@@ -1,7 +1,7 @@
 # Deploy Runbook
-LastUpdated: 2026-11-01 13:25 MSK
+LastUpdated: 2026-11-01 13:30 MSK
 
-Статус: сайт опубликован на https://arsenynn.com (2026-11-01). DNS и custom domain настроены. Все записи DNS only и указывают на GitHub. Осталось включить Enforce HTTPS после выпуска сертификата.
+Статус: сайт опубликован на https://arsenynn.com (2026-11-01). DNS и custom domain настроены. Все записи DNS only и указывают на GitHub. Сертификат `CN=arsenynn.com` выпущен, www редиректит на корень. Осталось включить Enforce HTTPS.
 
 ## Preview
 
