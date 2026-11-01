@@ -46,8 +46,9 @@ test('все семь проектов на месте, прямые ссылк�
 
 test('About раскрывается и закрывается с клавиатуры', async ({ page }) => {
   await page.goto('/');
+  // Порядок проектов зависит от свежести, поэтому панель берём из aria-controls кнопки.
   const button = page.locator('[data-about-toggle]').first();
-  const panel = page.locator('#about-arsenynn');
+  const panel = page.locator(`#${await button.getAttribute('aria-controls')}`);
   await expect(button).toHaveAttribute('aria-expanded', 'false');
   await expect(panel).toBeHidden();
   await button.focus();
@@ -74,6 +75,19 @@ test('reduced motion: панель About без анимации', async ({ brow
   const duration = await page.locator('#about-arsenynn').evaluate((el) => getComputedStyle(el).transitionDuration);
   expect(duration.split(',').every((d) => parseFloat(d) <= 0.01)).toBe(true);
   await context.close();
+});
+
+test('огоньки: свежие проекты выше, Coming soon последним, номера по порядку', async ({ page }) => {
+  await page.goto('/');
+  const numbers = await page.locator('article.project .project__index').allTextContents();
+  expect(numbers).toEqual(['01', '02', '03', '04', '05', '06', '07']);
+  await expect(page.locator('article.project').last()).toHaveAttribute('id', 'travel-log');
+  const weight = { live: 2, recent: 1, quiet: 0 } as Record<string, number>;
+  const signals = await page.locator('article.project .signal').evaluateAll((els) =>
+    els.map((el) => [...el.classList].find((c) => c.startsWith('signal--'))!.replace('signal--', '')),
+  );
+  const order = signals.map((s) => weight[s]);
+  expect(order).toEqual([...order].sort((a, b) => b - a));
 });
 
 test('404 отдаёт страницу со ссылкой на главную', async ({ page }) => {

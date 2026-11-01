@@ -3,6 +3,6 @@ import { getProjects } from '../data/projects';
 import ProjectSection from './ProjectSection.astro';
 const projects = await getProjects();
 ---
-<section class="project-list container" aria-label="Проекты">
-  {projects.map((project) => <ProjectSection project={project} />)}
+<section class="project-list container" aria-label="Проекты, свежие наверху">
+  {projects.map((project, i) => <ProjectSection project={project} position={i + 1} />)}
 </section>

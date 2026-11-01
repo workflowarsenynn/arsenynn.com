@@ -33,6 +33,10 @@ const projects = defineCollection({
       ),
       logo: asset.optional(),
       mark: asset.optional(),
+      /** Публичный Telegram-канал, по последнему посту которого считается активность. */
+      feed: z.string().regex(/^[A-Za-z0-9_]+$/).optional(),
+      /** Ручная дата последнего обновления, если ленты нет. */
+      updatedAt: z.coerce.date().optional(),
       detailPageEnabled: z.boolean(),
     })
     // Нет публичного URL — нет ссылки-заглушки, но должна быть подпись.

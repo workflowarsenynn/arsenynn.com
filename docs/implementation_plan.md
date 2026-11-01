@@ -1,5 +1,5 @@
 # Implementation Plan
-LastUpdated: 2026-11-01 16:55 MSK
+LastUpdated: 2026-11-01 17:10 MSK
 
 ## Todoist Sync
 - Sync: manual
@@ -29,7 +29,7 @@ LastUpdated: 2026-11-01 16:55 MSK
 - PushPolicy: auto-safe
 
 ## Status
-- Stage: Phase 5 of The Moving Index (advisory), только тёмная тема, сайт на https://arsenynn.com
+- Stage: Phase 6 (живой индекс) of The Moving Index (advisory), только тёмная тема, сайт на https://arsenynn.com
 - Направление задано `docs/Advisory/deep_research_and_implementation_direction.md`: оставить Astro и статику, развивать фазами, каждая фаза отдельным деплоем с точкой отката.
 - Phase 1: hero в одну строку, тексты по advisory, знаки в строке номера, текстовые ссылки вместо «пилюль», трёхколоночный desktop.
 
@@ -42,6 +42,7 @@ LastUpdated: 2026-11-01 16:55 MSK
 - `rollback/phase-3`: прод со светлой темой (769b072), отменён владельцем.
 - `rollback/phase-3r`: прод после отката к тёмной теме, до Phase 4 (7214de9).
 - `rollback/phase-4`: прод после Phase 4, до Phase 5 (7919e86).
+- `rollback/phase-5`: прод после Phase 5, до Phase 6 (c2f8ba2).
 - Откат: PR из revert-коммита фазы в `main` или `git revert <merge-commit>`; GitHub Actions пересоберёт сайт за 1–2 минуты.
 
 ## Done
@@ -56,6 +57,7 @@ LastUpdated: 2026-11-01 16:55 MSK
 - [x] Phase 3 (светлая тема) сделана и отменена владельцем: сайт только тёмный
 - [x] Phase 4: тесты Playwright + axe (16 проверок) и workflow Test в GitHub Actions
 - [x] Phase 5: проекты перенесены в Content Collection `src/content/projects.yaml` со схемой, HTML без изменений
+- [x] Phase 6: живой индекс — свежие проекты наверху, сигнальный огонёк (● неделя, ○ 45 дней), пересборка каждые 6 часов
 
 ## In Progress
 <!-- Нет задач в работе. -->
@@ -66,9 +68,11 @@ LastUpdated: 2026-11-01 16:55 MSK
 - [ ] Advisory step 5: RU/EN маршрутизация (`/en/`, hreflang)
 - [ ] Advisory step 6: первый мир `/arsenynn/` — нужны материалы владельца (фильмы или главы, обложки, тексты)
 - [ ] Получить чистый wordmark workflow@arsenynn
+- [ ] Даты для проектов без публичной ленты (`updatedAt` у bessmyslennost и without-streaming) или Bot API для них
 - [ ] Проверить на iPhone и из РФ-сети
 
 ## Risks
+- Огоньки зависят от публичной ленты t.me/s/: если Telegram не ответит при сборке, проект временно опустится в «тишину» до следующей пересборки.
 - Telegram отдаёт урезанные страницы при частых запросах: проверку ссылок повторять несколько раз.
 - Ветка `docs/sync-live-status` с локального Mac не смержена: её правки документации могут конфликтовать с этой веткой.
 - Проверка доступности ссылок выполнялась не из РФ-сети.

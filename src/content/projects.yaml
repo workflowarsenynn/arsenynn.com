@@ -2,6 +2,8 @@
 # Схема и проверка: src/content.config.ts. Порядок на странице задаёт order.
 # Короткие тексты из advisory (docs/Advisory/), About ждут утверждения владельца.
 # Проверка ссылок и открытые вопросы: docs/project_registry.md.
+# feed — публичный канал, по последнему посту которого проект поднимается наверх и получает огонёк.
+# updatedAt — ручная дата (YYYY-MM-DD) для проектов без публичной ленты: bessmyslennost, without-streaming.
 
 - id: arsenynn
   order: 1
@@ -21,6 +23,7 @@
       url: https://t.me/arsenynn
       type: telegram
       primary: true
+  feed: arsenynn
   detailPageEnabled: false
 
 - id: workflow
@@ -45,6 +48,7 @@
     - label: Telegram
       url: https://t.me/ww_arsenynn
       type: telegram
+  feed: ww_arsenynn
   detailPageEnabled: false
 
 - id: bessmyslennost
@@ -124,6 +128,7 @@
     src: /logos/annflow.webp
     width: 600
     height: 231
+  feed: annsflow
   detailPageEnabled: false
 
 - id: party-protocol
@@ -150,6 +155,7 @@
     src: /logos/party-protocol.svg
     width: 1392
     height: 546
+  feed: partyprotocol
   detailPageEnabled: false
 
 - id: travel-log
