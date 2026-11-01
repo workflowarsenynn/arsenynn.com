@@ -47,11 +47,11 @@ const line = toLocale(Astro.currentLocale) === 'en' ? site.en.heroLine : hero.li
 
   .hero__portrait {
     display: block;
-    width: min(72vw, 20rem);
+    width: min(42vw, 11rem);
     height: auto;
-    margin-top: -3.5rem;
+    margin-top: var(--space-2);
     /* наложение до ~20% высоты кадра: огонёк в кадре остаётся над wordmark */
-    margin-bottom: max(-17vw, -5.5rem);
+    margin-bottom: max(-9vw, -2.5rem);
     -webkit-mask-image: radial-gradient(ellipse 70% 72% at 58% 40%, #000 45%, transparent 100%);
     mask-image: radial-gradient(ellipse 70% 72% at 58% 40%, #000 45%, transparent 100%);
     pointer-events: none;
@@ -85,8 +85,8 @@ const line = toLocale(Astro.currentLocale) === 'en' ? site.en.heroLine : hero.li
 
   @media (min-width: 48rem) {
     .hero__portrait {
-      width: 24rem;
-      margin-bottom: -5.5rem;
+      width: 14rem;
+      margin-bottom: -3rem;
     }
 
     .hero__logo {
