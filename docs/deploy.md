@@ -1,11 +1,11 @@
 # Deploy Runbook
-LastUpdated: 2026-11-01 13:05 MSK
+LastUpdated: 2026-11-01 14:15 MSK
 
-Статус: сайт собран, но не опубликован, в зоне `arsenynn.com` нет записей для корня домена. Шаги ниже ещё не выполнялись, каждый требует подтверждения владельца.
+Статус: сайт опубликован на `https://arsenynn.com`. Merge в `main` запускает `.github/workflows/deploy.yml` и обновляет сайт. Остался один шаг запуска: Enforce HTTPS.
 
 ## Preview
 
-До публикации на домене есть приватное превью в claude.ai: https://claude.ai/artifact/CHuWcW8SaVZWaBCBYGxmQ1 (видно только владельцу и тем, с кем он поделится через Share).
+Приватное превью в claude.ai: https://claude.ai/artifact/CHuWcW8SaVZWaBCBYGxmQ1 (видно только владельцу и тем, с кем он поделится через Share). Сейчас оно нужно только для просмотра правок до merge.
 
 Обновить: `npm run build`, затем `scripts/build-preview.sh <папка>` и опубликовать `<папка>/index.html` с файлами `logos/`, `fonts/`, `favicon.svg`, `apple-touch-icon.png` в тот же артефакт.
 
@@ -22,9 +22,9 @@ LastUpdated: 2026-11-01 13:05 MSK
 
 Прокси Cloudflare в РФ обрезает ответы примерно на 16 KB, поэтому Portfolio уже переехал на GitHub Pages и работает из РФ. Этот сайт идёт тем же путём. Подробнее в `docs/decisions_log.md`.
 
-## DNS plan
+## DNS
 
-Менять DNS можно только после отдельного подтверждения владельца. В зоне уже есть `portfolio`, `mail-mcp` и `mail-platform`, их не трогать.
+Записи созданы и проверены 2026-11-01. Менять DNS можно только после отдельного подтверждения владельца, другие записи зоны не трогать.
 
 | Тип | Имя | Значение | Proxy |
 |---|---|---|---|
@@ -36,22 +36,18 @@ LastUpdated: 2026-11-01 13:05 MSK
 
 Проект использует `cf` CLI: `cf dns records list -z arsenynn.com`.
 
-После DNS: дождаться сертификата Let's Encrypt от GitHub и включить Enforce HTTPS.
-
 ## Publishing model
 
-Решение владельца от 2026-11-01: один публичный репозиторий `workflowarsenynn/arsenynn.com`. В публичном репозитории Actions бесплатны, поэтому сборка идёт через `.github/workflows/deploy.yml` при push в `main`. Секретов в репозитории нет.
+Решение владельца от 2026-11-01: один публичный репозиторий `workflowarsenynn/arsenynn.com`. В публичном репозитории Actions бесплатны, поэтому сборка идёт через `.github/workflows/deploy.yml` при push в `main`. Секретов в репозитории нет. Все файлы репозитория, включая `assets/` и `docs/`, видны всем.
 
-Порядок запуска, всё делает или подтверждает владелец:
+Запуск:
 
-1. Смержить ветку с MVP в `main`.
-2. Сделать репозиторий публичным: Settings → General → Danger Zone → Change visibility.
-3. Settings → Pages → Source: `GitHub Actions`.
-   Workflow берёт `base_path` из `actions/configure-pages` и передаёт в сборку как `PAGES_BASE`: без своего домена сайт открывается на `https://workflowarsenynn.github.io/arsenynn.com/`, с доменом на корне.
-4. Запустить workflow `Deploy to GitHub Pages` (или push в `main`) и проверить временный адрес Pages.
-5. Settings → Pages → Custom domain: `arsenynn.com`. Файл `public/CNAME` уже в сборке.
-6. Создать DNS-записи из таблицы выше, DNS only.
-7. После выпуска сертификата включить Enforce HTTPS и пройти Acceptance.
+- [x] MVP смержен в `main`.
+- [x] Репозиторий публичный.
+- [x] Pages с источником `GitHub Actions`, деплой проходит.
+- [x] Custom domain `arsenynn.com`, сертификат выдан.
+- [x] DNS-записи созданы, DNS only.
+- [ ] Включить Enforce HTTPS: сейчас `http://arsenynn.com` отвечает 200 без редиректа.
 
 ## Acceptance
 
