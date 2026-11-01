@@ -17,10 +17,57 @@ const t = ui[toLocale(Astro.currentLocale)];
   {project.links.length === 0 && project.statusLabel && (
     <span class="action action--row project-actions__status">{project.statusLabel}</span>
   )}
+  {project.parts?.map((part, i) => (
+    <>
+      <button
+        class="action action--row project-actions__toggle"
+        type="button"
+        aria-expanded="true"
+        aria-controls={`part-${project.id}-${i + 1}`}
+        data-about-toggle
+      >
+        {part.label}<span class="project-actions__sign" aria-hidden="true" data-sign>−</span>
+        <span class="visually-hidden">: {project.title}</span>
+      </button>
+      <div class="disclosure" id={`part-${project.id}-${i + 1}`}>
+        <ul class="disclosure__inner contents">
+          {part.youtube && (
+            <li>
+              <a class="contents__link" href={part.youtube} target="_blank" rel="noopener">
+                <span class="contents__title">{t.youtubeLabel}</span>
+                <span class="action__arrow" aria-hidden="true">↗</span>
+                <span class="visually-hidden">{t.newTab}</span>
+              </a>
+            </li>
+          )}
+          {part.intro && (
+            <li>
+              <a class="contents__link" href={part.intro} target="_blank" rel="noopener">
+                <span class="contents__title contents__title--muted">{t.introLabel}</span>
+                <span class="action__arrow" aria-hidden="true">↗</span>
+                <span class="visually-hidden">{t.newTab}</span>
+              </a>
+            </li>
+          )}
+          {part.chapters.map((ch) => (
+            <li>
+              <a class="contents__link chapter" href={ch.url} target="_blank" rel="noopener">
+                <span class="chapter__num" aria-hidden="true">{ch.num}</span>
+                <span class="chapter__title">{ch.title}</span>
+                {ch.duration && <span class="chapter__time">{ch.duration}</span>}
+                <span class="action__arrow" aria-hidden="true">↗</span>
+                <span class="visually-hidden">{`${ch.num}${t.newTab}`}</span>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </>
+  ))}
   {project.contents?.length && (
     <>
       <button
-        class="action action--row project-actions__about"
+        class="action action--row project-actions__toggle"
         type="button"
         aria-expanded="true"
         aria-controls={contentsId}
@@ -85,6 +132,11 @@ const t = ui[toLocale(Astro.currentLocale)];
     background: none;
   }
 
+  /* Части и проекты — основной контент, поэтому белым; About остаётся серым. */
+  .project-actions__toggle {
+    color: var(--color-text);
+  }
+
   .project-actions__about:hover {
     color: var(--color-text);
   }
@@ -126,6 +178,35 @@ const t = ui[toLocale(Astro.currentLocale)];
     display: flex;
     flex-direction: column;
     gap: 0.15rem;
+  }
+
+  .contents__title--muted {
+    color: var(--color-muted);
+  }
+
+  /* Строка главы: номер | название | длительность | ↗. Нажимается вся строка. */
+  .chapter {
+    justify-content: flex-start;
+  }
+
+  .chapter__num {
+    flex: none;
+    width: 3.4em;
+    color: var(--color-muted);
+    font-size: var(--text-meta);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .chapter__title {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .chapter__time {
+    flex: none;
+    color: var(--color-muted);
+    font-size: var(--text-meta);
+    font-variant-numeric: tabular-nums;
   }
 
   .contents__note {

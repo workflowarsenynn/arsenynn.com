@@ -44,6 +44,25 @@ const projects = defineCollection({
           }),
         )
         .optional(),
+      /** Части с главами (у @arsenynn): каждая часть раскрывается списком видео. */
+      parts: z
+        .array(
+          z.object({
+            label: z.string().min(1),
+            labelEn: z.string().min(1),
+            intro: z.url().optional(),
+            youtube: z.url().optional(),
+            chapters: z.array(
+              z.object({
+                num: z.string().min(1),
+                title: z.string().min(1),
+                duration: z.string().optional(),
+                url: z.url().refine((u) => u.startsWith('https://'), 'Ссылка должна начинаться с https://'),
+              }),
+            ),
+          }),
+        )
+        .optional(),
       logo: asset.optional(),
       mark: asset.optional(),
       /** Публичный Telegram-канал, по последнему посту которого считается активность. */

@@ -3,6 +3,7 @@
 # Короткие тексты из advisory (docs/Advisory/), About ждут утверждения владельца.
 # Проверка ссылок и открытые вопросы: docs/project_registry.md.
 # feed — публичный канал, по последнему посту которого проект поднимается наверх и получает огонёк.
+# parts — части @arsenynn: вступление (intro), главы-видео (chapters), позже youtube-плейлист части.
 # contents — оглавление канала у annFlow: проект, подзаголовок, ссылка на первый пост (из поста «Навигация по проектам канала»).
 # en — английский текст для /en/ (обязателен), labelEn — английская подпись ссылки.
 # updatedAt — ручная дата (YYYY-MM-DD) для проектов без публичной ленты: bessmyslennost, without-streaming.
@@ -25,14 +26,123 @@
       url: https://t.me/arsenynn
       type: telegram
       primary: true
+  parts:
     - label: Часть I
       labelEn: Part I
-      url: https://t.me/arsenynn/5
-      type: chapter
+      intro: https://t.me/arsenynn/5
+      chapters:
+        - num: '0.1'
+          title: "Hello to the future"
+          duration: '1:43'
+          url: https://t.me/arsenynn/6
+        - num: '0.2'
+          title: "I can talk to you about the atmosphere"
+          duration: '0:39'
+          url: https://t.me/arsenynn/7
+        - num: '1.0'
+          title: "When will you finally grow up?"
+          duration: '0:36'
+          url: https://t.me/arsenynn/8
+        - num: '1.1.1'
+          title: "Come here"
+          duration: '0:24'
+          url: https://t.me/arsenynn/9
+        - num: '1.1.2'
+          title: "A ty takoy"
+          duration: '1:10'
+          url: https://t.me/arsenynn/10
+        - num: '1.2.1'
+          title: "Decency"
+          duration: '0:25'
+          url: https://t.me/arsenynn/11
+        - num: '1.2.2'
+          title: "Behind the back"
+          duration: '1:08'
+          url: https://t.me/arsenynn/12
+        - num: '1.3.1'
+          title: "I think you understand"
+          duration: '0:40'
+          url: https://t.me/arsenynn/13
+        - num: '1.4'
+          title: "Spending time differently"
+          duration: '0:53'
+          url: https://t.me/arsenynn/14
+        - num: '1.5'
+          title: "Wanting more"
+          duration: '1:07'
+          url: https://t.me/arsenynn/15
+        - num: '1.6'
+          title: "Random things"
+          duration: '1:13'
+          url: https://t.me/arsenynn/16
+        - num: '1.7'
+          title: "We’ve all gone"
+          duration: '1:01'
+          url: https://t.me/arsenynn/17
+        - num: '1.8'
+          title: "If you feel like that"
+          duration: '1:08'
+          url: https://t.me/arsenynn/18
+        - num: '1.9'
+          title: "Resistance"
+          duration: '1:28'
+          url: https://t.me/arsenynn/19
+        - num: '1.10'
+          title: "I need to love"
+          duration: '1:41'
+          url: https://t.me/arsenynn/20
+        - num: '1.11.1'
+          title: "Nothing has changed"
+          duration: '0:28'
+          url: https://t.me/arsenynn/21
+        - num: '1.11.2'
+          title: "Reflection"
+          duration: '2:04'
+          url: https://t.me/arsenynn/22
+        - num: '1.11.3'
+          title: "Reflection BST"
+          duration: '2:05'
+          url: https://t.me/arsenynn/24
     - label: Часть II
       labelEn: Part II
-      url: https://t.me/arsenynn/28
-      type: chapter
+      intro: https://t.me/arsenynn/28
+      chapters:
+        - num: '2.0'
+          title: "Part Two"
+          duration: '0:28'
+          url: https://t.me/arsenynn/29
+        - num: '2.1'
+          title: "What does the w‑word mean?"
+          duration: '1:45'
+          url: https://t.me/arsenynn/31
+        - num: '2.2'
+          title: "Not to be cured"
+          duration: '1:15'
+          url: https://t.me/arsenynn/32
+        - num: '2.3.1'
+          title: "The things should be"
+          duration: '0:34'
+          url: https://t.me/arsenynn/33
+        - num: '2.3.2'
+          title: "Obsession"
+          duration: '1:29'
+          url: https://t.me/arsenynn/34
+        - num: '2.3.3'
+          title: "Obsession BST"
+          duration: '2:13'
+          url: https://t.me/arsenynn/35
+        - num: '2.4.1'
+          title: "We must not go back"
+          duration: '1:00'
+          url: https://t.me/arsenynn/45
+        - num: '2.4.2'
+          title: "I Left It There"
+          duration: '2:11'
+          url: https://t.me/arsenynn/46
+        - num: '2.5'
+          title: "Backstage podcast #1"
+          duration: '53:29'
+          url: https://t.me/arsenynn/54
   mark:
     src: /logos/nn.svg
     width: 3398
