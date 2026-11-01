@@ -55,3 +55,18 @@ export function relativeRu(date: Date, now = new Date()): string {
   const months = Math.round(days / 30);
   return `${months} ${plural(months, 'месяц', 'месяца', 'месяцев')} назад`;
 }
+
+/** "today", "3 days ago", "5 weeks ago". */
+export function relativeEn(date: Date, now = new Date()): string {
+  const days = Math.max(0, Math.floor((now.getTime() - date.getTime()) / DAY));
+  const unit = (n: number, w: string) => `${n} ${w}${n === 1 ? '' : 's'} ago`;
+  if (days === 0) return 'today';
+  if (days === 1) return 'yesterday';
+  if (days < 14) return unit(days, 'day');
+  if (days < 60) return unit(Math.round(days / 7), 'week');
+  return unit(Math.round(days / 30), 'month');
+}
+
+export function relative(date: Date, locale: 'ru' | 'en', now = new Date()): string {
+  return locale === 'en' ? relativeEn(date, now) : relativeRu(date, now);
+}

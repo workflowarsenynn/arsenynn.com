@@ -1,0 +1,21 @@
+---
+import Base from '../layouts/Base.astro';
+import SiteHeader from './SiteHeader.astro';
+import Hero from './Hero.astro';
+import ProjectList from './ProjectList.astro';
+import Collaboration from './Collaboration.astro';
+import SiteFooter from './SiteFooter.astro';
+---
+<Base>
+  <SiteHeader />
+  <main>
+    <Hero />
+    <ProjectList />
+    <Collaboration />
+  </main>
+  <SiteFooter />
+</Base>
+
+<script>
+  import '../scripts/about.ts';
+</script>

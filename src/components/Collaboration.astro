@@ -1,13 +1,15 @@
 ---
 import { site } from '../data/site';
 import ActionLink from './ActionLink.astro';
+import { toLocale } from '../lib/i18n';
 const { work } = site;
+const text = toLocale(Astro.currentLocale) === 'en' ? site.en.workText : work.text;
 ---
 <section class="work container" id="work" aria-labelledby="work-title">
   <div class="work__inner">
     <h2 class="work__title" id="work-title">{work.title}</h2>
     <p class="meta">{work.descriptor}</p>
-    <p class="work__text">{work.text}</p>
+    <p class="work__text">{text}</p>
     <div class="work__actions action-list">
       {work.links.map((link) => <ActionLink label={link.label} url={link.url} primary={'primary' in link && link.primary} />)}
     </div>

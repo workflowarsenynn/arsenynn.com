@@ -1,12 +1,21 @@
 ---
 import { site } from '../data/site';
 import { asset } from '../data/asset';
+import { locales, localePath, toLocale, ui } from '../lib/i18n';
 import '@fontsource-variable/source-serif-4/wght.css';
 import '@fontsource-variable/manrope/wght.css';
 import '../styles/tokens.css';
 import '../styles/global.css';
 
+type Props = { noindex?: boolean };
+const { noindex = false } = Astro.props;
+const locale = toLocale(Astro.currentLocale);
+const t = ui[locale];
+const title = locale === 'en' ? site.en.title : site.title;
+const description = locale === 'en' ? site.en.description : site.description;
 const canonical = new URL(Astro.url.pathname, site.url).href;
+// hreflang: обе версии ссылаются друг на друга, x-default ведёт на русскую (advisory).
+const alternates = locales.map((l) => ({ lang: l, href: new URL(localePath(l), site.url).href }));
 const ogImage = new URL(site.ogImage, site.url).href;
 const jsonLd = JSON.stringify({
   '@context': 'https://schema.org',
@@ -16,30 +25,33 @@ const jsonLd = JSON.stringify({
 });
 ---
 <!doctype html>
-<html lang={site.lang}>
+<html lang={t.htmlLang}>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <script is:inline>document.documentElement.classList.add('js')</script>
-    <title>{site.title}</title>
-    <meta name="description" content={site.description} />
+    <title>{title}</title>
+    <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />
+    {noindex && <meta name="robots" content="noindex" />}
+    {!noindex && alternates.map((a) => <link rel="alternate" hreflang={a.lang} href={a.href} />)}
+    {!noindex && <link rel="alternate" hreflang="x-default" href={alternates[0].href} />}
     <meta name="theme-color" content={site.themeColor} />
     <link rel="icon" href={asset('/favicon.svg')} type="image/svg+xml" />
     <link rel="apple-touch-icon" href={asset('/apple-touch-icon.png')} />
 
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content={site.name} />
-    <meta property="og:title" content={site.title} />
-    <meta property="og:description" content={site.description} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
     <meta property="og:image" content={ogImage} />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
-    <meta property="og:locale" content="ru_RU" />
+    <meta property="og:locale" content={t.ogLocale} />
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content={site.title} />
-    <meta name="twitter:description" content={site.description} />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={ogImage} />
     <script type="application/ld+json" set:html={jsonLd} />
   </head>

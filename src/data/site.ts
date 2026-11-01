@@ -34,6 +34,15 @@ export const site = {
     ],
   },
 
+  // Английская версия (/en/). Поля, которых здесь нет, берутся из основных.
+  en: {
+    title: '@arsenynn — index',
+    description:
+      'An index of @arsenynn projects: auteur film, commissioned video, philosophy, radio, AI systems, VPN and travel.',
+    heroLine: 'seven parallel things by one author',
+    workText: 'Portfolio for collaboration and hiring: AI automation, sales and events, video production.',
+  },
+
   footer: {
     name: '© @arsenynn',
   },

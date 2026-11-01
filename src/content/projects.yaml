@@ -3,6 +3,7 @@
 # Короткие тексты из advisory (docs/Advisory/), About ждут утверждения владельца.
 # Проверка ссылок и открытые вопросы: docs/project_registry.md.
 # feed — публичный канал, по последнему посту которого проект поднимается наверх и получает огонёк.
+# en — английский текст для /en/ (обязателен), labelEn — английская подпись ссылки.
 # updatedAt — ручная дата (YYYY-MM-DD) для проектов без публичной ленты: bessmyslennost, without-streaming.
 
 - id: arsenynn
@@ -24,12 +25,19 @@
       type: telegram
       primary: true
     - label: Часть I
+      labelEn: Part I
       url: https://t.me/arsenynn/5
       type: chapter
     - label: Часть II
+      labelEn: Part II
       url: https://t.me/arsenynn/28
       type: chapter
   feed: arsenynn
+  en:
+    shortDescription: "Films, chapters, and things that slowly become something larger."
+    longDescription:
+      - "Not a blog and not a portfolio. Places, people, thoughts and frames gather into chapters slowly, like a book."
+      - "Each chapter is an attempt to understand one thing."
   detailPageEnabled: false
 
 - id: workflow
@@ -55,6 +63,11 @@
       url: https://t.me/ww_arsenynn
       type: telegram
   feed: ww_arsenynn
+  en:
+    shortDescription: "Commissioned moving image, from the first idea to the final frame."
+    longDescription:
+      - "Script, shoot, edit, color. Promo, event films, brand videos."
+      - "One view of the whole story, from the brief to the last frame."
   detailPageEnabled: false
 
 - id: bessmyslennost
@@ -80,6 +93,11 @@
     src: /logos/nn.svg
     width: 3398
     height: 1881
+  en:
+    shortDescription: "Conversation and memory. Some things return later."
+    longDescription:
+      - "A channel as an environment. The bot ann takes part in the conversation, remembers context and brings old posts back into the flow."
+      - "Some things only make sense a year later. Here they are allowed to return."
   detailPageEnabled: false
 
 - id: without-streaming
@@ -108,6 +126,11 @@
     src: /logos/without-streaming.svg
     width: 718
     height: 529
+  en:
+    shortDescription: "A personal radio station. It is already on air."
+    longDescription:
+      - "A personal music library turned into a broadcast: music, archives and visual fragments in one stream."
+      - "Press Listen. It is already on air."
   detailPageEnabled: false
 
 - id: annflow
@@ -135,6 +158,11 @@
     width: 600
     height: 231
   feed: annsflow
+  en:
+    shortDescription: "Systems, agents and automation for things that need to work."
+    longDescription:
+      - "The operational side of @arsenynn: LLMs, agents, macOS automation, self-built services."
+      - "Experiments around real tasks, not technology reviews."
   detailPageEnabled: false
 
 - id: party-protocol
@@ -162,6 +190,10 @@
     width: 1392
     height: 546
   feed: partyprotocol
+  en:
+    shortDescription: "Independent access on infrastructure of its own."
+    longDescription:
+      - "An independent service with its own servers, website and Telegram bot."
   detailPageEnabled: false
 
 - id: travel-log
@@ -177,4 +209,7 @@
   status: coming-soon
   statusLabel: Coming soon
   links: []
+  en:
+    shortDescription: "Places, stories, and what remains after the journey."
+    statusLabel: Coming soon
   detailPageEnabled: false

@@ -1,12 +1,13 @@
 ---
 import Base from '../layouts/Base.astro';
-import SiteHeader from '../components/SiteHeader.astro';
+import { ui, localePath } from '../lib/i18n';
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 ---
-<Base>
-  <SiteHeader />
-  <main class="container" style="padding-block: var(--space-5)">
+<Base noindex>
+  <main class="container" style="padding-block: var(--space-6)">
     <h1>404</h1>
-    <p class="meta" style="margin-top: var(--space-2)">Такой страницы нет.</p>
-    <p><a class="action" href={import.meta.env.BASE_URL}>На главную</a></p>
+    <p class="meta" style="margin-top: var(--space-2)">{ui.ru.notFoundText} <span lang="en">{ui.en.notFoundText}</span></p>
+    <p><a class="action action--text" href={`${base}${localePath('ru')}`}>{ui.ru.notFoundBack}</a></p>
+    <p lang="en"><a class="action action--text" href={`${base}${localePath('en')}`}>{ui.en.notFoundBack}</a></p>
   </main>
 </Base>

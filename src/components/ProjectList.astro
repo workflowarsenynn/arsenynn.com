@@ -1,8 +1,10 @@
 ---
 import { getProjects } from '../data/projects';
+import { toLocale, ui } from '../lib/i18n';
 import ProjectSection from './ProjectSection.astro';
-const projects = await getProjects();
+const locale = toLocale(Astro.currentLocale);
+const projects = await getProjects(locale);
 ---
-<section class="project-list container" aria-label="Проекты, свежие наверху">
+<section class="project-list container" aria-label={ui[locale].projectsLabel}>
   {projects.map((project, i) => <ProjectSection project={project} position={i + 1} />)}
 </section>
