@@ -1,5 +1,5 @@
 # Project Registry
-LastUpdated: 2026-11-01 20:15 MSK
+LastUpdated: 2026-11-01 20:40 MSK
 
 Журнал проверки ссылок и открытых вопросов. Источник ссылок для сайта: `src/data/projects.ts` и `src/data/site.ts`.
 
@@ -12,7 +12,8 @@ LastUpdated: 2026-11-01 20:15 MSK
 | 01 | @arsenynn | `arsenynn` | Часть II (вступление + главы 2.0–2.5, посты 29–54) | https://t.me/arsenynn/28 | ссылка от владельца, главы из канала 2026-11-01 |
 | — | Work / Collaboration | — | Portfolio (hub) | https://portfolio.arsenynn.com/ | 200, хаб для сотрудничества и HR |
 | — | Work / Collaboration | — | IT / AI, Sales / Events, Video production | https://portfolio.arsenynn.com/it-ai/, /sales-events/, /video-production/ | 200 |
-| 02 | workflow@arsenynn | `workflow` | Portfolio (primary) | https://portfolio.arsenynn.com/video-production/ | раздел выбран владельцем 2026-11-01 |
+| 02 | workflow@arsenynn | `workflow` | Portfolio | — | убрана владельцем 2026-11-01; портфолио доступно в header и блоке Work |
+| 02 | workflow@arsenynn | `workflow` | Проекты: 11 работ (посты 119–194) | https://t.me/ww_arsenynn | обложки из альбомов стоп-кадров канала |
 | 02 | workflow@arsenynn | `workflow` | Telegram | https://t.me/ww_arsenynn | канал найден |
 | 03 | Бессмысленность и скоротечность | `bessmyslennost` | Telegram (primary) | https://t.me/bessmislennost | канал найден, ссылка от владельца 2026-11-01 |
 | 04 | Without Streaming | `without-streaming` | Listen (primary) | https://radio.arsenynn.quest | 200, владелец продлевает домен |

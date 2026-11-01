@@ -44,6 +44,10 @@ const projects = defineCollection({
             title: z.string().min(1),
             note: z.string().optional(),
             noteEn: z.string().optional(),
+            /** Строка над названием: год, длительность. */
+            meta: z.string().optional(),
+            /** Кадр-обложка 16:9 из public/thumbs/. */
+            thumb: z.string().startsWith('/').optional(),
             url: z.url().refine((u) => u.startsWith('https://'), 'Ссылка должна начинаться с https://'),
           }),
         )

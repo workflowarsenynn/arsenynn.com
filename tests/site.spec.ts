@@ -88,7 +88,7 @@ test('порядок проектов задан владельцем, номе�
   await expect(page.locator('#work')).toBeVisible();
 });
 
-test('annFlow: кнопка «Проекты» раскрывает оглавление со ссылками на посты', async ({ page }) => {
+test('annFlow: кнопка «Проекты» раскрывает оглавление с обложками и ссылками на посты', async ({ page }) => {
   await page.goto('/');
   const button = page.locator('#annflow [aria-controls="contents-annflow"]');
   const panel = page.locator('#contents-annflow');
@@ -99,8 +99,19 @@ test('annFlow: кнопка «Проекты» раскрывает оглавл
   const links = panel.locator('a');
   await expect(links).toHaveCount(7);
   for (const link of await links.all()) await expect(link).toHaveAttribute('href', /^https:\/\/t\.me\/annsflow\/\d+$/);
-  // только у annFlow
-  await expect(page.locator('[id^="contents-"]')).toHaveCount(1);
+  await expect(panel.locator('.chapter__frame img')).toHaveCount(7);
+});
+
+test('workflow: без Portfolio, «Проекты» раскрывают 11 работ с кадрами', async ({ page }) => {
+  await page.goto('/');
+  await expect(page.locator('#workflow a[href*="portfolio.arsenynn.com"]')).toHaveCount(0);
+  await page.locator('#workflow [aria-controls="contents-workflow"]').click();
+  const links = page.locator('#contents-workflow a');
+  await expect(links).toHaveCount(11);
+  for (const link of await links.all()) await expect(link).toHaveAttribute('href', /^https:\/\/t\.me\/ww_arsenynn\/\d+$/);
+  await expect(page.locator('#contents-workflow .chapter__frame img')).toHaveCount(11);
+  // всего два оглавления: annFlow и workflow
+  await expect(page.locator('[id^="contents-"]')).toHaveCount(2);
 });
 
 test('@arsenynn: части раскрываются главами с кадрами, ссылки на Telegram и строка YouTube', async ({ page }) => {
