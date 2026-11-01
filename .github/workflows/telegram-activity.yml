@@ -1,0 +1,41 @@
+# Раз в час забирает события Telegram-бота и обновляет даты активности проектов
+# без публичной ленты (bessmyslennost, without-streaming). При изменении коммитит
+# src/content/activity.json и запускает публикацию. Без секрета ничего не делает.
+name: Telegram activity
+
+on:
+  schedule:
+    - cron: '41 * * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  actions: write
+
+concurrency:
+  group: telegram-activity
+  cancel-in-progress: false
+
+jobs:
+  activity:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - id: tg
+        run: node scripts/telegram/activity.mjs
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+      - if: steps.tg.outputs.changed == 'true'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add src/content/activity.json
+          git commit -m "data: update Telegram activity dates"
+          git push
+          # push от GITHUB_TOKEN не запускает другие workflow, поэтому публикация запускается явно.
+          gh workflow run deploy.yml --ref main
+        env:
+          GH_TOKEN: ${{ github.token }}
