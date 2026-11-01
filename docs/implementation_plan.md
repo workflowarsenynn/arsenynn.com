@@ -29,7 +29,7 @@ LastUpdated: 2026-11-01 16:40 MSK
 - PushPolicy: auto-safe
 
 ## Status
-- Stage: Phase 2 of The Moving Index (advisory), сайт на https://arsenynn.com
+- Stage: Phase 4 of The Moving Index (advisory), только тёмная тема, сайт на https://arsenynn.com
 - Направление задано `docs/Advisory/deep_research_and_implementation_direction.md`: оставить Astro и статику, развивать фазами, каждая фаза отдельным деплоем с точкой отката.
 - Phase 1: hero в одну строку, тексты по advisory, знаки в строке номера, текстовые ссылки вместо «пилюль», трёхколоночный desktop.
 
