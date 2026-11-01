@@ -5,11 +5,14 @@ const require = createRequire(import.meta.url);
 // Playwright берётся из окружения (глобально или NODE_PATH), в зависимости проекта не входит.
 const { chromium } = require('playwright');
 
+import { readFileSync } from 'node:fs';
+
 const font = `-apple-system, 'Helvetica Neue', Arial, sans-serif`;
+const wordmark = 'data:image/svg+xml;base64,' + readFileSync('public/logos/arsenynn.svg').toString('base64');
 const og = `<html><body style="margin:0;width:1200px;height:630px;background:#0a0a0a;color:#f2f2f0;font-family:${font};display:flex;flex-direction:column;justify-content:flex-end;padding:80px;box-sizing:border-box">
-<div style="font-size:120px;font-weight:600;letter-spacing:-4px;line-height:1">@arsenynn</div>
+<img src="${wordmark}" style="width:560px;display:block">
 <div style="font-size:36px;color:#9a9a96;margin-top:28px">projects / channels / things</div>
-<div style="width:18px;height:18px;border-radius:50%;background:#e5322d;margin-top:40px"></div>
+<div style="font-size:30px;color:#f2f2f0;margin-top:16px;font-family:Georgia,serif">an index of parallel things</div>
 </body></html>`;
 const icon = `<html><body style="margin:0;width:180px;height:180px;background:#0a0a0a;color:#f2f2f0;font-family:${font};display:flex;align-items:center;justify-content:center;position:relative">
 <div style="font-size:110px;font-weight:600;line-height:1;margin-top:-10px">@</div>

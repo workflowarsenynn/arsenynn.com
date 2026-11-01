@@ -90,6 +90,7 @@ export const projects: Project[] = [
     ],
     status: 'active',
     links: [{ label: 'Telegram', url: 'https://t.me/annsflow', type: 'telegram', primary: true }],
+    logo: { src: '/logos/annflow.webp', width: 600, height: 231 },
     detailPageEnabled: false,
   },
   {

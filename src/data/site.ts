@@ -12,6 +12,7 @@ export const site = {
 
   hero: {
     title: '@arsenynn',
+    logo: { src: '/logos/arsenynn.svg', width: 1235, height: 491 },
     descriptor: 'projects / channels / things',
     phrase: 'an index of parallel things',
     intro: 'Семь проектов одного автора: кино, коммерческое видео, философия, радио, AI, VPN и путешествия.',

@@ -1,9 +1,45 @@
 # Decisions Log
-LastUpdated: 2026-11-01 12:40 MSK
+LastUpdated: 2026-11-01 12:50 MSK
 
 Этот файл хранит историю проекта: важные решения, изменения подхода, причины архитектурных поворотов, rejected options, runtime findings и выводы, которые помогают понять, как проект развивался.
 
 Записи идут в обратном хронологическом порядке: новые сверху.
+
+---
+
+## 2026-11-01 — Подключены логотипы @arsenynn и annFlow
+
+**Type:** decision
+**Project:** arsenynn.com
+**Phase:** MVP
+**Status:** accepted
+**Related plan:** `docs/implementation_plan.md`
+**Related files:** `assets/logos/README.md`, `public/logos/`, `scripts/trace-logo.py`, `src/components/Hero.astro`
+
+### Context
+Владелец прислал логотипы. Файлами дошли wordmark `@arsenynn`, annFlow, PSD со знаком NN и два фото. Остальные (Without Streaming, Party Protocol, workflow) пришли только превью в чате, сессия не может их сохранить.
+
+### Decision
+- Wordmark `@arsenynn` векторизован в SVG (7.7 KB) и стоит в hero вместо текста, а также в OG image.
+- annFlow: фон убран по яркости, WebP 600 px, логотип вместо названия в строке 05.
+- Имя в header убрано: wordmark стоит сразу ниже.
+- Портрет и фото эскизов сохранены, но не используются.
+
+### Why
+SVG чёткий на любом экране и легче растра. Красный wordmark становится главным красным пятном страницы, как и задумано в `docs/design_research.md`. Портрет отложен по разделу 40 ТЗ: сначала без него.
+
+### Alternatives / rejected options
+- WebP для wordmark: 43 KB lossy и 77 KB lossless против 7.7 KB SVG.
+- Брать логотипы из макетов GPT: это перерисовки, не оригиналы.
+
+### Consequences
+Логотипы остальных проектов ждут файлов. Цвет wordmark `#cf0100` темнее accent `#e5322d`: как графика проходит 3:1, менять accent под него нельзя, у текста упадёт контраст.
+
+### Lesson
+potracer трассирует нулевые пиксели: маску нужно инвертировать, иначе получается прямоугольник с вырезанными буквами.
+
+### Source
+Файлы владельца в сессии 2026-11-01.
 
 ---
 

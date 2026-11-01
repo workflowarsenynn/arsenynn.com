@@ -3,7 +3,20 @@ import { site } from '../data/site';
 const { hero } = site;
 ---
 <section class="hero container" aria-labelledby="hero-title">
-  <h1 id="hero-title" class="hero__title">{hero.title}<span class="hero__dot" aria-hidden="true"></span></h1>
+  <h1 id="hero-title" class="hero__title">
+    {hero.logo ? (
+      <img
+        class="hero__logo"
+        src={hero.logo.src}
+        width={hero.logo.width}
+        height={hero.logo.height}
+        alt={hero.title}
+        fetchpriority="high"
+      />
+    ) : (
+      <>{hero.title}<span class="hero__dot" aria-hidden="true"></span></>
+    )}
+  </h1>
   <p class="hero__descriptor meta">{hero.descriptor}</p>
   {hero.phrase && <p class="hero__phrase">{hero.phrase}</p>}
   {hero.intro && <p class="hero__intro">{hero.intro}</p>}
@@ -26,6 +39,18 @@ const { hero } = site;
     font-weight: 700;
     line-height: 0.95;
     letter-spacing: -0.04em;
+  }
+
+  .hero__logo {
+    display: block;
+    width: min(100%, 21rem);
+    height: auto;
+  }
+
+  @media (min-width: 48rem) {
+    .hero__logo {
+      width: 30rem;
+    }
   }
 
   .hero__dot {

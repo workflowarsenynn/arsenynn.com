@@ -1,5 +1,5 @@
 # Project Registry
-LastUpdated: 2026-11-01 12:40 MSK
+LastUpdated: 2026-11-01 12:50 MSK
 
 Журнал проверки ссылок и открытых вопросов. Источник ссылок для сайта: `src/data/projects.ts` и `src/data/site.ts`.
 
@@ -20,7 +20,7 @@ LastUpdated: 2026-11-01 12:40 MSK
 
 ## Open questions
 
-- **Логотипы.** Владелец прислал путь в iCloud на Mac, cloud-сессии он недоступен. Нужны файлы в `assets/logos/` (push или вложения в чат).
+- **Логотипы.** Подключены `@arsenynn` и annFlow. Остальные пришли только превью в чате, список недостающих файлов в `assets/logos/README.md`.
 - **Контакт в блоке Work.** Сейчас в блоке Work стоят Portfolio и Telegram-канал workflow. Личный Telegram `https://t.me/arsenynnn` (три n) и email не добавлены: ждут подтверждения владельца.
 
 ## Resolved 2026-11-01
