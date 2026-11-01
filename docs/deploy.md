@@ -1,7 +1,7 @@
 # Deploy Runbook
-LastUpdated: 2026-11-01 13:20 MSK
+LastUpdated: 2026-11-01 13:25 MSK
 
-Статус: сайт опубликован на https://arsenynn.com (2026-11-01). DNS и custom domain настроены. Осталось: запись `A @ 185.199.111.153` переключить с Proxied на DNS only и включить Enforce HTTPS после выпуска сертификата.
+Статус: сайт опубликован на https://arsenynn.com (2026-11-01). DNS и custom domain настроены. Все записи DNS only и указывают на GitHub. Осталось включить Enforce HTTPS после выпуска сертификата.
 
 ## Preview
 
