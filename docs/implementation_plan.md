@@ -1,5 +1,5 @@
 # Implementation Plan
-LastUpdated: 2026-11-01 13:05 MSK
+LastUpdated: 2026-11-01 13:10 MSK
 
 ## Todoist Sync
 - Sync: manual
@@ -25,7 +25,7 @@ LastUpdated: 2026-11-01 13:05 MSK
 - Repository: workflowarsenynn/arsenynn.com
 - Remote: origin
 - Mode: direct
-- Visibility: private
+- Visibility: public
 - PushPolicy: auto-safe
 
 ## Status
@@ -46,7 +46,8 @@ LastUpdated: 2026-11-01 13:05 MSK
 - [x] Проведён дизайн-ресерч, внедрено направление v2
 - [x] Подключены логотипы `@arsenynn` и annFlow, OG image с wordmark
 - [x] Подключены знаки NN, Ws и маска, тексты v2, опубликовано превью
-- [x] MVP смержен в `main` (workflowarsenynn/arsenynn.com#1) с разрешения владельца
+- [x] MVP смержен в `main` (workflowarsenynn/arsenynn.com#1, #2) с разрешения владельца
+- [x] Владелец сделал репозиторий публичным и включил Pages (GitHub Actions)
 - [x] Пройден QA в Chromium на 320–1440 px
 
 ## In Progress
@@ -57,13 +58,11 @@ LastUpdated: 2026-11-01 13:05 MSK
 - [ ] Получить чистый wordmark workflow@arsenynn
 - [ ] Утвердить у владельца тексты v2 и вид по превью
 - [ ] Решить, нужен ли личный Telegram или email в блоке Work
-- [ ] Сделать репозиторий публичным и включить Pages с источником GitHub Actions (владелец)
 - [ ] Подключить DNS `arsenynn.com` по `docs/deploy.md` (с подтверждения владельца)
 - [ ] Проверить в Safari iOS, с телефона из РФ и превью ссылки в Telegram
 
 ## Risks
 - `arsenynn.quest` истекает 2026-11-15: владелец продлевает домен, до продления кнопки Listen и Website под угрозой.
-- Actions в репозитории запускаются (run 41295699260 стартовал 2026-11-01), но деплой упадёт, пока Pages не включён: в приватном репозитории на бесплатном плане Pages недоступен.
 - Прокси Cloudflare в РФ обрезает ответы примерно на 16 KB: запись `arsenynn.com` должна оставаться DNS only.
 - Safari iOS не проверялся: в cloud-контейнере его нет, нужна проверка на телефоне.
 - Проверка доступности ссылок выполнялась не из РФ-сети.
