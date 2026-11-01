@@ -177,6 +177,10 @@
     - label: Telegram
       url: https://t.me/ww_arsenynn
       type: telegram
+  mark:
+    src: /logos/workflow.svg
+    width: 590
+    height: 600
   feed: ww_arsenynn
   en:
     shortDescription: "Commissioned moving image, from the first idea to the final frame."

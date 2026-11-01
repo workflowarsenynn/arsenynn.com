@@ -32,7 +32,8 @@
   --tap-row: 56px;
   --radius: 999px;
   --logo-height: 3.5rem;
-  --mark-height: 1.75rem;
+  /* Знаки проектов выравниваются по площади: сторона квадрата равной площади. */
+  --mark-size: 2.6rem;
   --duration: 200ms;
 }
 

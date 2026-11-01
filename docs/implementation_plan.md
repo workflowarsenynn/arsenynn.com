@@ -1,5 +1,5 @@
 # Implementation Plan
-LastUpdated: 2026-11-01 18:20 MSK
+LastUpdated: 2026-11-01 19:50 MSK
 
 ## Todoist Sync
 - Sync: manual
@@ -76,7 +76,6 @@ LastUpdated: 2026-11-01 18:20 MSK
 - [ ] Включить Enforce HTTPS в настройках Pages (владелец)
 - [ ] Advisory step 6: первый мир `/arsenynn/` — отложен владельцем: первая версия сайта только со ссылками, видео позже
 - [ ] Владелец: создать бота в @BotFather, добавить админом в @without_streaming и @bessmislennost, сохранить токен в секрет `TELEGRAM_BOT_TOKEN`
-- [ ] Получить чистый wordmark workflow@arsenynn
 - [ ] Даты для проектов без публичной ленты (`updatedAt` у bessmyslennost и without-streaming) или Bot API для них
 - [ ] Проверить на iPhone и из РФ-сети
 
