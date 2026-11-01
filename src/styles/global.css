@@ -84,6 +84,12 @@ a {
   border-top: 1px solid var(--color-line);
 }
 
+@media (min-width: 48rem) {
+  .action-list {
+    max-width: none;
+  }
+}
+
 .action--row {
   width: 100%;
   min-height: var(--tap-row);

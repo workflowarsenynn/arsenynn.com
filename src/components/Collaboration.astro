@@ -43,6 +43,8 @@ const text = toLocale(Astro.currentLocale) === 'en' ? site.en.workText : work.te
 
   @media (min-width: 48rem) {
     .work__inner {
+      max-width: var(--index-width);
+      margin-inline: auto;
       padding-left: calc(8rem + var(--space-3));
       padding-block: var(--space-6);
     }

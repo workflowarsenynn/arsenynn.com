@@ -12,14 +12,17 @@
   order: 4
   slug: arsenynn
   title: '@arsenynn'
+  # Главный проект: название целиком красным.
+  accent: true
   tags:
     - concept
     - chapters
     - identity
-  shortDescription: Фильмы, главы и вещи, которые со временем складываются во что-то большее.
+  shortDescription: "Там, где отсутствие необходимости не исключает неизбежности"
   longDescription:
-    - Не блог и не портфолио. Места, люди, мысли и кадры собираются в главы медленно, как книга.
-    - Каждая глава это попытка понять что-то одно.
+    - "Не всякое существование нуждается в ответе на вопрос «зачем?»."
+    - "Бессмысленность освобождает от необходимости искать цель, но способна замкнуть мысль на самой себе. Скоротечность разрывает этот круг, заставляя действовать вопреки собственным принципам."
+    - "@arsenynn — то, что не удалось ни обосновать необходимостью, ни оставить в области возможного."
   status: active
   links:
     - label: Telegram
@@ -201,10 +204,11 @@
     height: 1881
   feed: arsenynn
   en:
-    shortDescription: "Films, chapters, and things that slowly become something larger."
+    shortDescription: "Where the absence of necessity does not rule out inevitability"
     longDescription:
-      - "Not a blog and not a portfolio. Places, people, thoughts and frames gather into chapters slowly, like a book."
-      - "Each chapter is an attempt to understand one thing."
+      - "Not every existence needs an answer to the question “why?”."
+      - "Meaninglessness frees you from the need to look for a purpose, but it can close thought in on itself. Transience breaks this circle, forcing you to act against your own principles."
+      - "@arsenynn is what could neither be justified by necessity nor left in the realm of the possible."
   detailPageEnabled: false
 
 - id: workflow
@@ -360,8 +364,9 @@
     - workflows
   shortDescription: Системы, агенты и автоматизация для вещей, которые должны работать.
   longDescription:
-    - 'Операционная сторона @arsenynn: LLM, агенты, автоматизация macOS, собственные сервисы.'
-    - Эксперименты вокруг реальных задач, а не обзоры технологий.
+    - "annFlow — инженерное и технологическое направление @arsenynn."
+    - "Разработка собственных цифровых продуктов, ИИ-агентов, систем автоматизации и сетевой инфраструктуры."
+    - "Архитектура, реализация и эксплуатация. От идеи до работающей системы."
   status: active
   links:
     - label: Telegram
@@ -412,8 +417,9 @@
   en:
     shortDescription: "Systems, agents and automation for things that need to work."
     longDescription:
-      - "The operational side of @arsenynn: LLMs, agents, macOS automation, self-built services."
-      - "Experiments around real tasks, not technology reviews."
+      - "annFlow is the engineering and technology line of @arsenynn."
+      - "Building its own digital products, AI agents, automation systems and network infrastructure."
+      - "Architecture, implementation and operation. From idea to a working system."
   detailPageEnabled: false
 
 - id: party-protocol
@@ -429,13 +435,13 @@
     - Независимый сервис со своими серверами, сайтом и Telegram-ботом.
   status: active
   links:
-    - label: Website
-      url: https://partyprotocol.arsenynn.quest
-      type: website
-      primary: true
     - label: Telegram
       url: https://t.me/partyprotocol
       type: telegram
+      primary: true
+    - label: Website
+      url: https://partyprotocol.arsenynn.quest
+      type: website
   mark:
     src: /logos/party-protocol.svg
     width: 1392

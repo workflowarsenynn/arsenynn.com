@@ -43,7 +43,7 @@ const titleParts = project.title.split(/(?=@)/);
   </div>
 
   <div class="project__body">
-    <h2 class="project__title" id={headingId}>
+    <h2 class:list={['project__title', { 'project__title--accent': project.accent }]} id={headingId}>
       {project.logo ? (
         <img
           class="project__logo"
@@ -161,6 +161,10 @@ const titleParts = project.title.split(/(?=@)/);
     object-position: left center;
   }
 
+  .project__title--accent {
+    color: var(--color-accent);
+  }
+
   .project__tags {
     display: flex;
     flex-wrap: wrap;
@@ -181,7 +185,8 @@ const titleParts = project.title.split(/(?=@)/);
     max-width: 34rem;
   }
 
-  /* Планшет: колонка номера и знака слева. */
+  /* Планшет и desktop: номер и знак слева, всё остальное одной колонкой под текстом.
+     Индекс центрирован, как hero; ссылки и раскрытые списки на всю ширину текста. */
   @media (min-width: 48rem) {
     .project {
       grid-template-columns: 8rem minmax(0, 1fr);
@@ -190,6 +195,8 @@ const titleParts = project.title.split(/(?=@)/);
         'meta actions'
         'meta details';
       column-gap: var(--space-3);
+      max-width: var(--index-width);
+      margin-inline: auto;
       padding-block: var(--space-6);
     }
 
@@ -200,20 +207,6 @@ const titleParts = project.title.split(/(?=@)/);
       gap: var(--space-2);
       margin: 0;
       padding-top: 0.9rem;
-    }
-  }
-
-  /* Desktop: номер | название и текст | действия (advisory, The Moving Index). */
-  @media (min-width: 64rem) {
-    .project {
-      grid-template-columns: 8rem minmax(0, 1fr) 16rem;
-      grid-template-areas:
-        'meta body actions'
-        'meta details .';
-    }
-
-    .project__actions {
-      padding-top: 0.6rem;
     }
   }
 </style>
