@@ -1,5 +1,5 @@
 # Проекты главной страницы: единственный источник текстов и ссылок.
-# Схема и проверка: src/content.config.ts. Порядок на странице задаёт order.
+# Схема и проверка: src/content.config.ts. Порядок на странице задаёт order (выбран владельцем 2026-11-01).
 # Короткие тексты из advisory (docs/Advisory/), About ждут утверждения владельца.
 # Проверка ссылок и открытые вопросы: docs/project_registry.md.
 # feed — публичный канал, по последнему посту которого проект поднимается наверх и получает огонёк.
@@ -7,7 +7,7 @@
 # updatedAt — ручная дата (YYYY-MM-DD) для проектов без публичной ленты: bessmyslennost, without-streaming.
 
 - id: arsenynn
-  order: 1
+  order: 4
   slug: arsenynn
   title: '@arsenynn'
   tags:
@@ -41,7 +41,7 @@
   detailPageEnabled: false
 
 - id: workflow
-  order: 2
+  order: 5
   slug: workflow
   title: workflow@arsenynn
   tags:
@@ -71,7 +71,7 @@
   detailPageEnabled: false
 
 - id: bessmyslennost
-  order: 3
+  order: 6
   slug: bessmyslennost
   title: Бессмысленность и скоротечность
   tags:
@@ -101,7 +101,7 @@
   detailPageEnabled: false
 
 - id: without-streaming
-  order: 4
+  order: 3
   slug: without-streaming
   title: Without Streaming
   tags:
@@ -134,7 +134,7 @@
   detailPageEnabled: false
 
 - id: annflow
-  order: 5
+  order: 2
   slug: annflow
   title: annFlow
   tags:
@@ -166,7 +166,7 @@
   detailPageEnabled: false
 
 - id: party-protocol
-  order: 6
+  order: 1
   slug: party-protocol
   title: Party Protocol
   tags:

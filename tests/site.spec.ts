@@ -77,17 +77,15 @@ test('reduced motion: панель About без анимации', async ({ brow
   await context.close();
 });
 
-test('огоньки: свежие проекты выше, Coming soon последним, номера по порядку', async ({ page }) => {
+test('порядок проектов задан владельцем, номера 01–07 подряд', async ({ page }) => {
   await page.goto('/');
+  const ids = await page.locator('article.project').evaluateAll((els) => els.map((el) => el.id));
+  expect(ids).toEqual([
+    'party-protocol', 'annflow', 'without-streaming', 'arsenynn', 'workflow', 'bessmyslennost', 'travel-log',
+  ]);
   const numbers = await page.locator('article.project .project__index').allTextContents();
   expect(numbers).toEqual(['01', '02', '03', '04', '05', '06', '07']);
-  await expect(page.locator('article.project').last()).toHaveAttribute('id', 'travel-log');
-  const weight = { live: 2, recent: 1, quiet: 0 } as Record<string, number>;
-  const signals = await page.locator('article.project .signal').evaluateAll((els) =>
-    els.map((el) => [...el.classList].find((c) => c.startsWith('signal--'))!.replace('signal--', '')),
-  );
-  const order = signals.map((s) => weight[s]);
-  expect(order).toEqual([...order].sort((a, b) => b - a));
+  await expect(page.locator('#work')).toBeVisible();
 });
 
 test('английская версия: /en/, переключатель языка, hreflang, без русского текста в описаниях', async ({ page }) => {
