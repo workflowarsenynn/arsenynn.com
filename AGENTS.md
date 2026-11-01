@@ -1,5 +1,5 @@
 # AGENTS.md
-LastUpdated: 2026-11-01 16:40 MSK
+LastUpdated: 2026-11-01 16:55 MSK
 > Этот файл читается AI Coding Agent перед началом работы.
 
 ## Project
@@ -39,7 +39,7 @@ LastUpdated: 2026-11-01 16:40 MSK
 ## Rules
 - Перед любыми правками UI прочитать нужные разделы `docs/brief.md`. При конфликте действуют приоритеты из раздела 52: читаемое важнее красивого, mobile важнее desktop.
 - Порядок работы: UX → hierarchy → typography → spacing → responsive → content → visual personality.
-- Контент и URL только в `src/data/`, никогда в компонентах.
+- Контент и URL только в `src/content/projects.yaml` и `src/data/site.ts`, никогда в компонентах. Схема `src/content.config.ts` останавливает сборку при ошибке в данных.
 - Основные ссылки проекта всегда доступны без раскрытия About.
 - Любой изменённый интерфейс проверять в браузере на 320, 390 и 430 px и на desktop: нет горизонтального скролла, текст не меньше 14 px, touch target не меньше 44 px.
 - Цвета и отступы брать из design tokens, не вводить новые токены без необходимости.

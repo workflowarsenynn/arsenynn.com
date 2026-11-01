@@ -1,5 +1,5 @@
 # Implementation Plan
-LastUpdated: 2026-11-01 16:40 MSK
+LastUpdated: 2026-11-01 16:55 MSK
 
 ## Todoist Sync
 - Sync: manual
@@ -29,7 +29,7 @@ LastUpdated: 2026-11-01 16:40 MSK
 - PushPolicy: auto-safe
 
 ## Status
-- Stage: Phase 4 of The Moving Index (advisory), только тёмная тема, сайт на https://arsenynn.com
+- Stage: Phase 5 of The Moving Index (advisory), только тёмная тема, сайт на https://arsenynn.com
 - Направление задано `docs/Advisory/deep_research_and_implementation_direction.md`: оставить Astro и статику, развивать фазами, каждая фаза отдельным деплоем с точкой отката.
 - Phase 1: hero в одну строку, тексты по advisory, знаки в строке номера, текстовые ссылки вместо «пилюль», трёхколоночный desktop.
 
@@ -41,6 +41,7 @@ LastUpdated: 2026-11-01 16:40 MSK
 - `rollback/phase-2`: прод после Phase 2, до Phase 3 (0eb5957).
 - `rollback/phase-3`: прод со светлой темой (769b072), отменён владельцем.
 - `rollback/phase-3r`: прод после отката к тёмной теме, до Phase 4 (7214de9).
+- `rollback/phase-4`: прод после Phase 4, до Phase 5 (7919e86).
 - Откат: PR из revert-коммита фазы в `main` или `git revert <merge-commit>`; GitHub Actions пересоберёт сайт за 1–2 минуты.
 
 ## Done
@@ -54,6 +55,7 @@ LastUpdated: 2026-11-01 16:40 MSK
 - [x] Phase 2: Source Serif 4 + Manrope вместо Playfair и системного шрифта, шкала advisory (body 18/19 px, 1.58), OG на шрифтах сайта
 - [x] Phase 3 (светлая тема) сделана и отменена владельцем: сайт только тёмный
 - [x] Phase 4: тесты Playwright + axe (16 проверок) и workflow Test в GitHub Actions
+- [x] Phase 5: проекты перенесены в Content Collection `src/content/projects.yaml` со схемой, HTML без изменений
 
 ## In Progress
 <!-- Нет задач в работе. -->
@@ -61,7 +63,8 @@ LastUpdated: 2026-11-01 16:40 MSK
 ## Next
 <!-- Canonical planning checklist. Plain items DO NOT auto-create Todoist subtasks. Todoist child boundaries require explicit owner/canonical-plan approval under One Plan = One Subtask. -->
 - [ ] Включить Enforce HTTPS в настройках Pages (владелец)
-- [ ] Content Collections без смены URL, затем RU/EN и первый мир `/arsenynn/` (только с реальным контентом)
+- [ ] Advisory step 5: RU/EN маршрутизация (`/en/`, hreflang)
+- [ ] Advisory step 6: первый мир `/arsenynn/` — нужны материалы владельца (фильмы или главы, обложки, тексты)
 - [ ] Получить чистый wordmark workflow@arsenynn
 - [ ] Проверить на iPhone и из РФ-сети
 

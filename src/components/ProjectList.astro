@@ -1,7 +1,8 @@
 ---
-import { sortedProjects } from '../data/projects';
+import { getProjects } from '../data/projects';
 import ProjectSection from './ProjectSection.astro';
+const projects = await getProjects();
 ---
 <section class="project-list container" aria-label="Проекты">
-  {sortedProjects.map((project) => <ProjectSection project={project} />)}
+  {projects.map((project) => <ProjectSection project={project} />)}
 </section>
