@@ -6,6 +6,16 @@ const { hero } = site;
 const line = toLocale(Astro.currentLocale) === 'en' ? site.en.heroLine : hero.line;
 ---
 <section class="hero container" aria-labelledby="hero-title">
+  {hero.portrait && (
+    <img
+      class="hero__portrait"
+      src={asset(hero.portrait.src)}
+      width={hero.portrait.width}
+      height={hero.portrait.height}
+      alt=""
+      decoding="async"
+    />
+  )}
   <h1 id="hero-title" class="hero__title">
     {hero.logo ? (
       <img
@@ -25,6 +35,7 @@ const line = toLocale(Astro.currentLocale) === 'en' ? site.en.heroLine : hero.li
 
 <style>
   .hero {
+    position: relative;
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
@@ -72,4 +83,26 @@ const line = toLocale(Astro.currentLocale) === 'en' ? site.en.heroLine : hero.li
     color: var(--color-text);
   }
 
+
+  /* Портрет: кадр, проступающий из темноты. Края растворяются в фоне. */
+  .hero__portrait {
+    align-self: flex-end;
+    width: min(60vw, 16rem);
+    height: auto;
+    margin-bottom: -2.5rem;
+    -webkit-mask-image: radial-gradient(closest-side, #000 55%, transparent 100%);
+    mask-image: radial-gradient(closest-side, #000 55%, transparent 100%);
+    pointer-events: none;
+    user-select: none;
+  }
+
+  @media (min-width: 64rem) {
+    .hero__portrait {
+      position: absolute;
+      right: var(--gutter);
+      bottom: 0;
+      width: 28rem;
+      margin: 0;
+    }
+  }
 </style>

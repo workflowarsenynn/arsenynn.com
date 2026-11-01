@@ -1,5 +1,5 @@
 # Logos
-LastUpdated: 2026-11-01 18:05 MSK
+LastUpdated: 2026-11-01 18:20 MSK
 
 Исходники логотипов и фото от владельца. Оригиналы лежат здесь, веб-версии в `public/logos/` и подключаются через `src/data/` (`site.hero.logo`, поле `logo` проекта).
 
@@ -20,7 +20,8 @@ LastUpdated: 2026-11-01 18:05 MSK
 | `party-protocol-party.png`, `party-protocol-poster.png` | надпись PARTY, постер на жёлтом | нет |
 | `bessmyslennost-ann.png` | портрет ann в кепке | нет |
 | `wwnn-pattern.jpg` | паттерн workflow со знаками WW/NN | нет |
-| `../photos/*` | портрет, эскизы annFlow | нет |
+| `../photos/portrait-red.webp` | главный логотип хаба: портрет в красном свете (оригинал `Main logo arsenynn.png` 7680 px на Drive) | `public/portrait.webp` 800 px: hero и OG image |
+| `../photos/annflow-sketches.jpg` | эскизы annFlow | нет |
 
 Не взяты в репозиторий из-за размера: апскейл портрета ann (35 MB), портрет `Main logo arsenynn.png` 7680 px (есть уменьшенная копия `../photos/portrait-red.webp`), фото эскизов (есть копия), скриншот паттерна workflow.
 

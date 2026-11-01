@@ -1,5 +1,5 @@
 # Implementation Plan
-LastUpdated: 2026-11-01 17:55 MSK
+LastUpdated: 2026-11-01 18:20 MSK
 
 ## Todoist Sync
 - Sync: manual
@@ -29,7 +29,7 @@ LastUpdated: 2026-11-01 17:55 MSK
 - PushPolicy: auto-safe
 
 ## Status
-- Stage: Phase 10 of The Moving Index (advisory), только тёмная тема, сайт на https://arsenynn.com
+- Stage: Phase 12 of The Moving Index (advisory), только тёмная тема, сайт на https://arsenynn.com
 - Направление задано `docs/Advisory/deep_research_and_implementation_direction.md`: оставить Astro и статику, развивать фазами, каждая фаза отдельным деплоем с точкой отката.
 - Phase 1: hero в одну строку, тексты по advisory, знаки в строке номера, текстовые ссылки вместо «пилюль», трёхколоночный desktop.
 
@@ -47,6 +47,8 @@ LastUpdated: 2026-11-01 17:55 MSK
 - `rollback/phase-7`: прод после Phase 7, до Phase 8 (9363dd8).
 - `rollback/phase-8`: прод после Phase 8, до Phase 9 (46887f4).
 - `rollback/phase-9`: прод после Phase 9, до Phase 10 (839ae2b), автосортировка по свежести.
+- `rollback/phase-10`: порядок владельца, NN ещё у «Бессмысленности» (715dac1).
+- `rollback/phase-11`: NN у @arsenynn, до портрета в hero (651388f).
 - Откат: PR из revert-коммита фазы в `main` или `git revert <merge-commit>`; GitHub Actions пересоберёт сайт за 1–2 минуты.
 
 ## Done
@@ -61,7 +63,7 @@ LastUpdated: 2026-11-01 17:55 MSK
 - [x] Phase 3 (светлая тема) сделана и отменена владельцем: сайт только тёмный
 - [x] Phase 4: тесты Playwright + axe (16 проверок) и workflow Test в GitHub Actions
 - [x] Phase 5: проекты перенесены в Content Collection `src/content/projects.yaml` со схемой, HTML без изменений
-- [x] Phase 6 + 10: сигнальный огонёк (● неделя, ○ 45 дней), пересборка каждые 6 часов; порядок проектов фиксирован владельцем
+- [x] Phase 6 + 10: сигнальный огонёк (● неделя, ○ 45 дней), пересборка каждые 6 часов; порядок проектов фиксирован владельцем; NN у @arsenynn; портрет-логотип хаба в hero и OG
 - [x] Phase 7: ссылки «Часть I/II» у @arsenynn, портфолио-хаб в header и блоке Work (сотрудничество и HR)
 - [x] Phase 8: английская версия /en/, hreflang и x-default, переключатель RU/EN, обязательные переводы в схеме
 - [x] Phase 9: workflow Telegram activity (бот, даты активности bessmyslennost и without-streaming), ждёт токен
