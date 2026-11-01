@@ -1,0 +1,49 @@
+---
+import type { Project } from '../data/types';
+type Props = { project: Project };
+const { project } = Astro.props;
+---
+{project.longDescription?.length ? (
+  <div class="project-details" id={`about-${project.id}`} data-about-panel>
+    <div class="project-details__inner">
+      {project.longDescription.map((p) => <p>{p}</p>)}
+    </div>
+  </div>
+) : null}
+
+<style>
+  .project-details {
+    display: grid;
+    grid-template-rows: 1fr;
+    opacity: 1;
+  }
+
+  /* Класс js ставит inline-скрипт в head: без JS About просто открыт. */
+  :global(html.js) .project-details:not([data-open]) {
+    grid-template-rows: 0fr;
+    opacity: 0;
+    visibility: hidden;
+  }
+
+  :global(html.about-ready) .project-details {
+    transition:
+      grid-template-rows var(--duration) ease,
+      opacity var(--duration) ease,
+      visibility var(--duration);
+  }
+
+  .project-details__inner {
+    overflow: hidden;
+    min-height: 0;
+    max-width: 38rem;
+    color: var(--color-muted);
+  }
+
+  .project-details__inner p {
+    margin-top: var(--space-2);
+  }
+
+  .project-details__inner p:last-child {
+    padding-bottom: var(--space-1);
+  }
+</style>

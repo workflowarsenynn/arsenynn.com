@@ -1,0 +1,63 @@
+---
+import type { Project } from '../data/types';
+import ProjectActions from './ProjectActions.astro';
+import ProjectDetails from './ProjectDetails.astro';
+
+type Props = { project: Project };
+const { project } = Astro.props;
+const number = String(project.order).padStart(2, '0');
+const headingId = `project-${project.id}`;
+---
+<article class="project" id={project.slug} aria-labelledby={headingId}>
+  <p class="project__number meta" aria-hidden="true">{number}</p>
+  <div class="project__body">
+    <h2 class="project__title" id={headingId}>{project.title}</h2>
+    <p class="project__tags meta">{project.tags.join(' / ')}</p>
+    <p class="project__short">{project.shortDescription}</p>
+    <ProjectActions project={project} />
+    <ProjectDetails project={project} />
+  </div>
+</article>
+
+<style>
+  .project {
+    padding-block: var(--space-4);
+    border-top: 1px solid var(--color-line);
+  }
+
+  .project__number {
+    margin-bottom: var(--space-2);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .project__title {
+    font-family: var(--font-display);
+    font-size: var(--text-title);
+    font-weight: 600;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+  }
+
+  .project__tags {
+    margin-top: var(--space-1);
+  }
+
+  .project__short {
+    margin-top: var(--space-2);
+    max-width: 38rem;
+  }
+
+  @media (min-width: 48rem) {
+    .project {
+      display: grid;
+      grid-template-columns: 8rem minmax(0, 1fr);
+      column-gap: var(--space-3);
+      padding-block: var(--space-5);
+    }
+
+    .project__number {
+      margin: 0;
+      padding-top: 0.6em;
+    }
+  }
+</style>

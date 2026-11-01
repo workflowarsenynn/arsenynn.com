@@ -1,0 +1,31 @@
+---
+import { site } from '../data/site';
+import ActionLink from './ActionLink.astro';
+---
+<header class="site-header container">
+  <a class="site-header__name" href="/">{site.name}</a>
+  <ActionLink label={site.header.link.label} url={site.header.link.url} />
+</header>
+
+<style>
+  .site-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-2);
+    padding-top: max(var(--space-1), env(safe-area-inset-top));
+    font-size: var(--text-meta);
+  }
+
+  .site-header__name {
+    display: inline-flex;
+    align-items: center;
+    min-height: var(--tap);
+    text-decoration: none;
+    font-weight: 600;
+  }
+
+  .site-header :global(.action) {
+    color: var(--color-muted);
+  }
+</style>
