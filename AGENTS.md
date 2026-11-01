@@ -1,5 +1,5 @@
 # AGENTS.md
-LastUpdated: 2026-11-01 12:50 MSK
+LastUpdated: 2026-11-01 16:40 MSK
 > Этот файл читается AI Coding Agent перед началом работы.
 
 ## Project
@@ -29,6 +29,7 @@ LastUpdated: 2026-11-01 12:50 MSK
 - `npm install` — установить зависимости
 - `npm run dev` — локальный сервер
 - `npm run build` — `astro check` и статическая сборка в `dist/`
+- `npm test` — Playwright + axe: 10 ширин, ссылки без About, About с клавиатуры, без JS, reduced motion, 404, нет serious/critical нарушений axe
 - `NODE_PATH=$(npm root -g) node scripts/render-images.mjs` — перегенерировать `public/og.png` и `public/apple-touch-icon.png` (нужен Playwright в окружении)
 - `python3 scripts/trace-logo.py <in> public/logos/<slug>.svg '#hex'` — векторизовать одноцветный логотип (нужен `pip install potracer`)
 
