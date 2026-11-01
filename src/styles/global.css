@@ -64,34 +64,42 @@ a {
 .action {
   display: inline-flex;
   align-items: center;
-  justify-content: center;
   gap: 0.4em;
   min-height: var(--tap);
   min-width: var(--tap);
+  justify-content: flex-start;
   font: inherit;
   color: var(--color-text);
   text-decoration: none;
   transition: border-color var(--duration), color var(--duration), background-color var(--duration);
 }
 
+/* Ссылка проекта: текст и тонкая линия снизу, зона нажатия 48 px. */
 .action--button {
-  padding-inline: 1.25rem;
-  border: 1px solid var(--color-line-strong);
-  border-radius: var(--radius);
+  position: relative;
 }
 
-.action--button:hover {
-  border-color: var(--color-text);
+.action--button::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0.7rem;
+  height: 1px;
+  background: var(--color-line-strong);
+  transition: background-color var(--duration);
+}
+
+.action--button:hover::after {
+  background: currentColor;
 }
 
 .action--button.action--primary {
   color: var(--color-accent);
-  border-color: var(--color-accent);
 }
 
-.action--button.action--primary:hover {
-  background-color: var(--color-accent);
-  color: var(--color-bg);
+.action--button.action--primary::after {
+  background: currentColor;
 }
 
 .action--text {

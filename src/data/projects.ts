@@ -1,7 +1,7 @@
 import type { Project } from './types';
 
 // Единственный источник проектов, текстов и внешних ссылок.
-// Тексты v2 от 2026-11-01, ждут утверждения владельца.
+// Короткие тексты v3 по advisory (docs/Advisory/), About ждут утверждения владельца.
 // Проверка ссылок и открытые вопросы: docs/project_registry.md.
 
 const PORTFOLIO_VIDEO = 'https://portfolio.arsenynn.com/video-production/';
@@ -13,7 +13,7 @@ export const projects: Project[] = [
     slug: 'arsenynn',
     title: '@arsenynn',
     tags: ['concept', 'chapters', 'identity'],
-    shortDescription: 'Фильмы, которые складываются в главы. Отсюда растёт всё остальное.',
+    shortDescription: 'Фильмы, главы и вещи, которые со временем складываются во что-то большее.',
     longDescription: [
       'Не блог и не портфолио. Места, люди, мысли и кадры собираются в главы медленно, как книга.',
       'Каждая глава это попытка понять что-то одно.',
@@ -28,7 +28,7 @@ export const projects: Project[] = [
     slug: 'workflow',
     title: 'workflow@arsenynn',
     tags: ['production', 'promo', 'events', 'commercial video'],
-    shortDescription: 'Кино на заказ: для брендов, событий и людей, которым есть что показать.',
+    shortDescription: 'Видео на заказ — от первой мысли до последнего кадра.',
     longDescription: [
       'Сценарий, съёмка, монтаж, цвет. Промо, event-видео, ролики для брендов.',
       'Один взгляд на всю историю, от задачи до последнего кадра.',
@@ -46,7 +46,7 @@ export const projects: Project[] = [
     slug: 'bessmyslennost',
     title: 'Бессмысленность и скоротечность',
     tags: ['philosophy', 'impermanence', 'dialogue', 'memory'],
-    shortDescription: 'Разговор, в котором ничего не исчезает. Внутри живёт ann.',
+    shortDescription: 'Разговор и память. Некоторые вещи возвращаются позже.',
     longDescription: [
       'Канал как среда. Бот ann участвует в разговоре, помнит контекст и возвращает старые записи обратно в поток.',
       'Некоторые вещи становятся понятны только через год. Здесь им дают вернуться.',
@@ -62,7 +62,7 @@ export const projects: Project[] = [
     slug: 'without-streaming',
     title: 'Without Streaming',
     tags: ['radio', 'music', 'archives', 'fragments'],
-    shortDescription: 'Радио без алгоритмов. Эфир, который идёт, даже когда его никто не слушает.',
+    shortDescription: 'Личное радио. Эфир уже идёт.',
     longDescription: [
       'Личная медиатека, превращённая в эфир: музыка, архивы и визуальные фрагменты в одном потоке.',
       'Нажмите Listen. Эфир уже идёт.',
@@ -81,7 +81,7 @@ export const projects: Project[] = [
     slug: 'annflow',
     title: 'annFlow',
     tags: ['automation', 'AI', 'systems', 'agents', 'workflows'],
-    shortDescription: 'Машинное отделение. Агенты и системы, на которых держится всё остальное.',
+    shortDescription: 'Системы, агенты и автоматизация для вещей, которые должны работать.',
     longDescription: [
       'Операционная сторона @arsenynn: LLM, агенты, автоматизация macOS, собственные сервисы.',
       'Эксперименты вокруг реальных задач, а не обзоры технологий.',
@@ -97,7 +97,7 @@ export const projects: Project[] = [
     slug: 'party-protocol',
     title: 'Party Protocol',
     tags: ['VPN', 'privacy', 'secure access'],
-    shortDescription: 'Свой VPN на своей инфраструктуре. Тихо, быстро, без посредников.',
+    shortDescription: 'Независимый доступ через собственную инфраструктуру.',
     longDescription: ['Независимый сервис со своими серверами, сайтом и Telegram-ботом.'],
     status: 'active',
     links: [
@@ -113,7 +113,7 @@ export const projects: Project[] = [
     slug: 'travel-log',
     title: 'Travel Log',
     tags: ['places', 'stories', 'memory', 'literature'],
-    shortDescription: 'Места, книги о них и то, что остаётся после дороги.',
+    shortDescription: 'Места, истории и то, что остаётся после дороги.',
     status: 'coming-soon',
     statusLabel: 'Coming soon',
     links: [],

@@ -13,9 +13,8 @@ export const site = {
   hero: {
     title: '@arsenynn',
     logo: { src: '/logos/arsenynn.svg', width: 1235, height: 491 },
-    descriptor: 'projects / channels / things',
-    phrase: 'an index of parallel things',
-    intro: 'Один автор, семь параллельных линий: кино, заказное видео, разговор, эфир, системы, приватность и дорога.',
+    // Одна строка вместо трёх слоёв объяснения (advisory: reduce explanation, increase identity).
+    line: 'семь параллельных вещей одного автора',
   },
 
   header: {

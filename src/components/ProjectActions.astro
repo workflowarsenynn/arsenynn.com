@@ -33,8 +33,16 @@ const detailsId = `about-${project.id}`;
     display: flex;
     flex-wrap: wrap;
     align-items: center;
-    gap: var(--space-1) 0.75rem;
-    margin-top: var(--space-3);
+    gap: 0 var(--space-3);
+    margin-top: var(--space-2);
+  }
+
+  @media (min-width: 64rem) {
+    .project-actions {
+      flex-direction: column;
+      align-items: flex-start;
+      margin-top: 0;
+    }
   }
 
   .project-actions__status {
@@ -44,7 +52,7 @@ const detailsId = `about-${project.id}`;
   }
 
   .project-actions__about {
-    padding-inline: 0.5rem;
+    padding-inline: 0;
     background: none;
     border: 0;
     cursor: pointer;

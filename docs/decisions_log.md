@@ -1,9 +1,44 @@
 # Decisions Log
-LastUpdated: 2026-11-01 13:00 MSK
+LastUpdated: 2026-11-01 15:30 MSK
 
 Этот файл хранит историю проекта: важные решения, изменения подхода, причины архитектурных поворотов, rejected options, runtime findings и выводы, которые помогают понять, как проект развивался.
 
 Записи идут в обратном хронологическом порядке: новые сверху.
+
+---
+
+## 2026-11-01 — Advisory принят, Phase 1 The Moving Index
+
+**Type:** decision
+**Project:** arsenynn.com
+**Phase:** Advisory Phase 1
+**Status:** accepted
+**Related plan:** `docs/implementation_plan.md`
+**Related files:** `docs/Advisory/deep_research_and_implementation_direction.md`, `src/components/ProjectSection.astro`, `src/components/Hero.astro`, `src/styles/global.css`, `src/data/projects.ts`
+
+### Context
+Deep research владельца предложил направление The Moving Index: строгий редакционный каркас, внутри которого иногда случаются кинематографические события. Владельцу нравится текущий сайт, он просит изменить тексты, место логотипов, проверить ссылки и дальше следовать advisory, с возможностью отката и сразу на проде.
+
+### Decision
+- Работа фазами, по одной архитектурной смене на деплой. Перед фазой создаётся ветка `rollback/phase-N`: git-теги прокси облачной сессии не пропускает.
+- Hero: wordmark и одна строка «семь параллельных вещей одного автора» вместо трёх слоёв объяснения.
+- Короткие тексты проектов взяты из advisory (Final voice examples, RU).
+- Знаки проектов перенесены в строку номера: на телефоне номер слева и знак справа, на планшете и desktop знак под номером в левой колонке. Логотип annFlow остаётся вместо названия.
+- Ссылки: текст и тонкая линия снизу вместо «пилюль» с рамкой 999px, зона нажатия 48 px сохранена, primary красная.
+- Desktop от 1024 px: номер | название и текст | действия (advisory grid). Тишина между проектами 96 px на desktop.
+
+### Why
+Advisory: hero объяснял таксономию трижды; пилюли читаются как продуктовый UI, а не авторский индекс; ритм кино идёт от пауз 96–144 px, а не от эффектов. Шрифты меняются отдельной фазой, чтобы владелец оценивал изменения по одному.
+
+### Alternatives / rejected options
+- Сразу Source Serif 4 + Manrope и светлая тема: advisory запрещает менять layout, шрифты и цвета одним деплоем.
+- Next.js, CMS, анимационные библиотеки: advisory прямо отвергает.
+
+### Consequences
+OG image обновлён под новую строку. About пока остаётся, advisory предлагает убрать его, когда у мира появится настоящий контент.
+
+### Source
+Advisory `docs/Advisory/deep_research_and_implementation_direction.md`, сообщение владельца 2026-11-01.
 
 ---
 
