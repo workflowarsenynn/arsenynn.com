@@ -1,5 +1,5 @@
 # Deploy Runbook
-LastUpdated: 2026-11-01 13:00 MSK
+LastUpdated: 2026-11-01 13:05 MSK
 
 Статус: сайт собран, но не опубликован, в зоне `arsenynn.com` нет записей для корня домена. Шаги ниже ещё не выполнялись, каждый требует подтверждения владельца.
 
@@ -47,6 +47,7 @@ LastUpdated: 2026-11-01 13:00 MSK
 1. Смержить ветку с MVP в `main`.
 2. Сделать репозиторий публичным: Settings → General → Danger Zone → Change visibility.
 3. Settings → Pages → Source: `GitHub Actions`.
+   Workflow берёт `base_path` из `actions/configure-pages` и передаёт в сборку как `PAGES_BASE`: без своего домена сайт открывается на `https://workflowarsenynn.github.io/arsenynn.com/`, с доменом на корне.
 4. Запустить workflow `Deploy to GitHub Pages` (или push в `main`) и проверить временный адрес Pages.
 5. Settings → Pages → Custom domain: `arsenynn.com`. Файл `public/CNAME` уже в сборке.
 6. Создать DNS-записи из таблицы выше, DNS only.

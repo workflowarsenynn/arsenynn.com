@@ -1,5 +1,6 @@
 ---
 import { site } from '../data/site';
+import { asset } from '../data/asset';
 const { hero } = site;
 ---
 <section class="hero container" aria-labelledby="hero-title">
@@ -7,7 +8,7 @@ const { hero } = site;
     {hero.logo ? (
       <img
         class="hero__logo"
-        src={hero.logo.src}
+        src={asset(hero.logo.src)}
         width={hero.logo.width}
         height={hero.logo.height}
         alt={hero.title}

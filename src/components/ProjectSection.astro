@@ -1,5 +1,6 @@
 ---
 import type { Project } from '../data/types';
+import { asset } from '../data/asset';
 import ProjectActions from './ProjectActions.astro';
 import ProjectDetails from './ProjectDetails.astro';
 
@@ -17,7 +18,7 @@ const titleParts = project.title.split(/(?=@)/);
       {project.logo ? (
         <img
           class="project__logo"
-          src={project.logo.src}
+          src={asset(project.logo.src)}
           width={project.logo.width}
           height={project.logo.height}
           alt={project.title}
@@ -29,7 +30,7 @@ const titleParts = project.title.split(/(?=@)/);
           {project.mark && (
             <img
               class="project__mark"
-              src={project.mark.src}
+              src={asset(project.mark.src)}
               width={project.mark.width}
               height={project.mark.height}
               alt=""

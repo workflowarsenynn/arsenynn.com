@@ -1,5 +1,6 @@
 ---
 import { site } from '../data/site';
+import { asset } from '../data/asset';
 import '@fontsource-variable/playfair-display/wght.css';
 import '../styles/tokens.css';
 import '../styles/global.css';
@@ -23,8 +24,8 @@ const jsonLd = JSON.stringify({
     <meta name="description" content={site.description} />
     <link rel="canonical" href={canonical} />
     <meta name="theme-color" content={site.themeColor} />
-    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="icon" href={asset('/favicon.svg')} type="image/svg+xml" />
+    <link rel="apple-touch-icon" href={asset('/apple-touch-icon.png')} />
 
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content={site.name} />
