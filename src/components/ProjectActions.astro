@@ -1,0 +1,64 @@
+---
+import type { Project } from '../data/types';
+import ActionLink from './ActionLink.astro';
+
+type Props = { project: Project };
+const { project } = Astro.props;
+const hasAbout = Boolean(project.longDescription?.length);
+const detailsId = `about-${project.id}`;
+---
+<div class="project-actions">
+  {project.links.map((link) => (
+    <ActionLink label={link.label} url={link.url} primary={link.primary} />
+  ))}
+  {project.links.length === 0 && project.statusLabel && (
+    <span class="project-actions__status meta">{project.statusLabel}</span>
+  )}
+  {hasAbout && (
+    <button
+      class="action project-actions__about"
+      type="button"
+      aria-expanded="true"
+      aria-controls={detailsId}
+      data-about-toggle
+    >
+      About<span class="project-actions__sign" aria-hidden="true" data-sign>−</span>
+      <span class="visually-hidden">: {project.title}</span>
+    </button>
+  )}
+</div>
+
+<style>
+  .project-actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-1) 0.75rem;
+    margin-top: var(--space-3);
+  }
+
+  .project-actions__status {
+    display: inline-flex;
+    align-items: center;
+    min-height: var(--tap);
+  }
+
+  .project-actions__about {
+    padding-inline: 0.5rem;
+    background: none;
+    border: 0;
+    cursor: pointer;
+    color: var(--color-muted);
+    text-decoration: none;
+  }
+
+  .project-actions__about:hover {
+    color: var(--color-text);
+  }
+
+  .project-actions__sign {
+    display: inline-block;
+    width: 1ch;
+    text-align: center;
+  }
+</style>

@@ -1,0 +1,22 @@
+---
+import { site } from '../data/site';
+import ActionLink from './ActionLink.astro';
+// Имя автора не дублируется: wordmark @arsenynn стоит в hero сразу ниже.
+---
+<header class="site-header container">
+  <ActionLink label={site.header.link.label} url={site.header.link.url} variant="text" />
+</header>
+
+<style>
+  .site-header {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding-top: max(var(--space-1), env(safe-area-inset-top));
+    font-size: var(--text-meta);
+  }
+
+  .site-header :global(.action) {
+    color: var(--color-muted);
+  }
+</style>

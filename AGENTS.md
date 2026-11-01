@@ -1,5 +1,5 @@
 # AGENTS.md
-LastUpdated: 2026-11-01 11:10 MSK
+LastUpdated: 2026-11-01 12:50 MSK
 > Этот файл читается AI Coding Agent перед началом работы.
 
 ## Project
@@ -10,12 +10,14 @@ LastUpdated: 2026-11-01 11:10 MSK
 - Без UI-фреймворка в браузере, без сторонних скриптов и трекеров
 - GitHub Pages, DNS в Cloudflare
 
-Код ещё не создан, целевая структура описана в `docs/architecture.md`.
+Структура кода описана в `docs/architecture.md`.
 
 ## Repository structure
 - `docs/brief.md` — ТЗ владельца, главный источник требований
 - `docs/implementation_plan.md` — текущий статус и следующие шаги
 - `docs/architecture.md` — технические решения
+- `docs/design_research.md` — ресерч и визуальное направление v2
+- `docs/references/` — макеты владельца: брать структуру, не внешний вид
 - `docs/project_registry.md` — ссылки проектов и открытые вопросы
 - `docs/deploy.md` — публикация и DNS
 - `docs/cloud_workflow.md` — работа в cloud-сессиях
@@ -23,10 +25,11 @@ LastUpdated: 2026-11-01 11:10 MSK
 - `assets/logos/` — исходники логотипов
 
 ## Commands
-Появятся вместе с Astro-проектом, тогда этот раздел нужно обновить:
 - `npm install` — установить зависимости
 - `npm run dev` — локальный сервер
-- `npm run build` — статическая сборка в `dist/`
+- `npm run build` — `astro check` и статическая сборка в `dist/`
+- `NODE_PATH=$(npm root -g) node scripts/render-images.mjs` — перегенерировать `public/og.png` и `public/apple-touch-icon.png` (нужен Playwright в окружении)
+- `python3 scripts/trace-logo.py <in> public/logos/<slug>.svg '#hex'` — векторизовать одноцветный логотип (нужен `pip install potracer`)
 
 Проверка документации:
 - `python3 "$HOME/Documents/Projects Standarts/scripts/check_docs_drift.py" .` — только на Mac владельца

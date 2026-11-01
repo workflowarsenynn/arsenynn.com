@@ -1,0 +1,16 @@
+---
+import { site } from '../data/site';
+// Год вычисляется при сборке.
+const year = new Date().getFullYear();
+---
+<footer class="site-footer container meta">
+  <p class="site-footer__inner">{site.footer.name} <span>{year}</span></p>
+</footer>
+
+<style>
+  .site-footer__inner {
+    padding-top: var(--space-3);
+    padding-bottom: max(var(--space-4), env(safe-area-inset-bottom));
+    border-top: 1px solid var(--color-line);
+  }
+</style>

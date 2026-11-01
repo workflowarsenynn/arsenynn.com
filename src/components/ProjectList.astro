@@ -1,0 +1,7 @@
+---
+import { sortedProjects } from '../data/projects';
+import ProjectSection from './ProjectSection.astro';
+---
+<section class="project-list container" aria-label="Проекты">
+  {sortedProjects.map((project) => <ProjectSection project={project} />)}
+</section>

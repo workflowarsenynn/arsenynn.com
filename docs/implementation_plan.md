@@ -1,5 +1,5 @@
 # Implementation Plan
-LastUpdated: 2026-11-01 11:10 MSK
+LastUpdated: 2026-11-01 13:00 MSK
 
 ## Todoist Sync
 - Sync: manual
@@ -29,44 +29,49 @@ LastUpdated: 2026-11-01 11:10 MSK
 - PushPolicy: auto-safe
 
 ## Status
-- Stage: Inception (документация готова, код не начат)
-- ТЗ владельца сохранено в `docs/brief.md`, стек и хостинг выбраны, сайт не опубликован.
-- Реализацию ждут логотипы, ссылка на «Бессмысленность и скоротечность» и решение по модели публикации.
+- Stage: MVP (визуальное направление v2, проверено локально, не опубликовано)
+- Журнальный индекс семи проектов: засечки в заголовках, теги через красную точку, ссылки кнопками. Ресерч в `docs/design_research.md`.
+- Логотипы и знаки подключены, тексты v2. Превью: https://claude.ai/artifact/CHuWcW8SaVZWaBCBYGxmQ1. Публикация на домене ждёт владельца.
 
 ## Done
 - [x] Собраны и проверены ссылки проектов, записаны в `docs/project_registry.md`
 - [x] Сохранено ТЗ и создана документация по Project Standards
-- [x] Создан приватный репозиторий `workflowarsenynn/arsenynn.com`
+- [x] Создан репозиторий `workflowarsenynn/arsenynn.com`
+- [x] Получены решения владельца: публичный репозиторий, продление `arsenynn.quest`, Portfolio → `/video-production/`
+- [x] Создан Astro-проект, данные в `src/data/`, токены в `src/styles/tokens.css`
+- [x] Собраны секции страницы, About с клавиатурой, reduced motion и работой без JS
+- [x] Добавлены SEO, Open Graph, favicon, apple-touch-icon, OG image и 404
+- [x] Добавлен workflow публикации на GitHub Pages
+- [x] Добавлена ссылка на «Бессмысленность и скоротечность»
+- [x] Проведён дизайн-ресерч, внедрено направление v2
+- [x] Подключены логотипы `@arsenynn` и annFlow, OG image с wordmark
+- [x] Подключены знаки NN, Ws и маска, тексты v2, опубликовано превью
+- [x] Пройден QA в Chromium на 320–1440 px
 
 ## In Progress
 <!-- Нет задач в работе. -->
 
 ## Next
 <!-- Canonical planning checklist. Plain items DO NOT auto-create Todoist subtasks. Todoist child boundaries require explicit owner/canonical-plan approval under One Plan = One Subtask. -->
-- [ ] Получить логотипы от владельца в `assets/logos/`
-- [ ] Получить решения по вопросам из `docs/project_registry.md`
-- [ ] Выбрать модель публикации (см. Risks)
-- [ ] Создать Astro-проект и `src/data/` по `docs/architecture.md`
-- [ ] Собрать секции страницы без финального дизайна
-- [ ] Реализовать About с клавиатурой и reduced motion
-- [ ] Написать тексты About и утвердить у владельца
-- [ ] Подобрать типографику и отступы на 390 px
-- [ ] Адаптировать desktop
-- [ ] Добавить SEO, favicon и OG image
-- [ ] Пройти QA по `docs/brief.md` разделы 47–49
-- [ ] Опубликовать на GitHub Pages и подключить DNS с подтверждения владельца
-- [ ] Проверить сайт с телефона из РФ и превью в Telegram
+- [ ] Получить чистый wordmark workflow@arsenynn
+- [ ] Утвердить у владельца тексты v2 и вид по превью
+- [ ] Решить, нужен ли личный Telegram или email в блоке Work
+- [ ] Смержить ветку в `main`
+- [ ] Сделать репозиторий публичным и включить Pages с источником GitHub Actions (владелец)
+- [ ] Подключить DNS `arsenynn.com` по `docs/deploy.md` (с подтверждения владельца)
+- [ ] Проверить в Safari iOS, с телефона из РФ и превью ссылки в Telegram
 
 ## Risks
-- `arsenynn.quest` истекает 2026-11-15 по данным Portfolio, на нём ссылки Listen и Website: без продления или переноса две главные кнопки перестанут работать.
-- Модель публикации не выбрана. Actions в приватных репозиториях этого аккаунта не запускаются из-за billing: при приватном коде cloud-сессия сможет сделать PR, но публиковать придётся с Mac.
+- `arsenynn.quest` истекает 2026-11-15: владелец продлевает домен, до продления кнопки Listen и Website под угрозой.
+- Пока репозиторий приватный, workflow публикации не запустится из-за billing.
 - Прокси Cloudflare в РФ обрезает ответы примерно на 16 KB: запись `arsenynn.com` должна оставаться DNS only.
-- У «Бессмысленности и скоротечности» нет публичной ссылки: приватный чат по README проекта `ann_bot_2.0`.
-- Проверка доступности выполнялась не из РФ-сети: статусы в реестре это не подтверждают доступ из РФ.
+- Safari iOS не проверялся: в cloud-контейнере его нет, нужна проверка на телефоне.
+- Проверка доступности ссылок выполнялась не из РФ-сети.
 
 ## Todoist Intake
 <!-- External Todoist active subtasks/descriptions that require review before becoming implementation work. -->
 <!-- Empty unless Todoist intake found new unresolved inputs or intake could not be completed. -->
+- Warning 2026-11-01 (повторно 13:00): cloud-сессия без доступа к Todoist MCP и `td` CLI, intake не выполнен. Статус задачи `task:6hvH5GRVH9X75cCX` обновить из локальной сессии.
 
 ---
 

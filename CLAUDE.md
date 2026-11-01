@@ -1,5 +1,5 @@
 # CLAUDE.md
-LastUpdated: 2026-11-01 11:10 MSK
+LastUpdated: 2026-11-01 12:50 MSK
 
 ## Project
 Личный сайт arsenynn.com: mobile-first индекс семи проектов @arsenynn на одной странице, для людей, открывающих ссылку с телефона.
@@ -9,18 +9,21 @@ LastUpdated: 2026-11-01 11:10 MSK
 - TypeScript для данных, обычный CSS с токенами
 - GitHub Pages, DNS в Cloudflare через `cf` CLI
 
-Код ещё не создан, целевая структура в `docs/architecture.md`.
+MVP собран, структура в `docs/architecture.md`.
 
 ## Repository structure
 - `docs/` — вся документация, начинать с `docs/implementation_plan.md`
 - `assets/logos/` — исходники логотипов
-- `src/data/` — будущий единственный источник контента и ссылок
+- `src/data/` — единственный источник контента и ссылок
+- `src/components/`, `src/styles/` — разметка и design tokens
 
 ## Commands
-Появятся вместе с Astro-проектом:
+- установка: `npm install`
 - запуск: `npm run dev`
-- сборка: `npm run build`
-- тесты: пока нет, проверка идёт через сборку и браузер
+- сборка с проверкой типов: `npm run build` (результат в `dist/`)
+- OG image и apple-touch-icon: `NODE_PATH=$(npm root -g) node scripts/render-images.mjs`
+- векторизовать одноцветный логотип: `python3 scripts/trace-logo.py <in> public/logos/<slug>.svg '#hex'`
+- тестов нет, проверка идёт через сборку и браузер
 
 ## Code style
 - Контент и URL только в `src/data/`.
