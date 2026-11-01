@@ -1,0 +1,34 @@
+# Local AI/runtime state
+.ai_state/
+.todoist_sync_state.yaml
+.claude/settings.local.json
+
+# Environment / secrets
+.env
+.env.*
+*.pem
+*.key
+*.p12
+*.pfx
+secrets/
+credentials/
+credentials.json
+token.json
+
+# OS/editor noise
+.DS_Store
+Thumbs.db
+Icon?
+.vscode/
+.idea/
+
+# Logs/cache
+*.log
+.cache/
+tmp/
+temp/
+
+# Build
+node_modules/
+dist/
+.astro/
