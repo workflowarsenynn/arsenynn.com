@@ -9,6 +9,10 @@ const asset = z.object({
   src: z.string().startsWith('/'),
   width: z.number().int().positive(),
   height: z.number().int().positive(),
+  /** Множитель размера знака (фото-знаки крупнее штриховых, иначе лицо не читается). */
+  scale: z.number().positive().optional(),
+  /** Фото: края растворяются в фоне, как портрет в hero. */
+  photo: z.boolean().optional(),
 });
 
 const projects = defineCollection({

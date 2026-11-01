@@ -1,5 +1,5 @@
 # Logos
-LastUpdated: 2026-11-01 19:50 MSK
+LastUpdated: 2026-11-01 20:25 MSK
 
 Исходники логотипов и фото от владельца. Оригиналы лежат здесь, веб-версии в `public/logos/` и подключаются через `src/data/` (`site.hero.logo`, поле `logo` проекта).
 
@@ -18,7 +18,8 @@ LastUpdated: 2026-11-01 19:50 MSK
 | `without-streaming.png`, `without-streaming-circle.png` | монограмма Ws | `public/logos/without-streaming.svg`: знак строки 04 |
 | `party-protocol-mask.png` | маска | `public/logos/party-protocol.svg`: знак строки 06, белым |
 | `party-protocol-party.png`, `party-protocol-poster.png` | надпись PARTY, постер на жёлтом | нет |
-| `bessmyslennost-ann.png` | портрет ann в кепке | нет |
+| `bessmyslennost-ann.png` | портрет ann в кепке (вырезка) | нет |
+| Drive `ава_upscayl_4x` | ann в кепке на тёмном фоне — логотип «Бессмысленности» (владелец 2026-11-01) | `public/logos/bessmyslennost.webp` 320 px: фото-знак строки проекта |
 | `wwnn.webp` | знак WW/NN красным (от владельца 2026-11-01) | `public/logos/workflow.svg`: знак workflow@arsenynn |
 | `wwnn-pattern.jpg` | паттерн workflow со знаками WW/NN | нет |
 | `../photos/portrait-red.webp` | главный логотип хаба: портрет в красном свете (оригинал `Main logo arsenynn.png` 7680 px на Drive) | `public/portrait.webp` 800 px: hero и OG image |
