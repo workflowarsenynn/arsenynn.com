@@ -57,6 +57,10 @@ const projects = defineCollection({
                 num: z.string().min(1),
                 title: z.string().min(1),
                 duration: z.string().optional(),
+                /** Кадр-обложка 16:9 из public/thumbs/. */
+                thumb: z.string().startsWith('/').optional(),
+                /** ID видео на YouTube (канал @arsenynn). */
+                youtube: z.string().regex(/^[\w-]{11}$/).optional(),
                 url: z.url().refine((u) => u.startsWith('https://'), 'Ссылка должна начинаться с https://'),
               }),
             ),

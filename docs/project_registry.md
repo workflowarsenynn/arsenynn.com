@@ -1,5 +1,5 @@
 # Project Registry
-LastUpdated: 2026-11-01 19:35 MSK
+LastUpdated: 2026-11-01 20:15 MSK
 
 Журнал проверки ссылок и открытых вопросов. Источник ссылок для сайта: `src/data/projects.ts` и `src/data/site.ts`.
 
@@ -27,7 +27,7 @@ LastUpdated: 2026-11-01 19:35 MSK
 - **Тексты v2.** Короткие описания и About переписаны 2026-11-01 в `src/data/projects.ts`, ждут утверждения владельца.
 - **Контакт в блоке Work.** Сейчас в блоке Work стоят Portfolio и Telegram-канал workflow. Личный Telegram `https://t.me/arsenynnn` (три n) и email не добавлены: ждут подтверждения владельца.
 
-- **YouTube для частей @arsenynn.** Нужны ссылки на плейлисты частей (или на видео).
+- **YouTube 0.2 и 1.0.** Главы 0.2 «I can talk to you about the atmosphere» и 1.0 «When will you finally grow up?» не найдены на youtube.com/@arsenynn: без кадра. Плейлистов частей нет, строка YouTube ведёт на канал.
 
 ## Resolved 2026-11-01
 
