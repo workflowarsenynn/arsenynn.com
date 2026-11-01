@@ -8,7 +8,7 @@ const { work } = site;
     <h2 class="work__title" id="work-title">{work.title}</h2>
     <p class="meta">{work.descriptor}</p>
     <p class="work__text">{work.text}</p>
-    <div class="work__actions">
+    <div class="work__actions action-list">
       {work.links.map((link) => <ActionLink label={link.label} url={link.url} primary={'primary' in link && link.primary} />)}
     </div>
   </div>
@@ -36,10 +36,7 @@ const { work } = site;
   }
 
   .work__actions {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0 var(--space-3);
-    margin-top: var(--space-2);
+    margin-top: var(--space-3);
   }
 
   @media (min-width: 48rem) {
