@@ -1,6 +1,7 @@
 ---
 import type { ProjectView } from '../data/projects';
-import { relativeRu } from '../lib/activity';
+import { relative } from '../lib/activity';
+import { toLocale, ui } from '../lib/i18n';
 import { asset } from '../data/asset';
 import ProjectActions from './ProjectActions.astro';
 import ProjectDetails from './ProjectDetails.astro';
@@ -9,17 +10,19 @@ type Props = { project: ProjectView; position: number };
 const { project, position } = Astro.props;
 // Номер — место в индексе сейчас: свежие проекты поднимаются наверх.
 const number = String(position).padStart(2, '0');
-const when = project.lastActivity ? relativeRu(project.lastActivity) : undefined;
+const locale = toLocale(Astro.currentLocale);
+const t = ui[locale];
+const when = project.lastActivity ? relative(project.lastActivity, locale) : undefined;
 const headingId = `project-${project.id}`;
 // Разрешить перенос перед внутренним «@» (workflow@arsenynn), а не посреди слова.
 const titleParts = project.title.split(/(?=@)/);
 ---
 <article class="project" id={project.slug} aria-labelledby={headingId}>
   <div class="project__meta">
-    <p class="project__number" title={when ? `обновлено ${when}` : undefined}>
+    <p class="project__number" title={when ? `${t.updated} ${when}` : undefined}>
       <span class:list={['signal', `signal--${project.signal}`]} aria-hidden="true"></span>
       <span class="project__index" aria-hidden="true">{number}</span>
-      {when && <span class="visually-hidden">Обновлено {when}</span>}
+      {when && <span class="visually-hidden">{t.updated} {when}</span>}
     </p>
     {project.mark && (
       <img
@@ -50,7 +53,7 @@ const titleParts = project.title.split(/(?=@)/);
         titleParts.map((part, i) => (i > 0 ? <><wbr />{part}</> : part))
       )}
     </h2>
-    <ul class="project__tags meta" aria-label="Темы">
+    <ul class="project__tags meta" aria-label={t.tagsLabel}>
       {project.tags.map((tag) => <li>{tag}</li>)}
     </ul>
     <p class="project__short">{project.shortDescription}</p>

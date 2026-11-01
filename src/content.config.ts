@@ -26,6 +26,8 @@ const projects = defineCollection({
       links: z.array(
         z.object({
           label: z.string().min(1),
+          /** Подпись на /en/, если отличается (например, «Часть I» -> Part I). */
+          labelEn: z.string().min(1).optional(),
           url: z.url().refine((u) => u.startsWith('https://'), 'Ссылка должна начинаться с https://'),
           type: z.enum(['telegram', 'website', 'portfolio', 'listen', 'chapter', 'other']),
           primary: z.boolean().optional(),
@@ -37,6 +39,12 @@ const projects = defineCollection({
       feed: z.string().regex(/^[A-Za-z0-9_]+$/).optional(),
       /** Ручная дата последнего обновления, если ленты нет. */
       updatedAt: z.coerce.date().optional(),
+      /** Английский текст для /en/. Обязателен: смешанного языка на странице быть не должно. */
+      en: z.object({
+        shortDescription: z.string().min(1),
+        longDescription: z.array(z.string()).max(4).optional(),
+        statusLabel: z.string().optional(),
+      }),
       detailPageEnabled: z.boolean(),
     })
     // Нет публичного URL — нет ссылки-заглушки, но должна быть подпись.

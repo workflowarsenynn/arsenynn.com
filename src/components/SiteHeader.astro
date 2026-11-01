@@ -1,9 +1,16 @@
 ---
 import { site } from '../data/site';
+import { localePath, toLocale, ui } from '../lib/i18n';
 import ActionLink from './ActionLink.astro';
 // Имя автора не дублируется: wordmark @arsenynn стоит в hero сразу ниже.
+const locale = toLocale(Astro.currentLocale);
+const other = locale === 'ru' ? 'en' : 'ru';
+const t = ui[locale];
 ---
 <header class="site-header container">
+  <a class="site-header__lang" href={localePath(other)} hreflang={other} lang={other}>
+    <span aria-hidden="true">{t.switchLabel}</span><span class="visually-hidden">{t.switchName}</span>
+  </a>
   <ActionLink label={site.header.link.label} url={site.header.link.url} variant="text" />
 </header>
 
@@ -12,8 +19,25 @@ import ActionLink from './ActionLink.astro';
     display: flex;
     align-items: center;
     justify-content: flex-end;
+    gap: var(--space-3);
     padding-top: max(var(--space-1), env(safe-area-inset-top));
     font-size: var(--text-meta);
+  }
+
+  .site-header__lang {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: var(--tap);
+    min-height: var(--tap);
+    color: var(--color-muted);
+    text-decoration: none;
+    letter-spacing: 0.06em;
+    transition: color var(--duration);
+  }
+
+  .site-header__lang:hover {
+    color: var(--color-text);
   }
 
   .site-header :global(.action) {

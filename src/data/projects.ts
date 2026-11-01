@@ -1,12 +1,13 @@
 import { getCollection } from 'astro:content';
 import type { Project } from './types';
 import { lastTelegramPost, signalFor, type Signal } from '../lib/activity';
+import type { Locale } from '../lib/i18n';
 
 export type ProjectView = Project & { lastActivity?: Date; signal: Signal };
 
 // Данные проектов лежат в src/content/projects.yaml (Content Collection).
 // Порядок: свежие наверху, проекты без ссылок (Coming soon) внизу, при равенстве — поле order.
-export async function getProjects(): Promise<ProjectView[]> {
+export async function getProjects(locale: Locale = 'ru'): Promise<ProjectView[]> {
   const entries = await getCollection('projects');
   const now = new Date();
   const views = await Promise.all(
@@ -14,7 +15,18 @@ export async function getProjects(): Promise<ProjectView[]> {
       const fromFeed = e.data.feed ? await lastTelegramPost(e.data.feed) : undefined;
       const dates = [fromFeed, e.data.updatedAt].filter((d): d is Date => Boolean(d));
       const lastActivity = dates.length ? new Date(Math.max(...dates.map((d) => d.getTime()))) : undefined;
-      return { id: e.id, ...e.data, lastActivity, signal: signalFor(lastActivity, now) };
+      const d = e.data;
+      // На /en/ подставляются английские тексты и подписи ссылок, структура та же.
+      const localized =
+        locale === 'en'
+          ? {
+              shortDescription: d.en.shortDescription,
+              longDescription: d.en.longDescription,
+              statusLabel: d.en.statusLabel ?? d.statusLabel,
+              links: d.links.map((l) => ({ ...l, label: l.labelEn ?? l.label })),
+            }
+          : {};
+      return { id: e.id, ...d, ...localized, lastActivity, signal: signalFor(lastActivity, now) };
     }),
   );
   const rank = (p: ProjectView) => (p.links.length === 0 ? 1 : 0);

@@ -90,6 +90,20 @@ test('огоньки: свежие проекты выше, Coming soon посл
   expect(order).toEqual([...order].sort((a, b) => b - a));
 });
 
+test('английская версия: /en/, переключатель языка, hreflang, без русского текста в описаниях', async ({ page }) => {
+  await page.goto('/en/');
+  await expect(page.locator('html')).toHaveAttribute('lang', 'en');
+  await expect(page.locator('article.project')).toHaveCount(7);
+  await expect(page.locator('link[rel="alternate"][hreflang="ru"]')).toHaveAttribute('href', 'https://arsenynn.com/');
+  await expect(page.locator('link[rel="alternate"][hreflang="en"]')).toHaveAttribute('href', 'https://arsenynn.com/en/');
+  await expect(page.locator('link[rel="alternate"][hreflang="x-default"]')).toHaveAttribute('href', 'https://arsenynn.com/');
+  const shorts = await page.locator('.project__short').allTextContents();
+  for (const text of shorts) expect(text).not.toMatch(/[а-яё]/i);
+  await page.locator('.site-header__lang').click();
+  await expect(page).toHaveURL(/\/$/);
+  await expect(page.locator('html')).toHaveAttribute('lang', 'ru');
+});
+
 test('404 отдаёт страницу со ссылкой на главную', async ({ page }) => {
   const response = await page.goto('/nope');
   expect(response?.status()).toBe(404);

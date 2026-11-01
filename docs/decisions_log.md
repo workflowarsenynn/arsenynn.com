@@ -1,9 +1,35 @@
 # Decisions Log
-LastUpdated: 2026-11-01 17:20 MSK
+LastUpdated: 2026-11-01 17:35 MSK
 
 Этот файл хранит историю проекта: важные решения, изменения подхода, причины архитектурных поворотов, rejected options, runtime findings и выводы, которые помогают понять, как проект развивался.
 
 Записи идут в обратном хронологическом порядке: новые сверху.
+
+---
+
+## 2026-11-01 — Phase 8: английская версия
+
+**Type:** decision
+**Project:** arsenynn.com
+**Phase:** Phase 8 (advisory migration step 5)
+**Status:** accepted
+**Related files:** `astro.config.mjs`, `src/lib/i18n.ts`, `src/content/projects.yaml`, `src/layouts/Base.astro`, `src/components/SiteHeader.astro`
+
+### Context
+Владелец: «английская версия: делать сейчас». В исходном ТЗ переключатель языка не требовался, advisory ставит RU/EN пятым шагом миграции.
+
+### Decision
+Русский без префикса, английский на `/en/`, общие slug. hreflang ru/en и x-default на русскую. Переключатель RU/EN в header. Английские тексты проектов обязательны в схеме. Короткие английские фразы взяты из advisory (Final voice examples, EN), About переведены. Названия проектов и теги не переводятся (ТЗ раздел 34).
+
+### Alternatives / rejected options
+- Переводить slug: advisory советует общие slug для простоты ссылок и миграций.
+- Показывать русский текст, если перевода нет: advisory запрещает смешанный язык, поэтому перевод обязателен в схеме.
+
+### Lesson
+В YAML фраза с «: » внутри без кавычек превращается в объект: английские строки взяты в кавычки, ошибку поймала схема.
+
+### Source
+Сообщение владельца 2026-11-01, advisory (Language, Information architecture).
 
 ---
 
