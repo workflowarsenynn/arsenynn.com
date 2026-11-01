@@ -1,7 +1,7 @@
 # Deploy Runbook
-LastUpdated: 2026-11-01 11:10 MSK
+LastUpdated: 2026-11-01 12:00 MSK
 
-Статус: сайт не опубликован, в зоне `arsenynn.com` нет записей для корня домена. Все команды ниже это план, они ещё не выполнялись.
+Статус: сайт собран, но не опубликован, в зоне `arsenynn.com` нет записей для корня домена. Шаги ниже ещё не выполнялись, каждый требует подтверждения владельца.
 
 ## Target
 
@@ -34,7 +34,17 @@ LastUpdated: 2026-11-01 11:10 MSK
 
 ## Publishing model
 
-Ждёт решения владельца, варианты записаны в `docs/implementation_plan.md` раздел `## Risks`. GitHub Actions в приватных репозиториях этого аккаунта сейчас не запускаются из-за billing, а Pages нужен публичный репозиторий.
+Решение владельца от 2026-11-01: один публичный репозиторий `workflowarsenynn/arsenynn.com`. В публичном репозитории Actions бесплатны, поэтому сборка идёт через `.github/workflows/deploy.yml` при push в `main`. Секретов в репозитории нет.
+
+Порядок запуска, всё делает или подтверждает владелец:
+
+1. Смержить ветку с MVP в `main`.
+2. Сделать репозиторий публичным: Settings → General → Danger Zone → Change visibility.
+3. Settings → Pages → Source: `GitHub Actions`.
+4. Запустить workflow `Deploy to GitHub Pages` (или push в `main`) и проверить временный адрес Pages.
+5. Settings → Pages → Custom domain: `arsenynn.com`. Файл `public/CNAME` уже в сборке.
+6. Создать DNS-записи из таблицы выше, DNS only.
+7. После выпуска сертификата включить Enforce HTTPS и пройти Acceptance.
 
 ## Acceptance
 

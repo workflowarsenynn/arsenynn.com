@@ -1,9 +1,49 @@
 # Decisions Log
-LastUpdated: 2026-11-01 11:10 MSK
+LastUpdated: 2026-11-01 12:00 MSK
 
 Этот файл хранит историю проекта: важные решения, изменения подхода, причины архитектурных поворотов, rejected options, runtime findings и выводы, которые помогают понять, как проект развивался.
 
 Записи идут в обратном хронологическом порядке: новые сверху.
+
+---
+
+## 2026-11-01 — Ответы владельца и сборка MVP
+
+**Type:** decision
+**Project:** arsenynn.com
+**Phase:** MVP
+**Status:** accepted
+**Related plan:** `docs/implementation_plan.md`
+**Related files:** `src/data/projects.ts`, `docs/deploy.md`, `docs/project_registry.md`, `.github/workflows/deploy.yml`
+
+### Context
+После бутстрапа документации владелец ответил на четыре вопроса: модель публикации, ссылка «Бессмысленности и скоротечности», домен `arsenynn.quest`, адрес Portfolio для workflow.
+
+### Decision
+- Публикация: один публичный репозиторий, GitHub Pages через Actions.
+- «Бессмысленность и скоротечность»: владелец пришлёт ссылку. До этого проект показан без ссылки, с подписью «Ссылка скоро».
+- `arsenynn.quest`: владелец продлевает домен, адреса Listen и Website остаются.
+- Portfolio у workflow, в header и в блоке Work: `https://portfolio.arsenynn.com/video-production/`.
+- Собран MVP на Astro 7: одна страница, system font stack, CSS инлайнится в HTML, один скрипт About.
+
+### Why
+Публичный репозиторий снимает проблему billing для Actions и позволяет публиковать через merge в `main` без Mac. Секретов в проекте нет. Раздел `/video-production/` сразу показывает заказчику видео, а не общий индекс Portfolio.
+
+### Alternatives / rejected options
+- Приватный код и отдельный публичный репозиторий только с `dist/`: публикация зависит от Mac владельца.
+- Web-шрифт на первом проходе: ТЗ просит сначала решить интерфейс, system stack не требует лицензии.
+
+### Consequences
+Сайт заработает после смены видимости, включения Pages и DNS, это действия владельца. Пока репозиторий приватный, workflow может падать из-за billing, это ожидаемо.
+
+### Implementation notes
+QA в Chromium (Playwright) на 320, 360, 375, 390, 414, 430, 768, 1280, 1440 px: горизонтального скролла нет, минимальный текст 15 px, все ссылки и кнопки не меньше 44×44, About открывается Enter и Space, с reduced motion и без JavaScript работает, изображений на странице нет. Safari iOS не проверялся: в cloud-контейнере его нет.
+
+### Lesson
+Сворачивать About нужно через CSS по классу из inline-скрипта в `<head>`, а не из модульного скрипта: иначе страница сначала рисуется раскрытой и прыгает.
+
+### Source
+Ответы владельца в сессии 2026-11-01, сборка и браузерный QA.
 
 ---
 

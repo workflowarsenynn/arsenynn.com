@@ -1,11 +1,16 @@
 # arsenynn.com
-LastUpdated: 2026-11-01 11:10 MSK
+LastUpdated: 2026-11-01 12:00 MSK
 
 Личный сайт @arsenynn: mobile-first индекс разных проектов автора на одной странице.
 
 **film / magazine / index, not portfolio template**
 
-Статус: документация готова, кода сайта пока нет.
+Статус: MVP собран и проверен локально, сайт ещё не опубликован.
+
+```bash
+npm install
+npm run dev
+```
 
 С чего начать:
 

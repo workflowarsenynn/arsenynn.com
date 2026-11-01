@@ -1,7 +1,7 @@
 # Architecture
-LastUpdated: 2026-11-01 11:10 MSK
+LastUpdated: 2026-11-01 12:00 MSK
 
-Статус: целевая архитектура MVP. Код ещё не написан. Требования и их причины находятся в `docs/brief.md`, здесь только технические решения.
+Статус: MVP реализован по этой архитектуре. Требования и их причины находятся в `docs/brief.md`, здесь только технические решения.
 
 ## Stack
 
@@ -13,26 +13,32 @@ LastUpdated: 2026-11-01 11:10 MSK
 
 ## Repository structure
 
-Каталоги кода появятся на этапе реализации. Названия можно менять, принцип разделения нет.
+Названия можно менять, принцип разделения нет.
 
 ```text
 assets/logos/            исходники логотипов от владельца
 docs/                    документация проекта
-public/                  favicon, OG image, CNAME
+public/                  favicon, OG image, apple-touch-icon, CNAME
+scripts/render-images.mjs  генерация OG image и иконки через Playwright
+.github/workflows/deploy.yml  сборка и публикация на Pages
 src/
+  data/types.ts          типы Project и ProjectLink
   data/projects.ts       все проекты, тексты и внешние ссылки
-  data/site.ts           заголовок сайта, hero, блок Work, footer, SEO
-  components/            Hero, ProjectList, ProjectSection, ProjectActions,
-                         ProjectDetails, Collaboration, SiteFooter
+  data/site.ts           заголовок сайта, hero, header, блок Work, footer, SEO
+  components/            SiteHeader, Hero, ProjectList, ProjectSection,
+                         ProjectActions, ProjectDetails, ActionLink,
+                         Collaboration, SiteFooter
+  scripts/about.ts       единственный клиентский скрипт
   layouts/Base.astro     head, meta, Open Graph
   pages/index.astro      единственная страница MVP
+  pages/404.astro        страница 404 для Pages
   styles/tokens.css      design tokens
   styles/global.css      база и типографика
 ```
 
 ## Content model
 
-Единственный источник контента и URL: `src/data/`. До появления кода фактические значения лежат в `docs/project_registry.md`.
+Единственный источник контента и URL: `src/data/`. Журнал проверки ссылок и открытые вопросы: `docs/project_registry.md`.
 
 ```ts
 type ProjectLink = {
@@ -51,6 +57,7 @@ type Project = {
   shortDescription: string
   longDescription?: string[]     // абзацы для About, не больше четырёх
   status: 'active' | 'coming-soon' | 'private'
+  statusLabel?: string           // подпись вместо ссылок, если URL нет
   links: ProjectLink[]
   logo?: string
   detailPageEnabled: boolean     // в MVP всегда false
@@ -70,7 +77,7 @@ type Project = {
 - Кнопка `About +` / `About −` с `aria-expanded` и `aria-controls`, клавиатура работает за счёт нативной кнопки.
 - Анимация через `grid-template-rows` и `opacity`, 150–250 ms. При `prefers-reduced-motion` переход отключается.
 - Один общий скрипт на страницу, без фреймворка, без `client:*` директив Astro.
-- Без JavaScript текст About виден сразу: скрипт сам сворачивает секции при загрузке. Основные ссылки от скрипта не зависят.
+- Без JavaScript текст About виден сразу. Inline-скрипт в `<head>` ставит `html.js`, и CSS сворачивает панели до первой отрисовки, поэтому нет скачка. `about.ts` синхронизирует `aria-expanded` и знак `+`/`−`, класс `about-ready` включает анимацию только после загрузки. Основные ссылки от скрипта не зависят.
 - Раскрытие одной секции не закрывает другие.
 
 ## Styling
@@ -79,7 +86,9 @@ type Project = {
 - Сначала стили для 390 px, расширение только через `min-width`.
 - Размеры текста из `docs/brief.md` раздел 13: body 17–18 px, descriptors не меньше 14 px, заголовок проекта 26–36 px.
 - Touch target ссылки и кнопки не меньше 44 px, цель 48 px.
-- Высота hero через `svh` с запасным значением `vh`, меньше первого экрана, чтобы был виден следующий проект. Отступы учитывают `safe-area-inset-*`.
+- Высота hero 62 `svh` с запасным значением `vh`, чтобы был виден следующий проект. Отступы учитывают `safe-area-inset-*`.
+- Desktop от 48rem: колонка номера 8rem слева, контент справа, ширина текста до 38rem, контейнер до 72rem.
+- Сборка инлайнит CSS в HTML (`inlineStylesheets: always`): страница это один HTML около 23 KB без внешних запросов, кроме favicon.
 
 ## Hosting
 
