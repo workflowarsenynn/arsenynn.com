@@ -7,7 +7,8 @@ export type ProjectLink = {
   primary?: boolean;
 };
 
-export type Asset = { src: string; width: number; height: number };
+/** srcLight: версия для светлой темы, если основной файл светлый и на бумаге не виден. */
+export type Asset = { src: string; srcLight?: string; width: number; height: number };
 
 export type ProjectStatus = 'active' | 'coming-soon' | 'private';
 

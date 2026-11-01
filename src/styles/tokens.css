@@ -1,10 +1,12 @@
 /* Design tokens. Визуальное направление меняется здесь, не в компонентах. */
 :root {
+  /* Тёмная тема (по умолчанию). Advisory phase 3: neutral shell, red event. */
   --color-bg: #0a0a0a;
-  --color-text: #f2f2f0;
-  --color-muted: #9a9a96;
-  --color-accent: #e5322d;
-  --color-line: #262624;
+  --color-text: #f4f3ef;
+  --color-muted: #9c9a94;      /* 7.0:1 */
+  --color-accent: #e5322d;     /* текст, 4.55:1 */
+  --color-accent-mark: #d9322b; /* графика: точки, фокус */
+  --color-line: #292927;
   --color-line-strong: #4a4a46;
   --color-press: #161615;
 
@@ -41,5 +43,19 @@
     --text-body: 1.1875rem;  /* 19px */
     --text-lead: 1.625rem;   /* 26px */
     --gutter: 2.5rem;
+  }
+}
+
+/* Светлая тема: тёплая бумага, а не инверсия (advisory). */
+@media (prefers-color-scheme: light) {
+  :root {
+    --color-bg: #f2f0ea;
+    --color-text: #171716;      /* 15.7:1 */
+    --color-muted: #6b6964;     /* 4.8:1 */
+    --color-accent: #b92420;    /* текст, 5.5:1 */
+    --color-accent-mark: #d9322b;
+    --color-line: #d8d5ce;
+    --color-line-strong: #b5b1a8;
+    --color-press: #e8e5dd;
   }
 }

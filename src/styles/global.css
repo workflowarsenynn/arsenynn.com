@@ -7,7 +7,7 @@
 html {
   -webkit-text-size-adjust: 100%;
   text-size-adjust: 100%;
-  color-scheme: dark;
+  color-scheme: dark light;
 }
 
 body {
@@ -19,6 +19,10 @@ body {
   line-height: var(--leading-body);
   -webkit-font-smoothing: antialiased;
   overflow-wrap: break-word;
+}
+
+picture {
+  display: contents;
 }
 
 h1,
@@ -33,7 +37,7 @@ a {
 }
 
 :focus-visible {
-  outline: 2px solid var(--color-accent);
+  outline: 2px solid var(--color-accent-mark);
   outline-offset: 3px;
   border-radius: 2px;
 }
