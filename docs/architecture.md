@@ -1,5 +1,5 @@
 # Architecture
-LastUpdated: 2026-11-01 16:00 MSK
+LastUpdated: 2026-11-01 16:55 MSK
 
 Статус: MVP реализован по этой архитектуре. Требования и их причины находятся в `docs/brief.md`, здесь только технические решения.
 
@@ -25,8 +25,10 @@ scripts/build-preview.sh копия dist/ для превью-артефакта
 public/logos/            веб-версии логотипов
 .github/workflows/deploy.yml  сборка и публикация на Pages
 src/
-  data/types.ts          типы Project и ProjectLink
-  data/projects.ts       все проекты, тексты и внешние ссылки
+  content.config.ts      схема коллекции projects (zod)
+  content/projects.yaml  все проекты, тексты и внешние ссылки
+  data/types.ts          типы, выведенные из схемы
+  data/projects.ts       getProjects(): коллекция, отсортированная по order
   data/site.ts           заголовок сайта, hero, header, блок Work, footer, SEO
   components/            SiteHeader, Hero, ProjectList, ProjectSection,
                          ProjectActions, ProjectDetails, ActionLink,
@@ -41,7 +43,7 @@ src/
 
 ## Content model
 
-Единственный источник контента и URL: `src/data/`. Журнал проверки ссылок и открытые вопросы: `docs/project_registry.md`.
+Источник контента и URL: Content Collection `projects` (`src/content/projects.yaml`, схема `src/content.config.ts`) и `src/data/site.ts`. Схема проверяет поля, `https://` у ссылок, slug, не больше четырёх абзацев About и подпись у проекта без ссылок. Журнал проверки ссылок и открытые вопросы: `docs/project_registry.md`.
 
 ```ts
 type ProjectLink = {

@@ -1,9 +1,34 @@
 # Decisions Log
-LastUpdated: 2026-11-01 16:25 MSK
+LastUpdated: 2026-11-01 16:55 MSK
 
 Этот файл хранит историю проекта: важные решения, изменения подхода, причины архитектурных поворотов, rejected options, runtime findings и выводы, которые помогают понять, как проект развивался.
 
 Записи идут в обратном хронологическом порядке: новые сверху.
+
+---
+
+## 2026-11-01 — Phase 5: проекты в Content Collection
+
+**Type:** decision
+**Project:** arsenynn.com
+**Phase:** Advisory Phase 5 (migration step 4)
+**Status:** accepted
+**Related files:** `src/content.config.ts`, `src/content/projects.yaml`, `src/data/projects.ts`, `src/data/types.ts`
+
+### Context
+Advisory, migration step 4: Content Collections без смены URL, до RU/EN и внутренних миров.
+
+### Decision
+Проекты перенесены из `src/data/projects.ts` в `src/content/projects.yaml` (loader `file`). Схема zod проверяет поля, `https://` у ссылок, slug, до четырёх абзацев About и `statusLabel` у проекта без ссылок. Типы выводятся из схемы. `site.ts` пока остаётся TypeScript-модулем.
+
+### Why
+YAML удобно править владельцу и агентам, а схема превращает опечатку в ошибку сборки, а не в сломанную страницу. Это основа для коллекции `works` с видео, фото и текстами.
+
+### Consequences
+HTML главной совпадает с продом байт в байт (проверено diff). Проверено: ссылка с `http://` останавливает сборку с понятным сообщением.
+
+### Source
+Advisory, разделы Content model и Migration.
 
 ---
 

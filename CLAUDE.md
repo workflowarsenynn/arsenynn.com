@@ -1,5 +1,5 @@
 # CLAUDE.md
-LastUpdated: 2026-11-01 16:40 MSK
+LastUpdated: 2026-11-01 16:55 MSK
 
 ## Project
 Личный сайт arsenynn.com: mobile-first индекс семи проектов @arsenynn на одной странице, для людей, открывающих ссылку с телефона.
@@ -14,7 +14,8 @@ MVP собран, структура в `docs/architecture.md`.
 ## Repository structure
 - `docs/` — вся документация, начинать с `docs/implementation_plan.md`
 - `assets/logos/` — исходники логотипов
-- `src/data/` — единственный источник контента и ссылок
+- `src/content/projects.yaml` — проекты: тексты, теги, ссылки, логотипы (Content Collection, схема в `src/content.config.ts`)
+- `src/data/site.ts` — hero, header, блок Work, footer, SEO
 - `src/components/`, `src/styles/` — разметка и design tokens
 
 ## Commands
@@ -26,7 +27,7 @@ MVP собран, структура в `docs/architecture.md`.
 - тесты: `npm test` (Playwright + axe против `astro preview`, нужна сборка). В облачной сессии Claude: `PW_CHROMIUM=/opt/pw-browsers/chromium-1243/chrome-linux64/chrome npm test`. В CI их запускает `.github/workflows/test.yml`
 
 ## Code style
-- Контент и URL только в `src/data/`.
+- Контент и URL только в `src/content/` и `src/data/site.ts`, никогда в компонентах.
 - Цвета и отступы только через токены.
 - Минимум JavaScript: один маленький скрипт для About, без `client:*`.
 - Стили сначала для телефона, расширение через `min-width`.
