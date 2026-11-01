@@ -3,10 +3,10 @@ import { site } from '../data/site';
 const { hero } = site;
 ---
 <section class="hero container" aria-labelledby="hero-title">
-  <h1 id="hero-title" class="hero__title">{hero.title}</h1>
+  <h1 id="hero-title" class="hero__title">{hero.title}<span class="hero__dot" aria-hidden="true"></span></h1>
   <p class="hero__descriptor meta">{hero.descriptor}</p>
   {hero.phrase && <p class="hero__phrase">{hero.phrase}</p>}
-  <span class="hero__dot" aria-hidden="true"></span>
+  {hero.intro && <p class="hero__intro">{hero.intro}</p>}
 </section>
 
 <style>
@@ -14,30 +14,45 @@ const { hero } = site;
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
-    gap: var(--space-2);
-    /* Меньше экрана: внизу виден следующий проект. */
-    min-height: 62vh;
-    min-height: 62svh;
+    /* Компактно: первый проект виден на первом экране телефона. */
+    min-height: 46vh;
+    min-height: 46svh;
+    padding-top: var(--space-4);
     padding-bottom: var(--space-4);
   }
 
   .hero__title {
-    font-family: var(--font-display);
     font-size: var(--text-hero);
-    font-weight: 600;
-    line-height: 1;
-    letter-spacing: -0.03em;
-  }
-
-  .hero__phrase {
-    max-width: 28ch;
+    font-weight: 700;
+    line-height: 0.95;
+    letter-spacing: -0.04em;
   }
 
   .hero__dot {
-    width: 0.5rem;
-    height: 0.5rem;
-    margin-top: var(--space-2);
+    display: inline-block;
+    width: 0.14em;
+    height: 0.14em;
+    margin-left: 0.06em;
     border-radius: 50%;
     background: var(--color-accent);
+  }
+
+  .hero__descriptor {
+    margin-top: var(--space-2);
+    letter-spacing: 0.02em;
+  }
+
+  .hero__phrase {
+    margin-top: var(--space-3);
+    font-family: var(--font-display);
+    font-size: 1.625rem;
+    line-height: 1.15;
+    max-width: 18ch;
+  }
+
+  .hero__intro {
+    margin-top: var(--space-2);
+    max-width: 30rem;
+    color: var(--color-muted);
   }
 </style>

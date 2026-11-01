@@ -14,6 +14,7 @@ export const site = {
     title: '@arsenynn',
     descriptor: 'projects / channels / things',
     phrase: 'an index of parallel things',
+    intro: 'Семь проектов одного автора: кино, коммерческое видео, философия, радио, AI, VPN и путешествия.',
   },
 
   header: {

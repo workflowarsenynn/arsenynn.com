@@ -23,6 +23,7 @@ export type Project = {
   /** Подпись вместо ссылок, когда публичного URL нет. */
   statusLabel?: string;
   links: ProjectLink[];
-  logo?: string;
+  /** Логотип вместо текстового названия. Файл в public/logos/. */
+  logo?: { src: string; width: number; height: number };
   detailPageEnabled: boolean;
 };

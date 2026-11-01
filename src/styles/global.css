@@ -60,30 +60,50 @@ a {
   white-space: nowrap;
 }
 
-/* Текстовая ссылка с большой зоной нажатия. */
+/* Действия. Зона нажатия не меньше --tap. */
 .action {
   display: inline-flex;
   align-items: center;
-  gap: 0.35em;
+  justify-content: center;
+  gap: 0.4em;
   min-height: var(--tap);
   min-width: var(--tap);
-  padding-inline: 0.25rem;
-  margin-inline: -0.25rem;
   font: inherit;
   color: var(--color-text);
+  text-decoration: none;
+  transition: border-color var(--duration), color var(--duration), background-color var(--duration);
+}
+
+.action--button {
+  padding-inline: 1.25rem;
+  border: 1px solid var(--color-line-strong);
+  border-radius: var(--radius);
+}
+
+.action--button:hover {
+  border-color: var(--color-text);
+}
+
+.action--button.action--primary {
+  color: var(--color-accent);
+  border-color: var(--color-accent);
+}
+
+.action--button.action--primary:hover {
+  background-color: var(--color-accent);
+  color: var(--color-bg);
+}
+
+.action--text {
+  padding-inline: 0.25rem;
+  margin-inline: -0.25rem;
   text-decoration: underline;
-  text-decoration-color: var(--color-line);
+  text-decoration-color: var(--color-line-strong);
   text-decoration-thickness: 1px;
   text-underline-offset: 0.3em;
-  transition: text-decoration-color var(--duration), color var(--duration);
 }
 
-.action--primary {
-  color: var(--color-accent);
-  text-decoration-color: currentColor;
-}
-
-.action:hover {
+.action--text:hover {
   text-decoration-color: currentColor;
 }
 

@@ -1,7 +1,12 @@
 ---
-type Props = { label: string; url: string; primary?: boolean };
-const { label, url, primary = false } = Astro.props;
+type Props = { label: string; url: string; primary?: boolean; variant?: 'button' | 'text' };
+const { label, url, primary = false, variant = 'button' } = Astro.props;
 ---
-<a class:list={['action', { 'action--primary': primary }]} href={url} target="_blank" rel="noopener">
+<a
+  class:list={['action', `action--${variant}`, { 'action--primary': primary }]}
+  href={url}
+  target="_blank"
+  rel="noopener"
+>
   {label}<span class="action__arrow" aria-hidden="true">↗</span><span class="visually-hidden"> (откроется в новой вкладке)</span>
 </a>

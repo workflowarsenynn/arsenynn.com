@@ -5,14 +5,15 @@
   --color-muted: #9a9a96;
   --color-accent: #e5322d;
   --color-line: #262624;
+  --color-line-strong: #4a4a46;
 
   --font-ui: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-  --font-display: var(--font-ui);
+  --font-display: 'Playfair Display Variable', Georgia, 'Times New Roman', serif;
 
   --text-body: 1.0625rem;   /* 17px */
   --text-meta: 0.9375rem;   /* 15px */
-  --text-title: clamp(1.75rem, 1.2rem + 2.4vw, 2.5rem);
-  --text-hero: clamp(2.75rem, 1.6rem + 6vw, 5rem);
+  --text-title: clamp(1.625rem, 0.9rem + 3.6vw, 2.75rem);
+  --text-hero: clamp(3rem, 1.8rem + 6vw, 5.5rem);
 
   --space-1: 0.5rem;
   --space-2: 1rem;
@@ -23,6 +24,8 @@
   --gutter: 1.25rem;
   --content-width: 72rem;
   --tap: 48px;
+  --radius: 999px;
+  --logo-height: 2.25rem;
   --duration: 200ms;
 }
 
