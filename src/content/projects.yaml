@@ -3,6 +3,7 @@
 # Короткие тексты из advisory (docs/Advisory/), About ждут утверждения владельца.
 # Проверка ссылок и открытые вопросы: docs/project_registry.md.
 # feed — публичный канал, по последнему посту которого проект поднимается наверх и получает огонёк.
+# contents — оглавление канала у annFlow: проект, подзаголовок, ссылка на первый пост (из поста «Навигация по проектам канала»).
 # en — английский текст для /en/ (обязателен), labelEn — английская подпись ссылки.
 # updatedAt — ручная дата (YYYY-MM-DD) для проектов без публичной ленты: bessmyslennost, without-streaming.
 
@@ -153,6 +154,35 @@
       url: https://t.me/annsflow
       type: telegram
       primary: true
+  contents:
+    - title: "LiveContext"
+      note: "Как связать живой разговор с памятью проекта"
+      noteEn: "Linking a live conversation to project memory"
+      url: https://t.me/annsflow/186
+    - title: "MCP-сервер"
+      note: "Как я построил MCP-сервер для своей рабочей системы"
+      noteEn: "An MCP server for my working system"
+      url: https://t.me/annsflow/171
+    - title: "VoxBase"
+      note: "Как превратить голос, видео и подкасты в память"
+      noteEn: "Turning voice, video and podcasts into memory"
+      url: https://t.me/annsflow/155
+    - title: "Автоотклики"
+      note: "Как превратить поиск работы в форму порядка"
+      noteEn: "Turning a job search into a form of order"
+      url: https://t.me/annsflow/136
+    - title: "Бессмысленность и скоротечность"
+      note: "Философия, встроенная в память, разговор и рециркуляцию"
+      noteEn: "Philosophy built into memory, conversation and recirculation"
+      url: https://t.me/annsflow/107
+    - title: "Without Streaming"
+      note: "Telegram-канал как радиостанция"
+      noteEn: "A Telegram channel as a radio station"
+      url: https://t.me/annsflow/93
+    - title: "Mac Automation Stack"
+      note: "Как я строю клавиатурные слои, чтобы ускорить работу на Mac"
+      noteEn: "Keyboard layers that speed up work on a Mac"
+      url: https://t.me/annsflow/74
   logo:
     src: /logos/annflow.webp
     width: 600

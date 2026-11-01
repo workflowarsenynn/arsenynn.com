@@ -1,11 +1,14 @@
 ---
 import type { Project } from '../data/types';
 import ActionLink from './ActionLink.astro';
+import { toLocale, ui } from '../lib/i18n';
 
 type Props = { project: Project };
 const { project } = Astro.props;
 const hasAbout = Boolean(project.longDescription?.length);
 const detailsId = `about-${project.id}`;
+const contentsId = `contents-${project.id}`;
+const t = ui[toLocale(Astro.currentLocale)];
 ---
 <div class="project-actions action-list">
   {project.links.map((link) => (
@@ -13,6 +16,36 @@ const detailsId = `about-${project.id}`;
   ))}
   {project.links.length === 0 && project.statusLabel && (
     <span class="action action--row project-actions__status">{project.statusLabel}</span>
+  )}
+  {project.contents?.length && (
+    <>
+      <button
+        class="action action--row project-actions__about"
+        type="button"
+        aria-expanded="true"
+        aria-controls={contentsId}
+        data-about-toggle
+      >
+        {t.contentsLabel}<span class="project-actions__sign" aria-hidden="true" data-sign>−</span>
+        <span class="visually-hidden">: {project.title}</span>
+      </button>
+      <div class="disclosure" id={contentsId}>
+        <ul class="disclosure__inner contents">
+          {project.contents.map((item) => (
+            <li>
+              <a class="contents__link" href={item.url} target="_blank" rel="noopener">
+                <span class="contents__text">
+                  <span class="contents__title">{item.title}</span>
+                  {item.note && <span class="contents__note">{item.note}</span>}
+                </span>
+                <span class="action__arrow" aria-hidden="true">↗</span>
+                <span class="visually-hidden">{t.newTab}</span>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </>
   )}
   {hasAbout && (
     <button
@@ -61,5 +94,43 @@ const detailsId = `about-${project.id}`;
     width: 1em;
     text-align: center;
     font-size: 1.1em;
+  }
+
+  .contents {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  /* Строка оглавления: название и подзаголовок слева, стрелка справа, вся строка — ссылка. */
+  .contents__link {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-2);
+    min-height: var(--tap-row);
+    padding-block: 0.75rem;
+    padding-left: var(--space-2);
+    border-bottom: 1px solid var(--color-line);
+    color: var(--color-text);
+    text-decoration: none;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .contents__link:hover,
+  .contents__link:active {
+    background: var(--color-press);
+  }
+
+  .contents__text {
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+  }
+
+  .contents__note {
+    color: var(--color-muted);
+    font-size: var(--text-meta);
+    line-height: 1.4;
   }
 </style>
