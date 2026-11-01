@@ -1,9 +1,30 @@
 # Decisions Log
-LastUpdated: 2026-11-01 19:50 MSK
+LastUpdated: 2026-11-01 20:00 MSK
 
 Этот файл хранит историю проекта: важные решения, изменения подхода, причины архитектурных поворотов, rejected options, runtime findings и выводы, которые помогают понять, как проект развивался.
 
 Записи идут в обратном хронологическом порядке: новые сверху.
+
+---
+
+## 2026-11-01 — Превью ссылки: имя и слоган, описание для поиска отдельно
+
+**Type:** decision
+**Project:** arsenynn.com
+**Status:** accepted
+**Related files:** `src/data/site.ts`, `src/layouts/Base.astro`
+
+### Context
+Владелец увидел превью в Telegram: «@arsenynn — index» и «Индекс проектов @arsenynn: авторское кино…» — банально, спросил, менять ли на слоган или оставить для SEO.
+
+### Decision
+Разделены аудитории. Telegram и соцсети (og/twitter): site_name `arsenynn.com`, title `@arsenynn`, description — слоган. Google: `<title>` «@arsenynn — Финальная битва между рациональным и самоценным», meta description — содержательный список проектов для поиска.
+
+### Why
+og-теги видят люди в мессенджерах, meta description — поисковик. Слоган в превью сохраняет образ, список в meta description сохраняет находимость.
+
+### Source
+Сообщение владельца 2026-11-01.
 
 ---
 

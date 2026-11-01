@@ -13,6 +13,7 @@ const locale = toLocale(Astro.currentLocale);
 const t = ui[locale];
 const title = locale === 'en' ? site.en.title : site.title;
 const description = locale === 'en' ? site.en.description : site.description;
+const ogDescription = locale === 'en' ? site.en.ogDescription : site.ogDescription;
 const canonical = new URL(Astro.url.pathname, site.url).href;
 // hreflang: обе версии ссылаются друг на друга, x-default ведёт на русскую (advisory).
 const alternates = locales.map((l) => ({ lang: l, href: new URL(localePath(l), site.url).href }));
@@ -41,17 +42,17 @@ const jsonLd = JSON.stringify({
     <link rel="apple-touch-icon" href={asset('/apple-touch-icon.png')} />
 
     <meta property="og:type" content="website" />
-    <meta property="og:site_name" content={site.name} />
-    <meta property="og:title" content={title} />
-    <meta property="og:description" content={description} />
+    <meta property="og:site_name" content={site.ogSiteName} />
+    <meta property="og:title" content={site.ogTitle} />
+    <meta property="og:description" content={ogDescription} />
     <meta property="og:url" content={canonical} />
     <meta property="og:image" content={ogImage} />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
     <meta property="og:locale" content={t.ogLocale} />
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content={title} />
-    <meta name="twitter:description" content={description} />
+    <meta name="twitter:title" content={site.ogTitle} />
+    <meta name="twitter:description" content={ogDescription} />
     <meta name="twitter:image" content={ogImage} />
     <script type="application/ld+json" set:html={jsonLd} />
   </head>
