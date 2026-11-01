@@ -1,6 +1,6 @@
 ---
-type Props = { label: string; url: string; primary?: boolean; variant?: 'button' | 'text' };
-const { label, url, primary = false, variant = 'button' } = Astro.props;
+type Props = { label: string; url: string; primary?: boolean; variant?: 'row' | 'text' };
+const { label, url, primary = false, variant = 'row' } = Astro.props;
 ---
 <a
   class:list={['action', `action--${variant}`, { 'action--primary': primary }]}

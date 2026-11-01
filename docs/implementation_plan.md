@@ -1,5 +1,5 @@
 # Implementation Plan
-LastUpdated: 2026-11-01 15:30 MSK
+LastUpdated: 2026-11-01 15:45 MSK
 
 ## Todoist Sync
 - Sync: manual
@@ -36,6 +36,7 @@ LastUpdated: 2026-11-01 15:30 MSK
 ## Rollback
 - Точки отката: ветки `rollback/phase-N` на GitHub, каждая указывает на прод до начала фазы N+1.
 - `rollback/phase-0`: прод до advisory (c67cab3).
+- `rollback/phase-1`: прод после Phase 1, до Phase 1.1 (8256bd0).
 - Откат: PR из revert-коммита фазы в `main` или `git revert <merge-commit>`; GitHub Actions пересоберёт сайт за 1–2 минуты.
 
 ## Done
@@ -45,13 +46,13 @@ LastUpdated: 2026-11-01 15:30 MSK
 - [x] Полное описание проекта для deep research, получен advisory
 - [x] Phase 0: точка отката `rollback/phase-0`, advisory сохранён в `docs/Advisory/`, проверены все 10 внешних ссылок
 - [x] Phase 1: hero, тексты, место знаков, стиль ссылок, desktop-сетка
+- [x] Phase 1.1: ссылки строками на всю ширину 56 px по просьбе владельца (удобство на телефоне)
 
 ## In Progress
 <!-- Нет задач в работе. -->
 
 ## Next
 <!-- Canonical planning checklist. Plain items DO NOT auto-create Todoist subtasks. Todoist child boundaries require explicit owner/canonical-plan approval under One Plan = One Subtask. -->
-- [ ] Получить замечания владельца по Phase 1 на живом сайте
 - [ ] Phase 2: Source Serif 4 + Manrope вместо Playfair, цвета без изменений (отдельный деплой)
 - [ ] Phase 3: тёплая светлая тема по `prefers-color-scheme` и уточнённый красный (отдельный деплой)
 - [ ] Включить Enforce HTTPS в настройках Pages (владелец)

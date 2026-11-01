@@ -7,16 +7,16 @@ const { project } = Astro.props;
 const hasAbout = Boolean(project.longDescription?.length);
 const detailsId = `about-${project.id}`;
 ---
-<div class="project-actions">
+<div class="project-actions action-list">
   {project.links.map((link) => (
     <ActionLink label={link.label} url={link.url} primary={link.primary} />
   ))}
   {project.links.length === 0 && project.statusLabel && (
-    <span class="project-actions__status meta">{project.statusLabel}</span>
+    <span class="action action--row project-actions__status">{project.statusLabel}</span>
   )}
   {hasAbout && (
     <button
-      class="action project-actions__about"
+      class="action action--row project-actions__about"
       type="button"
       aria-expanded="true"
       aria-controls={detailsId}
@@ -30,34 +30,26 @@ const detailsId = `about-${project.id}`;
 
 <style>
   .project-actions {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: 0 var(--space-3);
-    margin-top: var(--space-2);
+    margin-top: var(--space-3);
   }
 
   @media (min-width: 64rem) {
     .project-actions {
-      flex-direction: column;
-      align-items: flex-start;
-      margin-top: 0;
+      margin-top: 0.4rem;
     }
   }
 
+  .project-actions__about,
   .project-actions__status {
-    display: inline-flex;
-    align-items: center;
-    min-height: var(--tap);
+    color: var(--color-muted);
   }
 
-  .project-actions__about {
-    padding-inline: 0;
+  .project-actions__status {
+    cursor: default;
+  }
+
+  .project-actions__status:hover {
     background: none;
-    border: 0;
-    cursor: pointer;
-    color: var(--color-muted);
-    text-decoration: none;
   }
 
   .project-actions__about:hover {
@@ -66,7 +58,8 @@ const detailsId = `about-${project.id}`;
 
   .project-actions__sign {
     display: inline-block;
-    width: 1ch;
+    width: 1em;
     text-align: center;
+    font-size: 1.1em;
   }
 </style>

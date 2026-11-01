@@ -74,32 +74,44 @@ a {
   transition: border-color var(--duration), color var(--duration), background-color var(--duration);
 }
 
-/* Ссылка проекта: текст и тонкая линия снизу, зона нажатия 48 px. */
-.action--button {
-  position: relative;
+/* Строка действия: на всю ширину колонки, 56 px, название слева, стрелка справа.
+   Нажимается любое место строки, между строками тонкие линии. */
+.action-list {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 26rem;
+  border-top: 1px solid var(--color-line);
 }
 
-.action--button::after {
-  content: '';
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 0.7rem;
-  height: 1px;
-  background: var(--color-line-strong);
-  transition: background-color var(--duration);
+.action--row {
+  width: 100%;
+  min-height: var(--tap-row);
+  justify-content: space-between;
+  gap: var(--space-2);
+  padding-inline: 0;
+  border: 0;
+  border-bottom: 1px solid var(--color-line);
+  background: none;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
 }
 
-.action--button:hover::after {
-  background: currentColor;
+.action--row:hover,
+.action--row:active {
+  background: var(--color-press);
 }
 
-.action--button.action--primary {
+.action--row.action--primary {
   color: var(--color-accent);
 }
 
-.action--button.action--primary::after {
-  background: currentColor;
+.action__arrow {
+  flex: none;
+  font-size: 1.1em;
+  line-height: 1;
 }
 
 .action--text {
