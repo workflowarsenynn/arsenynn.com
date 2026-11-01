@@ -1,5 +1,5 @@
 # AGENTS.md
-LastUpdated: 2026-11-01 12:00 MSK
+LastUpdated: 2026-11-01 12:40 MSK
 > Этот файл читается AI Coding Agent перед началом работы.
 
 ## Project
@@ -16,6 +16,8 @@ LastUpdated: 2026-11-01 12:00 MSK
 - `docs/brief.md` — ТЗ владельца, главный источник требований
 - `docs/implementation_plan.md` — текущий статус и следующие шаги
 - `docs/architecture.md` — технические решения
+- `docs/design_research.md` — ресерч и визуальное направление v2
+- `docs/references/` — макеты владельца: брать структуру, не внешний вид
 - `docs/project_registry.md` — ссылки проектов и открытые вопросы
 - `docs/deploy.md` — публикация и DNS
 - `docs/cloud_workflow.md` — работа в cloud-сессиях

@@ -1,5 +1,5 @@
 # Project Registry
-LastUpdated: 2026-11-01 12:00 MSK
+LastUpdated: 2026-11-01 12:40 MSK
 
 Журнал проверки ссылок и открытых вопросов. Источник ссылок для сайта: `src/data/projects.ts` и `src/data/site.ts`.
 
@@ -10,7 +10,7 @@ LastUpdated: 2026-11-01 12:00 MSK
 | 01 | @arsenynn | `arsenynn` | Telegram (primary) | https://t.me/arsenynn | канал найден |
 | 02 | workflow@arsenynn | `workflow` | Portfolio (primary) | https://portfolio.arsenynn.com/video-production/ | раздел выбран владельцем 2026-11-01 |
 | 02 | workflow@arsenynn | `workflow` | Telegram | https://t.me/ww_arsenynn | канал найден |
-| 03 | Бессмысленность и скоротечность | `bessmyslennost` | Telegram (primary) | нет | владелец пришлёт ссылку, до этого на сайте «Ссылка скоро» |
+| 03 | Бессмысленность и скоротечность | `bessmyslennost` | Telegram (primary) | https://t.me/bessmislennost | канал найден, ссылка от владельца 2026-11-01 |
 | 04 | Without Streaming | `without-streaming` | Listen (primary) | https://radio.arsenynn.quest | 200, владелец продлевает домен |
 | 04 | Without Streaming | `without-streaming` | Telegram | https://t.me/without_streaming | канал найден |
 | 05 | annFlow | `annflow` | Telegram (primary) | https://t.me/annsflow | канал найден |
@@ -20,11 +20,12 @@ LastUpdated: 2026-11-01 12:00 MSK
 
 ## Open questions
 
-- **Бессмысленность и скоротечность.** Владелец пришлёт ссылку. Когда она будет: добавить в `links` проекта в `src/data/projects.ts`, убрать `statusLabel`, поставить `status: 'active'`.
+- **Логотипы.** Владелец прислал путь в iCloud на Mac, cloud-сессии он недоступен. Нужны файлы в `assets/logos/` (push или вложения в чат).
 - **Контакт в блоке Work.** Сейчас в блоке Work стоят Portfolio и Telegram-канал workflow. Личный Telegram `https://t.me/arsenynnn` (три n) и email не добавлены: ждут подтверждения владельца.
 
 ## Resolved 2026-11-01
 
+- **Бессмысленность и скоротечность.** Ссылка `https://t.me/bessmislennost`, проверена по `og:title`.
 - **Portfolio из карточки workflow.** Ведёт на `/video-production/`. Header и блок Work используют тот же адрес.
 - **Домен `arsenynn.quest`.** Владелец продлевает домен до 2026-11-15, адреса Listen и Website не меняются.
 

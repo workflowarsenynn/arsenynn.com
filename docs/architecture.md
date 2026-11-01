@@ -1,5 +1,5 @@
 # Architecture
-LastUpdated: 2026-11-01 12:00 MSK
+LastUpdated: 2026-11-01 12:40 MSK
 
 Статус: MVP реализован по этой архитектуре. Требования и их причины находятся в `docs/brief.md`, здесь только технические решения.
 
@@ -8,7 +8,7 @@ LastUpdated: 2026-11-01 12:00 MSK
 - Astro со статической сборкой: компоненты на сервере сборки, в браузер уходит только HTML, CSS и один маленький скрипт. Причины выбора в `docs/decisions_log.md`.
 - TypeScript для данных, чтобы опечатка в проекте или ссылке ломала сборку, а не страницу.
 - Обычный CSS с design tokens. Без Tailwind, без UI-библиотек, без icon packs: стрелка `↗` это текст.
-- Шрифт: на первом проходе system stack. Открытый шрифт с кириллицей подключается только self-hosted, с подтверждённой лицензией и после теста типографики (`docs/brief.md` разделы 13, 28).
+- Шрифты: Playfair Display Variable (OFL-1.1, кириллица) для названий проектов, hero-фразы и Work, self-hosted через `@fontsource-variable/playfair-display`; системный sans для остального. Обоснование в `docs/design_research.md`.
 - Node.js 20 или новее.
 
 ## Repository structure
@@ -59,7 +59,7 @@ type Project = {
   status: 'active' | 'coming-soon' | 'private'
   statusLabel?: string           // подпись вместо ссылок, если URL нет
   links: ProjectLink[]
-  logo?: string
+  logo?: { src: string; width: number; height: number }  // файл в public/logos/
   detailPageEnabled: boolean     // в MVP всегда false
 }
 ```
@@ -69,6 +69,8 @@ type Project = {
 - Номер на странице выводится из `order`, а не хранится текстом.
 - Проект без публичного URL не получает ссылку-заглушку: `links` пустой, показывается `Coming soon` или ничего.
 - `About` не выводится, если `longDescription` пуст.
+- Если у проекта есть `logo`, вместо текста в `<h2>` выводится `<img>` с `alt` = `title`. Высота задаётся токеном `--logo-height`.
+- В названии разрешён перенос перед внутренним `@` (`workflow@arsenynn`), посреди слова названия не рвутся.
 - `slug` резервирует будущий маршрут. Страниц проектов в MVP нет.
 - Тексты лежат отдельно от разметки, поэтому RU/EN можно добавить позже без переписывания компонентов. Переключателя языка в MVP нет.
 
@@ -88,7 +90,8 @@ type Project = {
 - Touch target ссылки и кнопки не меньше 44 px, цель 48 px.
 - Высота hero 62 `svh` с запасным значением `vh`, чтобы был виден следующий проект. Отступы учитывают `safe-area-inset-*`.
 - Desktop от 48rem: колонка номера 8rem слева, контент справа, ширина текста до 38rem, контейнер до 72rem.
-- Сборка инлайнит CSS в HTML (`inlineStylesheets: always`): страница это один HTML около 23 KB без внешних запросов, кроме favicon.
+- Ссылки проектов это кнопки высотой 48 px с hairline-рамкой (`ActionLink` variant `button`), primary с красной рамкой. Ссылка в header текстовая (variant `text`). About текстовая кнопка.
+- Сборка инлайнит CSS в HTML (`inlineStylesheets: always`). Внешние запросы: favicon и woff2 Playfair нужного подмножества (кириллица или латиница, около 40–50 KB каждое).
 
 ## Hosting
 
