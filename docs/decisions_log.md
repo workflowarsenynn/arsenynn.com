@@ -1,9 +1,31 @@
 # Decisions Log
-LastUpdated: 2026-11-01 15:45 MSK
+LastUpdated: 2026-11-01 16:00 MSK
 
 Этот файл хранит историю проекта: важные решения, изменения подхода, причины архитектурных поворотов, rejected options, runtime findings и выводы, которые помогают понять, как проект развивался.
 
 Записи идут в обратном хронологическом порядке: новые сверху.
+
+---
+
+## 2026-11-01 — Phase 2: Source Serif 4 и Manrope
+
+**Type:** decision
+**Project:** arsenynn.com
+**Phase:** Advisory Phase 2
+**Status:** accepted
+**Related files:** `src/styles/tokens.css`, `src/layouts/Base.astro`, `scripts/render-images.mjs`
+
+### Context
+Advisory: Playfair Display стал привычным редакционным приёмом; Source Serif 4 — серьёзное текстовое семейство с кириллицей и variable-версией, Manrope — сдержанный современный гротеск с кириллицей. Менять шрифты отдельным деплоем, цвета не трогать.
+
+### Decision
+Source Serif 4 для заголовков и hero-строки, Manrope для интерфейса и текста. Шкала из advisory: body 18 px на телефоне и 19 px на desktop, line-height 1.58, lead 22/26 px, заголовок проекта 32–52 px. Подключена только ось wght: файлы с opsz весят в 2.5 раза больше. OG image рендерится шрифтами сайта.
+
+### Consequences
+Вес шрифтов около 126 KB при бюджете advisory 120 KB: кириллица и латиница обоих семейств. Можно снизить, если вынести латиницу Source Serif в подмножество.
+
+### Source
+Advisory, разделы Typography и Claude Code implementation brief.
 
 ---
 

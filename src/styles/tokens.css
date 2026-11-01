@@ -8,12 +8,15 @@
   --color-line-strong: #4a4a46;
   --color-press: #161615;
 
-  --font-ui: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-  --font-display: 'Playfair Display Variable', Georgia, 'Times New Roman', serif;
+  /* Advisory phase 2: Source Serif 4 для заголовков и литературного текста, Manrope для интерфейса. */
+  --font-ui: 'Manrope Variable', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
+  --font-display: 'Source Serif 4 Variable', Georgia, 'Times New Roman', serif;
 
-  --text-body: 1.0625rem;   /* 17px */
+  --text-body: 1.125rem;    /* 18px, advisory */
   --text-meta: 0.9375rem;   /* 15px */
-  --text-title: clamp(1.625rem, 0.9rem + 3.6vw, 2.75rem);
+  --text-lead: 1.375rem;    /* 22px */
+  --text-title: clamp(2rem, 1.2rem + 3.5vw, 3.25rem);
+  --leading-body: 1.58;
   --text-hero: clamp(3rem, 1.8rem + 6vw, 5.5rem);
 
   --space-1: 0.5rem;
@@ -35,7 +38,8 @@
 
 @media (min-width: 48rem) {
   :root {
-    --text-body: 1.125rem;   /* 18px */
+    --text-body: 1.1875rem;  /* 19px */
+    --text-lead: 1.625rem;   /* 26px */
     --gutter: 2.5rem;
   }
 }
