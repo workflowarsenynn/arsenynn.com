@@ -1,5 +1,5 @@
 # CLAUDE.md
-LastUpdated: 2026-11-01 12:50 MSK
+LastUpdated: 2026-11-01 16:40 MSK
 
 ## Project
 Личный сайт arsenynn.com: mobile-first индекс семи проектов @arsenynn на одной странице, для людей, открывающих ссылку с телефона.
@@ -23,7 +23,7 @@ MVP собран, структура в `docs/architecture.md`.
 - сборка с проверкой типов: `npm run build` (результат в `dist/`)
 - OG image и apple-touch-icon: `NODE_PATH=$(npm root -g) node scripts/render-images.mjs`
 - векторизовать одноцветный логотип: `python3 scripts/trace-logo.py <in> public/logos/<slug>.svg '#hex'`
-- тестов нет, проверка идёт через сборку и браузер
+- тесты: `npm test` (Playwright + axe против `astro preview`, нужна сборка). В облачной сессии Claude: `PW_CHROMIUM=/opt/pw-browsers/chromium-1243/chrome-linux64/chrome npm test`. В CI их запускает `.github/workflows/test.yml`
 
 ## Code style
 - Контент и URL только в `src/data/`.
