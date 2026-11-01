@@ -32,6 +32,10 @@
       labelEn: Part II
       url: https://t.me/arsenynn/28
       type: chapter
+  mark:
+    src: /logos/nn.svg
+    width: 3398
+    height: 1881
   feed: arsenynn
   en:
     shortDescription: "Films, chapters, and things that slowly become something larger."
@@ -89,10 +93,6 @@
       url: https://t.me/bessmislennost
       type: telegram
       primary: true
-  mark:
-    src: /logos/nn.svg
-    width: 3398
-    height: 1881
   en:
     shortDescription: "Conversation and memory. Some things return later."
     longDescription:
