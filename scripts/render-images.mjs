@@ -19,10 +19,8 @@ const og = `<html><head>${fonts}</head><body style="margin:0;width:1200px;height
 <img src="${wordmark}" style="width:560px;display:block;position:relative;z-index:1">
 <div style="font-size:34px;line-height:1.25;max-width:560px;text-wrap:balance;color:#f2f2f0;margin-top:28px;font-family:OGSerif,Georgia,serif;position:relative;z-index:1">Финальная битва между рациональным и самоценным</div>
 </body></html>`;
-const icon = `<html><body style="margin:0;width:180px;height:180px;background:#0a0a0a;color:#f2f2f0;font-family:${font};display:flex;align-items:center;justify-content:center;position:relative">
-<div style="font-size:110px;font-weight:600;line-height:1;margin-top:-10px">@</div>
-<div style="position:absolute;top:30px;right:30px;width:22px;height:22px;border-radius:50%;background:#e5322d"></div>
-</body></html>`;
+const nnIcon = 'data:image/svg+xml;base64,' + readFileSync('public/favicon.svg').toString('base64');
+const icon = `<html><body style="margin:0;width:180px;height:180px;background:#0a0a0a;display:flex;align-items:center;justify-content:center"><img src="${nnIcon}" style="width:150px;height:150px"></body></html>`;
 
 const browser = await chromium.launch();
 for (const [html, w, h, out] of [[og, 1200, 630, 'public/og.png'], [icon, 180, 180, 'public/apple-touch-icon.png']]) {

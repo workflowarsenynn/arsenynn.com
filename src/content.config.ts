@@ -61,6 +61,8 @@ const projects = defineCollection({
             label: z.string().min(1),
             labelEn: z.string().min(1),
             intro: z.url().optional(),
+            /** Полный текст вступления (RU) для чтения прямо на сайте. */
+            introText: z.array(z.string()).optional(),
             youtube: z.url().optional(),
             chapters: z.array(
               z.object({
