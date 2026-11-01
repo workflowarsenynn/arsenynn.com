@@ -29,9 +29,9 @@ LastUpdated: 2026-11-01 13:10 MSK
 - PushPolicy: auto-safe
 
 ## Status
-- Stage: MVP (визуальное направление v2, проверено локально, не опубликовано)
+- Stage: MVP (опубликован на GitHub Pages, домен не подключён)
 - Журнальный индекс семи проектов: засечки в заголовках, теги через красную точку, ссылки кнопками. Ресерч в `docs/design_research.md`.
-- Логотипы и знаки подключены, тексты v2. Превью: https://claude.ai/artifact/CHuWcW8SaVZWaBCBYGxmQ1. Публикация на домене ждёт владельца.
+- Логотипы и знаки подключены, тексты v2. Превью: https://claude.ai/artifact/CHuWcW8SaVZWaBCBYGxmQ1. Живой сайт: https://workflowarsenynn.github.io/arsenynn.com/. Домен arsenynn.com ждёт DNS.
 
 ## Done
 - [x] Собраны и проверены ссылки проектов, записаны в `docs/project_registry.md`
@@ -47,7 +47,7 @@ LastUpdated: 2026-11-01 13:10 MSK
 - [x] Подключены логотипы `@arsenynn` и annFlow, OG image с wordmark
 - [x] Подключены знаки NN, Ws и маска, тексты v2, опубликовано превью
 - [x] MVP смержен в `main` (workflowarsenynn/arsenynn.com#1, #2) с разрешения владельца
-- [x] Владелец сделал репозиторий публичным и включил Pages (GitHub Actions)
+- [x] Владелец сделал репозиторий публичным и включил Pages, сайт опубликован на github.io и проверен в браузере
 - [x] Пройден QA в Chromium на 320–1440 px
 
 ## In Progress
