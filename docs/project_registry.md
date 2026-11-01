@@ -1,5 +1,5 @@
 # Project Registry
-LastUpdated: 2026-11-01 17:20 MSK
+LastUpdated: 2026-11-01 19:35 MSK
 
 Журнал проверки ссылок и открытых вопросов. Источник ссылок для сайта: `src/data/projects.ts` и `src/data/site.ts`.
 
@@ -8,8 +8,8 @@ LastUpdated: 2026-11-01 17:20 MSK
 | № | Проект | slug | Действие | URL | Проверка |
 |---|---|---|---|---|---|
 | 01 | @arsenynn | `arsenynn` | Telegram (primary) | https://t.me/arsenynn | канал найден |
-| 01 | @arsenynn | `arsenynn` | Часть I | https://t.me/arsenynn/5 | пост найден, ссылка от владельца 2026-11-01 |
-| 01 | @arsenynn | `arsenynn` | Часть II | https://t.me/arsenynn/28 | пост найден, ссылка от владельца 2026-11-01 |
+| 01 | @arsenynn | `arsenynn` | Часть I (вступление + главы 0.1–1.11.3, посты 6–24) | https://t.me/arsenynn/5 | ссылка от владельца, главы из канала 2026-11-01 |
+| 01 | @arsenynn | `arsenynn` | Часть II (вступление + главы 2.0–2.5, посты 29–54) | https://t.me/arsenynn/28 | ссылка от владельца, главы из канала 2026-11-01 |
 | — | Work / Collaboration | — | Portfolio (hub) | https://portfolio.arsenynn.com/ | 200, хаб для сотрудничества и HR |
 | — | Work / Collaboration | — | IT / AI, Sales / Events, Video production | https://portfolio.arsenynn.com/it-ai/, /sales-events/, /video-production/ | 200 |
 | 02 | workflow@arsenynn | `workflow` | Portfolio (primary) | https://portfolio.arsenynn.com/video-production/ | раздел выбран владельцем 2026-11-01 |
@@ -26,6 +26,8 @@ LastUpdated: 2026-11-01 17:20 MSK
 
 - **Тексты v2.** Короткие описания и About переписаны 2026-11-01 в `src/data/projects.ts`, ждут утверждения владельца.
 - **Контакт в блоке Work.** Сейчас в блоке Work стоят Portfolio и Telegram-канал workflow. Личный Telegram `https://t.me/arsenynnn` (три n) и email не добавлены: ждут подтверждения владельца.
+
+- **YouTube для частей @arsenynn.** Нужны ссылки на плейлисты частей (или на видео).
 
 ## Resolved 2026-11-01
 

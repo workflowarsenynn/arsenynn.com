@@ -103,6 +103,19 @@ test('annFlow: кнопка «Проекты» раскрывает оглавл
   await expect(page.locator('[id^="contents-"]')).toHaveCount(1);
 });
 
+test('@arsenynn: части раскрываются списком глав со ссылками на видео в Telegram', async ({ page }) => {
+  await page.goto('/');
+  for (const [id, count] of [['part-arsenynn-1', 19], ['part-arsenynn-2', 10]] as const) {
+    const button = page.locator(`[aria-controls="${id}"]`);
+    const panel = page.locator(`#${id}`);
+    await expect(panel).toBeHidden();
+    await button.click();
+    await expect(panel).toBeVisible();
+    await expect(panel.locator('a')).toHaveCount(count); // вступление + главы
+    for (const link of await panel.locator('a').all()) await expect(link).toHaveAttribute('href', /^https:\/\/t\.me\/arsenynn\/\d+$/);
+  }
+});
+
 test('английская версия: /en/, переключатель языка, hreflang, без русского текста в описаниях', async ({ page }) => {
   await page.goto('/en/');
   await expect(page.locator('html')).toHaveAttribute('lang', 'en');
