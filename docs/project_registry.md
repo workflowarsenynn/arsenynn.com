@@ -1,5 +1,5 @@
 # Project Registry
-LastUpdated: 2026-11-01 13:00 MSK
+LastUpdated: 2026-11-01 14:15 MSK
 
 Журнал проверки ссылок и открытых вопросов. Источник ссылок для сайта: `src/data/projects.ts` и `src/data/site.ts`.
 
@@ -8,7 +8,7 @@ LastUpdated: 2026-11-01 13:00 MSK
 | № | Проект | slug | Действие | URL | Проверка |
 |---|---|---|---|---|---|
 | 01 | @arsenynn | `arsenynn` | Telegram (primary) | https://t.me/arsenynn | канал найден |
-| 02 | workflow@arsenynn | `workflow` | Portfolio (primary) | https://portfolio.arsenynn.com/video-production/ | раздел выбран владельцем 2026-11-01 |
+| 02 | workflow@arsenynn | `workflow` | Portfolio (primary) | https://portfolio.arsenynn.com/video-production/ | 200, выбран владельцем, но на странице пока заглушка |
 | 02 | workflow@arsenynn | `workflow` | Telegram | https://t.me/ww_arsenynn | канал найден |
 | 03 | Бессмысленность и скоротечность | `bessmyslennost` | Telegram (primary) | https://t.me/bessmislennost | канал найден, ссылка от владельца 2026-11-01 |
 | 04 | Without Streaming | `without-streaming` | Listen (primary) | https://radio.arsenynn.quest | 200, владелец продлевает домен |
@@ -20,6 +20,7 @@ LastUpdated: 2026-11-01 13:00 MSK
 
 ## Open questions
 
+- **Portfolio для заказчиков.** `/video-production/` показывает «Раздел готовится» и кнопку несуществующего PDF, страницу надо доделать в проекте Portfolio. Запасной вариант: `/sales-events/` с готовыми видео-кейсами.
 - **Тексты v2.** Короткие описания и About переписаны 2026-11-01 в `src/data/projects.ts`, ждут утверждения владельца.
 - **Контакт в блоке Work.** Сейчас в блоке Work стоят Portfolio и Telegram-канал workflow. Личный Telegram `https://t.me/arsenynnn` (три n) и email не добавлены: ждут подтверждения владельца.
 

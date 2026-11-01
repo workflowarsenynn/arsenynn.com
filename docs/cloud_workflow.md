@@ -1,5 +1,5 @@
 # Cloud Workflow
-LastUpdated: 2026-11-01 11:10 MSK
+LastUpdated: 2026-11-01 14:15 MSK
 
 Как вести проект в cloud-сессиях Claude Code. Cloud-сессия клонирует GitHub-репозиторий и видит только запушенное, поэтому всё нужное для работы должно лежать в `workflowarsenynn/arsenynn.com`.
 
@@ -7,7 +7,7 @@ LastUpdated: 2026-11-01 11:10 MSK
 
 Делает владелец, нужен его логин:
 
-1. Открыть claude.ai/code и установить Claude GitHub App на репозиторий `workflowarsenynn/arsenynn.com`. Репозиторий приватный, без этого он не будет виден.
+1. Открыть claude.ai/code и установить Claude GitHub App на репозиторий `workflowarsenynn/arsenynn.com`. Без него сессия не сможет пушить ветки и открывать PR.
 2. Environment: `Default`, network access `Trusted`. Секреты не добавлять, сайту они не нужны.
 
 ## Starting prompt

@@ -1,5 +1,5 @@
 # Implementation Plan
-LastUpdated: 2026-11-01 13:05 MSK
+LastUpdated: 2026-11-01 14:15 MSK
 
 ## Todoist Sync
 - Sync: manual
@@ -25,13 +25,13 @@ LastUpdated: 2026-11-01 13:05 MSK
 - Repository: workflowarsenynn/arsenynn.com
 - Remote: origin
 - Mode: direct
-- Visibility: private
+- Visibility: public-approved
 - PushPolicy: auto-safe
 
 ## Status
-- Stage: MVP (визуальное направление v2, проверено локально, не опубликовано)
-- Журнальный индекс семи проектов: засечки в заголовках, теги через красную точку, ссылки кнопками. Ресерч в `docs/design_research.md`.
-- Логотипы и знаки подключены, тексты v2. Превью: https://claude.ai/artifact/CHuWcW8SaVZWaBCBYGxmQ1. Публикация на домене ждёт владельца.
+- Stage: Integration (MVP v2 опубликован на `https://arsenynn.com`, приёмка не закончена)
+- Сайт отдаётся GitHub Pages из публичного репозитория, DNS в Cloudflare в режиме DNS only, merge в `main` публикует автоматически.
+- Открыто: HTTP не редиректит на HTTPS, Portfolio ведёт на незаконченный `/video-production/`, нет проверки в Safari iOS и из РФ.
 
 ## Done
 - [x] Собраны и проверены ссылки проектов, записаны в `docs/project_registry.md`
@@ -48,22 +48,24 @@ LastUpdated: 2026-11-01 13:05 MSK
 - [x] Подключены знаки NN, Ws и маска, тексты v2, опубликовано превью
 - [x] MVP смержен в `main` (workflowarsenynn/arsenynn.com#1) с разрешения владельца
 - [x] Пройден QA в Chromium на 320–1440 px
+- [x] Сайт опубликован: репозиторий публичный, Pages и DNS подключены, live проверен 2026-11-01
 
 ## In Progress
 <!-- Нет задач в работе. -->
 
 ## Next
 <!-- Canonical planning checklist. Plain items DO NOT auto-create Todoist subtasks. Todoist child boundaries require explicit owner/canonical-plan approval under One Plan = One Subtask. -->
+- [ ] Включить Enforce HTTPS в настройках Pages (с подтверждения владельца)
+- [ ] Закончить `/video-production/` в Portfolio или вести кнопку на `/sales-events/`
 - [ ] Получить чистый wordmark workflow@arsenynn
-- [ ] Утвердить у владельца тексты v2 и вид по превью
+- [ ] Утвердить у владельца тексты v2 и вид сайта
 - [ ] Решить, нужен ли личный Telegram или email в блоке Work
-- [ ] Сделать репозиторий публичным и включить Pages с источником GitHub Actions (владелец)
-- [ ] Подключить DNS `arsenynn.com` по `docs/deploy.md` (с подтверждения владельца)
 - [ ] Проверить в Safari iOS, с телефона из РФ и превью ссылки в Telegram
 
 ## Risks
 - `arsenynn.quest` истекает 2026-11-15: владелец продлевает домен, до продления кнопки Listen и Website под угрозой.
-- Actions в репозитории запускаются (run 41295699260 стартовал 2026-11-01), но деплой упадёт, пока Pages не включён: в приватном репозитории на бесплатном плане Pages недоступен.
+- Кнопка Portfolio для заказчиков ведёт на `/video-production/`: там пока заглушка «Раздел готовится» и нерабочая кнопка PDF.
+- `http://arsenynn.com` отвечает 200 без редиректа: сертификат выдан, Enforce HTTPS выключен.
 - Прокси Cloudflare в РФ обрезает ответы примерно на 16 KB: запись `arsenynn.com` должна оставаться DNS only.
 - Safari iOS не проверялся: в cloud-контейнере его нет, нужна проверка на телефоне.
 - Проверка доступности ссылок выполнялась не из РФ-сети.
@@ -71,7 +73,6 @@ LastUpdated: 2026-11-01 13:05 MSK
 ## Todoist Intake
 <!-- External Todoist active subtasks/descriptions that require review before becoming implementation work. -->
 <!-- Empty unless Todoist intake found new unresolved inputs or intake could not be completed. -->
-- Warning 2026-11-01 (повторно 13:00): cloud-сессия без доступа к Todoist MCP и `td` CLI, intake не выполнен. Статус задачи `task:6hvH5GRVH9X75cCX` обновить из локальной сессии.
 
 ---
 

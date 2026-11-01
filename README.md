@@ -1,11 +1,11 @@
 # arsenynn.com
-LastUpdated: 2026-11-01 12:40 MSK
+LastUpdated: 2026-11-01 14:15 MSK
 
 Личный сайт @arsenynn: mobile-first индекс разных проектов автора на одной странице.
 
 **film / magazine / index, not portfolio template**
 
-Статус: MVP собран и проверен локально, сайт ещё не опубликован.
+Статус: MVP опубликован на [arsenynn.com](https://arsenynn.com). Merge в `main` обновляет сайт автоматически.
 
 ```bash
 npm install
