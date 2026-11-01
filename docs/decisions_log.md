@@ -1,9 +1,32 @@
 # Decisions Log
-LastUpdated: 2026-11-01 17:10 MSK
+LastUpdated: 2026-11-01 17:20 MSK
 
 Этот файл хранит историю проекта: важные решения, изменения подхода, причины архитектурных поворотов, rejected options, runtime findings и выводы, которые помогают понять, как проект развивался.
 
 Записи идут в обратном хронологическом порядке: новые сверху.
+
+---
+
+## 2026-11-01 — Phase 7: части @arsenynn и портфолио-хаб
+
+**Type:** decision
+**Project:** arsenynn.com
+**Phase:** Phase 7
+**Status:** accepted
+**Related files:** `src/content/projects.yaml`, `src/data/site.ts`
+
+### Context
+Владелец: первая версия сайта только со ссылками, видео на сайте пока не будет, но у @arsenynn нужны ссылки на части (t.me/arsenynn/5 и /28). Портфолио `portfolio.arsenynn.com` для сотрудничества и HR должно быть видно на сайте.
+
+### Decision
+- У @arsenynn строки «Часть I» и «Часть II» (тип ссылки `chapter`) после Telegram.
+- Header Portfolio ведёт на хаб, а не на видеораздел.
+- Блок Work / Collaboration стал входом для сотрудничества и найма: Portfolio (хаб, primary), IT / AI, Sales / Events, Video production.
+- У workflow@arsenynn осталась прямая ссылка на видеопортфолио.
+- Внутренний мир `/arsenynn/` (advisory step 6) отложен до появления видео на сайте.
+
+### Source
+Сообщение владельца 2026-11-01.
 
 ---
 

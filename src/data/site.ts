@@ -17,17 +17,20 @@ export const site = {
     line: 'семь параллельных вещей одного автора',
   },
 
+  // Портфолио-хаб для сотрудничества и HR: IT / AI, продажи и события, видео.
   header: {
-    link: { label: 'Portfolio', url: 'https://portfolio.arsenynn.com/video-production/' },
+    link: { label: 'Portfolio', url: 'https://portfolio.arsenynn.com/' },
   },
 
   work: {
     title: 'Work / Collaboration',
-    descriptor: 'production / commercial video / creative projects',
-    text: 'Снимаю для брендов, событий и людей. Работы в портфолио, остальное в Telegram.',
+    descriptor: 'collaboration / hiring / portfolio',
+    text: 'Портфолио для сотрудничества и найма: AI-автоматизация, продажи и события, видеопродакшн.',
     links: [
-      { label: 'Portfolio', url: 'https://portfolio.arsenynn.com/video-production/', primary: true },
-      { label: 'Telegram', url: 'https://t.me/ww_arsenynn' },
+      { label: 'Portfolio', url: 'https://portfolio.arsenynn.com/', primary: true },
+      { label: 'IT / AI', url: 'https://portfolio.arsenynn.com/it-ai/' },
+      { label: 'Sales / Events', url: 'https://portfolio.arsenynn.com/sales-events/' },
+      { label: 'Video production', url: 'https://portfolio.arsenynn.com/video-production/' },
     ],
   },
 

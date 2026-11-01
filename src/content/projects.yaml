@@ -23,6 +23,12 @@
       url: https://t.me/arsenynn
       type: telegram
       primary: true
+    - label: Часть I
+      url: https://t.me/arsenynn/5
+      type: chapter
+    - label: Часть II
+      url: https://t.me/arsenynn/28
+      type: chapter
   feed: arsenynn
   detailPageEnabled: false
 
