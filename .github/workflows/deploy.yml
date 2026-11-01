@@ -7,6 +7,9 @@ on:
   push:
     branches: [main]
   workflow_dispatch:
+  # Пересборка каждые 6 часов: огоньки и порядок проектов следуют за свежими постами.
+  schedule:
+    - cron: '17 */6 * * *'
 
 permissions:
   contents: read
