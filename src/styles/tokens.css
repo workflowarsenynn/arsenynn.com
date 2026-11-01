@@ -28,6 +28,8 @@
 
   --gutter: 1.25rem;
   --content-width: 72rem;
+  /* Ширина индекса на desktop: колонка номера 8rem + текст ~44rem. */
+  --index-width: 54rem;
   --tap: 48px;
   --tap-row: 56px;
   --radius: 999px;

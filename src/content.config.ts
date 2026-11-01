@@ -22,6 +22,8 @@ const projects = defineCollection({
       order: z.number().int().min(1),
       slug: z.string().regex(/^[a-z0-9-]+$/),
       title: z.string().min(1),
+      /** Название акцентным красным (главный проект @arsenynn). */
+      accent: z.boolean().optional(),
       tags: z.array(z.string()).min(1),
       shortDescription: z.string().min(1),
       longDescription: z.array(z.string()).max(4).optional(),

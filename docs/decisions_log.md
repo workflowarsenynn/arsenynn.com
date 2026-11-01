@@ -1,9 +1,33 @@
 # Decisions Log
-LastUpdated: 2026-11-01 20:50 MSK
+LastUpdated: 2026-11-01 21:00 MSK
 
 Этот файл хранит историю проекта: важные решения, изменения подхода, причины архитектурных поворотов, rejected options, runtime findings и выводы, которые помогают понять, как проект развивался.
 
 Записи идут в обратном хронологическом порядке: новые сверху.
+
+---
+
+## 2026-11-01 — Индекс по центру на desktop, тексты @arsenynn и annFlow
+
+**Type:** decision
+**Project:** arsenynn.com
+**Status:** accepted
+**Related files:** `src/components/ProjectSection.astro`, `src/content/projects.yaml`, `src/styles/global.css`
+
+### Context
+Владелец: на desktop раскрытые «Проекты» в правой колонке выглядят неудобно, всё должно быть в центре. Также: у Party Protocol сначала Telegram; @arsenynn целиком красным, новый слоган и About; новый About у annFlow; видео для Without Streaming пришлёт позже.
+
+### Decision
+- Desktop: правая колонка действий убрана (это была трёхколоночная сетка из advisory Phase 1), индекс центрирован (54rem), ссылки и списки под текстом на всю его ширину.
+- Party Protocol: Telegram первым и главным, затем Website.
+- @arsenynn: название акцентным красным (`accent: true`), слоган «Там, где отсутствие необходимости не исключает неизбежности», About из трёх абзацев владельца. EN-переводы сделаны агентом.
+- annFlow: About владельца из трёх абзацев.
+
+### Alternatives / rejected options
+- Оставить колонку и вынести раскрытые списки под строку: в колонке остались бы узкие строки, и между кнопкой и её списком был бы разрыв.
+
+### Source
+Сообщение владельца 2026-11-01.
 
 ---
 
