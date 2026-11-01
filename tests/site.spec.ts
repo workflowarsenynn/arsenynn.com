@@ -131,6 +131,24 @@ test('@arsenynn: части раскрываются главами с кадр�
   await expect(page.locator('#part-arsenynn-1 .chapter__frame img')).toHaveCount(16);
 });
 
+test('@arsenynn: «Вступление» раскрывает текст введения внутри части', async ({ page }) => {
+  await page.goto('/');
+  await page.locator('[aria-controls="part-arsenynn-1"]').click();
+  const toggle = page.locator('[aria-controls="intro-arsenynn-1"]');
+  const text = page.locator('#intro-arsenynn-1 .reading');
+  await expect(text).toBeHidden();
+  await toggle.click();
+  await expect(text).toBeVisible();
+  await expect(text).toContainText('Находясь в точке «сейчас»');
+  await expect(text.locator('a[href="https://t.me/arsenynn/5"]')).toHaveCount(1);
+});
+
+test('Work: Video production виден, но не кликается', async ({ page }) => {
+  await page.goto('/');
+  await expect(page.locator('#work a[href*="video-production"]')).toHaveCount(0);
+  await expect(page.locator('#work .work__soon')).toContainText('Video production');
+});
+
 test('английская версия: /en/, переключатель языка, hreflang, без русского текста в описаниях', async ({ page }) => {
   await page.goto('/en/');
   await expect(page.locator('html')).toHaveAttribute('lang', 'en');

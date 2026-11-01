@@ -37,7 +37,8 @@ export const site = {
       { label: 'Portfolio', url: 'https://portfolio.arsenynn.com/', primary: true },
       { label: 'IT / AI', url: 'https://portfolio.arsenynn.com/it-ai/' },
       { label: 'Sales / Events', url: 'https://portfolio.arsenynn.com/sales-events/' },
-      { label: 'Video production', url: 'https://portfolio.arsenynn.com/video-production/' },
+      // Раздел готовится: строка видна, но не кликается.
+      { label: 'Video production', url: 'https://portfolio.arsenynn.com/video-production/', soon: true },
     ],
   },
 
