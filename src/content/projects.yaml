@@ -260,6 +260,12 @@
       url: https://t.me/bessmislennost
       type: telegram
       primary: true
+  mark:
+    src: /logos/bessmyslennost.webp
+    width: 320
+    height: 320
+    scale: 1.7
+    photo: true
   en:
     shortDescription: "Conversation and memory. Some things return later."
     longDescription:
