@@ -16,7 +16,7 @@ export const site = {
     // Главный логотип хаба: портрет в красном свете, единственное изображение сайта.
     portrait: { src: '/portrait.webp', width: 750, height: 900 },
     // Одна строка вместо трёх слоёв объяснения (advisory: reduce explanation, increase identity).
-    line: 'семь параллельных вещей одного автора',
+    line: 'одна авторская система, внутри которой семь способов смотреть на мир',
   },
 
   // Портфолио-хаб для сотрудничества и HR: IT / AI, продажи и события, видео.
@@ -41,7 +41,7 @@ export const site = {
     title: '@arsenynn — index',
     description:
       'An index of @arsenynn projects: auteur film, commissioned video, philosophy, radio, AI systems, VPN and travel.',
-    heroLine: 'seven parallel things by one author',
+    heroLine: 'one authored system, seven ways of looking at the world',
     workText: 'Portfolio for collaboration and hiring: AI automation, sales and events, video production.',
   },
 

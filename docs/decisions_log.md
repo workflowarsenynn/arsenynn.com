@@ -1,9 +1,27 @@
 # Decisions Log
-LastUpdated: 2026-11-01 18:55 MSK
+LastUpdated: 2026-11-01 19:05 MSK
 
 Этот файл хранит историю проекта: важные решения, изменения подхода, причины архитектурных поворотов, rejected options, runtime findings и выводы, которые помогают понять, как проект развивался.
 
 Записи идут в обратном хронологическом порядке: новые сверху.
+
+---
+
+## 2026-11-01 — Пропорции hero и новая строка
+
+**Type:** decision
+**Project:** arsenynn.com
+**Status:** accepted
+**Related files:** `src/components/Hero.astro`, `src/data/site.ts`, `scripts/render-images.mjs`
+
+### Context
+Владелец попросил опустить `@arsenynn` чуть ниже, проверить пропорции портрета и двух надписей и заменить строку на «одна авторская система, внутри которой семь способов смотреть на мир».
+
+### Decision
+Wordmark больше не накладывается на кадр: под портретом воздух 16–24 px. Ширина wordmark ≈ 1.6 ширины портрета (18rem к 11rem на телефоне, 24rem к 15rem на desktop). Строка: `text-wrap: balance`, ширина около ширины wordmark. EN: «one authored system, seven ways of looking at the world». OG image обновлён.
+
+### Source
+Сообщение владельца 2026-11-01.
 
 ---
 
