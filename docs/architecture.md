@@ -1,5 +1,5 @@
 # Architecture
-LastUpdated: 2026-11-01 15:45 MSK
+LastUpdated: 2026-11-01 16:00 MSK
 
 Статус: MVP реализован по этой архитектуре. Требования и их причины находятся в `docs/brief.md`, здесь только технические решения.
 
@@ -8,7 +8,7 @@ LastUpdated: 2026-11-01 15:45 MSK
 - Astro со статической сборкой: компоненты на сервере сборки, в браузер уходит только HTML, CSS и один маленький скрипт. Причины выбора в `docs/decisions_log.md`.
 - TypeScript для данных, чтобы опечатка в проекте или ссылке ломала сборку, а не страницу.
 - Обычный CSS с design tokens. Без Tailwind, без UI-библиотек, без icon packs: стрелка `↗` это текст.
-- Шрифты: Playfair Display Variable (OFL-1.1, кириллица) для названий проектов, hero-фразы и Work, self-hosted через `@fontsource-variable/playfair-display`; системный sans для остального. Обоснование в `docs/design_research.md`.
+- Шрифты (advisory phase 2): Source Serif 4 Variable для заголовков, hero-строки и литературного текста, Manrope Variable для интерфейса и текста. Оба OFL-1.1, с кириллицей, self-hosted через `@fontsource-variable/*`, только ось wght (без opsz): около 126 KB woff2 на первый просмотр с кириллицей и латиницей.
 - Node.js 20 или новее.
 
 ## Repository structure

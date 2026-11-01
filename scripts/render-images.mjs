@@ -9,9 +9,13 @@ import { readFileSync } from 'node:fs';
 
 const font = `-apple-system, 'Helvetica Neue', Arial, sans-serif`;
 const wordmark = 'data:image/svg+xml;base64,' + readFileSync('public/logos/arsenynn.svg').toString('base64');
-const og = `<html><body style="margin:0;width:1200px;height:630px;background:#0a0a0a;color:#f2f2f0;font-family:${font};display:flex;flex-direction:column;justify-content:flex-end;padding:80px;box-sizing:border-box">
+// Шрифты сайта для OG image: Source Serif 4 (кириллица) и Manrope (латиница).
+const fontFace = (family, file) =>
+  `@font-face{font-family:'${family}';src:url(data:font/woff2;base64,${readFileSync(file).toString('base64')}) format('woff2');font-weight:100 900}`;
+const fonts = `<style>${fontFace('OGSerif', 'node_modules/@fontsource-variable/source-serif-4/files/source-serif-4-cyrillic-wght-normal.woff2')}${fontFace('OGSans', 'node_modules/@fontsource-variable/manrope/files/manrope-latin-wght-normal.woff2')}</style>`;
+const og = `<html><head>${fonts}</head><body style="margin:0;width:1200px;height:630px;background:#0a0a0a;color:#f2f2f0;font-family:${font};display:flex;flex-direction:column;justify-content:flex-end;padding:80px;box-sizing:border-box">
 <img src="${wordmark}" style="width:560px;display:block">
-<div style="font-size:36px;color:#f2f2f0;margin-top:28px;font-family:Georgia,serif">семь параллельных вещей одного автора</div>
+<div style="font-size:36px;color:#f2f2f0;margin-top:28px;font-family:OGSerif,Georgia,serif">семь параллельных вещей одного автора</div>
 </body></html>`;
 const icon = `<html><body style="margin:0;width:180px;height:180px;background:#0a0a0a;color:#f2f2f0;font-family:${font};display:flex;align-items:center;justify-content:center;position:relative">
 <div style="font-size:110px;font-weight:600;line-height:1;margin-top:-10px">@</div>

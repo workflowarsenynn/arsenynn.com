@@ -16,7 +16,7 @@ body {
   color: var(--color-text);
   font-family: var(--font-ui);
   font-size: var(--text-body);
-  line-height: 1.5;
+  line-height: var(--leading-body);
   -webkit-font-smoothing: antialiased;
   overflow-wrap: break-word;
 }
