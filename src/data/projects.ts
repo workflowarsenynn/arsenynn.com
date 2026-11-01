@@ -2,6 +2,10 @@ import { getCollection } from 'astro:content';
 import type { Project } from './types';
 import { lastTelegramPost, signalFor, type Signal } from '../lib/activity';
 import type { Locale } from '../lib/i18n';
+import activity from '../content/activity.json';
+
+// Даты от Telegram-бота для проектов без публичной ленты (scripts/telegram/activity.mjs).
+const botActivity = activity as Record<string, { chat: string; lastActivity: string | null }>;
 
 export type ProjectView = Project & { lastActivity?: Date; signal: Signal };
 
@@ -13,7 +17,8 @@ export async function getProjects(locale: Locale = 'ru'): Promise<ProjectView[]>
   const views = await Promise.all(
     entries.map(async (e): Promise<ProjectView> => {
       const fromFeed = e.data.feed ? await lastTelegramPost(e.data.feed) : undefined;
-      const dates = [fromFeed, e.data.updatedAt].filter((d): d is Date => Boolean(d));
+      const fromBot = botActivity[e.id]?.lastActivity ? new Date(botActivity[e.id].lastActivity!) : undefined;
+      const dates = [fromFeed, fromBot, e.data.updatedAt].filter((d): d is Date => Boolean(d));
       const lastActivity = dates.length ? new Date(Math.max(...dates.map((d) => d.getTime()))) : undefined;
       const d = e.data;
       // На /en/ подставляются английские тексты и подписи ссылок, структура та же.

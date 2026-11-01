@@ -1,9 +1,38 @@
 # Decisions Log
-LastUpdated: 2026-11-01 17:35 MSK
+LastUpdated: 2026-11-01 17:45 MSK
 
 Этот файл хранит историю проекта: важные решения, изменения подхода, причины архитектурных поворотов, rejected options, runtime findings и выводы, которые помогают понять, как проект развивался.
 
 Записи идут в обратном хронологическом порядке: новые сверху.
+
+---
+
+## 2026-11-01 — Phase 9: даты активности от Telegram-бота
+
+**Type:** decision
+**Project:** arsenynn.com
+**Phase:** Phase 9 (advisory Telegram pipeline, metadata only)
+**Status:** accepted, ждёт токен
+**Related files:** `scripts/telegram/activity.mjs`, `.github/workflows/telegram-activity.yml`, `src/content/activity.json`
+
+### Context
+У группы «Бессмысленность и скоротечность» и канала Without Streaming нет публичной ленты, поэтому сигнальный огонёк для них не работает. Владелец попросил импорт из Telegram ботом по advisory.
+
+### Decision
+Отдельный бот (не ann: два процесса не могут читать getUpdates одного бота). Workflow раз в час забирает события, пишет только дату последнего сообщения по username чата, подтверждает offset, коммитит `activity.json` и явно запускает `deploy.yml`.
+
+### Why
+Advisory: Telegram — источник событий, не хранилище; для Without Streaming метаданные отдельно от архива. Bot API хранит события около 24 часов, поэтому опрос раз в час и сохранение даты в репозитории. Push от GITHUB_TOKEN не запускает другие workflow, кроме workflow_dispatch, поэтому публикация вызывается через `gh workflow run`.
+
+### Alternatives / rejected options
+- Черновики постов в Markdown (полный pipeline advisory): нужен, когда появятся внутренние страницы с контентом.
+- Webhook: нужен постоянный сервер, у сайта его нет.
+
+### Consequences
+Проверено на поддельных событиях: регистр username не важен, учитывается edit_date, чужие чаты игнорируются, offset подтверждается. До появления секрета workflow завершается без действий.
+
+### Source
+Сообщение владельца 2026-11-01.
 
 ---
 

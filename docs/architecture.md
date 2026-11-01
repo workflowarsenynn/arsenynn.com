@@ -1,5 +1,5 @@
 # Architecture
-LastUpdated: 2026-11-01 17:35 MSK
+LastUpdated: 2026-11-01 17:45 MSK
 
 Статус: MVP реализован по этой архитектуре. Требования и их причины находятся в `docs/brief.md`, здесь только технические решения.
 
@@ -96,6 +96,7 @@ type Project = {
 - Свежесть: дата последнего поста публичного канала (`feed` в `projects.yaml`, страница `t.me/s/<канал>`, только `<time datetime>`), иначе ручная `updatedAt`. Код: `src/lib/activity.ts`, 3 попытки по 8 с при сборке.
 - Сигнальный огонёк у номера: залитая точка — до 7 дней, кольцо — до 45 дней, пусто — тишина. Без анимации. Дата текстом только для экранных дикторов и в `title`.
 - `deploy.yml` пересобирает сайт по расписанию каждые 6 часов (`17 */6 * * *`).
+- Для чатов без публичной ленты (группа «Бессмысленность», канал Without Streaming) даты даёт бот: `.github/workflows/telegram-activity.yml` раз в час вызывает `scripts/telegram/activity.mjs` (getUpdates), пишет только дату в `src/content/activity.json`, коммитит и запускает `deploy.yml`. Без секрета `TELEGRAM_BOT_TOKEN` ничего не делает.
 
 ## About accordion
 

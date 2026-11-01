@@ -1,5 +1,5 @@
 # Implementation Plan
-LastUpdated: 2026-11-01 17:35 MSK
+LastUpdated: 2026-11-01 17:45 MSK
 
 ## Todoist Sync
 - Sync: manual
@@ -29,7 +29,7 @@ LastUpdated: 2026-11-01 17:35 MSK
 - PushPolicy: auto-safe
 
 ## Status
-- Stage: Phase 8 of The Moving Index (RU/EN) (advisory), только тёмная тема, сайт на https://arsenynn.com
+- Stage: Phase 9 of The Moving Index (Telegram activity) (advisory), только тёмная тема, сайт на https://arsenynn.com
 - Направление задано `docs/Advisory/deep_research_and_implementation_direction.md`: оставить Astro и статику, развивать фазами, каждая фаза отдельным деплоем с точкой отката.
 - Phase 1: hero в одну строку, тексты по advisory, знаки в строке номера, текстовые ссылки вместо «пилюль», трёхколоночный desktop.
 
@@ -45,6 +45,7 @@ LastUpdated: 2026-11-01 17:35 MSK
 - `rollback/phase-5`: прод после Phase 5, до Phase 6 (c2f8ba2).
 - `rollback/phase-6`: прод после Phase 6, до Phase 7 (24a7b08).
 - `rollback/phase-7`: прод после Phase 7, до Phase 8 (9363dd8).
+- `rollback/phase-8`: прод после Phase 8, до Phase 9 (46887f4).
 - Откат: PR из revert-коммита фазы в `main` или `git revert <merge-commit>`; GitHub Actions пересоберёт сайт за 1–2 минуты.
 
 ## Done
@@ -62,6 +63,7 @@ LastUpdated: 2026-11-01 17:35 MSK
 - [x] Phase 6: живой индекс — свежие проекты наверху, сигнальный огонёк (● неделя, ○ 45 дней), пересборка каждые 6 часов
 - [x] Phase 7: ссылки «Часть I/II» у @arsenynn, портфолио-хаб в header и блоке Work (сотрудничество и HR)
 - [x] Phase 8: английская версия /en/, hreflang и x-default, переключатель RU/EN, обязательные переводы в схеме
+- [x] Phase 9: workflow Telegram activity (бот, даты активности bessmyslennost и without-streaming), ждёт токен
 
 ## In Progress
 <!-- Нет задач в работе. -->
@@ -70,7 +72,7 @@ LastUpdated: 2026-11-01 17:35 MSK
 <!-- Canonical planning checklist. Plain items DO NOT auto-create Todoist subtasks. Todoist child boundaries require explicit owner/canonical-plan approval under One Plan = One Subtask. -->
 - [ ] Включить Enforce HTTPS в настройках Pages (владелец)
 - [ ] Advisory step 6: первый мир `/arsenynn/` — отложен владельцем: первая версия сайта только со ссылками, видео позже
-- [ ] Telegram-бот для активности bessmyslennost и without-streaming (нужен токен и бот-админ от владельца)
+- [ ] Владелец: создать бота в @BotFather, добавить админом в @without_streaming и @bessmislennost, сохранить токен в секрет `TELEGRAM_BOT_TOKEN`
 - [ ] Получить чистый wordmark workflow@arsenynn
 - [ ] Даты для проектов без публичной ленты (`updatedAt` у bessmyslennost и without-streaming) или Bot API для них
 - [ ] Проверить на iPhone и из РФ-сети
