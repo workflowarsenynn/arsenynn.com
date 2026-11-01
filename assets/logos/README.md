@@ -1,5 +1,5 @@
 # Logos
-LastUpdated: 2026-11-01 13:00 MSK
+LastUpdated: 2026-11-01 18:05 MSK
 
 Исходники логотипов и фото от владельца. Оригиналы лежат здесь, веб-версии в `public/logos/` и подключаются через `src/data/` (`site.hero.logo`, поле `logo` проекта).
 
@@ -14,7 +14,7 @@ LastUpdated: 2026-11-01 13:00 MSK
 | `arsenynn-wordmark.webp` | красный wordmark `@arsenynn` | `public/logos/arsenynn.svg`: hero, OG image |
 | `annflow-on-black.webp`, `annflow-main.png` | annFlow белым и красным | `public/logos/annflow.webp`: логотип строки 05 |
 | `annflow-app-icon.webp` | иконка annFlow со знаком `>_` | нет |
-| `nn-main.png`, `nn.psd` | знак NN красным | `public/logos/nn.svg`: знак строки 03 |
+| `nn-main.png`, `nn.psd` | знак NN красным | `public/logos/nn.svg`: знак проекта @arsenynn (уточнено владельцем 2026-11-01) |
 | `without-streaming.png`, `without-streaming-circle.png` | монограмма Ws | `public/logos/without-streaming.svg`: знак строки 04 |
 | `party-protocol-mask.png` | маска | `public/logos/party-protocol.svg`: знак строки 06, белым |
 | `party-protocol-party.png`, `party-protocol-poster.png` | надпись PARTY, постер на жёлтом | нет |
