@@ -1,5 +1,5 @@
 # Implementation Plan
-LastUpdated: 2026-11-01 12:50 MSK
+LastUpdated: 2026-11-01 13:00 MSK
 
 ## Todoist Sync
 - Sync: manual
@@ -31,7 +31,7 @@ LastUpdated: 2026-11-01 12:50 MSK
 ## Status
 - Stage: MVP (визуальное направление v2, проверено локально, не опубликовано)
 - Журнальный индекс семи проектов: засечки в заголовках, теги через красную точку, ссылки кнопками. Ресерч в `docs/design_research.md`.
-- Подключены логотипы `@arsenynn` (hero, OG) и annFlow. Остальные логотипы ждут файлов, публикация ждёт владельца.
+- Логотипы и знаки подключены, тексты v2. Превью: https://claude.ai/artifact/CHuWcW8SaVZWaBCBYGxmQ1. Публикация на домене ждёт владельца.
 
 ## Done
 - [x] Собраны и проверены ссылки проектов, записаны в `docs/project_registry.md`
@@ -45,6 +45,7 @@ LastUpdated: 2026-11-01 12:50 MSK
 - [x] Добавлена ссылка на «Бессмысленность и скоротечность»
 - [x] Проведён дизайн-ресерч, внедрено направление v2
 - [x] Подключены логотипы `@arsenynn` и annFlow, OG image с wordmark
+- [x] Подключены знаки NN, Ws и маска, тексты v2, опубликовано превью
 - [x] Пройден QA в Chromium на 320–1440 px
 
 ## In Progress
@@ -52,8 +53,8 @@ LastUpdated: 2026-11-01 12:50 MSK
 
 ## Next
 <!-- Canonical planning checklist. Plain items DO NOT auto-create Todoist subtasks. Todoist child boundaries require explicit owner/canonical-plan approval under One Plan = One Subtask. -->
-- [ ] Получить файлами логотипы Without Streaming, Party Protocol, workflow и знак NN (список в `assets/logos/README.md`) и подключить
-- [ ] Утвердить у владельца направление v2 и тексты hero, проектов и About
+- [ ] Получить чистый wordmark workflow@arsenynn
+- [ ] Утвердить у владельца тексты v2 и вид по превью
 - [ ] Решить, нужен ли личный Telegram или email в блоке Work
 - [ ] Смержить ветку в `main`
 - [ ] Сделать репозиторий публичным и включить Pages с источником GitHub Actions (владелец)
@@ -70,7 +71,7 @@ LastUpdated: 2026-11-01 12:50 MSK
 ## Todoist Intake
 <!-- External Todoist active subtasks/descriptions that require review before becoming implementation work. -->
 <!-- Empty unless Todoist intake found new unresolved inputs or intake could not be completed. -->
-- Warning 2026-11-01 (повторно 12:50): cloud-сессия без доступа к Todoist MCP и `td` CLI, intake не выполнен. Статус задачи `task:6hvH5GRVH9X75cCX` обновить из локальной сессии.
+- Warning 2026-11-01 (повторно 13:00): cloud-сессия без доступа к Todoist MCP и `td` CLI, intake не выполнен. Статус задачи `task:6hvH5GRVH9X75cCX` обновить из локальной сессии.
 
 ---
 

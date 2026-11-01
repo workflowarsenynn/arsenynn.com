@@ -7,6 +7,8 @@ export type ProjectLink = {
   primary?: boolean;
 };
 
+export type Asset = { src: string; width: number; height: number };
+
 export type ProjectStatus = 'active' | 'coming-soon' | 'private';
 
 export type Project = {
@@ -24,6 +26,8 @@ export type Project = {
   statusLabel?: string;
   links: ProjectLink[];
   /** Логотип вместо текстового названия. Файл в public/logos/. */
-  logo?: { src: string; width: number; height: number };
+  logo?: Asset;
+  /** Небольшой знак перед текстовым названием. Файл в public/logos/. */
+  mark?: Asset;
   detailPageEnabled: boolean;
 };

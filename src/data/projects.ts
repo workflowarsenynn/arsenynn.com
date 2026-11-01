@@ -1,7 +1,7 @@
 import type { Project } from './types';
 
 // Единственный источник проектов, текстов и внешних ссылок.
-// Тексты черновые (docs/brief.md раздел 53), About ждут утверждения владельца.
+// Тексты v2 от 2026-11-01, ждут утверждения владельца.
 // Проверка ссылок и открытые вопросы: docs/project_registry.md.
 
 const PORTFOLIO_VIDEO = 'https://portfolio.arsenynn.com/video-production/';
@@ -13,11 +13,10 @@ export const projects: Project[] = [
     slug: 'arsenynn',
     title: '@arsenynn',
     tags: ['concept', 'chapters', 'identity'],
-    shortDescription:
-      'Основной авторский канал. Фильмы, главы, наблюдения и фрагменты, из которых постепенно складывается более крупная история.',
+    shortDescription: 'Фильмы, которые складываются в главы. Отсюда растёт всё остальное.',
     longDescription: [
-      'Центральная авторская линия. Не lifestyle-канал, не портфолио и не блог в привычном смысле.',
-      'Видео, места, люди, мысли и визуальные фрагменты делятся на главы и со временем складываются в одну большую структуру.',
+      'Не блог и не портфолио. Места, люди, мысли и кадры собираются в главы медленно, как книга.',
+      'Каждая глава это попытка понять что-то одно.',
     ],
     status: 'active',
     links: [{ label: 'Telegram', url: 'https://t.me/arsenynn', type: 'telegram', primary: true }],
@@ -29,11 +28,10 @@ export const projects: Project[] = [
     slug: 'workflow',
     title: 'workflow@arsenynn',
     tags: ['production', 'promo', 'events', 'commercial video'],
-    shortDescription:
-      'Коммерческие видео, production и проекты для клиентов. Съёмка, монтаж, режиссура и работа с визуальными историями.',
+    shortDescription: 'Кино на заказ: для брендов, событий и людей, которым есть что показать.',
     longDescription: [
-      'Профессиональная сторона видеопроизводства: ролики для брендов, промо, event-видео, съёмка, монтаж, режиссура и продюсирование.',
-      'Если нужен проект под задачу, начните с портфолио или напишите в Telegram.',
+      'Сценарий, съёмка, монтаж, цвет. Промо, event-видео, ролики для брендов.',
+      'Один взгляд на всю историю, от задачи до последнего кадра.',
     ],
     status: 'active',
     links: [
@@ -48,14 +46,14 @@ export const projects: Project[] = [
     slug: 'bessmyslennost',
     title: 'Бессмысленность и скоротечность',
     tags: ['philosophy', 'impermanence', 'dialogue', 'memory'],
-    shortDescription:
-      'Пространство разговора, памяти и вещей, которые могут возвращаться спустя время вместо того, чтобы исчезать после публикации.',
+    shortDescription: 'Разговор, в котором ничего не исчезает. Внутри живёт ann.',
     longDescription: [
-      'Не просто канал, а среда для разговора. Внутри работает бот ann: он участвует в беседе, помнит контекст и возвращает старые материалы обратно в поток.',
-      'Некоторые вещи становятся понятны спустя месяцы или годы, поэтому здесь ничто не обязано исчезать после публикации.',
+      'Канал как среда. Бот ann участвует в разговоре, помнит контекст и возвращает старые записи обратно в поток.',
+      'Некоторые вещи становятся понятны только через год. Здесь им дают вернуться.',
     ],
     status: 'active',
     links: [{ label: 'Telegram', url: 'https://t.me/bessmislennost', type: 'telegram', primary: true }],
+    mark: { src: '/logos/nn.svg', width: 3398, height: 1881 },
     detailPageEnabled: false,
   },
   {
@@ -64,16 +62,17 @@ export const projects: Project[] = [
     slug: 'without-streaming',
     title: 'Without Streaming',
     tags: ['radio', 'music', 'archives', 'fragments'],
-    shortDescription: 'Личная музыкальная медиатека, превращённая в постоянно существующий эфир.',
+    shortDescription: 'Радио без алгоритмов. Эфир, который идёт, даже когда его никто не слушает.',
     longDescription: [
-      'Интернет-радио, выросшее из канала с музыкой и визуальными материалами. Не плейлист, а эфир, который идёт всегда.',
-      'Музыка, архив, визуальные фрагменты и личный вкус соединяются в один поток.',
+      'Личная медиатека, превращённая в эфир: музыка, архивы и визуальные фрагменты в одном потоке.',
+      'Нажмите Listen. Эфир уже идёт.',
     ],
     status: 'active',
     links: [
       { label: 'Listen', url: 'https://radio.arsenynn.quest', type: 'listen', primary: true },
       { label: 'Telegram', url: 'https://t.me/without_streaming', type: 'telegram' },
     ],
+    mark: { src: '/logos/without-streaming.svg', width: 718, height: 529 },
     detailPageEnabled: false,
   },
   {
@@ -82,11 +81,10 @@ export const projects: Project[] = [
     slug: 'annflow',
     title: 'annFlow',
     tags: ['automation', 'AI', 'systems', 'agents', 'workflows'],
-    shortDescription:
-      'AI, автоматизация, собственные системы и проекты, которые превращают идеи и повседневные процессы в работающую инфраструктуру.',
+    shortDescription: 'Машинное отделение. Агенты и системы, на которых держится всё остальное.',
     longDescription: [
-      'Операционная сторона всего @arsenynn: как всё это строится и работает.',
-      'Агенты, LLM, автоматизация macOS, собственные сервисы и инфраструктура. Эксперименты и проекты вокруг реальных задач, а не обзоры технологий.',
+      'Операционная сторона @arsenynn: LLM, агенты, автоматизация macOS, собственные сервисы.',
+      'Эксперименты вокруг реальных задач, а не обзоры технологий.',
     ],
     status: 'active',
     links: [{ label: 'Telegram', url: 'https://t.me/annsflow', type: 'telegram', primary: true }],
@@ -99,15 +97,14 @@ export const projects: Project[] = [
     slug: 'party-protocol',
     title: 'Party Protocol',
     tags: ['VPN', 'privacy', 'secure access'],
-    shortDescription: 'Независимый VPN-проект про приватность, устойчивый доступ и собственную инфраструктуру.',
-    longDescription: [
-      'Отдельный продукт со своей инфраструктурой, сайтом и Telegram-ботом.',
-    ],
+    shortDescription: 'Свой VPN на своей инфраструктуре. Тихо, быстро, без посредников.',
+    longDescription: ['Независимый сервис со своими серверами, сайтом и Telegram-ботом.'],
     status: 'active',
     links: [
       { label: 'Website', url: 'https://partyprotocol.arsenynn.quest', type: 'website', primary: true },
       { label: 'Telegram', url: 'https://t.me/partyprotocol', type: 'telegram' },
     ],
+    mark: { src: '/logos/party-protocol.svg', width: 1392, height: 546 },
     detailPageEnabled: false,
   },
   {
@@ -116,7 +113,7 @@ export const projects: Project[] = [
     slug: 'travel-log',
     title: 'Travel Log',
     tags: ['places', 'stories', 'memory', 'literature'],
-    shortDescription: 'Путешествия, места, фотография, кино, литература и память.',
+    shortDescription: 'Места, книги о них и то, что остаётся после дороги.',
     status: 'coming-soon',
     statusLabel: 'Coming soon',
     links: [],

@@ -1,5 +1,5 @@
 # Architecture
-LastUpdated: 2026-11-01 12:50 MSK
+LastUpdated: 2026-11-01 13:00 MSK
 
 Статус: MVP реализован по этой архитектуре. Требования и их причины находятся в `docs/brief.md`, здесь только технические решения.
 
@@ -21,6 +21,7 @@ docs/                    документация проекта
 public/                  favicon, OG image, apple-touch-icon, CNAME
 scripts/render-images.mjs  генерация OG image и иконки через Playwright
 scripts/trace-logo.py    векторизация одноцветного логотипа в SVG
+scripts/build-preview.sh копия dist/ для превью-артефакта
 public/logos/            веб-версии логотипов
 .github/workflows/deploy.yml  сборка и публикация на Pages
 src/
@@ -61,7 +62,8 @@ type Project = {
   status: 'active' | 'coming-soon' | 'private'
   statusLabel?: string           // подпись вместо ссылок, если URL нет
   links: ProjectLink[]
-  logo?: { src: string; width: number; height: number }  // файл в public/logos/
+  logo?: Asset                   // логотип вместо названия
+  mark?: Asset                   // знак над названием
   detailPageEnabled: boolean     // в MVP всегда false
 }
 ```
@@ -71,6 +73,7 @@ type Project = {
 - Номер на странице выводится из `order`, а не хранится текстом.
 - Проект без публичного URL не получает ссылку-заглушку: `links` пустой, показывается `Coming soon` или ничего.
 - `About` не выводится, если `longDescription` пуст.
+- Если у проекта есть `mark`, небольшой знак (`--mark-height`) стоит строкой над текстовым названием, `alt` пустой, потому что название есть текстом.
 - Если у проекта есть `logo`, вместо текста в `<h2>` выводится `<img>` с `alt` = `title`. Высота задаётся токеном `--logo-height`.
 - Hero выводит wordmark из `site.hero.logo` (SVG, `fetchpriority=high`), без логотипа выводится текст. Header содержит только ссылку Portfolio, имя не дублируется.
 - В названии разрешён перенос перед внутренним `@` (`workflow@arsenynn`), посреди слова названия не рвутся.

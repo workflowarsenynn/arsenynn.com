@@ -1,7 +1,13 @@
 # Deploy Runbook
-LastUpdated: 2026-11-01 12:00 MSK
+LastUpdated: 2026-11-01 13:00 MSK
 
 Статус: сайт собран, но не опубликован, в зоне `arsenynn.com` нет записей для корня домена. Шаги ниже ещё не выполнялись, каждый требует подтверждения владельца.
+
+## Preview
+
+До публикации на домене есть приватное превью в claude.ai: https://claude.ai/artifact/CHuWcW8SaVZWaBCBYGxmQ1 (видно только владельцу и тем, с кем он поделится через Share).
+
+Обновить: `npm run build`, затем `scripts/build-preview.sh <папка>` и опубликовать `<папка>/index.html` с файлами `logos/`, `fonts/`, `favicon.svg`, `apple-touch-icon.png` в тот же артефакт.
 
 ## Target
 

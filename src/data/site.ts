@@ -15,7 +15,7 @@ export const site = {
     logo: { src: '/logos/arsenynn.svg', width: 1235, height: 491 },
     descriptor: 'projects / channels / things',
     phrase: 'an index of parallel things',
-    intro: 'Семь проектов одного автора: кино, коммерческое видео, философия, радио, AI, VPN и путешествия.',
+    intro: 'Один автор, семь параллельных линий: кино, заказное видео, разговор, эфир, системы, приватность и дорога.',
   },
 
   header: {
@@ -25,7 +25,7 @@ export const site = {
   work: {
     title: 'Work / Collaboration',
     descriptor: 'production / commercial video / creative projects',
-    text: 'Коммерческие видео, production и совместные проекты. Посмотрите работы или напишите в Telegram.',
+    text: 'Снимаю для брендов, событий и людей. Работы в портфолио, остальное в Telegram.',
     links: [
       { label: 'Portfolio', url: 'https://portfolio.arsenynn.com/video-production/', primary: true },
       { label: 'Telegram', url: 'https://t.me/ww_arsenynn' },

@@ -25,7 +25,20 @@ const titleParts = project.title.split(/(?=@)/);
           decoding="async"
         />
       ) : (
-        titleParts.map((part, i) => (i > 0 ? <><wbr />{part}</> : part))
+        <>
+          {project.mark && (
+            <img
+              class="project__mark"
+              src={project.mark.src}
+              width={project.mark.width}
+              height={project.mark.height}
+              alt=""
+              loading="lazy"
+              decoding="async"
+            />
+          )}
+          {titleParts.map((part, i) => (i > 0 ? <><wbr />{part}</> : part))}
+        </>
       )}
     </h2>
     <ul class="project__tags meta" aria-label="Темы">
@@ -70,6 +83,14 @@ const titleParts = project.title.split(/(?=@)/);
     max-width: 100%;
     object-fit: contain;
     object-position: left center;
+  }
+
+  /* Знак стоит в строке над названием: длинные названия не теряют ширину. */
+  .project__mark {
+    display: block;
+    width: auto;
+    height: var(--mark-height);
+    margin-bottom: var(--space-1);
   }
 
   .project__tags {

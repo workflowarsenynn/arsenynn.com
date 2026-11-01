@@ -1,5 +1,5 @@
 # Logos
-LastUpdated: 2026-11-01 12:50 MSK
+LastUpdated: 2026-11-01 13:00 MSK
 
 Исходники логотипов и фото от владельца. Оригиналы лежат здесь, веб-версии в `public/logos/` и подключаются через `src/data/` (`site.hero.logo`, поле `logo` проекта).
 
@@ -7,18 +7,26 @@ LastUpdated: 2026-11-01 12:50 MSK
 
 ## Inventory
 
+Источник: папка владельца на Google Drive `assest/logos.zip`, 2026-11-01.
+
 | Файл | Что | На сайте |
 |---|---|---|
-| `arsenynn-wordmark.webp` | красный wordmark `@arsenynn`, прозрачный фон, 2000×667 | `public/logos/arsenynn.svg` (векторизован), hero и OG image |
-| `annflow-on-black.webp` | annFlow белым и красным на чёрном | `public/logos/annflow.webp` (фон убран), строка 05 |
-| `annflow-app-icon.webp` | иконка annFlow со знаком `>_` | не используется |
-| `nn.psd`, `nn.png` | знак NN красным, слои с прозрачностью | не используется |
-| `../photos/annflow-sketches.jpg` | фото эскизов annFlow | не используется, референс |
-| `../photos/portrait-red.webp` | портрет в красном свете | не используется: ТЗ раздел 40 просит сначала без портрета |
+| `arsenynn-wordmark.webp` | красный wordmark `@arsenynn` | `public/logos/arsenynn.svg`: hero, OG image |
+| `annflow-on-black.webp`, `annflow-main.png` | annFlow белым и красным | `public/logos/annflow.webp`: логотип строки 05 |
+| `annflow-app-icon.webp` | иконка annFlow со знаком `>_` | нет |
+| `nn-main.png`, `nn.psd` | знак NN красным | `public/logos/nn.svg`: знак строки 03 |
+| `without-streaming.png`, `without-streaming-circle.png` | монограмма Ws | `public/logos/without-streaming.svg`: знак строки 04 |
+| `party-protocol-mask.png` | маска | `public/logos/party-protocol.svg`: знак строки 06, белым |
+| `party-protocol-party.png`, `party-protocol-poster.png` | надпись PARTY, постер на жёлтом | нет |
+| `bessmyslennost-ann.png` | портрет ann в кепке | нет |
+| `wwnn-pattern.jpg` | паттерн workflow со знаками WW/NN | нет |
+| `../photos/*` | портрет, эскизы annFlow | нет |
+
+Не взяты в репозиторий из-за размера: апскейл портрета ann (35 MB), портрет `Main logo arsenynn.png` 7680 px (есть уменьшенная копия `../photos/portrait-red.webp`), фото эскизов (есть копия), скриншот паттерна workflow.
 
 ## Missing
 
-Есть только превью в чате, нужны файлы: Without Streaming (`Ws` и надпись), Party Protocol (маска, надпись PARTY, постер), workflow@arsenynn (wordmark, знак WW/NN), отдельный знак NN красным, Travel Log, «Бессмысленность и скоротечность».
+Чистого wordmark `workflow@arsenynn` нет: в паттерне он с глитчем. Travel Log без логотипа.
 
 ## How to add
 
