@@ -14,7 +14,7 @@ export const site = {
     title: '@arsenynn',
     logo: { src: '/logos/arsenynn.svg', width: 1235, height: 491 },
     // Главный логотип хаба: портрет в красном свете, единственное изображение сайта.
-    portrait: { src: '/portrait.webp', width: 800, height: 800 },
+    portrait: { src: '/portrait.webp', width: 750, height: 900 },
     // Одна строка вместо трёх слоёв объяснения (advisory: reduce explanation, increase identity).
     line: 'семь параллельных вещей одного автора',
   },
