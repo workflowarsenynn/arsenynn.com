@@ -27,7 +27,7 @@ const projects = defineCollection({
         z.object({
           label: z.string().min(1),
           url: z.url().refine((u) => u.startsWith('https://'), 'Ссылка должна начинаться с https://'),
-          type: z.enum(['telegram', 'website', 'portfolio', 'listen', 'other']),
+          type: z.enum(['telegram', 'website', 'portfolio', 'listen', 'chapter', 'other']),
           primary: z.boolean().optional(),
         }),
       ),

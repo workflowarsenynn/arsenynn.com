@@ -1,5 +1,5 @@
 # Implementation Plan
-LastUpdated: 2026-11-01 17:10 MSK
+LastUpdated: 2026-11-01 17:20 MSK
 
 ## Todoist Sync
 - Sync: manual
@@ -29,7 +29,7 @@ LastUpdated: 2026-11-01 17:10 MSK
 - PushPolicy: auto-safe
 
 ## Status
-- Stage: Phase 6 (живой индекс) of The Moving Index (advisory), только тёмная тема, сайт на https://arsenynn.com
+- Stage: Phase 7 of The Moving Index (advisory), только тёмная тема, сайт на https://arsenynn.com
 - Направление задано `docs/Advisory/deep_research_and_implementation_direction.md`: оставить Astro и статику, развивать фазами, каждая фаза отдельным деплоем с точкой отката.
 - Phase 1: hero в одну строку, тексты по advisory, знаки в строке номера, текстовые ссылки вместо «пилюль», трёхколоночный desktop.
 
@@ -43,6 +43,7 @@ LastUpdated: 2026-11-01 17:10 MSK
 - `rollback/phase-3r`: прод после отката к тёмной теме, до Phase 4 (7214de9).
 - `rollback/phase-4`: прод после Phase 4, до Phase 5 (7919e86).
 - `rollback/phase-5`: прод после Phase 5, до Phase 6 (c2f8ba2).
+- `rollback/phase-6`: прод после Phase 6, до Phase 7 (24a7b08).
 - Откат: PR из revert-коммита фазы в `main` или `git revert <merge-commit>`; GitHub Actions пересоберёт сайт за 1–2 минуты.
 
 ## Done
@@ -58,6 +59,7 @@ LastUpdated: 2026-11-01 17:10 MSK
 - [x] Phase 4: тесты Playwright + axe (16 проверок) и workflow Test в GitHub Actions
 - [x] Phase 5: проекты перенесены в Content Collection `src/content/projects.yaml` со схемой, HTML без изменений
 - [x] Phase 6: живой индекс — свежие проекты наверху, сигнальный огонёк (● неделя, ○ 45 дней), пересборка каждые 6 часов
+- [x] Phase 7: ссылки «Часть I/II» у @arsenynn, портфолио-хаб в header и блоке Work (сотрудничество и HR)
 
 ## In Progress
 <!-- Нет задач в работе. -->
@@ -66,7 +68,8 @@ LastUpdated: 2026-11-01 17:10 MSK
 <!-- Canonical planning checklist. Plain items DO NOT auto-create Todoist subtasks. Todoist child boundaries require explicit owner/canonical-plan approval under One Plan = One Subtask. -->
 - [ ] Включить Enforce HTTPS в настройках Pages (владелец)
 - [ ] Advisory step 5: RU/EN маршрутизация (`/en/`, hreflang)
-- [ ] Advisory step 6: первый мир `/arsenynn/` — нужны материалы владельца (фильмы или главы, обложки, тексты)
+- [ ] Advisory step 6: первый мир `/arsenynn/` — отложен владельцем: первая версия сайта только со ссылками, видео позже
+- [ ] Telegram-бот для активности bessmyslennost и without-streaming (нужен токен и бот-админ от владельца)
 - [ ] Получить чистый wordmark workflow@arsenynn
 - [ ] Даты для проектов без публичной ленты (`updatedAt` у bessmyslennost и without-streaming) или Bot API для них
 - [ ] Проверить на iPhone и из РФ-сети

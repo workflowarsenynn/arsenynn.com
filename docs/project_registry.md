@@ -1,5 +1,5 @@
 # Project Registry
-LastUpdated: 2026-11-01 13:00 MSK
+LastUpdated: 2026-11-01 17:20 MSK
 
 Журнал проверки ссылок и открытых вопросов. Источник ссылок для сайта: `src/data/projects.ts` и `src/data/site.ts`.
 
@@ -8,6 +8,10 @@ LastUpdated: 2026-11-01 13:00 MSK
 | № | Проект | slug | Действие | URL | Проверка |
 |---|---|---|---|---|---|
 | 01 | @arsenynn | `arsenynn` | Telegram (primary) | https://t.me/arsenynn | канал найден |
+| 01 | @arsenynn | `arsenynn` | Часть I | https://t.me/arsenynn/5 | пост найден, ссылка от владельца 2026-11-01 |
+| 01 | @arsenynn | `arsenynn` | Часть II | https://t.me/arsenynn/28 | пост найден, ссылка от владельца 2026-11-01 |
+| — | Work / Collaboration | — | Portfolio (hub) | https://portfolio.arsenynn.com/ | 200, хаб для сотрудничества и HR |
+| — | Work / Collaboration | — | IT / AI, Sales / Events, Video production | https://portfolio.arsenynn.com/it-ai/, /sales-events/, /video-production/ | 200 |
 | 02 | workflow@arsenynn | `workflow` | Portfolio (primary) | https://portfolio.arsenynn.com/video-production/ | раздел выбран владельцем 2026-11-01 |
 | 02 | workflow@arsenynn | `workflow` | Telegram | https://t.me/ww_arsenynn | канал найден |
 | 03 | Бессмысленность и скоротечность | `bessmyslennost` | Telegram (primary) | https://t.me/bessmislennost | канал найден, ссылка от владельца 2026-11-01 |
