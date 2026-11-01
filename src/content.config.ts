@@ -33,6 +33,17 @@ const projects = defineCollection({
           primary: z.boolean().optional(),
         }),
       ),
+      /** Оглавление канала: проекты со ссылками на первые посты (пока только annFlow). */
+      contents: z
+        .array(
+          z.object({
+            title: z.string().min(1),
+            note: z.string().optional(),
+            noteEn: z.string().optional(),
+            url: z.url().refine((u) => u.startsWith('https://'), 'Ссылка должна начинаться с https://'),
+          }),
+        )
+        .optional(),
       logo: asset.optional(),
       mark: asset.optional(),
       /** Публичный Telegram-канал, по последнему посту которого считается активность. */

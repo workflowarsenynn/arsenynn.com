@@ -88,6 +88,21 @@ test('порядок проектов задан владельцем, номе�
   await expect(page.locator('#work')).toBeVisible();
 });
 
+test('annFlow: кнопка «Проекты» раскрывает оглавление со ссылками на посты', async ({ page }) => {
+  await page.goto('/');
+  const button = page.locator('#annflow [aria-controls="contents-annflow"]');
+  const panel = page.locator('#contents-annflow');
+  await expect(button).toHaveAttribute('aria-expanded', 'false');
+  await expect(panel).toBeHidden();
+  await button.click();
+  await expect(panel).toBeVisible();
+  const links = panel.locator('a');
+  await expect(links).toHaveCount(7);
+  for (const link of await links.all()) await expect(link).toHaveAttribute('href', /^https:\/\/t\.me\/annsflow\/\d+$/);
+  // только у annFlow
+  await expect(page.locator('[id^="contents-"]')).toHaveCount(1);
+});
+
 test('английская версия: /en/, переключатель языка, hreflang, без русского текста в описаниях', async ({ page }) => {
   await page.goto('/en/');
   await expect(page.locator('html')).toHaveAttribute('lang', 'en');

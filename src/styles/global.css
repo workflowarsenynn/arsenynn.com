@@ -127,6 +127,31 @@ a {
   text-decoration-color: currentColor;
 }
 
+/* Раскрывающаяся панель (оглавление annFlow): без JS открыта, с JS свёрнута до нажатия. */
+.disclosure {
+  display: grid;
+  grid-template-rows: 1fr;
+  opacity: 1;
+}
+
+html.js .disclosure:not([data-open]) {
+  grid-template-rows: 0fr;
+  opacity: 0;
+  visibility: hidden;
+}
+
+html.about-ready .disclosure {
+  transition:
+    grid-template-rows var(--duration) ease,
+    opacity var(--duration) ease,
+    visibility var(--duration);
+}
+
+.disclosure__inner {
+  overflow: hidden;
+  min-height: 0;
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
