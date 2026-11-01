@@ -17,7 +17,7 @@ const fonts = `<style>${fontFace('OGSerif', 'node_modules/@fontsource-variable/s
 const og = `<html><head>${fonts}</head><body style="margin:0;width:1200px;height:630px;background:#0a0a0a;color:#f2f2f0;font-family:${font};display:flex;flex-direction:column;justify-content:flex-end;padding:80px;box-sizing:border-box;position:relative">
 <img src="${portrait}" style="position:absolute;right:40px;top:0;width:525px;height:630px;-webkit-mask-image:radial-gradient(ellipse 85% 80% at 72% 38%,#000 45%,transparent 100%)">
 <img src="${wordmark}" style="width:560px;display:block;position:relative;z-index:1">
-<div style="font-size:34px;line-height:1.25;max-width:560px;text-wrap:balance;color:#f2f2f0;margin-top:28px;font-family:OGSerif,Georgia,serif;position:relative;z-index:1">одна авторская система, внутри которой семь способов смотреть на мир</div>
+<div style="font-size:34px;line-height:1.25;max-width:560px;text-wrap:balance;color:#f2f2f0;margin-top:28px;font-family:OGSerif,Georgia,serif;position:relative;z-index:1">Финальная битва между рациональным и самоценным</div>
 </body></html>`;
 const icon = `<html><body style="margin:0;width:180px;height:180px;background:#0a0a0a;color:#f2f2f0;font-family:${font};display:flex;align-items:center;justify-content:center;position:relative">
 <div style="font-size:110px;font-weight:600;line-height:1;margin-top:-10px">@</div>

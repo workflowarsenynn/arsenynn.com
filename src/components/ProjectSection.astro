@@ -12,6 +12,8 @@ const { project, position } = Astro.props;
 const number = String(position).padStart(2, '0');
 const locale = toLocale(Astro.currentLocale);
 const t = ui[locale];
+// Оптическое выравнивание знаков: одинаковая площадь при разных пропорциях.
+const markK = project.mark ? (1 / Math.sqrt(project.mark.width / project.mark.height)).toFixed(3) : undefined;
 const when = project.lastActivity ? relative(project.lastActivity, locale) : undefined;
 const headingId = `project-${project.id}`;
 // Разрешить перенос перед внутренним «@» (workflow@arsenynn), а не посреди слова.
@@ -27,6 +29,7 @@ const titleParts = project.title.split(/(?=@)/);
     {project.mark && (
       <img
         class="project__mark"
+        style={`--mark-k: ${markK}`}
         src={asset(project.mark.src)}
         width={project.mark.width}
         height={project.mark.height}
@@ -83,7 +86,7 @@ const titleParts = project.title.split(/(?=@)/);
     align-items: center;
     justify-content: space-between;
     gap: var(--space-2);
-    min-height: var(--mark-height);
+    min-height: var(--mark-size);
     margin-bottom: var(--space-3);
   }
 
@@ -117,7 +120,7 @@ const titleParts = project.title.split(/(?=@)/);
   .project__mark {
     display: block;
     width: auto;
-    height: var(--mark-height);
+    height: calc(var(--mark-size) * var(--mark-k, 1));
   }
 
   .project__body {

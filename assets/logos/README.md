@@ -1,5 +1,5 @@
 # Logos
-LastUpdated: 2026-11-01 18:20 MSK
+LastUpdated: 2026-11-01 19:50 MSK
 
 Исходники логотипов и фото от владельца. Оригиналы лежат здесь, веб-версии в `public/logos/` и подключаются через `src/data/` (`site.hero.logo`, поле `logo` проекта).
 
@@ -19,6 +19,7 @@ LastUpdated: 2026-11-01 18:20 MSK
 | `party-protocol-mask.png` | маска | `public/logos/party-protocol.svg`: знак строки 06, белым |
 | `party-protocol-party.png`, `party-protocol-poster.png` | надпись PARTY, постер на жёлтом | нет |
 | `bessmyslennost-ann.png` | портрет ann в кепке | нет |
+| `wwnn.webp` | знак WW/NN красным (от владельца 2026-11-01) | `public/logos/workflow.svg`: знак workflow@arsenynn |
 | `wwnn-pattern.jpg` | паттерн workflow со знаками WW/NN | нет |
 | `../photos/portrait-red.webp` | главный логотип хаба: портрет в красном свете (оригинал `Main logo arsenynn.png` 7680 px на Drive) | `public/portrait.webp` 800 px: hero и OG image |
 | `../photos/annflow-sketches.jpg` | эскизы annFlow | нет |
@@ -27,7 +28,7 @@ LastUpdated: 2026-11-01 18:20 MSK
 
 ## Missing
 
-Чистого wordmark `workflow@arsenynn` нет: в паттерне он с глитчем. Travel Log без логотипа.
+Travel Log без логотипа.
 
 ## How to add
 
