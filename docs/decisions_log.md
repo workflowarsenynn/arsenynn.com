@@ -1,9 +1,29 @@
 # Decisions Log
-LastUpdated: 2026-11-01 20:25 MSK
+LastUpdated: 2026-11-01 20:40 MSK
 
 Этот файл хранит историю проекта: важные решения, изменения подхода, причины архитектурных поворотов, rejected options, runtime findings и выводы, которые помогают понять, как проект развивался.
 
 Записи идут в обратном хронологическом порядке: новые сверху.
+
+---
+
+## 2026-11-01 — Проекты workflow с кадрами, обложки annFlow, без Portfolio у workflow
+
+**Type:** decision
+**Project:** arsenynn.com
+**Status:** accepted
+**Related files:** `src/content/projects.yaml`, `src/components/ProjectActions.astro`, `public/thumbs/`
+
+### Context
+Владелец: убрать ссылку Portfolio у workflow@arsenynn, добавить проекты с каверами как у @arsenynn, то же для annFlow (в постах оглавления есть картинки).
+
+### Decision
+- workflow: главная ссылка Telegram; «Проекты» раскрывают 11 работ канала, свежие сверху, строка «год · длительность» над названием. Обложки — лучший кадр из альбома стоп-кадров перед каждым видео; у Dissociation — паттерн workflow.
+- annFlow: у семи серий обложки из первых постов серий (оформленные заставки канала).
+- Портфолио осталось в header и блоке Work / Collaboration.
+
+### Source
+Сообщение владельца 2026-11-01.
 
 ---
 

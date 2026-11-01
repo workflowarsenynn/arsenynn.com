@@ -89,8 +89,14 @@ const t = ui[toLocale(Astro.currentLocale)];
         <ul class="disclosure__inner contents">
           {project.contents.map((item) => (
             <li>
-              <a class="contents__link" href={item.url} target="_blank" rel="noopener">
+              <a class:list={['contents__link', { chapter: item.thumb }]} href={item.url} target="_blank" rel="noopener">
+                {item.thumb && (
+                  <span class="chapter__frame" aria-hidden="true">
+                    <img src={asset(item.thumb)} width="288" height="162" alt="" loading="lazy" decoding="async" />
+                  </span>
+                )}
                 <span class="contents__text">
+                  {item.meta && <span class="chapter__meta">{item.meta}</span>}
                   <span class="contents__title">{item.title}</span>
                   {item.note && <span class="contents__note">{item.note}</span>}
                 </span>
@@ -184,6 +190,8 @@ const t = ui[toLocale(Astro.currentLocale)];
   }
 
   .contents__text {
+    flex: 1;
+    min-width: 0;
     display: flex;
     flex-direction: column;
     gap: 0.15rem;
