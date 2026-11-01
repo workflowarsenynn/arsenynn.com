@@ -30,11 +30,14 @@
     - label: Часть I
       labelEn: Part I
       intro: https://t.me/arsenynn/5
+      youtube: https://www.youtube.com/@arsenynn/videos
       chapters:
         - num: '0.1'
           title: "Hello to the future"
           duration: '1:43'
           url: https://t.me/arsenynn/6
+          thumb: /thumbs/arsenynn-6.webp
+          youtube: Ko0993YuBsU
         - num: '0.2'
           title: "I can talk to you about the atmosphere"
           duration: '0:39'
@@ -47,102 +50,151 @@
           title: "Come here"
           duration: '0:24'
           url: https://t.me/arsenynn/9
+          thumb: /thumbs/arsenynn-9.webp
+          youtube: EfjmCTCCgJw
         - num: '1.1.2'
           title: "A ty takoy"
           duration: '1:10'
           url: https://t.me/arsenynn/10
+          thumb: /thumbs/arsenynn-10.webp
+          youtube: b-00LTI8hYM
         - num: '1.2.1'
           title: "Decency"
           duration: '0:25'
           url: https://t.me/arsenynn/11
+          thumb: /thumbs/arsenynn-11.webp
+          youtube: _Xz9sGZy41I
         - num: '1.2.2'
           title: "Behind the back"
           duration: '1:08'
           url: https://t.me/arsenynn/12
+          thumb: /thumbs/arsenynn-12.webp
+          youtube: Dtm650cQHxw
         - num: '1.3.1'
           title: "I think you understand"
           duration: '0:40'
           url: https://t.me/arsenynn/13
+          thumb: /thumbs/arsenynn-13.webp
+          youtube: MeVj-gvsn1Y
         - num: '1.4'
           title: "Spending time differently"
           duration: '0:53'
           url: https://t.me/arsenynn/14
+          thumb: /thumbs/arsenynn-14.webp
+          youtube: POyWKK_EefM
         - num: '1.5'
           title: "Wanting more"
           duration: '1:07'
           url: https://t.me/arsenynn/15
+          thumb: /thumbs/arsenynn-15.webp
+          youtube: S6mNOx6SM-w
         - num: '1.6'
           title: "Random things"
           duration: '1:13'
           url: https://t.me/arsenynn/16
+          thumb: /thumbs/arsenynn-16.webp
+          youtube: pAXrD1YskH0
         - num: '1.7'
           title: "We’ve all gone"
           duration: '1:01'
           url: https://t.me/arsenynn/17
+          thumb: /thumbs/arsenynn-17.webp
+          youtube: qHL8_iL1_Bc
         - num: '1.8'
           title: "If you feel like that"
           duration: '1:08'
           url: https://t.me/arsenynn/18
+          thumb: /thumbs/arsenynn-18.webp
+          youtube: vbXkhxFRi9o
         - num: '1.9'
           title: "Resistance"
           duration: '1:28'
           url: https://t.me/arsenynn/19
+          thumb: /thumbs/arsenynn-19.webp
+          youtube: Z4QIsvTXcHA
         - num: '1.10'
           title: "I need to love"
           duration: '1:41'
           url: https://t.me/arsenynn/20
+          thumb: /thumbs/arsenynn-20.webp
+          youtube: _siCmpaq2VA
         - num: '1.11.1'
           title: "Nothing has changed"
           duration: '0:28'
           url: https://t.me/arsenynn/21
+          thumb: /thumbs/arsenynn-21.webp
+          youtube: GbpM4LVH_xo
         - num: '1.11.2'
           title: "Reflection"
           duration: '2:04'
           url: https://t.me/arsenynn/22
+          thumb: /thumbs/arsenynn-22.webp
+          youtube: MOB456mATac
         - num: '1.11.3'
           title: "Reflection BST"
           duration: '2:05'
           url: https://t.me/arsenynn/24
+          thumb: /thumbs/arsenynn-24.webp
+          youtube: oAfntW93Lt8
     - label: Часть II
       labelEn: Part II
       intro: https://t.me/arsenynn/28
+      youtube: https://www.youtube.com/@arsenynn/videos
       chapters:
         - num: '2.0'
           title: "Part Two"
           duration: '0:28'
           url: https://t.me/arsenynn/29
+          thumb: /thumbs/arsenynn-29.webp
+          youtube: jZb-eB2e5Y0
         - num: '2.1'
           title: "What does the w‑word mean?"
           duration: '1:45'
           url: https://t.me/arsenynn/31
+          thumb: /thumbs/arsenynn-31.webp
+          youtube: anG6iK_jrQM
         - num: '2.2'
           title: "Not to be cured"
           duration: '1:15'
           url: https://t.me/arsenynn/32
+          thumb: /thumbs/arsenynn-32.webp
+          youtube: IcH9Z7rOX3g
         - num: '2.3.1'
           title: "The things should be"
           duration: '0:34'
           url: https://t.me/arsenynn/33
+          thumb: /thumbs/arsenynn-33.webp
+          youtube: 8d5pRpEtfkk
         - num: '2.3.2'
           title: "Obsession"
           duration: '1:29'
           url: https://t.me/arsenynn/34
+          thumb: /thumbs/arsenynn-34.webp
+          youtube: wUDolwN3XC4
         - num: '2.3.3'
           title: "Obsession BST"
           duration: '2:13'
           url: https://t.me/arsenynn/35
+          thumb: /thumbs/arsenynn-35.webp
+          youtube: Gk0R093UMlk
         - num: '2.4.1'
           title: "We must not go back"
           duration: '1:00'
           url: https://t.me/arsenynn/45
+          thumb: /thumbs/arsenynn-45.webp
+          youtube: vTCiHmHByG8
         - num: '2.4.2'
           title: "I Left It There"
           duration: '2:11'
           url: https://t.me/arsenynn/46
+          thumb: /thumbs/arsenynn-46.webp
+          youtube: fDkwPabzFaU
         - num: '2.5'
           title: "Backstage podcast #1"
           duration: '53:29'
           url: https://t.me/arsenynn/54
+          thumb: /thumbs/arsenynn-54.webp
+          youtube: ecPJAgF_-bM
   mark:
     src: /logos/nn.svg
     width: 3398
