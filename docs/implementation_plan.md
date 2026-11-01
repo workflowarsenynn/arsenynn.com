@@ -1,5 +1,5 @@
 # Implementation Plan
-LastUpdated: 2026-11-01 13:10 MSK
+LastUpdated: 2026-11-01 13:20 MSK
 
 ## Todoist Sync
 - Sync: manual
@@ -29,9 +29,9 @@ LastUpdated: 2026-11-01 13:10 MSK
 - PushPolicy: auto-safe
 
 ## Status
-- Stage: MVP (опубликован на GitHub Pages, домен не подключён)
+- Stage: MVP (опубликован на https://arsenynn.com)
 - Журнальный индекс семи проектов: засечки в заголовках, теги через красную точку, ссылки кнопками. Ресерч в `docs/design_research.md`.
-- Логотипы и знаки подключены, тексты v2. Превью: https://claude.ai/artifact/CHuWcW8SaVZWaBCBYGxmQ1. Живой сайт: https://workflowarsenynn.github.io/arsenynn.com/. Домен arsenynn.com ждёт DNS.
+- Логотипы и знаки подключены, тексты v2. Превью: https://claude.ai/artifact/CHuWcW8SaVZWaBCBYGxmQ1. Живой сайт: https://arsenynn.com. Одна запись A пока Proxied, ждёт переключения на DNS only.
 
 ## Done
 - [x] Собраны и проверены ссылки проектов, записаны в `docs/project_registry.md`
@@ -47,7 +47,7 @@ LastUpdated: 2026-11-01 13:10 MSK
 - [x] Подключены логотипы `@arsenynn` и annFlow, OG image с wordmark
 - [x] Подключены знаки NN, Ws и маска, тексты v2, опубликовано превью
 - [x] MVP смержен в `main` (workflowarsenynn/arsenynn.com#1, #2) с разрешения владельца
-- [x] Владелец сделал репозиторий публичным и включил Pages, сайт опубликован на github.io и проверен в браузере
+- [x] Сайт опубликован на GitHub Pages и arsenynn.com, DNS и custom domain настроены владельцем, проверено в браузере
 - [x] Пройден QA в Chromium на 320–1440 px
 
 ## In Progress
@@ -58,10 +58,11 @@ LastUpdated: 2026-11-01 13:10 MSK
 - [ ] Получить чистый wordmark workflow@arsenynn
 - [ ] Утвердить у владельца тексты v2 и вид по превью
 - [ ] Решить, нужен ли личный Telegram или email в блоке Work
-- [ ] Подключить DNS `arsenynn.com` по `docs/deploy.md` (с подтверждения владельца)
+- [ ] Переключить запись `A @ 185.199.111.153` на DNS only и включить Enforce HTTPS
 - [ ] Проверить в Safari iOS, с телефона из РФ и превью ссылки в Telegram
 
 ## Risks
+- Запись `A @ 185.199.111.153` Proxied: Cloudflare отдаёт свои IP для всего корня, в РФ ответы могут обрезаться, GitHub не выпускает сертификат.
 - `arsenynn.quest` истекает 2026-11-15: владелец продлевает домен, до продления кнопки Listen и Website под угрозой.
 - Прокси Cloudflare в РФ обрезает ответы примерно на 16 KB: запись `arsenynn.com` должна оставаться DNS only.
 - Safari iOS не проверялся: в cloud-контейнере его нет, нужна проверка на телефоне.

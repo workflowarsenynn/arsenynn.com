@@ -1,7 +1,7 @@
 # Deploy Runbook
-LastUpdated: 2026-11-01 13:05 MSK
+LastUpdated: 2026-11-01 13:20 MSK
 
-Статус: сайт опубликован на https://workflowarsenynn.github.io/arsenynn.com/ (2026-11-01). Шаги 1–4 выполнены, домен и DNS (шаги 5–7) ещё нет.
+Статус: сайт опубликован на https://arsenynn.com (2026-11-01). DNS и custom domain настроены. Осталось: запись `A @ 185.199.111.153` переключить с Proxied на DNS only и включить Enforce HTTPS после выпуска сертификата.
 
 ## Preview
 
