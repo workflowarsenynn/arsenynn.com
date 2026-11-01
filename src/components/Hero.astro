@@ -34,75 +34,63 @@ const line = toLocale(Astro.currentLocale) === 'en' ? site.en.heroLine : hero.li
 </section>
 
 <style>
+  /* Центрированный титульный кадр: лицо по центру, wordmark и строка под ним, как титры. */
   .hero {
     position: relative;
     display: flex;
     flex-direction: column;
-    justify-content: flex-end;
-    /* Компактно: первый проект виден на первом экране телефона. */
-    min-height: 46vh;
-    min-height: 46svh;
-    padding-top: var(--space-4);
-    padding-bottom: var(--space-4);
+    align-items: center;
+    text-align: center;
+    padding-top: var(--space-2);
+    padding-bottom: var(--space-5);
+  }
+
+  .hero__portrait {
+    display: block;
+    width: min(72vw, 20rem);
+    height: auto;
+    margin-top: -3.5rem;
+    /* наложение до ~20% высоты кадра: огонёк в кадре остаётся над wordmark */
+    margin-bottom: max(-17vw, -5.5rem);
+    -webkit-mask-image: radial-gradient(ellipse 70% 72% at 58% 40%, #000 45%, transparent 100%);
+    mask-image: radial-gradient(ellipse 70% 72% at 58% 40%, #000 45%, transparent 100%);
+    pointer-events: none;
+    user-select: none;
+  }
+
+  .hero__title,
+  .hero__line {
+    position: relative;
+    z-index: 1;
   }
 
   .hero__title {
-    font-size: var(--text-hero);
-    font-weight: 700;
     line-height: 0.95;
-    letter-spacing: -0.04em;
   }
 
   .hero__logo {
     display: block;
     width: min(100%, 21rem);
     height: auto;
-  }
-
-  @media (min-width: 48rem) {
-    .hero__logo {
-      width: 30rem;
-    }
-  }
-
-  .hero__dot {
-    display: inline-block;
-    width: 0.14em;
-    height: 0.14em;
-    margin-left: 0.06em;
-    border-radius: 50%;
-    background: var(--color-accent);
+    margin-inline: auto;
   }
 
   .hero__line {
     margin-top: var(--space-3);
-    max-width: 22ch;
     font-family: var(--font-display);
     font-size: var(--text-lead);
     line-height: 1.3;
     color: var(--color-text);
   }
 
-
-  /* Портрет: кадр, проступающий из темноты. Края растворяются в фоне. */
-  .hero__portrait {
-    align-self: flex-end;
-    width: min(60vw, 16rem);
-    height: auto;
-    margin-bottom: -2.5rem;
-    -webkit-mask-image: radial-gradient(closest-side, #000 55%, transparent 100%);
-    mask-image: radial-gradient(closest-side, #000 55%, transparent 100%);
-    pointer-events: none;
-    user-select: none;
-  }
-
-  @media (min-width: 64rem) {
+  @media (min-width: 48rem) {
     .hero__portrait {
-      position: absolute;
-      right: var(--gutter);
-      bottom: 0;
-      width: 28rem;
-      margin: 0;
+      width: 24rem;
+      margin-bottom: -5.5rem;
+    }
+
+    .hero__logo {
+      width: 30rem;
     }
   }
 </style>
