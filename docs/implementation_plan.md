@@ -1,5 +1,5 @@
 # Implementation Plan
-LastUpdated: 2026-11-01 13:05 MSK
+LastUpdated: 2026-11-01 15:30 MSK
 
 ## Todoist Sync
 - Sync: manual
@@ -25,47 +25,44 @@ LastUpdated: 2026-11-01 13:05 MSK
 - Repository: workflowarsenynn/arsenynn.com
 - Remote: origin
 - Mode: direct
-- Visibility: private
+- Visibility: public
 - PushPolicy: auto-safe
 
 ## Status
-- Stage: MVP (визуальное направление v2, проверено локально, не опубликовано)
-- Журнальный индекс семи проектов: засечки в заголовках, теги через красную точку, ссылки кнопками. Ресерч в `docs/design_research.md`.
-- Логотипы и знаки подключены, тексты v2. Превью: https://claude.ai/artifact/CHuWcW8SaVZWaBCBYGxmQ1. Публикация на домене ждёт владельца.
+- Stage: Phase 1 of The Moving Index (advisory), сайт на https://arsenynn.com
+- Направление задано `docs/Advisory/deep_research_and_implementation_direction.md`: оставить Astro и статику, развивать фазами, каждая фаза отдельным деплоем с точкой отката.
+- Phase 1: hero в одну строку, тексты по advisory, знаки в строке номера, текстовые ссылки вместо «пилюль», трёхколоночный desktop.
+
+## Rollback
+- Точки отката: ветки `rollback/phase-N` на GitHub, каждая указывает на прод до начала фазы N+1.
+- `rollback/phase-0`: прод до advisory (c67cab3).
+- Откат: PR из revert-коммита фазы в `main` или `git revert <merge-commit>`; GitHub Actions пересоберёт сайт за 1–2 минуты.
 
 ## Done
-- [x] Собраны и проверены ссылки проектов, записаны в `docs/project_registry.md`
-- [x] Сохранено ТЗ и создана документация по Project Standards
-- [x] Создан репозиторий `workflowarsenynn/arsenynn.com`
-- [x] Получены решения владельца: публичный репозиторий, продление `arsenynn.quest`, Portfolio → `/video-production/`
-- [x] Создан Astro-проект, данные в `src/data/`, токены в `src/styles/tokens.css`
-- [x] Собраны секции страницы, About с клавиатурой, reduced motion и работой без JS
-- [x] Добавлены SEO, Open Graph, favicon, apple-touch-icon, OG image и 404
-- [x] Добавлен workflow публикации на GitHub Pages
-- [x] Добавлена ссылка на «Бессмысленность и скоротечность»
-- [x] Проведён дизайн-ресерч, внедрено направление v2
-- [x] Подключены логотипы `@arsenynn` и annFlow, OG image с wordmark
-- [x] Подключены знаки NN, Ws и маска, тексты v2, опубликовано превью
-- [x] MVP смержен в `main` (workflowarsenynn/arsenynn.com#1) с разрешения владельца
-- [x] Пройден QA в Chromium на 320–1440 px
+- [x] MVP: Astro, данные в `src/data/`, About, SEO, OG, 404, Pages workflow, QA 320–1440 px
+- [x] Дизайн v2: ресерч, засечки, логотипы и знаки проектов (NN, Ws, annFlow, маска), тексты v2
+- [x] Публикация: репозиторий публичный, GitHub Pages, DNS only в Cloudflare, сертификат на arsenynn.com
+- [x] Полное описание проекта для deep research, получен advisory
+- [x] Phase 0: точка отката `rollback/phase-0`, advisory сохранён в `docs/Advisory/`, проверены все 10 внешних ссылок
+- [x] Phase 1: hero, тексты, место знаков, стиль ссылок, desktop-сетка
 
 ## In Progress
 <!-- Нет задач в работе. -->
 
 ## Next
 <!-- Canonical planning checklist. Plain items DO NOT auto-create Todoist subtasks. Todoist child boundaries require explicit owner/canonical-plan approval under One Plan = One Subtask. -->
+- [ ] Получить замечания владельца по Phase 1 на живом сайте
+- [ ] Phase 2: Source Serif 4 + Manrope вместо Playfair, цвета без изменений (отдельный деплой)
+- [ ] Phase 3: тёплая светлая тема по `prefers-color-scheme` и уточнённый красный (отдельный деплой)
+- [ ] Включить Enforce HTTPS в настройках Pages (владелец)
+- [ ] Playwright + axe тесты в репозитории
+- [ ] Content Collections без смены URL, затем RU/EN и первый мир `/arsenynn/` (только с реальным контентом)
 - [ ] Получить чистый wordmark workflow@arsenynn
-- [ ] Утвердить у владельца тексты v2 и вид по превью
-- [ ] Решить, нужен ли личный Telegram или email в блоке Work
-- [ ] Сделать репозиторий публичным и включить Pages с источником GitHub Actions (владелец)
-- [ ] Подключить DNS `arsenynn.com` по `docs/deploy.md` (с подтверждения владельца)
-- [ ] Проверить в Safari iOS, с телефона из РФ и превью ссылки в Telegram
+- [ ] Проверить на iPhone и из РФ-сети
 
 ## Risks
-- `arsenynn.quest` истекает 2026-11-15: владелец продлевает домен, до продления кнопки Listen и Website под угрозой.
-- Actions в репозитории запускаются (run 41295699260 стартовал 2026-11-01), но деплой упадёт, пока Pages не включён: в приватном репозитории на бесплатном плане Pages недоступен.
-- Прокси Cloudflare в РФ обрезает ответы примерно на 16 KB: запись `arsenynn.com` должна оставаться DNS only.
-- Safari iOS не проверялся: в cloud-контейнере его нет, нужна проверка на телефоне.
+- Telegram отдаёт урезанные страницы при частых запросах: проверку ссылок повторять несколько раз.
+- Ветка `docs/sync-live-status` с локального Mac не смержена: её правки документации могут конфликтовать с этой веткой.
 - Проверка доступности ссылок выполнялась не из РФ-сети.
 
 ## Todoist Intake

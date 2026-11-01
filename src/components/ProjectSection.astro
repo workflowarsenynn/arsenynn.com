@@ -12,7 +12,21 @@ const headingId = `project-${project.id}`;
 const titleParts = project.title.split(/(?=@)/);
 ---
 <article class="project" id={project.slug} aria-labelledby={headingId}>
-  <p class="project__number" aria-hidden="true">{number}</p>
+  <div class="project__meta">
+    <p class="project__number" aria-hidden="true">{number}</p>
+    {project.mark && (
+      <img
+        class="project__mark"
+        src={asset(project.mark.src)}
+        width={project.mark.width}
+        height={project.mark.height}
+        alt=""
+        loading="lazy"
+        decoding="async"
+      />
+    )}
+  </div>
+
   <div class="project__body">
     <h2 class="project__title" id={headingId}>
       {project.logo ? (
@@ -26,46 +40,66 @@ const titleParts = project.title.split(/(?=@)/);
           decoding="async"
         />
       ) : (
-        <>
-          {project.mark && (
-            <img
-              class="project__mark"
-              src={asset(project.mark.src)}
-              width={project.mark.width}
-              height={project.mark.height}
-              alt=""
-              loading="lazy"
-              decoding="async"
-            />
-          )}
-          {titleParts.map((part, i) => (i > 0 ? <><wbr />{part}</> : part))}
-        </>
+        titleParts.map((part, i) => (i > 0 ? <><wbr />{part}</> : part))
       )}
     </h2>
     <ul class="project__tags meta" aria-label="Темы">
       {project.tags.map((tag) => <li>{tag}</li>)}
     </ul>
     <p class="project__short">{project.shortDescription}</p>
+  </div>
+
+  <div class="project__actions">
     <ProjectActions project={project} />
+  </div>
+
+  <div class="project__details">
     <ProjectDetails project={project} />
   </div>
 </article>
 
 <style>
+  /* Телефон: одна колонка. Строка «номер ... знак» работает как шапка записи. */
   .project {
     display: grid;
-    grid-template-columns: 2rem minmax(0, 1fr);
-    column-gap: 0.75rem;
-    padding-block: var(--space-4);
+    grid-template-areas: 'meta' 'body' 'actions' 'details';
+    padding-block: var(--space-5);
     border-top: 1px solid var(--color-line);
   }
 
+  .project__meta {
+    grid-area: meta;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-2);
+    min-height: var(--mark-height);
+    margin-bottom: var(--space-3);
+  }
+
   .project__number {
-    padding-top: 0.55rem;
     color: var(--color-muted);
     font-size: var(--text-meta);
     font-variant-numeric: tabular-nums;
     letter-spacing: 0.04em;
+  }
+
+  .project__mark {
+    display: block;
+    width: auto;
+    height: var(--mark-height);
+  }
+
+  .project__body {
+    grid-area: body;
+  }
+
+  .project__actions {
+    grid-area: actions;
+  }
+
+  .project__details {
+    grid-area: details;
   }
 
   .project__title {
@@ -86,14 +120,6 @@ const titleParts = project.title.split(/(?=@)/);
     object-position: left center;
   }
 
-  /* Знак стоит в строке над названием: длинные названия не теряют ширину. */
-  .project__mark {
-    display: block;
-    width: auto;
-    height: var(--mark-height);
-    margin-bottom: var(--space-1);
-  }
-
   .project__tags {
     display: flex;
     flex-wrap: wrap;
@@ -111,18 +137,42 @@ const titleParts = project.title.split(/(?=@)/);
 
   .project__short {
     margin-top: var(--space-2);
-    max-width: 38rem;
+    max-width: 34rem;
   }
 
+  /* Планшет: колонка номера и знака слева. */
   @media (min-width: 48rem) {
     .project {
       grid-template-columns: 8rem minmax(0, 1fr);
+      grid-template-areas:
+        'meta body'
+        'meta actions'
+        'meta details';
       column-gap: var(--space-3);
-      padding-block: var(--space-5);
+      padding-block: var(--space-6);
     }
 
-    .project__number {
+    .project__meta {
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: flex-start;
+      gap: var(--space-2);
+      margin: 0;
       padding-top: 0.9rem;
+    }
+  }
+
+  /* Desktop: номер | название и текст | действия (advisory, The Moving Index). */
+  @media (min-width: 64rem) {
+    .project {
+      grid-template-columns: 8rem minmax(0, 1fr) 14rem;
+      grid-template-areas:
+        'meta body actions'
+        'meta details .';
+    }
+
+    .project__actions {
+      padding-top: 0.6rem;
     }
   }
 </style>
