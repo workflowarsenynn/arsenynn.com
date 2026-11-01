@@ -1,5 +1,5 @@
 # Implementation Plan
-LastUpdated: 2026-11-01 16:15 MSK
+LastUpdated: 2026-11-01 16:25 MSK
 
 ## Todoist Sync
 - Sync: manual
@@ -29,7 +29,7 @@ LastUpdated: 2026-11-01 16:15 MSK
 - PushPolicy: auto-safe
 
 ## Status
-- Stage: Phase 3 of The Moving Index (advisory), сайт на https://arsenynn.com
+- Stage: Phase 2 of The Moving Index (advisory), сайт на https://arsenynn.com
 - Направление задано `docs/Advisory/deep_research_and_implementation_direction.md`: оставить Astro и статику, развивать фазами, каждая фаза отдельным деплоем с точкой отката.
 - Phase 1: hero в одну строку, тексты по advisory, знаки в строке номера, текстовые ссылки вместо «пилюль», трёхколоночный desktop.
 
@@ -39,6 +39,7 @@ LastUpdated: 2026-11-01 16:15 MSK
 - `rollback/phase-1`: прод после Phase 1, до Phase 1.1 (8256bd0).
 - `rollback/phase-1-1`: прод после Phase 1.1, до Phase 2 (5086a8c).
 - `rollback/phase-2`: прод после Phase 2, до Phase 3 (0eb5957).
+- `rollback/phase-3`: прод со светлой темой (769b072), отменён владельцем.
 - Откат: PR из revert-коммита фазы в `main` или `git revert <merge-commit>`; GitHub Actions пересоберёт сайт за 1–2 минуты.
 
 ## Done
@@ -50,7 +51,7 @@ LastUpdated: 2026-11-01 16:15 MSK
 - [x] Phase 1: hero, тексты, место знаков, стиль ссылок, desktop-сетка
 - [x] Phase 1.1: ссылки строками на всю ширину 56 px по просьбе владельца (удобство на телефоне)
 - [x] Phase 2: Source Serif 4 + Manrope вместо Playfair и системного шрифта, шкала advisory (body 18/19 px, 1.58), OG на шрифтах сайта
-- [x] Phase 3: тёплая светлая тема по `prefers-color-scheme`, токены advisory, версии знаков для бумаги
+- [x] Phase 3 (светлая тема) сделана и отменена владельцем: сайт только тёмный
 
 ## In Progress
 <!-- Нет задач в работе. -->

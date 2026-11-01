@@ -1,9 +1,31 @@
 # Decisions Log
-LastUpdated: 2026-11-01 16:15 MSK
+LastUpdated: 2026-11-01 16:25 MSK
 
 Этот файл хранит историю проекта: важные решения, изменения подхода, причины архитектурных поворотов, rejected options, runtime findings и выводы, которые помогают понять, как проект развивался.
 
 Записи идут в обратном хронологическом порядке: новые сверху.
+
+---
+
+## 2026-11-01 — Только тёмная тема: Phase 3 отменена
+
+**Type:** decision
+**Project:** arsenynn.com
+**Phase:** Advisory Phase 3 revert
+**Status:** accepted
+**Related plan:** `docs/implementation_plan.md`
+
+### Context
+Владелец посмотрел светлую тему на проде: «пусть будет только тёмная тема».
+
+### Decision
+Phase 3 откатана revert-коммитом merge-коммита 769b072. Сайт снова тёмный всегда, как после Phase 2. Ветка `rollback/phase-3` сохраняет светлую тему, если к ней вернутся.
+
+### Consequences
+Пункт advisory о светлой теме закрыт решением владельца. Расхождение с advisory зафиксировано здесь, следующие агенты не должны возвращать светлую тему без запроса.
+
+### Source
+Сообщение владельца 2026-11-01.
 
 ---
 
@@ -12,7 +34,7 @@ LastUpdated: 2026-11-01 16:15 MSK
 **Type:** decision
 **Project:** arsenynn.com
 **Phase:** Advisory Phase 3
-**Status:** accepted
+**Status:** reverted (2026-11-01, решение владельца: только тёмная тема)
 **Related files:** `src/styles/tokens.css`, `src/components/ThemedImage.astro`, `public/logos/*-light.*`
 
 ### Context
