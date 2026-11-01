@@ -10,7 +10,7 @@ const botActivity = activity as Record<string, { chat: string; lastActivity: str
 export type ProjectView = Project & { lastActivity?: Date; signal: Signal };
 
 // Данные проектов лежат в src/content/projects.yaml (Content Collection).
-// Порядок: свежие наверху, проекты без ссылок (Coming soon) внизу, при равенстве — поле order.
+// Порядок задаёт владелец полем order. Свежесть влияет только на сигнальный огонёк.
 export async function getProjects(locale: Locale = 'ru'): Promise<ProjectView[]> {
   const entries = await getCollection('projects');
   const now = new Date();
@@ -34,11 +34,5 @@ export async function getProjects(locale: Locale = 'ru'): Promise<ProjectView[]>
       return { id: e.id, ...d, ...localized, lastActivity, signal: signalFor(lastActivity, now) };
     }),
   );
-  const rank = (p: ProjectView) => (p.links.length === 0 ? 1 : 0);
-  return views.sort(
-    (a, b) =>
-      rank(a) - rank(b) ||
-      (b.lastActivity?.getTime() ?? 0) - (a.lastActivity?.getTime() ?? 0) ||
-      a.order - b.order,
-  );
+  return views.sort((a, b) => a.order - b.order);
 }

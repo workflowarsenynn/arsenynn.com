@@ -17,7 +17,7 @@ export const ui = {
   ru: {
     htmlLang: 'ru',
     ogLocale: 'ru_RU',
-    projectsLabel: 'Проекты, свежие наверху',
+    projectsLabel: 'Проекты',
     tagsLabel: 'Темы',
     newTab: ' (откроется в новой вкладке)',
     updated: 'Обновлено',
@@ -29,7 +29,7 @@ export const ui = {
   en: {
     htmlLang: 'en',
     ogLocale: 'en_US',
-    projectsLabel: 'Projects, most recent first',
+    projectsLabel: 'Projects',
     tagsLabel: 'Topics',
     newTab: ' (opens in a new tab)',
     updated: 'Updated',

@@ -1,9 +1,31 @@
 # Decisions Log
-LastUpdated: 2026-11-01 17:45 MSK
+LastUpdated: 2026-11-01 17:55 MSK
 
 Этот файл хранит историю проекта: важные решения, изменения подхода, причины архитектурных поворотов, rejected options, runtime findings и выводы, которые помогают понять, как проект развивался.
 
 Записи идут в обратном хронологическом порядке: новые сверху.
+
+---
+
+## 2026-11-01 — Phase 10: порядок проектов задаёт владелец
+
+**Type:** decision
+**Project:** arsenynn.com
+**Phase:** Phase 10
+**Status:** accepted
+**Related files:** `src/content/projects.yaml`, `src/data/projects.ts`
+
+### Context
+Владелец задал порядок: Party Protocol, annFlow, Without Streaming, @arsenynn, workflow@arsenynn, Бессмысленность и скоротечность, Travel Log, затем Work / Collaboration.
+
+### Decision
+Порядок из поля `order`, автосортировка по свежести из Phase 6 отключена. Сигнальный огонёк остаётся и показывает свежесть, не меняя порядок. Тест проверяет точный порядок.
+
+### Alternatives / rejected options
+- Оставить автосортировку: противоречит явному порядку владельца. Вернуть её можно из `rollback/phase-9`.
+
+### Source
+Сообщение владельца 2026-11-01.
 
 ---
 
