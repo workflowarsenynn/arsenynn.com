@@ -18,6 +18,7 @@ npm run dev
 - [ТЗ](docs/brief.md)
 - [Архитектура](docs/architecture.md)
 - [Дизайн-ресерч и направление](docs/design_research.md)
+- [Полное описание проекта для deep research](docs/project_overview_for_research.md)
 - [Ссылки проектов и открытые вопросы](docs/project_registry.md)
 - [Публикация](docs/deploy.md)
 - [Работа в cloud-сессиях](docs/cloud_workflow.md)

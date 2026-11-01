@@ -17,6 +17,7 @@ LastUpdated: 2026-11-01 12:50 MSK
 - `docs/implementation_plan.md` — текущий статус и следующие шаги
 - `docs/architecture.md` — технические решения
 - `docs/design_research.md` — ресерч и визуальное направление v2
+- `docs/project_overview_for_research.md` — полное описание проекта и промт для deep research
 - `docs/references/` — макеты владельца: брать структуру, не внешний вид
 - `docs/project_registry.md` — ссылки проектов и открытые вопросы
 - `docs/deploy.md` — публикация и DNS
