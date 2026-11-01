@@ -24,8 +24,7 @@ const jsonLd = JSON.stringify({
     <title>{site.title}</title>
     <meta name="description" content={site.description} />
     <link rel="canonical" href={canonical} />
-    <meta name="theme-color" content={site.themeColor} media="(prefers-color-scheme: dark)" />
-    <meta name="theme-color" content={site.themeColorLight} media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content={site.themeColor} />
     <link rel="icon" href={asset('/favicon.svg')} type="image/svg+xml" />
     <link rel="apple-touch-icon" href={asset('/apple-touch-icon.png')} />
 

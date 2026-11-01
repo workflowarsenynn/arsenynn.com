@@ -72,7 +72,7 @@ export const projects: Project[] = [
       { label: 'Listen', url: 'https://radio.arsenynn.quest', type: 'listen', primary: true },
       { label: 'Telegram', url: 'https://t.me/without_streaming', type: 'telegram' },
     ],
-    mark: { src: '/logos/without-streaming.svg', srcLight: '/logos/without-streaming-light.svg', width: 718, height: 529 },
+    mark: { src: '/logos/without-streaming.svg', width: 718, height: 529 },
     detailPageEnabled: false,
   },
   {
@@ -88,7 +88,7 @@ export const projects: Project[] = [
     ],
     status: 'active',
     links: [{ label: 'Telegram', url: 'https://t.me/annsflow', type: 'telegram', primary: true }],
-    logo: { src: '/logos/annflow.webp', srcLight: '/logos/annflow-light.webp', width: 600, height: 231 },
+    logo: { src: '/logos/annflow.webp', width: 600, height: 231 },
     detailPageEnabled: false,
   },
   {
@@ -104,7 +104,7 @@ export const projects: Project[] = [
       { label: 'Website', url: 'https://partyprotocol.arsenynn.quest', type: 'website', primary: true },
       { label: 'Telegram', url: 'https://t.me/partyprotocol', type: 'telegram' },
     ],
-    mark: { src: '/logos/party-protocol.svg', srcLight: '/logos/party-protocol-light.svg', width: 1392, height: 546 },
+    mark: { src: '/logos/party-protocol.svg', width: 1392, height: 546 },
     detailPageEnabled: false,
   },
   {

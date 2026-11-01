@@ -8,7 +8,6 @@ export const site = {
   description:
     'Индекс проектов @arsenynn: авторское кино, коммерческое видео, философия, радио, AI-системы, VPN и путешествия.',
   themeColor: '#0a0a0a',
-  themeColorLight: '#f2f0ea',
   ogImage: '/og.png',
 
   hero: {

@@ -1,6 +1,6 @@
 ---
 import type { Project } from '../data/types';
-import ThemedImage from './ThemedImage.astro';
+import { asset } from '../data/asset';
 import ProjectActions from './ProjectActions.astro';
 import ProjectDetails from './ProjectDetails.astro';
 
@@ -15,14 +15,30 @@ const titleParts = project.title.split(/(?=@)/);
   <div class="project__meta">
     <p class="project__number" aria-hidden="true">{number}</p>
     {project.mark && (
-      <ThemedImage class="project__mark" image={project.mark} alt="" />
+      <img
+        class="project__mark"
+        src={asset(project.mark.src)}
+        width={project.mark.width}
+        height={project.mark.height}
+        alt=""
+        loading="lazy"
+        decoding="async"
+      />
     )}
   </div>
 
   <div class="project__body">
     <h2 class="project__title" id={headingId}>
       {project.logo ? (
-        <ThemedImage class="project__logo" image={project.logo} alt={project.title} />
+        <img
+          class="project__logo"
+          src={asset(project.logo.src)}
+          width={project.logo.width}
+          height={project.logo.height}
+          alt={project.title}
+          loading="lazy"
+          decoding="async"
+        />
       ) : (
         titleParts.map((part, i) => (i > 0 ? <><wbr />{part}</> : part))
       )}
@@ -68,7 +84,7 @@ const titleParts = project.title.split(/(?=@)/);
     letter-spacing: 0.04em;
   }
 
-  .project :global(.project__mark) {
+  .project__mark {
     display: block;
     width: auto;
     height: var(--mark-height);
@@ -95,7 +111,7 @@ const titleParts = project.title.split(/(?=@)/);
     overflow-wrap: normal;
   }
 
-  .project :global(.project__logo) {
+  .project__logo {
     display: block;
     width: auto;
     height: var(--logo-height);
@@ -115,7 +131,7 @@ const titleParts = project.title.split(/(?=@)/);
   .project__tags li:not(:last-child)::after {
     content: '·';
     margin-inline: 0.45em;
-    color: var(--color-accent-mark);
+    color: var(--color-accent);
     font-weight: 700;
   }
 
