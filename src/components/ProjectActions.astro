@@ -32,7 +32,7 @@ const t = ui[locale];
         <span class="visually-hidden">: {project.title}</span>
       </button>
       <div class="disclosure" id={`part-${project.id}-${i + 1}`}>
-        <ul class="disclosure__inner contents">
+        <ul class="disclosure__inner contents" data-part={part.label}>
           {part.youtube && (
             <li>
               <a class="contents__link" href={part.youtube} target="_blank" rel="noopener">
@@ -79,7 +79,7 @@ const t = ui[locale];
           )}
           {part.chapters.map((ch) => (
             <li>
-              <a class="contents__link chapter" href={ch.url} target="_blank" rel="noopener">
+              <a class="contents__link chapter" href={ch.url} target="_blank" rel="noopener" data-video={ch.youtube} aria-haspopup={ch.youtube ? 'dialog' : undefined}>
                 <span class="chapter__frame" aria-hidden="true">
                   {ch.thumb ? (
                     <img src={asset(ch.thumb)} width="288" height="162" alt="" loading="lazy" decoding="async" />
@@ -91,8 +91,19 @@ const t = ui[locale];
                   <span class="chapter__meta" aria-hidden="true">{ch.num}{ch.duration && ` · ${ch.duration}`}</span>
                   <span class="chapter__title">{ch.title}</span>
                 </span>
-                <span class="action__arrow" aria-hidden="true">↗</span>
-                <span class="visually-hidden">{`${ch.num}${t.newTab}`}</span>
+                {ch.youtube ? (
+                  <>
+                    <svg class="chapter__play only-js" viewBox="0 0 10 12" width="10" height="12" aria-hidden="true"><path d="M0 0l10 6-10 6z" /></svg>
+                    <span class="action__arrow only-nojs" aria-hidden="true">↗</span>
+                    <span class="visually-hidden only-js">{`${ch.num}${t.playVideo}`}</span>
+                    <span class="visually-hidden only-nojs">{`${ch.num}${t.newTab}`}</span>
+                  </>
+                ) : (
+                  <>
+                    <span class="action__arrow" aria-hidden="true">↗</span>
+                    <span class="visually-hidden">{`${ch.num}${t.newTab}`}</span>
+                  </>
+                )}
               </a>
             </li>
           ))}
@@ -246,6 +257,17 @@ const t = ui[locale];
     width: 100%;
     height: 100%;
     object-fit: cover;
+  }
+
+  .chapter__play {
+    flex: none;
+    margin-right: 0.15rem;
+    fill: currentColor;
+    transition: color var(--duration) ease;
+  }
+
+  .chapter:hover .chapter__play {
+    color: var(--color-accent);
   }
 
   .chapter__frame-num {

@@ -1,5 +1,5 @@
 # Handoff
-LastUpdated: 2026-11-04 22:45 MSK
+LastUpdated: 2026-11-04 23:00 MSK
 
 Передача проекта следующему агенту. Прочитай целиком перед первой правкой. Дальше: `CLAUDE.md` → `AGENTS.md` → `docs/implementation_plan.md` → `docs/architecture.md` → `docs/decisions_log.md` (последние записи сверху).
 
@@ -16,7 +16,7 @@ LastUpdated: 2026-11-04 22:45 MSK
 
 1. Правки в ветке `claude/adoring-meitner-l33yf3` (перед началом `git fetch origin && git merge origin/main`).
 2. `npm run build` (включает `astro check`, должен быть «0 errors, 0 warnings»).
-3. Тесты: `npx astro preview --port 4321 &` затем `PW_CHROMIUM=/opt/pw-browsers/chromium-1243/chrome-linux64/chrome npx playwright test` (сейчас 26 тестов). Останавливать preview: `pkill -f "astro.mjs previe[w]"` — скобки нужны, иначе pkill убьёт собственную команду.
+3. Тесты: `npx astro preview --port 4321 &` затем `PW_CHROMIUM=/opt/pw-browsers/chromium-1243/chrome-linux64/chrome npx playwright test` (сейчас 34 теста). Останавливать preview: `pkill -f "astro.mjs previe[w]"` — скобки нужны, иначе pkill убьёт собственную команду.
 4. Визуальная проверка в Playwright на 390 и 1280/1440 px, отправить скриншоты владельцу.
 5. Обновить доки (`docs/decisions_log.md` запись сверху, `architecture.md`, при необходимости `implementation_plan.md`, `LastUpdated`).
 6. Commit → push → PR в `main` через GitHub MCP → **дождаться зелёного workflow `Test`** на PR → merge.
@@ -28,7 +28,7 @@ LastUpdated: 2026-11-04 22:45 MSK
 
 ## 3. Текущее состояние сайта
 
-**Hero (по центру):** маленький портрет-логотип хаба (`public/portrait.webp`, вертикальный кроп, чёрный поднят до фона #0a0a0a, WebP без потерь), под ним красный wordmark `@arsenynn` (SVG), строка «Финальная битва между рациональным и самоценным». Header: переключатель EN/RU и Portfolio (хаб).
+**Hero (по центру):** маленький портрет-логотип хаба (`public/portrait.webp`, вертикальный кроп, чёрный поднят до фона #0a0a0a, WebP без потерь), под ним красный wordmark `@arsenynn` (SVG), строка «Финальная битва между самоценным и рациональным». Header: переключатель EN/RU и Portfolio (хаб).
 
 **Индекс (порядок задан владельцем полем `order`):**
 
@@ -55,12 +55,12 @@ LastUpdated: 2026-11-04 22:45 MSK
 - `src/lib/i18n.ts` — служебные подписи RU/EN. `src/lib/activity.ts` — даты постов для огоньков.
 - `src/components/` — `HomePage`, `Hero`, `ProjectSection` (сетка строки, знаки), `ProjectActions` (ссылки, части, главы, оглавления, вступление), `Collaboration`, `ActionLink`.
 - `src/styles/tokens.css` — все токены (цвета, размеры, `--mark-size`, `--index-width`). `global.css` — строки действий `.action--row`, раскрывашки `.disclosure`.
-- `src/scripts/about.ts` — единственный клиентский скрипт: все раскрывашки с `data-about-toggle` + `aria-controls`.
+- `src/scripts/about.ts` — все раскрывашки с `data-about-toggle` + `aria-controls`. `src/scripts/player.ts` и `src/components/VideoPlayer.astro` — плеер глав, адреса провайдера в `site.video`.
 - `public/logos/`, `public/thumbs/` (кадры глав и работ 288×162), `public/portrait.webp`.
 - `assets/logos/README.md` — инвентарь исходников и что где используется. Оригиналы владельца — Google Drive `assest/logos.zip` (см. ниже, как скачать).
 - `docs/Advisory/deep_research_and_implementation_direction.md` — направление развития (The Moving Index). Владелец просит «делать по advisory».
 - `docs/references/youtube-arsenynn-map.txt` — соответствие постов @arsenynn и видео YouTube.
-- `tests/site.spec.ts` — 26 тестов (ширины 320–1440, ссылки, раскрывашки, ленивые кадры, иконки, без JS, reduced motion, 404, axe, EN, порядок, оглавления, вступление, Work).
+- `tests/site.spec.ts` — 34 теста (ширины 320–1440, ссылки, раскрывашки, ленивые кадры, иконки, плеер, без JS, reduced motion, 404, axe, EN, порядок, оглавления, вступление, Work).
 
 ## 5. Открытые задачи
 
@@ -76,6 +76,7 @@ LastUpdated: 2026-11-04 22:45 MSK
 
 ## 6. Решения владельца, которые нельзя ломать
 
+- Главы @arsenynn открывают YouTube внутри сайта, в `<dialog>`, не на новой странице. Под кадром всегда видна ссылка на Telegram.
 - Ссылки всегда видны без раскрытия About. Одна ссылка на строку, строки 56 px на всю ширину (для большого пальца). Без вложенных раскрывашек, **кроме** «Вступления» внутри частей (прямая просьба владельца).
 - На desktop индекс по центру (`--index-width` 54rem), без правой колонки: раскрытые списки в ней были неудобны.
 - Знаки выравниваются по площади (`--mark-size` / √пропорции); фото-знак ann — круг, `scale: 1.2`; annFlow-лого не трогать.

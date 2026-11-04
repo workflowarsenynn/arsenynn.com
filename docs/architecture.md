@@ -1,5 +1,5 @@
 # Architecture
-LastUpdated: 2026-11-04 22:30 MSK
+LastUpdated: 2026-11-04 23:00 MSK
 
 Статус: MVP реализован по этой архитектуре. Требования и их причины находятся в `docs/brief.md`, здесь только технические решения.
 
@@ -33,7 +33,8 @@ src/
   components/            SiteHeader, Hero, ProjectList, ProjectSection,
                          ProjectActions, ProjectDetails, ActionLink,
                          Collaboration, SiteFooter
-  scripts/about.ts       единственный клиентский скрипт
+  scripts/about.ts       раскрывашки
+  scripts/player.ts      плеер глав
   layouts/Base.astro     head, meta, Open Graph
   pages/index.astro      единственная страница MVP
   pages/404.astro        страница 404 для Pages
@@ -98,6 +99,7 @@ type Project = {
 - У annFlow и workflow@arsenynn строка «Проекты». У workflow — 11 работ канала (кадр, «год · длительность», название), обложки из альбомов стоп-кадров перед каждым видео. У annFlow (EN Projects) раскрывает оглавление канала: проект, обложка серии из поста (оформленные заставки канала), подзаголовок, ссылка на первый пост. Поля строки: title, meta, note, thumb, url. Данные в `contents` проекта в `projects.yaml` (схема требует https), источник — пост канала «Навигация по проектам канала» и новые серии после него.
 - Панель — `.disclosure` в `global.css`, тот же скрипт `about.ts` (data-about-toggle): без JS открыта, с JS свёрнута. Закрытая панель держит `content-visibility: hidden`, иначе lazy-кадры внутри грузятся сразу.
 - Оглавление на /en/: `noteEn` и необязательное `titleEn`, имена собственные остаются как есть.
+- Плеер глав: `VideoPlayer.astro` и `src/scripts/player.ts`. Строка главы с `youtube` получает `data-video`, скрипт открывает `<dialog>` и создаёт iframe по нажатию. Без JS это ссылка на Telegram. Адреса провайдера в `site.video`.
 
 ## Languages
 

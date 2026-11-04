@@ -51,6 +51,12 @@ a {
   line-height: 1.4;
 }
 
+/* Без JS глава ведёт в Telegram, с JS открывает плеер: подписи и значки меняются местами. */
+html.js .only-nojs,
+html:not(.js) .only-js {
+  display: none;
+}
+
 .visually-hidden {
   position: absolute;
   width: 1px;

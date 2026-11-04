@@ -16,11 +16,12 @@ for (const [width, height] of viewports) {
       const r = await page.evaluate(() => {
         const out = { overflow: document.documentElement.scrollWidth > innerWidth, small: [] as string[], tiny: [] as string[] };
         for (const el of document.querySelectorAll<HTMLElement>('body *')) {
-          if (el.closest('.visually-hidden')) continue;
+          if (el.closest('.visually-hidden, dialog:not([open])')) continue;
           const hasText = [...el.childNodes].some((n) => n.nodeType === 3 && n.textContent!.trim());
           if (hasText && el.getBoundingClientRect().width && parseFloat(getComputedStyle(el).fontSize) < 14) out.small.push(el.tagName);
         }
         for (const el of document.querySelectorAll('a, button')) {
+          if (el.closest('dialog:not([open])')) continue;
           const b = el.getBoundingClientRect();
           if (b.width < 44 || b.height < 44) out.tiny.push(`${el.textContent!.trim()} ${Math.round(b.width)}x${Math.round(b.height)}`);
         }
@@ -190,6 +191,75 @@ test('иконки: ссылки с версией ведут на сущест�
   const ico = await request.get('/favicon.ico');
   expect(ico.status()).toBe(200);
   expect([...(await ico.body()).subarray(0, 4)]).toEqual([0, 0, 1, 0]);
+});
+
+test.describe('плеер глав', () => {
+  const firstChapter = '#part-arsenynn-1 [data-video="Ko0993YuBsU"]';
+
+  test.beforeEach(async ({ page }) => {
+    await page.route(/youtube-nocookie\.com/, (route) => route.fulfill({ contentType: 'text/html', body: '<title>stub</title>' }));
+  });
+
+  test('до нажатия нет запросов к YouTube, нажатие открывает кадр на этой же странице', async ({ page }) => {
+    const calls: string[] = [];
+    page.on('request', (r) => { if (/youtube/.test(r.url())) calls.push(r.url()); });
+    await page.goto('/', { waitUntil: 'networkidle' });
+    expect(calls).toEqual([]);
+
+    await page.locator('[aria-controls="part-arsenynn-1"]').click();
+    await page.locator(firstChapter).click();
+    const player = page.locator('[data-player]');
+    await expect(player).toBeVisible();
+    await expect(player.locator('iframe')).toHaveAttribute('src', /youtube-nocookie\.com\/embed\/Ko0993YuBsU\?/);
+    await expect(player.locator('h2')).toHaveText('Hello to the future');
+    await expect(player.locator('[data-player-telegram]')).toHaveAttribute('href', 'https://t.me/arsenynn/6');
+    expect(page.url()).not.toContain('youtube');
+    expect(page.context().pages()).toHaveLength(1);
+  });
+
+  test('«Дальше» пропускает главы без видео, закрытие убирает iframe и возвращает фокус', async ({ page }) => {
+    await page.goto('/');
+    await page.locator('[aria-controls="part-arsenynn-1"]').click();
+    const link = page.locator(firstChapter);
+    await link.click();
+    const player = page.locator('[data-player]');
+    await expect(player.locator('[data-player-prev]')).toBeDisabled();
+    await player.locator('[data-player-next]').click();
+    await expect(player.locator('h2')).toHaveText('Come here');
+    await page.keyboard.press('Escape');
+    await expect(player).toBeHidden();
+    await expect(player.locator('iframe')).toHaveCount(0);
+    await expect(link).toBeFocused();
+  });
+
+  test('главы без YouTube остаются ссылками на Telegram', async ({ page }) => {
+    await page.goto('/');
+    await expect(page.locator('#part-arsenynn-1 a[href="https://t.me/arsenynn/7"]')).not.toHaveAttribute('data-video');
+  });
+
+  test('axe: открытый плеер без serious и critical нарушений', async ({ page }) => {
+    await page.goto('/');
+    await page.locator('[aria-controls="part-arsenynn-1"]').click();
+    await page.locator(firstChapter).click();
+    await expect(page.locator('[data-player] iframe')).toHaveCount(1);
+    await expect(page.locator('[data-player]')).toHaveCSS('opacity', '1');
+    const { violations } = await new AxeBuilder({ page }).include('[data-player]').disableRules(['frame-tested']).analyze();
+    expect(violations.filter((v) => ['serious', 'critical'].includes(v.impact ?? ''))).toEqual([]);
+  });
+
+  for (const [width, height] of [[320, 568], [390, 844], [844, 390], [1440, 900]] as const) {
+    test(`кадр 16:9 помещается в экран ${width}x${height}`, async ({ page }) => {
+      await page.setViewportSize({ width, height });
+      await page.goto('/');
+      await page.locator('[aria-controls="part-arsenynn-1"]').click();
+      await page.locator(firstChapter).click();
+      const box = (await page.locator('[data-player-frame]').boundingBox())!;
+      expect(box.x).toBeGreaterThanOrEqual(0);
+      expect(box.x + box.width).toBeLessThanOrEqual(width);
+      expect(box.y + box.height).toBeLessThanOrEqual(height);
+      expect(Math.abs(box.width / box.height - 16 / 9)).toBeLessThan(0.02);
+    });
+  }
 });
 
 test('404 отдаёт страницу со ссылкой на главную', async ({ page }) => {

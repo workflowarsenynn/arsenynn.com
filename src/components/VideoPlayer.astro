@@ -1,0 +1,241 @@
+---
+// Плеер глав @arsenynn: один <dialog> на страницу, наполняется из src/scripts/player.ts.
+// Iframe создаётся только после нажатия, до этого запросов к провайдеру нет.
+import { site } from '../data/site';
+import { toLocale, ui } from '../lib/i18n';
+
+const t = ui[toLocale(Astro.currentLocale)];
+---
+<dialog
+  class="player"
+  aria-labelledby="player-title"
+  data-player
+  data-embed={site.video.embed}
+  data-watch={site.video.watch}
+>
+  <div class="player__stage">
+    <div class="player__bar">
+      <p class="player__meta" data-player-meta></p>
+      <button class="player__close" type="button" aria-label={t.playerClose} autofocus data-player-close>
+        <svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path d="M2 2l12 12M14 2L2 14" /></svg>
+      </button>
+    </div>
+    <div class="player__frame" data-player-frame></div>
+    <div class="player__caption">
+      <h2 class="player__title" id="player-title" data-player-title></h2>
+      <div class="player__nav">
+        <button class="player__step" type="button" data-player-prev><span aria-hidden="true">←</span> {t.playerPrev}</button>
+        <button class="player__step" type="button" data-player-next>{t.playerNext} <span aria-hidden="true">→</span></button>
+      </div>
+      <p class="player__links">
+        <a class="action action--text" href="#" target="_blank" rel="noopener" data-player-telegram>
+          {t.playerTelegram}<span class="action__arrow" aria-hidden="true">↗</span><span class="visually-hidden">{t.newTab}</span>
+        </a>
+        <a class="action action--text" href="#" target="_blank" rel="noopener" data-player-youtube>
+          YouTube<span class="action__arrow" aria-hidden="true">↗</span><span class="visually-hidden">{t.newTab}</span>
+        </a>
+      </p>
+    </div>
+  </div>
+</dialog>
+
+<style>
+  /* Зал: страница уходит в темноту, остаётся кадр. Единственная крупная анимация сайта. */
+  .player {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    max-width: none;
+    height: 100vh;
+    height: 100dvh;
+    max-height: none;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    background: var(--color-bg);
+    color: var(--color-text);
+    opacity: 0;
+    transition: opacity var(--duration-reveal) ease;
+  }
+
+  .player[open] {
+    display: grid;
+    align-content: center;
+  }
+
+  .player[open]:not([data-closing]) {
+    opacity: 1;
+  }
+
+  @starting-style {
+    .player[open]:not([data-closing]) {
+      opacity: 0;
+    }
+  }
+
+  .player::backdrop {
+    background: var(--color-bg);
+    overflow: hidden;
+    overscroll-behavior: contain;
+  }
+
+  .player__stage {
+    width: 100%;
+    margin-inline: auto;
+  }
+
+  .player__bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-2);
+    padding-inline: var(--gutter);
+  }
+
+  .player__meta {
+    margin: 0;
+    color: var(--color-muted);
+    font-size: var(--text-meta);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .player__close {
+    display: grid;
+    place-items: center;
+    width: var(--tap);
+    height: var(--tap);
+    margin-right: -1rem;
+    padding: 0;
+    border: 0;
+    background: none;
+    color: var(--color-text);
+    cursor: pointer;
+    transition: color var(--duration) ease;
+  }
+
+  .player__close svg {
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.5;
+  }
+
+  .player__close:hover {
+    color: var(--color-accent);
+  }
+
+  /* На телефоне кадр идёт от края до края. */
+  .player__frame {
+    position: relative;
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+    background: var(--color-press);
+  }
+
+  /* Постер ждёт ответа провайдера. Если YouTube не загрузится, кадр не останется пустым. */
+  .player__frame :global(img) {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: blur(14px) brightness(0.55);
+    transform: scale(1.08);
+  }
+
+  .player__frame :global(iframe) {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+    opacity: 0;
+    transition: opacity var(--duration-reveal) ease;
+  }
+
+  .player__frame :global(iframe[data-ready]) {
+    opacity: 1;
+  }
+
+  .player__caption {
+    padding: var(--space-3) var(--gutter) var(--space-2);
+  }
+
+  .player__title {
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: var(--text-lead);
+    font-weight: 400;
+    line-height: 1.25;
+    text-wrap: balance;
+  }
+
+  .player__nav {
+    display: flex;
+    justify-content: space-between;
+    gap: var(--space-2);
+    margin-top: var(--space-2);
+    border-block: 1px solid var(--color-line);
+  }
+
+  .player__step {
+    min-height: var(--tap-row);
+    padding: 0;
+    border: 0;
+    background: none;
+    color: var(--color-text);
+    font: inherit;
+    cursor: pointer;
+    transition: color var(--duration) ease;
+  }
+
+  .player__step:hover:not(:disabled) {
+    color: var(--color-accent);
+  }
+
+  .player__step:disabled {
+    color: var(--color-line-strong);
+    cursor: default;
+  }
+
+  .player__links {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 0 var(--space-3);
+    margin: 0;
+    font-size: var(--text-meta);
+  }
+
+  /* Телефон лёжа: кадр занимает высоту экрана, подпись ниже по прокрутке. */
+  @media (orientation: landscape) and (max-height: 30rem) {
+    .player[open] {
+      align-content: start;
+    }
+
+    .player__stage {
+      width: min(100%, calc((100dvh - var(--tap)) * 16 / 9));
+    }
+
+    .player__bar,
+    .player__caption {
+      padding-inline: 0;
+    }
+  }
+
+  @media (min-width: 48rem) and (min-height: 30rem) {
+    .player__stage {
+      width: min(100% - 2 * var(--gutter), var(--content-width), calc((100dvh - 17rem) * 16 / 9));
+    }
+
+    .player__bar,
+    .player__caption {
+      padding-inline: 0;
+    }
+
+    .player__close {
+      margin-right: -1rem;
+    }
+  }
+</style>

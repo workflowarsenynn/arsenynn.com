@@ -17,7 +17,7 @@ const fonts = `<style>${fontFace('OGSerif', 'node_modules/@fontsource-variable/s
 const og = `<html><head>${fonts}</head><body style="margin:0;width:1200px;height:630px;background:#0a0a0a;color:#f2f2f0;font-family:${font};display:flex;flex-direction:column;justify-content:flex-end;padding:80px;box-sizing:border-box;position:relative">
 <img src="${portrait}" style="position:absolute;right:40px;top:0;width:525px;height:630px;-webkit-mask-image:radial-gradient(ellipse 85% 80% at 72% 38%,#000 45%,transparent 100%)">
 <img src="${wordmark}" style="width:560px;display:block;position:relative;z-index:1">
-<div style="font-size:34px;line-height:1.25;max-width:560px;text-wrap:balance;color:#f2f2f0;margin-top:28px;font-family:OGSerif,Georgia,serif;position:relative;z-index:1">Финальная битва между рациональным и самоценным</div>
+<div style="font-size:34px;line-height:1.25;max-width:560px;text-wrap:balance;color:#f2f2f0;margin-top:28px;font-family:OGSerif,Georgia,serif;position:relative;z-index:1">Финальная битва между самоценным и рациональным</div>
 </body></html>`;
 const nnIcon = 'data:image/svg+xml;base64,' + readFileSync('public/favicon.svg').toString('base64');
 const icon = `<html><body style="margin:0;width:180px;height:180px;background:#0a0a0a;display:flex;align-items:center;justify-content:center"><img src="${nnIcon}" style="width:150px;height:150px"></body></html>`;

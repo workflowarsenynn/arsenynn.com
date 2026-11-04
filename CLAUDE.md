@@ -1,5 +1,5 @@
 # CLAUDE.md
-LastUpdated: 2026-11-04 22:45 MSK
+LastUpdated: 2026-11-04 23:00 MSK
 
 ## Project
 Личный сайт arsenynn.com: mobile-first индекс семи проектов @arsenynn на одной странице, для людей, открывающих ссылку с телефона.
@@ -29,7 +29,7 @@ MVP собран, структура в `docs/architecture.md`.
 ## Code style
 - Контент и URL только в `src/content/` и `src/data/site.ts`, никогда в компонентах.
 - Цвета и отступы только через токены.
-- Минимум JavaScript: один маленький скрипт для About, без `client:*`.
+- Минимум JavaScript: два маленьких скрипта, About и плеер глав, без `client:*`.
 - Стили сначала для телефона, расширение через `min-width`.
 
 ## Testing
