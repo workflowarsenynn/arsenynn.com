@@ -1,5 +1,5 @@
 # Deploy Runbook
-LastUpdated: 2026-11-01 13:30 MSK
+LastUpdated: 2026-11-04 22:30 MSK
 
 Статус: сайт опубликован на https://arsenynn.com (2026-11-01). DNS и custom domain настроены. Все записи DNS only и указывают на GitHub. Сертификат `CN=arsenynn.com` выпущен, www редиректит на корень. Осталось включить Enforce HTTPS.
 
@@ -36,7 +36,7 @@ LastUpdated: 2026-11-01 13:30 MSK
 
 Проект использует `cf` CLI: `cf dns records list -z arsenynn.com`.
 
-После DNS: дождаться сертификата Let's Encrypt от GitHub и включить Enforce HTTPS.
+После DNS: дождаться сертификата Let's Encrypt от GitHub и включить Enforce HTTPS. Сделано, `http://arsenynn.com` отвечает 301 на https (проверено 2026-11-04).
 
 ## Publishing model
 
