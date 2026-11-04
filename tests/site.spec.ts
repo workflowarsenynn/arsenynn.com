@@ -88,6 +88,15 @@ test('порядок проектов задан владельцем, номе�
   await expect(page.locator('#work')).toBeVisible();
 });
 
+test('кадры закрытых панелей не грузятся, пока панель не открыта', async ({ page }) => {
+  const thumbs: string[] = [];
+  page.on('request', (r) => { if (r.url().includes('/thumbs/')) thumbs.push(r.url()); });
+  await page.goto('/', { waitUntil: 'networkidle' });
+  expect(thumbs).toEqual([]);
+  await page.locator('#annflow [aria-controls="contents-annflow"]').click();
+  await expect.poll(() => thumbs.length).toBeGreaterThan(0);
+});
+
 test('annFlow: кнопка «Проекты» раскрывает оглавление с обложками и ссылками на посты', async ({ page }) => {
   await page.goto('/');
   const button = page.locator('#annflow [aria-controls="contents-annflow"]');
@@ -161,6 +170,13 @@ test('английская версия: /en/, переключатель язы
   await page.locator('.site-header__lang').click();
   await expect(page).toHaveURL(/\/$/);
   await expect(page.locator('html')).toHaveAttribute('lang', 'ru');
+});
+
+test('английская версия: служебные названия оглавления annFlow переведены', async ({ page }) => {
+  await page.goto('/en/');
+  const titles = page.locator('#contents-annflow .contents__title');
+  await expect(titles.filter({ hasText: 'MCP server' })).toHaveCount(1);
+  await expect(titles.filter({ hasText: 'Auto-apply' })).toHaveCount(1);
 });
 
 test('404 отдаёт страницу со ссылкой на главную', async ({ page }) => {
