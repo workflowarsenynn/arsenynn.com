@@ -1,0 +1,16 @@
+{
+  "title": "Space hold -> F18 layer",
+  "rules": [
+    {
+      "description": "Spacebar: tap=spacebar, hold=F18",
+      "manipulators": [
+        {
+          "type": "basic",
+          "from": { "key_code": "spacebar", "modifiers": { "optional": ["any"] } },
+          "to_if_alone": [ { "key_code": "spacebar" } ],
+          "to_if_held_down": [ { "key_code": "f18" } ]
+        }
+      ]
+    }
+  ]
+}

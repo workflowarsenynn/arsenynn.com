@@ -1,8 +1,8 @@
 # CLAUDE.md
-LastUpdated: 2026-11-04 23:00 MSK
+LastUpdated: 2026-11-04 23:45 MSK
 
 ## Project
-Личный сайт arsenynn.com: mobile-first индекс семи проектов @arsenynn на одной странице, для людей, открывающих ссылку с телефона.
+Личный сайт arsenynn.com: mobile-first индекс семи проектов @arsenynn для людей, открывающих ссылку с телефона. У annFlow есть свой мир: весь канал на сайте.
 
 ## Stack
 - Astro со статической сборкой, Node.js 20+
@@ -16,6 +16,7 @@ MVP собран, структура в `docs/architecture.md`.
 - `assets/logos/` — исходники логотипов
 - `src/content/projects.yaml` — проекты: тексты, теги, ссылки, логотипы (Content Collection, схема в `src/content.config.ts`)
 - `src/data/site.ts` — hero, header, блок Work, footer, SEO
+- `src/content/annflow/` — заметки канала annFlow, картинки, серии (`channel.json`)
 - `src/components/`, `src/styles/` — разметка и design tokens
 
 ## Commands
@@ -23,6 +24,7 @@ MVP собран, структура в `docs/architecture.md`.
 - запуск: `npm run dev`
 - сборка с проверкой типов: `npm run build` (результат в `dist/`)
 - OG image, apple-touch-icon и favicon.ico: `NODE_PATH=$(npm root -g) node scripts/render-images.mjs`
+- импорт новых постов annFlow: `node scripts/telegram/import-channel.mjs`, результат смотреть в diff
 - векторизовать одноцветный логотип: `python3 scripts/trace-logo.py <in> public/logos/<slug>.svg '#hex'`
 - тесты: `npm test` (Playwright + axe против `astro preview`, нужна сборка). В облачной сессии Claude: `PW_CHROMIUM=/opt/pw-browsers/chromium-1243/chrome-linux64/chrome npm test`. В CI их запускает `.github/workflows/test.yml`. Локально: `npx playwright install chromium`; в worktree внутри `.claude/` сборка падает, см. `docs/handoff.md` раздел 7
 

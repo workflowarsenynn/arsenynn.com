@@ -1,0 +1,36 @@
+{
+  "title": "RU: Option+б/ю -> Shift+6/7 (comma/period)",
+  "rules": [
+    {
+      "description": "RU only: Option+б -> ',' (Shift+6), Option+ю -> '.' (Shift+7)",
+      "manipulators": [
+        {
+          "type": "basic",
+          "from": {
+            "key_code": "comma",
+            "modifiers": { "mandatory": ["option"], "optional": ["any"] }
+          },
+          "to": [
+            { "key_code": "6", "modifiers": ["shift"] }
+          ],
+          "conditions": [
+            { "type": "input_source_if", "input_sources": [{ "language": "ru" }] }
+          ]
+        },
+        {
+          "type": "basic",
+          "from": {
+            "key_code": "period",
+            "modifiers": { "mandatory": ["option"], "optional": ["any"] }
+          },
+          "to": [
+            { "key_code": "7", "modifiers": ["shift"] }
+          ],
+          "conditions": [
+            { "type": "input_source_if", "input_sources": [{ "language": "ru" }] }
+          ]
+        }
+      ]
+    }
+  ]
+}

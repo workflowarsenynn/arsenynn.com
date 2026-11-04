@@ -1,5 +1,5 @@
 import { defineCollection } from 'astro:content';
-import { file } from 'astro/loaders';
+import { file, glob } from 'astro/loaders';
 import { z } from 'astro/zod';
 
 // Advisory, migration step 4: Content Collections без смены URL.
@@ -34,8 +34,9 @@ const projects = defineCollection({
           label: z.string().min(1),
           /** Подпись на /en/, если отличается (например, «Часть I» -> Part I). */
           labelEn: z.string().min(1).optional(),
-          url: z.url().refine((u) => u.startsWith('https://'), 'Ссылка должна начинаться с https://'),
-          type: z.enum(['telegram', 'website', 'portfolio', 'listen', 'chapter', 'other']),
+          /** Внешняя ссылка по https:// или страница сайта от корня. */
+          url: z.string().refine((u) => u.startsWith('https://') || u.startsWith('/'), 'Ссылка: https:// или путь от корня сайта'),
+          type: z.enum(['telegram', 'website', 'portfolio', 'listen', 'chapter', 'site', 'other']),
           primary: z.boolean().optional(),
         }),
       ),
@@ -48,6 +49,8 @@ const projects = defineCollection({
             titleEn: z.string().optional(),
             note: z.string().optional(),
             noteEn: z.string().optional(),
+            /** Страница этой серии на сайте, важнее url. */
+            path: z.string().startsWith('/').optional(),
             /** Строка над названием слева: год. */
             meta: z.string().optional(),
             /** Длительность, справа на той же строке. */
@@ -108,4 +111,34 @@ const projects = defineCollection({
     }),
 });
 
-export const collections = { projects };
+// Заметки канала annFlow: scripts/telegram/import-channel.mjs, серии в src/content/annflow/channel.json.
+const annflow = defineCollection({
+  loader: glob({ pattern: '*.md', base: './src/content/annflow/notes' }),
+  schema: ({ image }) =>
+    z.object({
+      title: z.string().min(1),
+      series: z.string().regex(/^[a-z0-9-]+$/),
+      order: z.number().int().min(1),
+      publishedAt: z.coerce.date(),
+      /** Посты Telegram, из которых собрана заметка, первый — основной. */
+      source: z.array(z.number().int().positive()).min(1),
+      /** Файлы из public/files/annflow/. */
+      files: z.array(z.string()).optional(),
+      media: z
+        .array(
+          z.object({
+            type: z.enum(['image', 'video', 'audio']),
+            /** Картинка или постер видео. */
+            src: image().optional(),
+            /** Файл видео в public/. Без него постер ведёт в Telegram. */
+            file: z.string().startsWith('/').optional(),
+            duration: z.string().optional(),
+            caption: z.string().optional(),
+            post: z.number().int().positive(),
+          }),
+        )
+        .optional(),
+    }),
+});
+
+export const collections = { projects, annflow };

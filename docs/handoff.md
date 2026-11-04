@@ -1,5 +1,5 @@
 # Handoff
-LastUpdated: 2026-11-04 23:15 MSK
+LastUpdated: 2026-11-04 23:45 MSK
 
 Передача проекта следующему агенту. Прочитай целиком перед первой правкой. Дальше: `CLAUDE.md` → `AGENTS.md` → `docs/implementation_plan.md` → `docs/architecture.md` → `docs/decisions_log.md` (последние записи сверху).
 
@@ -16,12 +16,12 @@ LastUpdated: 2026-11-04 23:15 MSK
 
 1. Правки в ветке `claude/adoring-meitner-l33yf3` (перед началом `git fetch origin && git merge origin/main`).
 2. `npm run build` (включает `astro check`, должен быть «0 errors, 0 warnings»).
-3. Тесты: `npx astro preview --port 4321 &` затем `PW_CHROMIUM=/opt/pw-browsers/chromium-1243/chrome-linux64/chrome npx playwright test` (сейчас 36 тестов). Останавливать preview: `pkill -f "astro.mjs previe[w]"` — скобки нужны, иначе pkill убьёт собственную команду.
+3. Тесты: `npx astro preview --port 4321 &` затем `PW_CHROMIUM=/opt/pw-browsers/chromium-1243/chrome-linux64/chrome npx playwright test` (сейчас 47 тестов). Останавливать preview: `pkill -f "astro.mjs previe[w]"` — скобки нужны, иначе pkill убьёт собственную команду.
 4. Визуальная проверка в Playwright на 390 и 1280/1440 px, отправить скриншоты владельцу.
 5. Обновить доки (`docs/decisions_log.md` запись сверху, `architecture.md`, при необходимости `implementation_plan.md`, `LastUpdated`).
 6. Commit → push → PR в `main` через GitHub MCP → **дождаться зелёного workflow `Test`** на PR → merge.
 7. Проверить живой сайт (`curl` по маркеру из нового HTML, обычно 30–70 с после merge).
-8. Создать точку отката: ветка `rollback/phase-N` от `main` через `mcp__github__create_branch` (git-теги прокси сессии не пропускает). Последняя: `rollback/phase-26`.
+8. Создать точку отката: ветка `rollback/phase-N` от `main` через `mcp__github__create_branch` (git-теги прокси сессии не пропускает). Последняя: `rollback/phase-27`.
 9. Сообщить владельцу «опубликовано» только после проверки живого сайта. Он это проверяет.
 
 Откат: revert merge-коммита фазы отдельным PR (так уже откатывали светлую тему) или PR из нужной `rollback/phase-N`. Историю в `decisions_log.md` не удалять, а помечать `Status: reverted`.
@@ -35,7 +35,7 @@ LastUpdated: 2026-11-04 23:15 MSK
 | № | Проект | Знак/лого | Ссылки и раскрывашки |
 |---|---|---|---|
 | 01 | Party Protocol | маска | Telegram (главная), Website, About |
-| 02 | annFlow | логотип вместо названия | Telegram, «Проекты» (7 серий с обложками из постов), About |
+| 02 | annFlow | логотип вместо названия | «Читать» (главная, `/annflow/`), Telegram, «Проекты» (7 серий, ведут на страницы сайта), About |
 | 03 | Without Streaming | Ws | Listen, Telegram, About |
 | 04 | @arsenynn | NN; **название красное** (`accent`) | Telegram, «Часть I», «Часть II» («Вступление» с текстом, главы с кадрами открываются в плеере), About |
 | 05 | workflow@arsenynn | WW/NN | Telegram, «Проекты» (11 работ с кадрами, открываются в плеере), About. **Portfolio убрана владельцем** |
@@ -51,6 +51,7 @@ LastUpdated: 2026-11-04 23:15 MSK
 ## 4. Где что лежит
 
 - `src/content/projects.yaml` — **все проекты, тексты RU/EN, ссылки, знаки, части, главы, оглавления**. Схема zod в `src/content.config.ts` (сборка падает на ошибке: http вместо https, нет перевода и т. п.).
+- `src/content/annflow/` — мир annFlow: `notes/<id>.md` (заметки), `media/` (картинки), `channel.json` (серии, состав заметок, заголовки, видео, файлы). Импорт новых постов: `node scripts/telegram/import-channel.mjs` (заметки не перезаписывает, `--force` пересоздаёт всё и сотрёт ручные правки). Страницы: `src/pages/annflow/`, данные: `src/lib/annflow.ts`.
 - `src/data/site.ts` — hero, header, Work, footer, SEO/OG тексты, английские поля `site.en`.
 - `src/lib/i18n.ts` — служебные подписи RU/EN. `src/lib/activity.ts` — даты постов для огоньков.
 - `src/components/` — `HomePage`, `Hero`, `ProjectSection` (сетка строки, знаки), `ProjectActions` (ссылки, части, главы, оглавления, вступление), `Collaboration`, `ActionLink`.
@@ -60,7 +61,7 @@ LastUpdated: 2026-11-04 23:15 MSK
 - `assets/logos/README.md` — инвентарь исходников и что где используется. Оригиналы владельца — Google Drive `assest/logos.zip` (см. ниже, как скачать).
 - `docs/Advisory/deep_research_and_implementation_direction.md` — направление развития (The Moving Index). Владелец просит «делать по advisory».
 - `docs/references/youtube-arsenynn-map.txt` — соответствие постов @arsenynn и видео YouTube.
-- `tests/site.spec.ts` — 36 тестов (ширины 320–1440, ссылки, раскрывашки, ленивые кадры, иконки, плеер, без JS, reduced motion, 404, axe, EN, порядок, оглавления, вступление, Work).
+- `tests/site.spec.ts` — 47 тестов (ширины 320–1440, ссылки, раскрывашки, ленивые кадры, иконки, плеер, без JS, reduced motion, 404, axe, EN, порядок, оглавления, вступление, Work).
 
 ## 5. Открытые задачи
 
@@ -69,7 +70,7 @@ LastUpdated: 2026-11-04 23:15 MSK
 3. **Кадры для глав 0.2 и 1.0** @arsenynn: на YouTube их нет, сейчас заглушка с номером. Нужны видео или кадры от владельца.
 4. **Проверить переводы EN**, сделанные агентом (слоганы, About «Бессмысленности», Without Streaming, @arsenynn, annFlow, названия `titleEn` в оглавлении annFlow). Это оценка владельца: явных ошибок агент не нашёл, голос текста может судить только он.
 5. **Домен `arsenynn.quest` истекает 2026-11-15** (Porkbun, на нём Listen и Website Party Protocol). По whois на 2026-11-04 не продлён, сами поддомены отвечают 200. Владелец обещал продлить — напомнить и проверить. Голый `https://arsenynn.quest` не отвечает, сайт на него не ссылается.
-6. **Advisory step 6** — внутренние страницы (`/arsenynn/` и т. д.) отложены владельцем: первая версия только со ссылками.
+6. **Внутренние страницы:** annFlow сделан (`/annflow/`). 9 видео и аудио ждут файлов от владельца, список в `implementation_plan.md`. Следующий мир выбирает владелец, advisory советует `/arsenynn/`.
 7. Ветка `docs/sync-live-status` (с Mac владельца) не смержена: один коммит, 66 коммитов позади `main`. Из нового в ней только запись журнала «Сайт в проде, документы отстали от факта», остальное устарело (Enforce HTTPS уже включён). Не трогать без владельца.
 8. Todoist из облачной сессии недоступен, из локальной работает `td`. Intake 2026-11-04 чистый, подзадач нет. Запись статуса только по запросу владельца.
 9. Шрифты первого экрана 125 KB при бюджете advisory 120 KB. Остальной бюджет выполнен, замер в `decisions_log.md` от 2026-11-04.

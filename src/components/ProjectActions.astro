@@ -121,7 +121,7 @@ const t = ui[locale];
         <ul class="disclosure__inner contents" data-part={project.title}>
           {project.contents.map((item) => (
             <li>
-              <a class:list={['contents__link', { chapter: item.thumb, 'chapter--accent': item.accent }]} href={item.url} target="_blank" rel="noopener" data-video={item.youtube} aria-haspopup={item.youtube ? 'dialog' : undefined}>
+              <a class:list={['contents__link', { chapter: item.thumb, 'chapter--accent': item.accent }]} href={item.path ? asset(item.path) : item.url} target={item.path ? undefined : '_blank'} rel={item.path ? undefined : 'noopener'} data-video={item.youtube} aria-haspopup={item.youtube ? 'dialog' : undefined}>
                 {item.thumb && (
                   <span class="chapter__frame" aria-hidden="true">
                     <img src={asset(item.thumb)} width="288" height="162" alt="" loading="lazy" decoding="async" />
@@ -137,7 +137,9 @@ const t = ui[locale];
                   <span class="contents__title">{item.title}</span>
                   {item.note && <span class="contents__note">{item.note}</span>}
                 </span>
-                {item.youtube ? (
+                {item.path ? (
+                  <span class="action__arrow" aria-hidden="true">→</span>
+                ) : item.youtube ? (
                   <>
                     <svg class="chapter__play only-js" viewBox="0 0 10 12" width="10" height="12" aria-hidden="true"><path d="M0 0l10 6-10 6z" /></svg>
                     <span class="action__arrow only-nojs" aria-hidden="true">↗</span>

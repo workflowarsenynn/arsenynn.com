@@ -1,0 +1,42 @@
+---
+// Верхняя строка внутренних страниц: путь назад, не меню.
+import { asset } from '../data/asset';
+
+type Crumb = { label: string; href: string };
+type Props = { crumbs: Crumb[] };
+const { crumbs } = Astro.props;
+---
+<nav class="world-bar container" aria-label="Путь">
+  <a href={asset('/')}>@arsenynn</a>
+  {crumbs.map((c) => (
+    <>
+      <span aria-hidden="true">/</span>
+      <a href={asset(c.href)}>{c.label}</a>
+    </>
+  ))}
+</nav>
+
+<style>
+  .world-bar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0 var(--space-1);
+    padding-top: max(var(--space-1), env(safe-area-inset-top));
+    color: var(--color-muted);
+    font-size: var(--text-meta);
+  }
+
+  .world-bar a {
+    display: inline-flex;
+    align-items: center;
+    min-height: var(--tap);
+    color: var(--color-muted);
+    text-decoration: none;
+    transition: color var(--duration) ease;
+  }
+
+  .world-bar a:hover {
+    color: var(--color-text);
+  }
+</style>

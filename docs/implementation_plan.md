@@ -1,5 +1,5 @@
 # Implementation Plan
-LastUpdated: 2026-11-04 23:15 MSK
+LastUpdated: 2026-11-04 23:45 MSK
 
 ## Todoist Sync
 - Sync: manual
@@ -29,9 +29,9 @@ LastUpdated: 2026-11-04 23:15 MSK
 - PushPolicy: auto-safe
 
 ## Status
-- Stage: Polish (сайт в проде на https://arsenynn.com, The Moving Index по advisory, последняя фаза 24)
+- Stage: Build (первый мир: annFlow на сайте, индекс в проде на https://arsenynn.com, последняя фаза 27)
 - Направление задано `docs/Advisory/deep_research_and_implementation_direction.md`: оставить Astro и статику, развивать фазами, каждая фаза отдельным деплоем с точкой отката.
-- Сейчас на проде: hero с портретом, индекс из семи проектов по центру, части и главы @arsenynn и работы workflow со встроенным плеером YouTube, оглавление annFlow, RU и /en/, только тёмная тема.
+- Сейчас на проде: hero с портретом, индекс из семи проектов по центру, части и главы @arsenynn и работы workflow со встроенным плеером YouTube, RU и /en/, только тёмная тема. Новая стадия: весь канал annFlow на сайте, 66 заметок в 8 сериях.
 - Передача проекта и рабочий цикл: `docs/handoff.md`.
 
 ## Rollback
@@ -60,6 +60,7 @@ LastUpdated: 2026-11-04 23:15 MSK
 - `rollback/phase-24`: вступления, favicon NN, знак ann, новые тексты (194becf).
 - `rollback/phase-25`: ленивые кадры панелей, `titleEn`, синхронизация документации (89f2de6).
 - `rollback/phase-26`: плеер глав @arsenynn, новый слоган, favicon NN (e21a7e0).
+- `rollback/phase-27`: плеер у workflow, хиты красным, номер и время разведены (e7bd0a0).
 - Откат: PR из revert-коммита фазы в `main` или `git revert <merge-commit>`; GitHub Actions пересоберёт сайт за 1–2 минуты.
 
 ## Done
@@ -73,11 +74,11 @@ LastUpdated: 2026-11-04 23:15 MSK
 - [x] Phase 6 + 10: сигнальный огонёк, пересборка каждые 6 часов, порядок проектов задан владельцем
 - [x] Phase 7–8: части @arsenynn, портфолио-хаб, английская версия /en/ с hreflang
 - [x] Phase 9: workflow Telegram activity, ждёт токен
-- [x] Phase 12–15: портрет-логотип хаба, hero как титульный кадр, OG
-- [x] Phase 16–17: оглавление annFlow, части @arsenynn с главами и кадрами
+- [x] Phase 12–17: портрет-логотип хаба, hero как титульный кадр, оглавление annFlow, части @arsenynn с главами
 - [x] Phase 18–22: знаки по площади, превью ссылки, кадры глав, логотип ann, 11 работ workflow, обложки annFlow
 - [x] Phase 23–24: индекс по центру на desktop, вступления, favicon NN, новые тексты, NFC
 - [x] Базовые метрики прода (476 → 230 KB), `titleEn`, favicon NN с новым адресом, плеер в `<dialog>` у @arsenynn и workflow, хиты красным, новый слоган
+- [x] Мир annFlow: импорт канала в Markdown, страницы серий и заметок, оглавления, файлы
 
 ## In Progress
 <!-- Нет задач в работе. -->
@@ -93,7 +94,9 @@ LastUpdated: 2026-11-04 23:15 MSK
 - [ ] Проверить на iPhone и из РФ-сети, включая плеер глав и автозапуск
 - [ ] Если YouTube из РФ работает плохо: решить про Kinescope или Mux для глав
 - [ ] Шрифты первого экрана: 125 KB при бюджете advisory 120 KB
-- [ ] Advisory step 6: первый мир `/arsenynn/`, отложен владельцем: первая версия только со ссылками
+- [ ] Владелец: прислать 9 видео annFlow (посты 89, 100, 102, 108, 147, 180, 183, 184, 189) и аудио из поста 83, Telegram не отдаёт их браузеру
+- [ ] Владелец: прочитать заметки annFlow и решить, оставлять ли имена людей на скриншотах (серия про бота)
+- [ ] Следующий мир по тому же образцу: выбрать проект, advisory советует @arsenynn
 
 ## Risks
 - Домен `arsenynn.quest` истекает 2026-11-15 (whois 2026-11-04, продления ещё нет): без него перестанут работать Listen и Website Party Protocol.

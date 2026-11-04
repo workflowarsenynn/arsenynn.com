@@ -1,0 +1,236 @@
+---
+import { render } from 'astro:content';
+import Base from '../../../layouts/Base.astro';
+import WorldBar from '../../../components/WorldBar.astro';
+import NoteMedia from '../../../components/NoteMedia.astro';
+import SiteFooter from '../../../components/SiteFooter.astro';
+import { asset } from '../../../data/asset';
+import { formatDate, getSeries, minutesOf, telegramUrl, type Note, type Series } from '../../../lib/annflow';
+
+export async function getStaticPaths() {
+  const all = await getSeries();
+  const flat = all.flatMap((series) => series.notes.map((note, index) => ({ note, series, index })));
+  return flat.map((item, i) => ({
+    params: { id: item.note.id },
+    props: { ...item, prev: flat[i - 1]?.note, next: flat[i + 1]?.note, nextSeries: flat[i + 1]?.series },
+  }));
+}
+
+type Props = { note: Note; series: Series; index: number; prev?: Note; next?: Note; nextSeries?: Series };
+const { note, series, index, prev, next, nextSeries } = Astro.props;
+const { Content } = await render(note);
+const { title, source, media = [], files = [], publishedAt } = note.data;
+const lead = media.filter((m) => m.post === source[0]);
+const after = media.filter((m) => m.post !== source[0]);
+const description = (note.body ?? '').replace(/[*_`#>\\[\]]|\(http[^)]*\)|\(\/[^)]*\)/g, '').replace(/\s+/g, ' ').trim().slice(0, 155);
+const crossing = next && nextSeries && nextSeries.slug !== series.slug;
+---
+<Base title={`${title} — annFlow`} description={description} ogTitle={title} ogType="article">
+  <WorldBar crumbs={[{ label: 'annFlow', href: '/annflow/' }, { label: series.title, href: `/annflow/projects/${series.slug}/` }]} />
+  <main class="container">
+    <article class="note">
+      <header class="note__head">
+        <p class="note__meta">
+          <span>{index + 1} из {series.notes.length}</span>
+          <span>{minutesOf(note)} мин</span>
+          <time datetime={publishedAt.toISOString()}>{formatDate(publishedAt)}</time>
+        </p>
+        <h1>{title}</h1>
+      </header>
+
+      {lead.length > 0 && <NoteMedia items={lead} title={title} />}
+      <div class="prose"><Content /></div>
+      {after.length > 0 && <NoteMedia items={after} title={title} />}
+
+      {files.length > 0 && (
+        <ul class="note__files">
+          {files.map((f) => (
+            <li><a class="action action--text" href={asset(`/files/annflow/${f}`)} download>{f}<span class="action__arrow" aria-hidden="true">↓</span></a></li>
+          ))}
+        </ul>
+      )}
+
+      <p class="note__source">
+        <a class="action action--text" href={telegramUrl(source[0])} target="_blank" rel="noopener">
+          Оригинал в Telegram<span class="action__arrow" aria-hidden="true">↗</span><span class="visually-hidden"> (откроется в новой вкладке)</span>
+        </a>
+      </p>
+    </article>
+
+    <nav class="note__nav" aria-label="Заметки">
+      {next && (
+        <a class="note__step note__step--next" href={asset(`/annflow/notes/${next.id}/`)}>
+          <span>{crossing ? `Следующая серия: ${nextSeries.title}` : 'Дальше'}</span>
+          <strong>{next.data.title} <span aria-hidden="true">→</span></strong>
+        </a>
+      )}
+      {prev && (
+        <a class="note__step" href={asset(`/annflow/notes/${prev.id}/`)}>
+          <span>Назад</span>
+          <strong><span aria-hidden="true">←</span> {prev.data.title}</strong>
+        </a>
+      )}
+    </nav>
+
+    <details class="note__toc">
+      <summary>Оглавление серии<span class="note__toc-sign" aria-hidden="true"></span></summary>
+      <ol>
+        {series.notes.map((n, i) => (
+          <li>
+            <a href={asset(`/annflow/notes/${n.id}/`)} aria-current={n.id === note.id ? 'page' : undefined}>
+              <span class="note__toc-num" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
+              <span>{n.data.title}</span>
+            </a>
+          </li>
+        ))}
+      </ol>
+    </details>
+  </main>
+  <SiteFooter />
+</Base>
+
+<style>
+  main {
+    padding-bottom: var(--space-5);
+  }
+
+  .note,
+  .note__nav,
+  .note__toc {
+    max-width: 44rem;
+    margin-inline: auto;
+  }
+
+  .note__head {
+    padding-block: var(--space-3) var(--space-2);
+  }
+
+  .note__meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0 var(--space-2);
+    margin: 0 0 var(--space-2);
+    color: var(--color-muted);
+    font-size: var(--text-meta);
+    font-variant-numeric: tabular-nums;
+  }
+
+  h1 {
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: clamp(1.75rem, 1.35rem + 1.8vw, 2.5rem);
+    font-weight: 400;
+    line-height: 1.15;
+    text-wrap: balance;
+  }
+
+  .note__files {
+    margin: var(--space-3) 0 0;
+    padding: 0;
+    list-style: none;
+    font-size: var(--text-meta);
+  }
+
+  .note__source {
+    margin: var(--space-3) 0 0;
+    font-size: var(--text-meta);
+  }
+
+  .note__nav {
+    display: flex;
+    flex-direction: column;
+    margin-top: var(--space-4);
+    border-top: 1px solid var(--color-line);
+  }
+
+  .note__step {
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+    min-height: var(--tap-row);
+    padding-block: var(--space-2);
+    border-bottom: 1px solid var(--color-line);
+    color: var(--color-text);
+    text-decoration: none;
+    -webkit-tap-highlight-color: transparent;
+    transition: background var(--duration) ease;
+  }
+
+  .note__step:hover,
+  .note__step:active {
+    background: var(--color-press);
+  }
+
+  .note__step span:first-child {
+    color: var(--color-muted);
+    font-size: var(--text-meta);
+  }
+
+  .note__step strong {
+    font-weight: 400;
+    line-height: 1.3;
+  }
+
+  .note__step--next strong {
+    font-family: var(--font-display);
+    font-size: var(--text-lead);
+  }
+
+  .note__toc {
+    border-bottom: 1px solid var(--color-line);
+  }
+
+  summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    min-height: var(--tap-row);
+    cursor: pointer;
+    list-style: none;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .note__toc-sign::before {
+    content: '+';
+    color: var(--color-muted);
+  }
+
+  details[open] .note__toc-sign::before {
+    content: '−';
+  }
+
+  .note__toc ol {
+    margin: 0;
+    padding: 0 0 var(--space-2);
+    list-style: none;
+  }
+
+  .note__toc a {
+    display: flex;
+    align-items: baseline;
+    gap: var(--space-2);
+    min-height: var(--tap);
+    padding-block: 0.6rem;
+    color: var(--color-muted);
+    line-height: 1.35;
+    text-decoration: none;
+  }
+
+  .note__toc a:hover {
+    color: var(--color-text);
+  }
+
+  .note__toc a[aria-current='page'] {
+    color: var(--color-accent);
+  }
+
+  .note__toc-num {
+    flex: none;
+    font-size: var(--text-meta);
+    font-variant-numeric: tabular-nums;
+  }
+</style>
