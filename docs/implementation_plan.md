@@ -1,5 +1,5 @@
 # Implementation Plan
-LastUpdated: 2026-11-04 22:30 MSK
+LastUpdated: 2026-11-04 23:00 MSK
 
 ## Todoist Sync
 - Sync: manual
@@ -31,7 +31,7 @@ LastUpdated: 2026-11-04 22:30 MSK
 ## Status
 - Stage: Polish (сайт в проде на https://arsenynn.com, The Moving Index по advisory, последняя фаза 24)
 - Направление задано `docs/Advisory/deep_research_and_implementation_direction.md`: оставить Astro и статику, развивать фазами, каждая фаза отдельным деплоем с точкой отката.
-- Сейчас на проде: hero с портретом, индекс из семи проектов по центру, части и главы @arsenynn, оглавления annFlow и workflow, RU и /en/, только тёмная тема.
+- Сейчас на проде: hero с портретом, индекс из семи проектов по центру, части и главы @arsenynn со встроенным плеером YouTube, оглавления annFlow и workflow, RU и /en/, только тёмная тема.
 - Передача проекта и рабочий цикл: `docs/handoff.md`.
 
 ## Rollback
@@ -58,6 +58,7 @@ LastUpdated: 2026-11-04 22:30 MSK
 - `rollback/phase-22`: проекты workflow и обложки annFlow, включая PR 27 и 28 (1106327).
 - `rollback/phase-23`: индекс по центру на desktop (b30c701).
 - `rollback/phase-24`: вступления, favicon NN, знак ann, новые тексты (194becf).
+- `rollback/phase-25`: ленивые кадры панелей, `titleEn`, синхронизация документации (89f2de6).
 - Откат: PR из revert-коммита фазы в `main` или `git revert <merge-commit>`; GitHub Actions пересоберёт сайт за 1–2 минуты.
 
 ## Done
@@ -75,7 +76,7 @@ LastUpdated: 2026-11-04 22:30 MSK
 - [x] Phase 16–17: оглавление annFlow, части @arsenynn с главами и кадрами
 - [x] Phase 18–22: знаки по площади, превью ссылки, кадры глав, логотип ann, 11 работ workflow, обложки annFlow
 - [x] Phase 23–24: индекс по центру на desktop, вступления, favicon NN, новые тексты, NFC
-- [x] Базовые метрики прода, кадры закрытых панелей больше не грузятся на старте (476 → 230 KB), `titleEn` в оглавлении
+- [x] Базовые метрики прода (476 → 230 KB), `titleEn`, favicon NN с новым адресом, плеер глав в `<dialog>`, новый слоган
 
 ## In Progress
 <!-- Нет задач в работе. -->
@@ -88,7 +89,8 @@ LastUpdated: 2026-11-04 22:30 MSK
 - [ ] Владелец: прислать кадры для глав 0.2 и 1.0 @arsenynn
 - [ ] Владелец: проверить переводы EN, сделанные агентом
 - [ ] Владелец: решить судьбу ветки `docs/sync-live-status`
-- [ ] Проверить на iPhone и из РФ-сети
+- [ ] Проверить на iPhone и из РФ-сети, включая плеер глав и автозапуск
+- [ ] Если YouTube из РФ работает плохо: решить про Kinescope или Mux для глав
 - [ ] Шрифты первого экрана: 125 KB при бюджете advisory 120 KB
 - [ ] Advisory step 6: первый мир `/arsenynn/`, отложен владельцем: первая версия только со ссылками
 
@@ -98,6 +100,7 @@ LastUpdated: 2026-11-04 22:30 MSK
 - Telegram отдаёт урезанные страницы при частых запросах: проверку ссылок повторять несколько раз. Код 200 от t.me не доказывает, что пост существует.
 - Ветка `docs/sync-live-status` с локального Mac не смержена и отстаёт от `main` на 66 коммитов: её правки документации конфликтуют с текущими.
 - Проверка доступности ссылок выполнялась не из РФ-сети.
+- Плеер глав зависит от YouTube, в РФ он работает с перебоями. Запасной путь: ссылка на Telegram под кадром.
 
 ## Todoist Intake
 <!-- External Todoist active subtasks/descriptions that require review before becoming implementation work. -->

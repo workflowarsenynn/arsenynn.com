@@ -5,15 +5,21 @@ export const site = {
   url: 'https://arsenynn.com',
   lang: 'ru',
   // Google и вкладка браузера: <title> и meta description (описание содержательное, для поиска).
-  title: '@arsenynn — Финальная битва между рациональным и самоценным',
+  title: '@arsenynn — Финальная битва между самоценным и рациональным',
   description:
     'Проекты @arsenynn: авторское кино, видео на заказ, философия, интернет-радио, AI-системы, VPN и путешествия.',
   // Превью в Telegram и соцсетях: только имя и слоган.
   ogSiteName: 'arsenynn.com',
   ogTitle: '@arsenynn',
-  ogDescription: 'Финальная битва между рациональным и самоценным',
+  ogDescription: 'Финальная битва между самоценным и рациональным',
   themeColor: '#0a0a0a',
   ogImage: '/og.png',
+
+  // Провайдер плеера глав. Сменить провайдера: эти адреса и параметры в src/scripts/player.ts.
+  video: {
+    embed: 'https://www.youtube-nocookie.com/embed/',
+    watch: 'https://www.youtube.com/watch?v=',
+  },
 
   hero: {
     title: '@arsenynn',
@@ -21,7 +27,7 @@ export const site = {
     // Главный логотип хаба: портрет в красном свете, единственное изображение сайта.
     portrait: { src: '/portrait.webp', width: 750, height: 900 },
     // Одна строка вместо трёх слоёв объяснения (advisory: reduce explanation, increase identity).
-    line: 'Финальная битва между рациональным и самоценным',
+    line: 'Финальная битва между самоценным и рациональным',
   },
 
   // Портфолио-хаб для сотрудничества и HR: IT / AI, продажи и события, видео.
@@ -44,11 +50,11 @@ export const site = {
 
   // Английская версия (/en/). Поля, которых здесь нет, берутся из основных.
   en: {
-    title: '@arsenynn — The final battle between the rational and the intrinsic',
+    title: '@arsenynn — The final battle between the intrinsic and the rational',
     description:
       'Projects by @arsenynn: auteur film, commissioned video, philosophy, internet radio, AI systems, VPN and travel.',
-    ogDescription: 'The final battle between the rational and the intrinsic',
-    heroLine: 'The final battle between the rational and the intrinsic',
+    ogDescription: 'The final battle between the intrinsic and the rational',
+    heroLine: 'The final battle between the intrinsic and the rational',
     workText: 'Portfolio for collaboration and hiring: AI automation, sales and events, video production.',
   },
 

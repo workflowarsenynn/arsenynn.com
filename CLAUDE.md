@@ -1,5 +1,5 @@
 # CLAUDE.md
-LastUpdated: 2026-11-04 22:30 MSK
+LastUpdated: 2026-11-04 23:00 MSK
 
 ## Project
 Личный сайт arsenynn.com: mobile-first индекс семи проектов @arsenynn на одной странице, для людей, открывающих ссылку с телефона.
@@ -22,14 +22,14 @@ MVP собран, структура в `docs/architecture.md`.
 - установка: `npm install`
 - запуск: `npm run dev`
 - сборка с проверкой типов: `npm run build` (результат в `dist/`)
-- OG image и apple-touch-icon: `NODE_PATH=$(npm root -g) node scripts/render-images.mjs`
+- OG image, apple-touch-icon и favicon.ico: `NODE_PATH=$(npm root -g) node scripts/render-images.mjs`
 - векторизовать одноцветный логотип: `python3 scripts/trace-logo.py <in> public/logos/<slug>.svg '#hex'`
 - тесты: `npm test` (Playwright + axe против `astro preview`, нужна сборка). В облачной сессии Claude: `PW_CHROMIUM=/opt/pw-browsers/chromium-1243/chrome-linux64/chrome npm test`. В CI их запускает `.github/workflows/test.yml`. Локально: `npx playwright install chromium`; в worktree внутри `.claude/` сборка падает, см. `docs/handoff.md` раздел 7
 
 ## Code style
 - Контент и URL только в `src/content/` и `src/data/site.ts`, никогда в компонентах.
 - Цвета и отступы только через токены.
-- Минимум JavaScript: один маленький скрипт для About, без `client:*`.
+- Минимум JavaScript: два маленьких скрипта, About и плеер глав, без `client:*`.
 - Стили сначала для телефона, расширение через `min-width`.
 
 ## Testing

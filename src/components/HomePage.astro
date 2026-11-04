@@ -5,6 +5,7 @@ import Hero from './Hero.astro';
 import ProjectList from './ProjectList.astro';
 import Collaboration from './Collaboration.astro';
 import SiteFooter from './SiteFooter.astro';
+import VideoPlayer from './VideoPlayer.astro';
 ---
 <Base>
   <SiteHeader />
@@ -14,8 +15,10 @@ import SiteFooter from './SiteFooter.astro';
     <Collaboration />
   </main>
   <SiteFooter />
+  <VideoPlayer />
 </Base>
 
 <script>
   import '../scripts/about.ts';
+  import '../scripts/player.ts';
 </script>

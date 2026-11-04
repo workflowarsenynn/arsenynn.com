@@ -38,8 +38,10 @@ const jsonLd = JSON.stringify({
     {!noindex && alternates.map((a) => <link rel="alternate" hreflang={a.lang} href={a.href} />)}
     {!noindex && <link rel="alternate" hreflang="x-default" href={alternates[0].href} />}
     <meta name="theme-color" content={site.themeColor} />
-    <link rel="icon" href={asset('/favicon.svg')} type="image/svg+xml" />
-    <link rel="apple-touch-icon" href={asset('/apple-touch-icon.png')} />
+    <!-- ?v= сбрасывает кэш браузера: старый значок держится по прежнему адресу месяцами. Менять при смене иконки. -->
+    <link rel="icon" href={asset('/favicon.ico?v=2')} sizes="48x48" />
+    <link rel="icon" href={asset('/favicon.svg?v=2')} type="image/svg+xml" />
+    <link rel="apple-touch-icon" href={asset('/apple-touch-icon.png?v=2')} />
 
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content={site.ogSiteName} />
