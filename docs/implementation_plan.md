@@ -1,5 +1,5 @@
 # Implementation Plan
-LastUpdated: 2026-11-04 22:30 MSK
+LastUpdated: 2026-11-04 22:45 MSK
 
 ## Todoist Sync
 - Sync: manual
@@ -58,6 +58,7 @@ LastUpdated: 2026-11-04 22:30 MSK
 - `rollback/phase-22`: проекты workflow и обложки annFlow, включая PR 27 и 28 (1106327).
 - `rollback/phase-23`: индекс по центру на desktop (b30c701).
 - `rollback/phase-24`: вступления, favicon NN, знак ann, новые тексты (194becf).
+- `rollback/phase-25`: ленивые кадры панелей, `titleEn`, синхронизация документации (89f2de6).
 - Откат: PR из revert-коммита фазы в `main` или `git revert <merge-commit>`; GitHub Actions пересоберёт сайт за 1–2 минуты.
 
 ## Done

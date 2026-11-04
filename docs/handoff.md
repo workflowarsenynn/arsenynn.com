@@ -1,5 +1,5 @@
 # Handoff
-LastUpdated: 2026-11-04 22:30 MSK
+LastUpdated: 2026-11-04 22:45 MSK
 
 Передача проекта следующему агенту. Прочитай целиком перед первой правкой. Дальше: `CLAUDE.md` → `AGENTS.md` → `docs/implementation_plan.md` → `docs/architecture.md` → `docs/decisions_log.md` (последние записи сверху).
 
@@ -16,12 +16,12 @@ LastUpdated: 2026-11-04 22:30 MSK
 
 1. Правки в ветке `claude/adoring-meitner-l33yf3` (перед началом `git fetch origin && git merge origin/main`).
 2. `npm run build` (включает `astro check`, должен быть «0 errors, 0 warnings»).
-3. Тесты: `npx astro preview --port 4321 &` затем `PW_CHROMIUM=/opt/pw-browsers/chromium-1243/chrome-linux64/chrome npx playwright test` (сейчас 25 тестов). Останавливать preview: `pkill -f "astro.mjs previe[w]"` — скобки нужны, иначе pkill убьёт собственную команду.
+3. Тесты: `npx astro preview --port 4321 &` затем `PW_CHROMIUM=/opt/pw-browsers/chromium-1243/chrome-linux64/chrome npx playwright test` (сейчас 26 тестов). Останавливать preview: `pkill -f "astro.mjs previe[w]"` — скобки нужны, иначе pkill убьёт собственную команду.
 4. Визуальная проверка в Playwright на 390 и 1280/1440 px, отправить скриншоты владельцу.
 5. Обновить доки (`docs/decisions_log.md` запись сверху, `architecture.md`, при необходимости `implementation_plan.md`, `LastUpdated`).
 6. Commit → push → PR в `main` через GitHub MCP → **дождаться зелёного workflow `Test`** на PR → merge.
 7. Проверить живой сайт (`curl` по маркеру из нового HTML, обычно 30–70 с после merge).
-8. Создать точку отката: ветка `rollback/phase-N` от `main` через `mcp__github__create_branch` (git-теги прокси сессии не пропускает). Последняя: `rollback/phase-24`.
+8. Создать точку отката: ветка `rollback/phase-N` от `main` через `mcp__github__create_branch` (git-теги прокси сессии не пропускает). Последняя: `rollback/phase-25`.
 9. Сообщить владельцу «опубликовано» только после проверки живого сайта. Он это проверяет.
 
 Откат: revert merge-коммита фазы отдельным PR (так уже откатывали светлую тему) или PR из нужной `rollback/phase-N`. Историю в `decisions_log.md` не удалять, а помечать `Status: reverted`.
@@ -45,7 +45,7 @@ LastUpdated: 2026-11-04 22:30 MSK
 
 - Сигнальный огонёк у номера: ● пост за 7 дней, ○ за 45 дней, иначе пусто. Только индикатор, на порядок не влияет. Сайт пересобирается каждые 6 часов (cron в `deploy.yml`).
 - Только тёмная тема. Светлую делали и **отменили по решению владельца**, не возвращать без запроса.
-- Favicon: красные NN (`public/favicon.svg`, штрих утолщён для 16 px).
+- Favicon: красные NN (`public/favicon.svg`, штрих утолщён для 16 px) и `public/favicon.ico`. При смене иконки поднимать `?v=` в `Base.astro`, иначе браузер покажет кэш.
 - Превью в Telegram: site_name `arsenynn.com`, title `@arsenynn`, description — слоган; OG-картинка `public/og.png` рендерится `scripts/render-images.mjs`. Meta description для Google — содержательный список проектов.
 
 ## 4. Где что лежит
@@ -60,7 +60,7 @@ LastUpdated: 2026-11-04 22:30 MSK
 - `assets/logos/README.md` — инвентарь исходников и что где используется. Оригиналы владельца — Google Drive `assest/logos.zip` (см. ниже, как скачать).
 - `docs/Advisory/deep_research_and_implementation_direction.md` — направление развития (The Moving Index). Владелец просит «делать по advisory».
 - `docs/references/youtube-arsenynn-map.txt` — соответствие постов @arsenynn и видео YouTube.
-- `tests/site.spec.ts` — 25 тестов (ширины 320–1440, ссылки, раскрывашки, ленивые кадры, без JS, reduced motion, 404, axe, EN, порядок, оглавления, вступление, Work).
+- `tests/site.spec.ts` — 26 тестов (ширины 320–1440, ссылки, раскрывашки, ленивые кадры, иконки, без JS, reduced motion, 404, axe, EN, порядок, оглавления, вступление, Work).
 
 ## 5. Открытые задачи
 

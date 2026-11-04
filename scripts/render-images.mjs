@@ -1,11 +1,11 @@
-// Генерирует public/og.png и public/apple-touch-icon.png через Playwright.
+// Генерирует public/og.png, public/apple-touch-icon.png и public/favicon.ico через Playwright.
 // Запуск: node scripts/render-images.mjs (нужен установленный playwright).
 import { createRequire } from 'node:module';
 const require = createRequire(import.meta.url);
 // Playwright берётся из окружения (глобально или NODE_PATH), в зависимости проекта не входит.
 const { chromium } = require('playwright');
 
-import { readFileSync } from 'node:fs';
+import { readFileSync, writeFileSync } from 'node:fs';
 
 const font = `-apple-system, 'Helvetica Neue', Arial, sans-serif`;
 const wordmark = 'data:image/svg+xml;base64,' + readFileSync('public/logos/arsenynn.svg').toString('base64');
@@ -29,4 +29,31 @@ for (const [html, w, h, out] of [[og, 1200, 630, 'public/og.png'], [icon, 180, 1
   await page.screenshot({ path: out });
   await page.close();
 }
+
+// favicon.ico: тот же знак NN на прозрачном фоне, PNG внутри контейнера ICO.
+const sizes = [16, 32, 48];
+const pngs = [];
+for (const size of sizes) {
+  const page = await browser.newPage({ viewport: { width: size, height: size } });
+  await page.setContent(`<html><body style="margin:0;background:transparent"><img src="${nnIcon}" style="display:block;width:${size}px;height:${size}px"></body></html>`);
+  pngs.push(await page.screenshot({ omitBackground: true }));
+  await page.close();
+}
 await browser.close();
+
+const header = Buffer.alloc(6);
+header.writeUInt16LE(1, 2);
+header.writeUInt16LE(sizes.length, 4);
+let offset = 6 + 16 * sizes.length;
+const entries = sizes.map((size, i) => {
+  const entry = Buffer.alloc(16);
+  entry.writeUInt8(size, 0);
+  entry.writeUInt8(size, 1);
+  entry.writeUInt16LE(1, 4);
+  entry.writeUInt16LE(32, 6);
+  entry.writeUInt32LE(pngs[i].length, 8);
+  entry.writeUInt32LE(offset, 12);
+  offset += pngs[i].length;
+  return entry;
+});
+writeFileSync('public/favicon.ico', Buffer.concat([header, ...entries, ...pngs]));

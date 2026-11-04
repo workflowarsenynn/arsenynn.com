@@ -179,6 +179,19 @@ test('английская версия: служебные названия о�
   await expect(titles.filter({ hasText: 'Auto-apply' })).toHaveCount(1);
 });
 
+test('иконки: ссылки с версией ведут на существующие файлы, favicon.ico есть', async ({ page, request }) => {
+  await page.goto('/');
+  const hrefs = await page.locator('link[rel="icon"], link[rel="apple-touch-icon"]').evaluateAll((l) => l.map((e) => e.getAttribute('href')!));
+  expect(hrefs).toHaveLength(3);
+  for (const href of hrefs) {
+    expect(href).toContain('?v=');
+    expect((await request.get(href)).status()).toBe(200);
+  }
+  const ico = await request.get('/favicon.ico');
+  expect(ico.status()).toBe(200);
+  expect([...(await ico.body()).subarray(0, 4)]).toEqual([0, 0, 1, 0]);
+});
+
 test('404 отдаёт страницу со ссылкой на главную', async ({ page }) => {
   const response = await page.goto('/nope');
   expect(response?.status()).toBe(404);
