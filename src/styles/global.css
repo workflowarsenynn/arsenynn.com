@@ -158,6 +158,18 @@ html.about-ready .disclosure {
   min-height: 0;
 }
 
+/* Свёрнутая панель через 0fr остаётся в раскладке, и lazy-кадры считались видимыми:
+   телефон качал все обложки сразу. content-visibility убирает содержимое из раскладки.
+   Safari до 26 это правило пропустит, панель там всё равно скрыта правилом выше. */
+html.js .disclosure:not([data-open]) > .disclosure__inner {
+  content-visibility: hidden;
+}
+
+/* allow-discrete держит содержимое до конца анимации закрытия. */
+html.about-ready .disclosure__inner {
+  transition: content-visibility var(--duration) allow-discrete;
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,

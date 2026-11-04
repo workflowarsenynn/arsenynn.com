@@ -29,7 +29,7 @@ export async function getProjects(locale: Locale = 'ru'): Promise<ProjectView[]>
               longDescription: d.en.longDescription,
               statusLabel: d.en.statusLabel ?? d.statusLabel,
               links: d.links.map((l) => ({ ...l, label: l.labelEn ?? l.label })),
-              contents: d.contents?.map((c) => ({ ...c, note: c.noteEn ?? c.note })),
+              contents: d.contents?.map((c) => ({ ...c, title: c.titleEn ?? c.title, note: c.noteEn ?? c.note })),
               parts: d.parts?.map((p) => ({ ...p, label: p.labelEn })),
             }
           : {};

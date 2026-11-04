@@ -1,5 +1,5 @@
 # Handoff
-LastUpdated: 2026-11-04 MSK
+LastUpdated: 2026-11-04 22:30 MSK
 
 Передача проекта следующему агенту. Прочитай целиком перед первой правкой. Дальше: `CLAUDE.md` → `AGENTS.md` → `docs/implementation_plan.md` → `docs/architecture.md` → `docs/decisions_log.md` (последние записи сверху).
 
@@ -12,9 +12,11 @@ LastUpdated: 2026-11-04 MSK
 
 ## 2. Как работать (рабочий цикл, обязательно)
 
+Шаги ниже написаны для облачной сессии. В локальной сессии на Mac: отдельный worktree от `origin/main`, Chromium ставит `npx playwright install chromium`, `PW_CHROMIUM` не нужен, PR и ветки через `gh`. Подробности в разделе 7. Merge в `main` публикует сайт, поэтому нужно подтверждение владельца.
+
 1. Правки в ветке `claude/adoring-meitner-l33yf3` (перед началом `git fetch origin && git merge origin/main`).
 2. `npm run build` (включает `astro check`, должен быть «0 errors, 0 warnings»).
-3. Тесты: `npx astro preview --port 4321 &` затем `PW_CHROMIUM=/opt/pw-browsers/chromium-1243/chrome-linux64/chrome npx playwright test` (сейчас 23 теста). Останавливать preview: `pkill -f "astro.mjs previe[w]"` — скобки нужны, иначе pkill убьёт собственную команду.
+3. Тесты: `npx astro preview --port 4321 &` затем `PW_CHROMIUM=/opt/pw-browsers/chromium-1243/chrome-linux64/chrome npx playwright test` (сейчас 25 тестов). Останавливать preview: `pkill -f "astro.mjs previe[w]"` — скобки нужны, иначе pkill убьёт собственную команду.
 4. Визуальная проверка в Playwright на 390 и 1280/1440 px, отправить скриншоты владельцу.
 5. Обновить доки (`docs/decisions_log.md` запись сверху, `architecture.md`, при необходимости `implementation_plan.md`, `LastUpdated`).
 6. Commit → push → PR в `main` через GitHub MCP → **дождаться зелёного workflow `Test`** на PR → merge.
@@ -58,19 +60,19 @@ LastUpdated: 2026-11-04 MSK
 - `assets/logos/README.md` — инвентарь исходников и что где используется. Оригиналы владельца — Google Drive `assest/logos.zip` (см. ниже, как скачать).
 - `docs/Advisory/deep_research_and_implementation_direction.md` — направление развития (The Moving Index). Владелец просит «делать по advisory».
 - `docs/references/youtube-arsenynn-map.txt` — соответствие постов @arsenynn и видео YouTube.
-- `tests/site.spec.ts` — 23 теста (ширины 320–1440, ссылки, раскрывашки, без JS, reduced motion, 404, axe, EN, порядок, оглавления, вступление, Work).
+- `tests/site.spec.ts` — 25 тестов (ширины 320–1440, ссылки, раскрывашки, ленивые кадры, без JS, reduced motion, 404, axe, EN, порядок, оглавления, вступление, Work).
 
 ## 5. Открытые задачи
 
 1. **Without Streaming: видео/анимация радио.** Владелец пришлёт файл. Согласованное ограничение: не увеличивать блок. Предложены варианты: беззвучная зацикленная анимация на месте знака Ws либо узкая полоса 16:9 под описанием; `muted playsinline`, poster, при `prefers-reduced-motion` — статичный кадр, не грузить до видимости. По умолчанию — вариант 1.
 2. **Telegram-бот для огоньков** «Бессмысленности» (группа) и Without Streaming (у них нет публичной ленты). Код готов (`scripts/telegram/activity.mjs`, workflow `telegram-activity.yml`, раз в час, без токена ничего не делает). Ждёт от владельца: бот в @BotFather (не ann), админ в @without_streaming и @bessmislennost, секрет `TELEGRAM_BOT_TOKEN`.
 3. **Кадры для глав 0.2 и 1.0** @arsenynn: на YouTube их нет, сейчас заглушка с номером. Нужны видео или кадры от владельца.
-4. **Проверить переводы EN**, сделанные агентом (слоганы, About «Бессмысленности», Without Streaming, @arsenynn, annFlow).
-5. **Домен `arsenynn.quest` истекает 2026-11-15** (на нём Listen и Website Party Protocol). Владелец обещал продлить — напомнить и проверить.
+4. **Проверить переводы EN**, сделанные агентом (слоганы, About «Бессмысленности», Without Streaming, @arsenynn, annFlow, названия `titleEn` в оглавлении annFlow). Это оценка владельца: явных ошибок агент не нашёл, голос текста может судить только он.
+5. **Домен `arsenynn.quest` истекает 2026-11-15** (Porkbun, на нём Listen и Website Party Protocol). По whois на 2026-11-04 не продлён, сами поддомены отвечают 200. Владелец обещал продлить — напомнить и проверить. Голый `https://arsenynn.quest` не отвечает, сайт на него не ссылается.
 6. **Advisory step 6** — внутренние страницы (`/arsenynn/` и т. д.) отложены владельцем: первая версия только со ссылками.
-7. Ветка `docs/sync-live-status` (с Mac владельца) не смержена, может конфликтовать с документацией — не трогать без владельца.
-8. Todoist из облачной сессии недоступен — в `implementation_plan.md` стоит warning; статус обновляет локальная сессия.
-9. `docs/implementation_plan.md` частично отстаёт от последних правок (тексты, оглавления, кадры) — сверить по `decisions_log.md` и сжать `## Done` до ≤15 пунктов.
+7. Ветка `docs/sync-live-status` (с Mac владельца) не смержена: один коммит, 66 коммитов позади `main`. Из нового в ней только запись журнала «Сайт в проде, документы отстали от факта», остальное устарело (Enforce HTTPS уже включён). Не трогать без владельца.
+8. Todoist из облачной сессии недоступен, из локальной работает `td`. Intake 2026-11-04 чистый, подзадач нет. Запись статуса только по запросу владельца.
+9. Шрифты первого экрана 125 KB при бюджете advisory 120 KB. Остальной бюджет выполнен, замер в `decisions_log.md` от 2026-11-04.
 
 ## 6. Решения владельца, которые нельзя ломать
 
@@ -94,3 +96,6 @@ LastUpdated: 2026-11-04 MSK
 - Push от `GITHUB_TOKEN` не запускает другие workflow; деплой из бота вызывается `gh workflow run deploy.yml`.
 - Foreground `sleep` блокируется — ждать CI через Bash с `run_in_background: true`.
 - DNS, видимость репозитория, настройки Pages — только с подтверждения владельца (у облачной сессии к ним нет доступа).
+- **Worktree внутри `.claude/`:** `npm run build` падает с `Tsconfig not found astro/tsconfigs/strict` из-за скрытого каталога в пути. Собирать и тестировать на копии вне `.claude/` (`rsync` без `node_modules`, `.git`, `dist`).
+- **Astro 7 preview** в агентной среде уходит в фон и держит один сервер. Playwright пишет `Process from config.webServer exited early`, при повторном запуске подключается к нему. Проверить, откуда работает сервер: `npx astro preview status`, остановить: `npx astro preview stop`. Сервер отдаёт `dist/` того каталога, где запущен.
+- **Закрытые панели:** `grid-template-rows: 0fr` не убирает содержимое из раскладки, lazy-картинки считаются видимыми. Поэтому на `.disclosure__inner` стоит `content-visibility: hidden`, не убирать.

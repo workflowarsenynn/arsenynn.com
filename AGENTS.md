@@ -1,5 +1,5 @@
 # AGENTS.md
-LastUpdated: 2026-11-01 16:55 MSK
+LastUpdated: 2026-11-04 22:30 MSK
 > Этот файл читается AI Coding Agent перед началом работы.
 
 ## Project
@@ -23,6 +23,7 @@ LastUpdated: 2026-11-01 16:55 MSK
 - `docs/deploy.md` — публикация и DNS
 - `docs/cloud_workflow.md` — работа в cloud-сессиях
 - `docs/decisions_log.md` — решения и их причины
+- `docs/handoff.md` — передача проекта: состояние, рабочий цикл, открытые задачи, подводные камни
 - `assets/logos/` — исходники логотипов
 
 ## Commands

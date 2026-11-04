@@ -44,6 +44,8 @@ const projects = defineCollection({
         .array(
           z.object({
             title: z.string().min(1),
+            /** Английское название, если оно отличается от title. */
+            titleEn: z.string().optional(),
             note: z.string().optional(),
             noteEn: z.string().optional(),
             /** Строка над названием: год, длительность. */

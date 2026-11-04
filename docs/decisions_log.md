@@ -1,9 +1,44 @@
 # Decisions Log
-LastUpdated: 2026-11-01 22:30 MSK
+LastUpdated: 2026-11-04 22:30 MSK
 
 Этот файл хранит историю проекта: важные решения, изменения подхода, причины архитектурных поворотов, rejected options, runtime findings и выводы, которые помогают понять, как проект развивался.
 
 Записи идут в обратном хронологическом порядке: новые сверху.
+
+---
+
+## 2026-11-04 — Базовые метрики прода: кадры закрытых панелей грузились на старте
+
+**Type:** runtime-finding
+**Project:** arsenynn.com
+**Status:** accepted
+**Related files:** `src/styles/global.css`, `src/content.config.ts`, `src/data/projects.ts`, `tests/site.spec.ts`, `docs/handoff.md`
+
+### Context
+Первая локальная сессия после облачной. Advisory относит к NOW базовые метрики производительности, их не было.
+
+### Trigger
+Замер живого сайта, профиль iPhone 13, 2026-11-04: 476 KB на первом экране, из них 334 KB картинки, CLS 0, LCP около 0,7 с без ограничения сети, горизонтального скролла нет. Все 43 кадра закрытых панелей загружались сразу, 238 KB.
+
+### Decision
+- Панель, свёрнутая через `grid-template-rows: 0fr`, остаётся в раскладке, поэтому `loading="lazy"` считает кадры видимыми. На закрытую панель поставлен `content-visibility: hidden`, первый экран стал около 230 KB (бюджет advisory без медиа 350 KB).
+- Анимацию закрытия сохраняет `transition: content-visibility ... allow-discrete`.
+- Safari до 26 правило пропускает и ведёт себя как раньше: панель скрыта через `visibility`, кадры грузятся сразу. Отдельный fallback не нужен.
+- Оглавление получило необязательное `titleEn`: на /en/ оставались «MCP-сервер» и «Автоотклики». Имена собственные не переводятся.
+
+### Alternatives / rejected options
+- `data-src` и подстановка скриптом: без JS кадры пропали бы, а панели без JS открыты.
+- `display: none` на закрытой панели: ломает анимацию высоты.
+
+### Consequences
+Шрифты 125 KB при бюджете 120 KB, оставлено в `## Next`. /en/ всё равно грузит кириллические шрифты из-за имён собственных и переключателя языка, это ожидаемо.
+
+### Lesson
+- `npm run build` падает с `Tsconfig not found astro/tsconfigs/strict` в worktree внутри `.claude/`: скрытый каталог в пути. Код ни при чём, вне `.claude/` сборка проходит.
+- Astro 7 в агентной среде уводит `astro preview` в фон и держит один сервер на lock-файле. Playwright пишет `Process from config.webServer exited early`, повторный запуск подключается к уже работающему серверу. Управление: `npx astro preview status` и `stop`.
+
+### Source
+Playwright с CDP на https://arsenynn.com и `/en/`, `whois`, `curl` по 61 внешней ссылке.
 
 ---
 

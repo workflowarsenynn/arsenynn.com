@@ -1,5 +1,5 @@
 # Implementation Plan
-LastUpdated: 2026-11-01 19:50 MSK
+LastUpdated: 2026-11-04 22:30 MSK
 
 ## Todoist Sync
 - Sync: manual
@@ -13,7 +13,7 @@ LastUpdated: 2026-11-01 19:50 MSK
 - SubtaskMaterialization: explicit-boundaries
 - SubtaskBoundaryMarker: TODOIST:SUBTASK
 - StatusCommentSource: Status
-- LastUpdated: 2026-11-01
+- LastUpdated: 2026-11-04
 - ProjectPath: /Users/arsey/Documents/arsenynn.com
 - ObsidianProjectPath: N/A
 - PathRegistry: N/A
@@ -29,9 +29,10 @@ LastUpdated: 2026-11-01 19:50 MSK
 - PushPolicy: auto-safe
 
 ## Status
-- Stage: Phase 12 of The Moving Index (advisory), только тёмная тема, сайт на https://arsenynn.com
+- Stage: Polish (сайт в проде на https://arsenynn.com, The Moving Index по advisory, последняя фаза 24)
 - Направление задано `docs/Advisory/deep_research_and_implementation_direction.md`: оставить Astro и статику, развивать фазами, каждая фаза отдельным деплоем с точкой отката.
-- Phase 1: hero в одну строку, тексты по advisory, знаки в строке номера, текстовые ссылки вместо «пилюль», трёхколоночный desktop.
+- Сейчас на проде: hero с портретом, индекс из семи проектов по центру, части и главы @arsenynn, оглавления annFlow и workflow, RU и /en/, только тёмная тема.
+- Передача проекта и рабочий цикл: `docs/handoff.md`.
 
 ## Rollback
 - Точки отката: ветки `rollback/phase-N` на GitHub, каждая указывает на прод до начала фазы N+1.
@@ -49,46 +50,59 @@ LastUpdated: 2026-11-01 19:50 MSK
 - `rollback/phase-9`: прод после Phase 9, до Phase 10 (839ae2b), автосортировка по свежести.
 - `rollback/phase-10`: порядок владельца, NN ещё у «Бессмысленности» (715dac1).
 - `rollback/phase-11`: NN у @arsenynn, до портрета в hero (651388f).
+- `rollback/phase-12`: портрет-логотип в hero и превью (5f8dfcc).
+- `rollback/phase-13`, `-14`, `-15`: hero как титульный кадр, меньше портрет, новая строка (18385a3, 885ab43, 5a08c16).
+- `rollback/phase-16`, `-17`: оглавление annFlow, главы частей @arsenynn (39f7e4a, 923f146).
+- `rollback/phase-18`, `-19`: слоган и равные по весу знаки, превью ссылки (e76b100, 9ebd78e).
+- `rollback/phase-20`, `-21`: кадры глав, логотип «Бессмысленности» (0149597, b550e15).
+- `rollback/phase-22`: проекты workflow и обложки annFlow, включая PR 27 и 28 (1106327).
+- `rollback/phase-23`: индекс по центру на desktop (b30c701).
+- `rollback/phase-24`: вступления, favicon NN, знак ann, новые тексты (194becf).
 - Откат: PR из revert-коммита фазы в `main` или `git revert <merge-commit>`; GitHub Actions пересоберёт сайт за 1–2 минуты.
 
 ## Done
-- [x] MVP: Astro, данные в `src/data/`, About, SEO, OG, 404, Pages workflow, QA 320–1440 px
-- [x] Дизайн v2: ресерч, засечки, логотипы и знаки проектов (NN, Ws, annFlow, маска), тексты v2
-- [x] Публикация: репозиторий публичный, GitHub Pages, DNS only в Cloudflare, сертификат на arsenynn.com
-- [x] Полное описание проекта для deep research, получен advisory
-- [x] Phase 0: точка отката `rollback/phase-0`, advisory сохранён в `docs/Advisory/`, проверены все 10 внешних ссылок
-- [x] Phase 1: hero, тексты, место знаков, стиль ссылок, desktop-сетка
-- [x] Phase 1.1: ссылки строками на всю ширину 56 px по просьбе владельца (удобство на телефоне)
-- [x] Phase 2: Source Serif 4 + Manrope вместо Playfair и системного шрифта, шкала advisory (body 18/19 px, 1.58), OG на шрифтах сайта
-- [x] Phase 3 (светлая тема) сделана и отменена владельцем: сайт только тёмный
-- [x] Phase 4: тесты Playwright + axe (16 проверок) и workflow Test в GitHub Actions
-- [x] Phase 5: проекты перенесены в Content Collection `src/content/projects.yaml` со схемой, HTML без изменений
-- [x] Phase 6 + 10: сигнальный огонёк (● неделя, ○ 45 дней), пересборка каждые 6 часов; порядок проектов фиксирован владельцем; NN у @arsenynn; портрет-логотип хаба в hero и OG
-- [x] Phase 7: ссылки «Часть I/II» у @arsenynn, портфолио-хаб в header и блоке Work (сотрудничество и HR)
-- [x] Phase 8: английская версия /en/, hreflang и x-default, переключатель RU/EN, обязательные переводы в схеме
-- [x] Phase 9: workflow Telegram activity (бот, даты активности bessmyslennost и without-streaming), ждёт токен
+- [x] MVP: Astro, About, SEO, OG, 404, Pages workflow, QA 320–1440 px
+- [x] Дизайн v2: ресерч, логотипы и знаки проектов, тексты v2
+- [x] Публикация: репозиторий публичный, Pages, DNS only в Cloudflare, сертификат, Enforce HTTPS (301 проверен 2026-11-04)
+- [x] Advisory получен, Phase 0: точка отката, проверка внешних ссылок
+- [x] Phase 1–1.1: hero, тексты, ссылки строками 56 px на всю ширину
+- [x] Phase 2: Source Serif 4 + Manrope, шкала advisory; Phase 3 (светлая тема) сделана и отменена владельцем
+- [x] Phase 4–5: тесты Playwright + axe, workflow Test, проекты в Content Collection со схемой
+- [x] Phase 6 + 10: сигнальный огонёк, пересборка каждые 6 часов, порядок проектов задан владельцем
+- [x] Phase 7–8: части @arsenynn, портфолио-хаб, английская версия /en/ с hreflang
+- [x] Phase 9: workflow Telegram activity, ждёт токен
+- [x] Phase 12–15: портрет-логотип хаба, hero как титульный кадр, OG
+- [x] Phase 16–17: оглавление annFlow, части @arsenynn с главами и кадрами
+- [x] Phase 18–22: знаки по площади, превью ссылки, кадры глав, логотип ann, 11 работ workflow, обложки annFlow
+- [x] Phase 23–24: индекс по центру на desktop, вступления, favicon NN, новые тексты, NFC
+- [x] Базовые метрики прода, кадры закрытых панелей больше не грузятся на старте (476 → 230 KB), `titleEn` в оглавлении
 
 ## In Progress
 <!-- Нет задач в работе. -->
 
 ## Next
 <!-- Canonical planning checklist. Plain items DO NOT auto-create Todoist subtasks. Todoist child boundaries require explicit owner/canonical-plan approval under One Plan = One Subtask. -->
-- [ ] Включить Enforce HTTPS в настройках Pages (владелец)
-- [ ] Advisory step 6: первый мир `/arsenynn/` — отложен владельцем: первая версия сайта только со ссылками, видео позже
+- [ ] Владелец: продлить домен `arsenynn.quest` до 2026-11-15 (Porkbun), на нём Listen и Website Party Protocol
+- [ ] Владелец: прислать видео или анимацию радио для Without Streaming, блок не увеличивать
 - [ ] Владелец: создать бота в @BotFather, добавить админом в @without_streaming и @bessmislennost, сохранить токен в секрет `TELEGRAM_BOT_TOKEN`
-- [ ] Даты для проектов без публичной ленты (`updatedAt` у bessmyslennost и without-streaming) или Bot API для них
+- [ ] Владелец: прислать кадры для глав 0.2 и 1.0 @arsenynn
+- [ ] Владелец: проверить переводы EN, сделанные агентом
+- [ ] Владелец: решить судьбу ветки `docs/sync-live-status`
 - [ ] Проверить на iPhone и из РФ-сети
+- [ ] Шрифты первого экрана: 125 KB при бюджете advisory 120 KB
+- [ ] Advisory step 6: первый мир `/arsenynn/`, отложен владельцем: первая версия только со ссылками
 
 ## Risks
+- Домен `arsenynn.quest` истекает 2026-11-15 (whois 2026-11-04, продления ещё нет): без него перестанут работать Listen и Website Party Protocol.
 - Огоньки зависят от публичной ленты t.me/s/: если Telegram не ответит при сборке, проект временно опустится в «тишину» до следующей пересборки.
-- Telegram отдаёт урезанные страницы при частых запросах: проверку ссылок повторять несколько раз.
-- Ветка `docs/sync-live-status` с локального Mac не смержена: её правки документации могут конфликтовать с этой веткой.
+- Telegram отдаёт урезанные страницы при частых запросах: проверку ссылок повторять несколько раз. Код 200 от t.me не доказывает, что пост существует.
+- Ветка `docs/sync-live-status` с локального Mac не смержена и отстаёт от `main` на 66 коммитов: её правки документации конфликтуют с текущими.
 - Проверка доступности ссылок выполнялась не из РФ-сети.
 
 ## Todoist Intake
 <!-- External Todoist active subtasks/descriptions that require review before becoming implementation work. -->
 <!-- Empty unless Todoist intake found new unresolved inputs or intake could not be completed. -->
-- Warning 2026-11-01 (повторно 13:00): cloud-сессия без доступа к Todoist MCP и `td` CLI, intake не выполнен. Статус задачи `task:6hvH5GRVH9X75cCX` обновить из локальной сессии.
+- 2026-11-04: intake через `td` CLI (путь `mcp_connector_fallback` не понадобился, local gate без токена). Подзадач у `task:6hvH5GRVH9X75cCX` нет, новых вводных нет. Статус в Todoist не менялся: запись только по запросу владельца.
 
 ---
 

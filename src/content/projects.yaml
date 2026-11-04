@@ -405,6 +405,7 @@
       thumb: /thumbs/annflow-186.webp
       url: https://t.me/annsflow/186
     - title: "MCP-сервер"
+      titleEn: "MCP server"
       note: "Как я построил MCP-сервер для своей рабочей системы"
       noteEn: "An MCP server for my working system"
       thumb: /thumbs/annflow-171.webp
@@ -415,6 +416,7 @@
       thumb: /thumbs/annflow-155.webp
       url: https://t.me/annsflow/155
     - title: "Автоотклики"
+      titleEn: "Auto-apply"
       note: "Как превратить поиск работы в форму порядка"
       noteEn: "Turning a job search into a form of order"
       thumb: /thumbs/annflow-136.webp

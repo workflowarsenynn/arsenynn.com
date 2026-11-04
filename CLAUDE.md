@@ -1,5 +1,5 @@
 # CLAUDE.md
-LastUpdated: 2026-11-01 16:55 MSK
+LastUpdated: 2026-11-04 22:30 MSK
 
 ## Project
 Личный сайт arsenynn.com: mobile-first индекс семи проектов @arsenynn на одной странице, для людей, открывающих ссылку с телефона.
@@ -24,7 +24,7 @@ MVP собран, структура в `docs/architecture.md`.
 - сборка с проверкой типов: `npm run build` (результат в `dist/`)
 - OG image и apple-touch-icon: `NODE_PATH=$(npm root -g) node scripts/render-images.mjs`
 - векторизовать одноцветный логотип: `python3 scripts/trace-logo.py <in> public/logos/<slug>.svg '#hex'`
-- тесты: `npm test` (Playwright + axe против `astro preview`, нужна сборка). В облачной сессии Claude: `PW_CHROMIUM=/opt/pw-browsers/chromium-1243/chrome-linux64/chrome npm test`. В CI их запускает `.github/workflows/test.yml`
+- тесты: `npm test` (Playwright + axe против `astro preview`, нужна сборка). В облачной сессии Claude: `PW_CHROMIUM=/opt/pw-browsers/chromium-1243/chrome-linux64/chrome npm test`. В CI их запускает `.github/workflows/test.yml`. Локально: `npx playwright install chromium`; в worktree внутри `.claude/` сборка падает, см. `docs/handoff.md` раздел 7
 
 ## Code style
 - Контент и URL только в `src/content/` и `src/data/site.ts`, никогда в компонентах.
@@ -40,7 +40,7 @@ MVP собран, структура в `docs/architecture.md`.
 
 ## Agent rules
 - Можно без подтверждения: правки кода и документации, сборка, проверки, local commit, Routine Safe Push при `PushPolicy: auto-safe` по `docs/ai_workflows/github-source-recovery.md` в Project Standards.
-- Нужно подтверждение владельца: DNS, настройки Pages, видимость репозитория, публикация сайта.
+- Нужно подтверждение владельца: DNS, настройки Pages, видимость репозитория, публикация сайта. Merge в `main` публикует сайт.
 - Запрещено автоматически: force push, разрешение divergence, переписывание опубликованной истории, замена remote, `reset --hard`, `git clean`, удаление веток и репозитория.
 - После любой правки `docs/implementation_plan.md` обновлять `LastUpdated` и Machine Layer, сохранять `## Next` checklist-only. Отдельные Todoist subtasks только для явно одобренных границ по One Plan = One Subtask.
 - При каждой правке плана проверять, нужна ли запись в `docs/decisions_log.md`. Журнал хранит решения, смену подхода, rejected options, runtime findings и lessons; мелкие технические правки в него не пишутся.

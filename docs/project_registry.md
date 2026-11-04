@@ -1,5 +1,5 @@
 # Project Registry
-LastUpdated: 2026-11-01 20:40 MSK
+LastUpdated: 2026-11-04 22:30 MSK
 
 Журнал проверки ссылок и открытых вопросов. Источник ссылок для сайта: `src/data/projects.ts` и `src/data/site.ts`.
 
@@ -11,7 +11,7 @@ LastUpdated: 2026-11-01 20:40 MSK
 | 01 | @arsenynn | `arsenynn` | Часть I (вступление + главы 0.1–1.11.3, посты 6–24) | https://t.me/arsenynn/5 | ссылка от владельца, главы из канала 2026-11-01 |
 | 01 | @arsenynn | `arsenynn` | Часть II (вступление + главы 2.0–2.5, посты 29–54) | https://t.me/arsenynn/28 | ссылка от владельца, главы из канала 2026-11-01 |
 | — | Work / Collaboration | — | Portfolio (hub) | https://portfolio.arsenynn.com/ | 200, хаб для сотрудничества и HR |
-| — | Work / Collaboration | — | IT / AI, Sales / Events, Video production | https://portfolio.arsenynn.com/it-ai/, /sales-events/, /video-production/ | 200 |
+| — | Work / Collaboration | — | IT / AI, Sales / Events, Video production | https://portfolio.arsenynn.com/it-ai/, /sales-events/; Video production показан как «скоро», без ссылки | 200 |
 | 02 | workflow@arsenynn | `workflow` | Portfolio | — | убрана владельцем 2026-11-01; портфолио доступно в header и блоке Work |
 | 02 | workflow@arsenynn | `workflow` | Проекты: 11 работ (посты 119–194) | https://t.me/ww_arsenynn | обложки из альбомов стоп-кадров канала |
 | 02 | workflow@arsenynn | `workflow` | Telegram | https://t.me/ww_arsenynn | канал найден |
@@ -25,7 +25,8 @@ LastUpdated: 2026-11-01 20:40 MSK
 
 ## Open questions
 
-- **Тексты v2.** Короткие описания и About переписаны 2026-11-01 в `src/data/projects.ts`, ждут утверждения владельца.
+- **Переводы EN.** Сделаны агентом, ждут проверки владельца. Тексты живут в `src/content/projects.yaml`.
+- **Домен `arsenynn.quest`.** Истекает 2026-11-15, по whois на 2026-11-04 не продлён. Адреса Listen и Website не меняются.
 - **Контакт в блоке Work.** Сейчас в блоке Work стоят Portfolio и Telegram-канал workflow. Личный Telegram `https://t.me/arsenynnn` (три n) и email не добавлены: ждут подтверждения владельца.
 
 - **YouTube 0.2 и 1.0.** Главы 0.2 «I can talk to you about the atmosphere» и 1.0 «When will you finally grow up?» не найдены на youtube.com/@arsenynn: без кадра. Плейлистов частей нет, строка YouTube ведёт на канал.
@@ -33,8 +34,7 @@ LastUpdated: 2026-11-01 20:40 MSK
 ## Resolved 2026-11-01
 
 - **Бессмысленность и скоротечность.** Ссылка `https://t.me/bessmislennost`, проверена по `og:title`.
-- **Portfolio из карточки workflow.** Ведёт на `/video-production/`. Header и блок Work используют тот же адрес.
-- **Домен `arsenynn.quest`.** Владелец продлевает домен до 2026-11-15, адреса Listen и Website не меняются.
+- **Portfolio из карточки workflow.** Ссылка убрана владельцем, Portfolio остался в header и блоке Work.
 
 ## Other known surfaces
 
