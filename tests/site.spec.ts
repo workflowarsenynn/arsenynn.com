@@ -135,7 +135,7 @@ test('@arsenynn: части раскрываются главами с кадр�
     const chapters = panel.locator('a.chapter');
     await expect(chapters).toHaveCount(count);
     for (const link of await chapters.all()) await expect(link).toHaveAttribute('href', /^https:\/\/t\.me\/arsenynn\/\d+$/);
-    await expect(panel.locator('a[href^="https://www.youtube.com/@arsenynn"]')).toHaveCount(1);
+    await expect(panel.locator('a[href*="youtube.com"]')).toHaveCount(0);
   }
   // кадры загружаются: у первой части 16 кадров (0.2 и 1.0 без YouTube — заглушка с номером)
   await expect(page.locator('#part-arsenynn-1 .chapter__frame img')).toHaveCount(16);
@@ -230,6 +230,32 @@ test.describe('плеер глав', () => {
     await expect(player).toBeHidden();
     await expect(player.locator('iframe')).toHaveCount(0);
     await expect(link).toBeFocused();
+  });
+
+  test('workflow: работа открывается в плеере, все 11 работ с видео', async ({ page }) => {
+    await page.goto('/');
+    await page.locator('[aria-controls="contents-workflow"]').click();
+    const works = page.locator('#contents-workflow [data-video]');
+    await expect(works).toHaveCount(11);
+    await works.first().click();
+    const player = page.locator('[data-player]');
+    await expect(player).toBeVisible();
+    await expect(player.locator('h2')).toHaveText('Окутало');
+    await expect(player.locator('[data-player-meta]')).toHaveText('workflow@arsenynn · 2025');
+    await expect(player.locator('iframe')).toHaveAttribute('src', /embed\/dmTiMsocUFE\?/);
+  });
+
+  test('хиты выделены красным, номер и время разведены', async ({ page }) => {
+    await page.goto('/');
+    await expect(page.locator('.chapter--accent')).toHaveCount(3);
+    await page.locator('[aria-controls="part-arsenynn-1"]').click();
+    const hit = page.locator('#part-arsenynn-1 .chapter--accent');
+    await expect(hit.locator('.chapter__title')).toHaveText('Reflection');
+    await expect(hit.locator('.chapter__title')).toHaveCSS('color', 'rgb(229, 50, 45)');
+    const num = (await hit.locator('.chapter__num').boundingBox())!;
+    const time = (await hit.locator('.chapter__time').boundingBox())!;
+    expect(time.x).toBeGreaterThan(num.x + num.width + 8);
+    expect(Math.abs(time.y - num.y)).toBeLessThan(2);
   });
 
   test('главы без YouTube остаются ссылками на Telegram', async ({ page }) => {

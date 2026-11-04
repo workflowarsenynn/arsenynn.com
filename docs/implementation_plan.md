@@ -1,5 +1,5 @@
 # Implementation Plan
-LastUpdated: 2026-11-04 23:00 MSK
+LastUpdated: 2026-11-04 23:15 MSK
 
 ## Todoist Sync
 - Sync: manual
@@ -31,7 +31,7 @@ LastUpdated: 2026-11-04 23:00 MSK
 ## Status
 - Stage: Polish (сайт в проде на https://arsenynn.com, The Moving Index по advisory, последняя фаза 24)
 - Направление задано `docs/Advisory/deep_research_and_implementation_direction.md`: оставить Astro и статику, развивать фазами, каждая фаза отдельным деплоем с точкой отката.
-- Сейчас на проде: hero с портретом, индекс из семи проектов по центру, части и главы @arsenynn со встроенным плеером YouTube, оглавления annFlow и workflow, RU и /en/, только тёмная тема.
+- Сейчас на проде: hero с портретом, индекс из семи проектов по центру, части и главы @arsenynn и работы workflow со встроенным плеером YouTube, оглавление annFlow, RU и /en/, только тёмная тема.
 - Передача проекта и рабочий цикл: `docs/handoff.md`.
 
 ## Rollback
@@ -59,6 +59,7 @@ LastUpdated: 2026-11-04 23:00 MSK
 - `rollback/phase-23`: индекс по центру на desktop (b30c701).
 - `rollback/phase-24`: вступления, favicon NN, знак ann, новые тексты (194becf).
 - `rollback/phase-25`: ленивые кадры панелей, `titleEn`, синхронизация документации (89f2de6).
+- `rollback/phase-26`: плеер глав @arsenynn, новый слоган, favicon NN (e21a7e0).
 - Откат: PR из revert-коммита фазы в `main` или `git revert <merge-commit>`; GitHub Actions пересоберёт сайт за 1–2 минуты.
 
 ## Done
@@ -76,7 +77,7 @@ LastUpdated: 2026-11-04 23:00 MSK
 - [x] Phase 16–17: оглавление annFlow, части @arsenynn с главами и кадрами
 - [x] Phase 18–22: знаки по площади, превью ссылки, кадры глав, логотип ann, 11 работ workflow, обложки annFlow
 - [x] Phase 23–24: индекс по центру на desktop, вступления, favicon NN, новые тексты, NFC
-- [x] Базовые метрики прода (476 → 230 KB), `titleEn`, favicon NN с новым адресом, плеер глав в `<dialog>`, новый слоган
+- [x] Базовые метрики прода (476 → 230 KB), `titleEn`, favicon NN с новым адресом, плеер в `<dialog>` у @arsenynn и workflow, хиты красным, новый слоган
 
 ## In Progress
 <!-- Нет задач в работе. -->

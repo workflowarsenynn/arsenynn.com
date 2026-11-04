@@ -1,5 +1,5 @@
 # Project Registry
-LastUpdated: 2026-11-04 22:30 MSK
+LastUpdated: 2026-11-04 23:15 MSK
 
 Журнал проверки ссылок и открытых вопросов. Источник ссылок для сайта: `src/data/projects.ts` и `src/data/site.ts`.
 
@@ -29,7 +29,7 @@ LastUpdated: 2026-11-04 22:30 MSK
 - **Домен `arsenynn.quest`.** Истекает 2026-11-15, по whois на 2026-11-04 не продлён. Адреса Listen и Website не меняются.
 - **Контакт в блоке Work.** Сейчас в блоке Work стоят Portfolio и Telegram-канал workflow. Личный Telegram `https://t.me/arsenynnn` (три n) и email не добавлены: ждут подтверждения владельца.
 
-- **YouTube 0.2 и 1.0.** Главы 0.2 «I can talk to you about the atmosphere» и 1.0 «When will you finally grow up?» не найдены на youtube.com/@arsenynn: без кадра. Плейлистов частей нет, строка YouTube ведёт на канал.
+- **YouTube 0.2 и 1.0.** Главы 0.2 «I can talk to you about the atmosphere» и 1.0 «When will you finally grow up?» не найдены на youtube.com/@arsenynn: без кадра и без плеера, ведут на Telegram.
 
 ## Resolved 2026-11-01
 
@@ -37,6 +37,8 @@ LastUpdated: 2026-11-04 22:30 MSK
 - **Portfolio из карточки workflow.** Ссылка убрана владельцем, Portfolio остался в header и блоке Work.
 
 ## Other known surfaces
+
+- YouTube workflow@arsenynn: https://www.youtube.com/@workflow.arsenynn
 
 В MVP не показываются, записаны чтобы не искать заново:
 

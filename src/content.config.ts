@@ -48,8 +48,14 @@ const projects = defineCollection({
             titleEn: z.string().optional(),
             note: z.string().optional(),
             noteEn: z.string().optional(),
-            /** Строка над названием: год, длительность. */
+            /** Строка над названием слева: год. */
             meta: z.string().optional(),
+            /** Длительность, справа на той же строке. */
+            duration: z.string().optional(),
+            /** ID видео на YouTube, открывается в плеере на сайте. */
+            youtube: z.string().regex(/^[\w-]{11}$/).optional(),
+            /** Хит: название красным. */
+            accent: z.boolean().optional(),
             /** Кадр-обложка 16:9 из public/thumbs/. */
             thumb: z.string().startsWith('/').optional(),
             url: z.url().refine((u) => u.startsWith('https://'), 'Ссылка должна начинаться с https://'),
@@ -65,7 +71,6 @@ const projects = defineCollection({
             intro: z.url().optional(),
             /** Полный текст вступления (RU) для чтения прямо на сайте. */
             introText: z.array(z.string()).optional(),
-            youtube: z.url().optional(),
             chapters: z.array(
               z.object({
                 num: z.string().min(1),
@@ -75,6 +80,8 @@ const projects = defineCollection({
                 thumb: z.string().startsWith('/').optional(),
                 /** ID видео на YouTube (канал @arsenynn). */
                 youtube: z.string().regex(/^[\w-]{11}$/).optional(),
+                /** Хит: название красным. */
+                accent: z.boolean().optional(),
                 url: z.url().refine((u) => u.startsWith('https://'), 'Ссылка должна начинаться с https://'),
               }),
             ),

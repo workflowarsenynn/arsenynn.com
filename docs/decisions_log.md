@@ -1,9 +1,38 @@
 # Decisions Log
-LastUpdated: 2026-11-04 23:00 MSK
+LastUpdated: 2026-11-04 23:15 MSK
 
 Этот файл хранит историю проекта: важные решения, изменения подхода, причины архитектурных поворотов, rejected options, runtime findings и выводы, которые помогают понять, как проект развивался.
 
 Записи идут в обратном хронологическом порядке: новые сверху.
+
+---
+
+## 2026-11-04 — Плеер у workflow, хиты красным, номер и время разведены
+
+**Type:** decision
+**Project:** arsenynn.com
+**Status:** accepted
+**Related files:** `src/content/projects.yaml`, `src/content.config.ts`, `src/components/ProjectActions.astro`, `src/scripts/player.ts`, `tests/site.spec.ts`
+
+### Context
+Владелец: убрать «Смотреть на YouTube», раз видео запускаются на сайте; номер и время сливаются; Reflection и I Left It There выделить красным как лучшие работы, закрывающие части; workflow@arsenynn открывать так же, как @arsenynn.
+
+### Decision
+- Строки «Смотреть на YouTube» и поле `youtube` у частей убраны.
+- Номер слева, время справа на той же строке над названием. Разделитель-точка убран, в плеере осталось только «часть · номер».
+- Поле `accent` у глав и работ: красное название и значок в строке, красное название в плеере. Выделены Reflection (1.11.2), I Left It There (2.4.2) и I left it there у workflow. Reflection BST не выделен: владелец назвал только Reflection.
+- У работ `meta` стало годом, длительность вынесена в `duration`.
+- Все 11 работ workflow открываются в плеере, «Назад» и «Дальше» идут по списку.
+
+### Alternatives / rejected options
+- Время в отдельной колонке у значка: на 320 px название сжималось примерно до 90 px.
+- Время на кадре, как на YouTube: 15 px закрывает заметную часть кадра шириной 88 px.
+
+### Lesson
+У workflow отдельный канал `https://www.youtube.com/@workflow.arsenynn`. Прежняя запись «UFO на YouTube нет» неверна: ролик там есть (`GcwnBXtJq4Y`). Dissociation не показан на вкладке видео канала и находится поиском, «Окутало» лежит на канале @arsenynn. Искать по названию канала, а не угадывать handle.
+
+### Source
+Сообщение владельца 2026-11-04, YouTube oEmbed по 11 работам: автор и встраивание подтверждены.
 
 ---
 

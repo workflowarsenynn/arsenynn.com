@@ -21,10 +21,11 @@ if (dialog && typeof dialog.showModal === 'function') {
     chapters = [...list.querySelectorAll<HTMLAnchorElement>('[data-video]')];
     index = chapters.indexOf(link);
     const id = link.dataset.video!;
-    const name = link.querySelector('.chapter__title')!.textContent!;
+    const name = link.querySelector('.chapter__title, .contents__title')!.textContent!;
 
-    meta.textContent = `${list.dataset.part} · ${link.querySelector('.chapter__meta')!.textContent}`;
+    meta.textContent = `${list.dataset.part} · ${link.querySelector('.chapter__num')!.textContent}`;
     title.textContent = name;
+    title.classList.toggle('player__title--accent', link.classList.contains('chapter--accent'));
     telegram.href = link.href;
     youtube.href = `${watch}${id}`;
     prev.disabled = index === 0;

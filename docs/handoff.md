@@ -1,5 +1,5 @@
 # Handoff
-LastUpdated: 2026-11-04 23:00 MSK
+LastUpdated: 2026-11-04 23:15 MSK
 
 Передача проекта следующему агенту. Прочитай целиком перед первой правкой. Дальше: `CLAUDE.md` → `AGENTS.md` → `docs/implementation_plan.md` → `docs/architecture.md` → `docs/decisions_log.md` (последние записи сверху).
 
@@ -16,12 +16,12 @@ LastUpdated: 2026-11-04 23:00 MSK
 
 1. Правки в ветке `claude/adoring-meitner-l33yf3` (перед началом `git fetch origin && git merge origin/main`).
 2. `npm run build` (включает `astro check`, должен быть «0 errors, 0 warnings»).
-3. Тесты: `npx astro preview --port 4321 &` затем `PW_CHROMIUM=/opt/pw-browsers/chromium-1243/chrome-linux64/chrome npx playwright test` (сейчас 34 теста). Останавливать preview: `pkill -f "astro.mjs previe[w]"` — скобки нужны, иначе pkill убьёт собственную команду.
+3. Тесты: `npx astro preview --port 4321 &` затем `PW_CHROMIUM=/opt/pw-browsers/chromium-1243/chrome-linux64/chrome npx playwright test` (сейчас 36 тестов). Останавливать preview: `pkill -f "astro.mjs previe[w]"` — скобки нужны, иначе pkill убьёт собственную команду.
 4. Визуальная проверка в Playwright на 390 и 1280/1440 px, отправить скриншоты владельцу.
 5. Обновить доки (`docs/decisions_log.md` запись сверху, `architecture.md`, при необходимости `implementation_plan.md`, `LastUpdated`).
 6. Commit → push → PR в `main` через GitHub MCP → **дождаться зелёного workflow `Test`** на PR → merge.
 7. Проверить живой сайт (`curl` по маркеру из нового HTML, обычно 30–70 с после merge).
-8. Создать точку отката: ветка `rollback/phase-N` от `main` через `mcp__github__create_branch` (git-теги прокси сессии не пропускает). Последняя: `rollback/phase-25`.
+8. Создать точку отката: ветка `rollback/phase-N` от `main` через `mcp__github__create_branch` (git-теги прокси сессии не пропускает). Последняя: `rollback/phase-26`.
 9. Сообщить владельцу «опубликовано» только после проверки живого сайта. Он это проверяет.
 
 Откат: revert merge-коммита фазы отдельным PR (так уже откатывали светлую тему) или PR из нужной `rollback/phase-N`. Историю в `decisions_log.md` не удалять, а помечать `Status: reverted`.
@@ -37,8 +37,8 @@ LastUpdated: 2026-11-04 23:00 MSK
 | 01 | Party Protocol | маска | Telegram (главная), Website, About |
 | 02 | annFlow | логотип вместо названия | Telegram, «Проекты» (7 серий с обложками из постов), About |
 | 03 | Without Streaming | Ws | Listen, Telegram, About |
-| 04 | @arsenynn | NN; **название красное** (`accent`) | Telegram, «Часть I», «Часть II» (YouTube-строка, «Вступление» с текстом, главы с кадрами), About |
-| 05 | workflow@arsenynn | WW/NN | Telegram, «Проекты» (11 работ с кадрами), About. **Portfolio убрана владельцем** |
+| 04 | @arsenynn | NN; **название красное** (`accent`) | Telegram, «Часть I», «Часть II» («Вступление» с текстом, главы с кадрами открываются в плеере), About |
+| 05 | workflow@arsenynn | WW/NN | Telegram, «Проекты» (11 работ с кадрами, открываются в плеере), About. **Portfolio убрана владельцем** |
 | 06 | Бессмысленность и скоротечность | ann в кепке, круг | Telegram (группа), About |
 | 07 | Travel Log | — | Coming soon |
 | — | Work / Collaboration | — | Portfolio (хаб), IT / AI, Sales / Events, Video production — **«скоро», без ссылки** |
@@ -60,7 +60,7 @@ LastUpdated: 2026-11-04 23:00 MSK
 - `assets/logos/README.md` — инвентарь исходников и что где используется. Оригиналы владельца — Google Drive `assest/logos.zip` (см. ниже, как скачать).
 - `docs/Advisory/deep_research_and_implementation_direction.md` — направление развития (The Moving Index). Владелец просит «делать по advisory».
 - `docs/references/youtube-arsenynn-map.txt` — соответствие постов @arsenynn и видео YouTube.
-- `tests/site.spec.ts` — 34 теста (ширины 320–1440, ссылки, раскрывашки, ленивые кадры, иконки, плеер, без JS, reduced motion, 404, axe, EN, порядок, оглавления, вступление, Work).
+- `tests/site.spec.ts` — 36 тестов (ширины 320–1440, ссылки, раскрывашки, ленивые кадры, иконки, плеер, без JS, reduced motion, 404, axe, EN, порядок, оглавления, вступление, Work).
 
 ## 5. Открытые задачи
 
@@ -76,7 +76,8 @@ LastUpdated: 2026-11-04 23:00 MSK
 
 ## 6. Решения владельца, которые нельзя ломать
 
-- Главы @arsenynn открывают YouTube внутри сайта, в `<dialog>`, не на новой странице. Под кадром всегда видна ссылка на Telegram.
+- Главы @arsenynn и работы workflow открывают YouTube внутри сайта, в `<dialog>`, не на новой странице. Под кадром всегда видна ссылка на Telegram.
+- Reflection и I Left It There — хиты, название красным (`accent` у главы или работы). Номер и время разведены по краям строки.
 - Ссылки всегда видны без раскрытия About. Одна ссылка на строку, строки 56 px на всю ширину (для большого пальца). Без вложенных раскрывашек, **кроме** «Вступления» внутри частей (прямая просьба владельца).
 - На desktop индекс по центру (`--index-width` 54rem), без правой колонки: раскрытые списки в ней были неудобны.
 - Знаки выравниваются по площади (`--mark-size` / √пропорции); фото-знак ann — круг, `scale: 1.2`; annFlow-лого не трогать.
@@ -90,7 +91,7 @@ LastUpdated: 2026-11-04 23:00 MSK
 - **Картинки, вставленные в сообщение,** до сессии файлом часто не доходят (кроме тех, что сохранились в `…/images/`). Файлы через «@» доходят в `/root/.claude/uploads/…`. Путь на Mac/iCloud недоступен.
 - **Google Drive по ссылке-шаре:** большие файлы качать напрямую `curl -L "https://drive.usercontent.google.com/download?id=<ID>&export=download&confirm=t"`, а не через MCP (base64). Находить ID через `mcp__Google_Drive__search_files` с `parentId`.
 - **Telegram:** `t.me/s/<канал>` и `t.me/<канал>/<n>?embed=1&mode=tme` дают тексты, даты, обложки; видеофайлы почти никогда. Ответы иногда урезаны — повторять. Тексты приводить к Unicode NFC (была разложенная «й»).
-- **YouTube:** список видео канала — парсить `ytInitialData` → `lockupViewModel` со страницы `@arsenynn/videos`.
+- **YouTube:** список видео канала — парсить `ytInitialData` → `lockupViewModel` со страницы `@arsenynn/videos`. Работы workflow на отдельном канале `@workflow.arsenynn`.
 - Astro scoped CSS не действует на элементы дочернего компонента — использовать `:global()`.
 - YAML: строки с «: » брать в кавычки (иначе станут объектом); при генерации через Python — `json.dumps(..., ensure_ascii=False)` и лямбда в `re.sub`.
 - Тёмные картинки на тёмном фоне — WebP **без потерь** и чёрный поднять до #0a0a0a, иначе кольца на маске.
