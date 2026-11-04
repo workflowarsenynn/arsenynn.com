@@ -41,7 +41,7 @@ test('все семь проектов на месте, прямые ссылк�
   await expect(primary).toHaveCount(6); // у Travel Log ссылки нет
   for (const link of await primary.all()) {
     await expect(link).toBeVisible();
-    await expect(link).toHaveAttribute('href', /^https:\/\//);
+    await expect(link).toHaveAttribute('href', /^(https:\/\/|\/annflow\/)/);
   }
 });
 
@@ -98,7 +98,7 @@ test('кадры закрытых панелей не грузятся, пока
   await expect.poll(() => thumbs.length).toBeGreaterThan(0);
 });
 
-test('annFlow: кнопка «Проекты» раскрывает оглавление с обложками и ссылками на посты', async ({ page }) => {
+test('annFlow: кнопка «Проекты» раскрывает оглавление с обложками и ссылками на серии', async ({ page }) => {
   await page.goto('/');
   const button = page.locator('#annflow [aria-controls="contents-annflow"]');
   const panel = page.locator('#contents-annflow');
@@ -108,7 +108,7 @@ test('annFlow: кнопка «Проекты» раскрывает оглавл
   await expect(panel).toBeVisible();
   const links = panel.locator('a');
   await expect(links).toHaveCount(7);
-  for (const link of await links.all()) await expect(link).toHaveAttribute('href', /^https:\/\/t\.me\/annsflow\/\d+$/);
+  for (const link of await links.all()) await expect(link).toHaveAttribute('href', /^\/annflow\/projects\/[a-z-]+\/$/);
   await expect(panel.locator('.chapter__frame img')).toHaveCount(7);
 });
 
@@ -252,10 +252,14 @@ test.describe('плеер глав', () => {
     const hit = page.locator('#part-arsenynn-1 .chapter--accent');
     await expect(hit.locator('.chapter__title')).toHaveText('Reflection');
     await expect(hit.locator('.chapter__title')).toHaveCSS('color', 'rgb(229, 50, 45)');
-    const num = (await hit.locator('.chapter__num').boundingBox())!;
-    const time = (await hit.locator('.chapter__time').boundingBox())!;
-    expect(time.x).toBeGreaterThan(num.x + num.width + 8);
-    expect(Math.abs(time.y - num.y)).toBeLessThan(2);
+    // Первый кадр после нажатия панель ещё не разложена: ждём раскладку, а не читаем сразу.
+    const gaps = () => hit.evaluate((el) => {
+      const num = el.querySelector('.chapter__num')!.getBoundingClientRect();
+      const time = el.querySelector('.chapter__time')!.getBoundingClientRect();
+      return { vertical: Math.abs(time.y - num.y), horizontal: time.x - (num.x + num.width) };
+    });
+    await expect.poll(async () => (await gaps()).vertical).toBeLessThan(2);
+    expect((await gaps()).horizontal).toBeGreaterThan(8);
   });
 
   test('главы без YouTube остаются ссылками на Telegram', async ({ page }) => {
@@ -286,6 +290,91 @@ test.describe('плеер глав', () => {
       expect(Math.abs(box.width / box.height - 16 / 9)).toBeLessThan(0.02);
     });
   }
+});
+
+test.describe('мир annFlow', () => {
+  test('главная ведёт в чтение, серии открываются на сайте', async ({ page }) => {
+    await page.goto('/');
+    const read = page.locator('#annflow a[href="/annflow/"]');
+    await expect(read).toHaveText(/Читать/);
+    await expect(read).not.toHaveAttribute('target');
+    await page.locator('#annflow [aria-controls="contents-annflow"]').click();
+    await expect(page.locator('#contents-annflow a[href^="/annflow/projects/"]')).toHaveCount(7);
+  });
+
+  test('от серии до заметки и дальше по порядку', async ({ page }) => {
+    await page.goto('/annflow/');
+    await expect(page.locator('.series-row')).toHaveCount(8);
+    await page.locator('.series-row', { hasText: 'VoxBase' }).click();
+    await expect(page).toHaveURL(/\/annflow\/projects\/voxbase\/$/);
+    await expect(page.locator('.toc li')).toHaveCount(9);
+    await page.getByRole('link', { name: 'Начать читать' }).click();
+    await expect(page).toHaveURL(/\/annflow\/notes\/155\/$/);
+    await expect(page.locator('.note__meta')).toContainText('1 из 9');
+    await page.locator('.note__step--next').click();
+    await expect(page).toHaveURL(/\/annflow\/notes\/156\/$/);
+    await expect(page.locator('h1')).toHaveText('Почему голосовые заметки обычно умирают');
+  });
+
+  test('заметка: оглавление серии, источник, файл', async ({ page, request }) => {
+    await page.goto('/annflow/notes/79/');
+    await expect(page.locator('.note__source a')).toHaveAttribute('href', 'https://t.me/annsflow/79');
+    await page.locator('.note__toc summary').click();
+    await expect(page.locator('.note__toc [aria-current="page"]')).toContainText('Caps Lock');
+    const file = page.locator('.note__files a');
+    await expect(file).toHaveText(/caps_lock_to_hyper\.json/);
+    const res = await request.get((await file.getAttribute('href'))!);
+    expect(res.status()).toBe(200);
+    expect(JSON.parse(await res.text())).toBeTruthy();
+  });
+
+  test('видео: файл на сайте играет здесь, без файла постер ведёт в Telegram', async ({ page }) => {
+    await page.goto('/annflow/notes/93/');
+    await expect(page.locator('video source')).toHaveAttribute('src', '/media/annflow/94.mp4');
+    await expect(page.locator('video')).toHaveAttribute('preload', 'none');
+    await page.goto('/annflow/notes/189/');
+    await expect(page.locator('.note-video')).toHaveAttribute('href', 'https://t.me/annsflow/189');
+  });
+
+  test('служебных хвостов Telegram в заметках нет, внутренние ссылки ведут на сайт', async ({ page }) => {
+    await page.goto('/annflow/notes/115/');
+    await expect(page.locator('.prose')).not.toContainText('Оглавление темы');
+    await expect(page.locator('.prose')).not.toContainText('@annsFlow');
+    await page.goto('/annflow/notes/181/');
+    await expect(page.locator('.prose a[href="/annflow/notes/93/"]')).toHaveCount(1);
+  });
+
+  for (const width of [320, 390, 430, 1440]) {
+    test(`страницы с кодом и картинками без горизонтального скролла, ${width}px`, async ({ page }) => {
+      await page.setViewportSize({ width, height: 800 });
+      for (const path of ['/annflow/', '/annflow/projects/mac-automation/', '/annflow/notes/85/', '/annflow/notes/115/', '/annflow/notes/146/']) {
+        await page.goto(path);
+        const r = await page.evaluate(() => ({
+          over: document.documentElement.scrollWidth - innerWidth,
+          small: [...document.querySelectorAll<HTMLElement>('main *')]
+            .filter((el) => !el.closest('.visually-hidden') && [...el.childNodes].some((n) => n.nodeType === 3 && n.textContent!.trim()))
+            .filter((el) => parseFloat(getComputedStyle(el).fontSize) < 14).map((el) => el.tagName),
+        }));
+        expect(r.over, path).toBeLessThanOrEqual(0);
+        expect(r.small, path).toEqual([]);
+      }
+    });
+  }
+
+  test('axe: страницы annFlow без serious и critical нарушений', async ({ page }) => {
+    for (const path of ['/annflow/', '/annflow/projects/voxbase/', '/annflow/notes/146/']) {
+      await page.goto(path);
+      const { violations } = await new AxeBuilder({ page }).analyze();
+      expect(violations.filter((v) => ['serious', 'critical'].includes(v.impact ?? '')), path).toEqual([]);
+    }
+  });
+
+  test('заметка лёгкая: картинки ниже экрана не грузятся сразу, нет лишних скриптов', async ({ page }) => {
+    const kinds: string[] = [];
+    page.on('request', (r) => kinds.push(r.resourceType()));
+    await page.goto('/annflow/notes/146/', { waitUntil: 'networkidle' });
+    expect(kinds.filter((k) => k === 'script')).toEqual([]);
+  });
 });
 
 test('404 отдаёт страницу со ссылкой на главную', async ({ page }) => {

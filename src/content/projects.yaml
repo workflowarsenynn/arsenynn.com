@@ -418,48 +418,59 @@
     - "Архитектура, реализация и эксплуатация. От идеи до работающей системы."
   status: active
   links:
+    - label: Читать
+      labelEn: Read (in Russian)
+      url: /annflow/
+      type: site
+      primary: true
     - label: Telegram
       url: https://t.me/annsflow
       type: telegram
-      primary: true
   contents:
     - title: "LiveContext"
       note: "Как связать живой разговор с памятью проекта"
       noteEn: "Linking a live conversation to project memory"
       thumb: /thumbs/annflow-186.webp
       url: https://t.me/annsflow/186
+      path: /annflow/projects/live-context/
     - title: "MCP-сервер"
       titleEn: "MCP server"
       note: "Как я построил MCP-сервер для своей рабочей системы"
       noteEn: "An MCP server for my working system"
       thumb: /thumbs/annflow-171.webp
       url: https://t.me/annsflow/171
+      path: /annflow/projects/mcp-server/
     - title: "VoxBase"
       note: "Как превратить голос, видео и подкасты в память"
       noteEn: "Turning voice, video and podcasts into memory"
       thumb: /thumbs/annflow-155.webp
       url: https://t.me/annsflow/155
+      path: /annflow/projects/voxbase/
     - title: "Автоотклики"
       titleEn: "Auto-apply"
       note: "Как превратить поиск работы в форму порядка"
       noteEn: "Turning a job search into a form of order"
       thumb: /thumbs/annflow-136.webp
       url: https://t.me/annsflow/136
+      path: /annflow/projects/auto-apply/
     - title: "Бессмысленность и скоротечность"
       note: "Философия, встроенная в память, разговор и рециркуляцию"
       noteEn: "Philosophy built into memory, conversation and recirculation"
       thumb: /thumbs/annflow-107.webp
       url: https://t.me/annsflow/107
+      path: /annflow/projects/bessmyslennost/
     - title: "Without Streaming"
       note: "Telegram-канал как радиостанция"
       noteEn: "A Telegram channel as a radio station"
       thumb: /thumbs/annflow-93.webp
       url: https://t.me/annsflow/93
+      path: /annflow/projects/without-streaming/
     - title: "Mac Automation Stack"
       note: "Как я строю клавиатурные слои, чтобы ускорить работу на Mac"
       noteEn: "Keyboard layers that speed up work on a Mac"
       thumb: /thumbs/annflow-74.webp
       url: https://t.me/annsflow/74
+      path: /annflow/projects/mac-automation/
   logo:
     src: /logos/annflow.webp
     width: 600

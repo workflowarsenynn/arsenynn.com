@@ -184,3 +184,87 @@ html.about-ready .disclosure__inner {
     animation-duration: 0.01ms !important;
   }
 }
+
+/* Переход между страницами без JS. */
+@media (prefers-reduced-motion: no-preference) {
+  @view-transition {
+    navigation: auto;
+  }
+}
+
+/* Заметка: advisory, long reading — Source Serif 4, мера около 62ch, 18/19 px, 1.6. */
+.prose {
+  max-width: 62ch;
+  font-family: var(--font-display);
+  font-size: var(--text-body);
+  line-height: 1.62;
+  font-feature-settings: 'kern', 'liga';
+  overflow-wrap: break-word;
+}
+
+.prose > * {
+  margin-block: 0 1.1em;
+}
+
+.prose strong {
+  font-weight: 600;
+}
+
+.prose a {
+  color: inherit;
+  text-decoration-color: var(--color-accent);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.18em;
+}
+
+.prose a:hover {
+  color: var(--color-accent);
+}
+
+.prose ul,
+.prose ol {
+  padding-left: 1.2em;
+}
+
+.prose li {
+  margin-bottom: 0.4em;
+}
+
+.prose li::marker {
+  color: var(--color-accent);
+}
+
+.prose blockquote {
+  margin-inline: 0;
+  padding-left: var(--space-2);
+  border-left: 1px solid var(--color-accent);
+  color: var(--color-muted);
+}
+
+.prose code {
+  font-family: var(--font-mono);
+  font-size: 0.86em;
+  overflow-wrap: anywhere;
+}
+
+/* Код прокручивается внутри блока, страница остаётся на месте. */
+.prose pre {
+  margin-inline: calc(var(--gutter) * -1);
+  padding: var(--space-2) var(--gutter);
+  overflow-x: auto;
+  background: var(--color-press) !important;
+  font-size: 0.875rem;
+  line-height: 1.5;
+}
+
+.prose pre code {
+  font-size: inherit;
+  overflow-wrap: normal;
+}
+
+@media (min-width: 48rem) {
+  .prose pre {
+    margin-inline: 0;
+    padding-inline: var(--space-2);
+  }
+}

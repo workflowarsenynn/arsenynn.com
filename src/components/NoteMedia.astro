@@ -1,0 +1,138 @@
+---
+// Картинки, видео и аудио заметки. Видео без файла ведёт в Telegram: большие файлы канал наружу не отдаёт.
+import { Image } from 'astro:assets';
+import { asset } from '../data/asset';
+import { telegramUrl, type Note } from '../lib/annflow';
+
+type Props = { items: NonNullable<Note['data']['media']>; title: string };
+const { items, title } = Astro.props;
+const images = items.filter((m) => m.type === 'image');
+const others = items.filter((m) => m.type !== 'image');
+const widths = [480, 800, 1280];
+const sizes = '(min-width: 48rem) 44rem, 100vw';
+const caption = images.find((m) => m.caption)?.caption;
+---
+{images.length > 0 && (
+  <figure class:list={['note-media', { 'note-media--grid': images.length > 1 }]}>
+    {images.map((m, i) => (
+      <Image src={m.src!} alt={m.caption ?? `${title}: иллюстрация ${i + 1}`} widths={widths} sizes={sizes} loading="lazy" decoding="async" />
+    ))}
+    {caption && <figcaption>{caption}</figcaption>}
+  </figure>
+)}
+{others.map((m) => (
+  m.type === 'video' && m.file ? (
+    <figure class="note-media">
+      <video controls playsinline preload="none" poster={m.src?.src}>
+        <source src={asset(m.file)} type="video/mp4" />
+      </video>
+      {m.caption && <figcaption>{m.caption}</figcaption>}
+    </figure>
+  ) : m.type === 'video' ? (
+    <figure class="note-media">
+      <a class="note-video" href={telegramUrl(m.post)} target="_blank" rel="noopener">
+        {m.src && <Image src={m.src} alt="" widths={widths} sizes={sizes} loading="lazy" decoding="async" />}
+        <span class="note-video__label">
+          <svg viewBox="0 0 10 12" width="10" height="12" aria-hidden="true"><path d="M0 0l10 6-10 6z" /></svg>
+          Смотреть в Telegram{m.duration && ` · ${m.duration}`}
+          <span class="visually-hidden"> (откроется в новой вкладке)</span>
+        </span>
+      </a>
+      {m.caption && <figcaption>{m.caption}</figcaption>}
+    </figure>
+  ) : (
+    <p class="note-audio">
+      <a class="action action--text" href={telegramUrl(m.post)} target="_blank" rel="noopener">
+        Аудио: {m.caption}<span class="action__arrow" aria-hidden="true">↗</span><span class="visually-hidden"> (откроется в новой вкладке)</span>
+      </a>
+    </p>
+  )
+))}
+
+<style>
+  .note-media {
+    margin: var(--space-4) calc(var(--gutter) * -1);
+  }
+
+  .note-media img,
+  .note-media video {
+    display: block;
+    width: 100%;
+    height: auto;
+    background: var(--color-press);
+  }
+
+  /* Скриншоты нельзя обрезать: на телефоне идут в колонку, на широком экране по две. */
+  .note-media--grid {
+    display: grid;
+    gap: var(--space-1);
+  }
+
+  figcaption {
+    padding: var(--space-1) var(--gutter) 0;
+    color: var(--color-muted);
+    font-size: var(--text-meta);
+    line-height: 1.4;
+  }
+
+  .note-video {
+    position: relative;
+    display: block;
+    min-height: var(--tap-row);
+    background: var(--color-press);
+    color: var(--color-text);
+    text-decoration: none;
+  }
+
+  .note-video img {
+    filter: brightness(0.7);
+    transition: filter var(--duration) ease;
+  }
+
+  .note-video:hover img {
+    filter: brightness(0.9);
+  }
+
+  .note-video__label {
+    position: absolute;
+    left: var(--gutter);
+    bottom: var(--space-2);
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-1);
+    font-size: var(--text-meta);
+    text-shadow: 0 1px 8px rgb(0 0 0 / 0.8);
+  }
+
+  .note-video__label svg {
+    fill: currentColor;
+  }
+
+  .note-audio {
+    margin: var(--space-3) 0;
+    font-size: var(--text-meta);
+  }
+
+  @media (min-width: 48rem) {
+    .note-media {
+      margin-inline: 0;
+    }
+
+    .note-media--grid {
+      grid-template-columns: repeat(2, 1fr);
+      align-items: start;
+    }
+
+    .note-media--grid figcaption {
+      grid-column: 1 / -1;
+    }
+
+    figcaption {
+      padding-inline: 0;
+    }
+
+    .note-video__label {
+      left: var(--space-2);
+    }
+  }
+</style>

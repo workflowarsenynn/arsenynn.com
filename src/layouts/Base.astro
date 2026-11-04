@@ -7,13 +7,16 @@ import '@fontsource-variable/manrope/wght.css';
 import '../styles/tokens.css';
 import '../styles/global.css';
 
-type Props = { noindex?: boolean };
-const { noindex = false } = Astro.props;
+type Props = { noindex?: boolean; title?: string; description?: string; ogTitle?: string; ogType?: string };
+const { noindex = false, title: pageTitle, description: pageDescription, ogTitle: pageOgTitle, ogType = 'website' } = Astro.props;
 const locale = toLocale(Astro.currentLocale);
 const t = ui[locale];
-const title = locale === 'en' ? site.en.title : site.title;
-const description = locale === 'en' ? site.en.description : site.description;
-const ogDescription = locale === 'en' ? site.en.ogDescription : site.ogDescription;
+const title = pageTitle ?? (locale === 'en' ? site.en.title : site.title);
+const description = pageDescription ?? (locale === 'en' ? site.en.description : site.description);
+const ogDescription = pageDescription ?? (locale === 'en' ? site.en.ogDescription : site.ogDescription);
+const ogTitle = pageOgTitle ?? pageTitle ?? site.ogTitle;
+// Языковые версии есть только у главной: внутренние страницы пока на русском.
+const hasAlternates = !noindex && !pageTitle;
 const canonical = new URL(Astro.url.pathname, site.url).href;
 // hreflang: обе версии ссылаются друг на друга, x-default ведёт на русскую (advisory).
 const alternates = locales.map((l) => ({ lang: l, href: new URL(localePath(l), site.url).href }));
@@ -35,17 +38,17 @@ const jsonLd = JSON.stringify({
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />
     {noindex && <meta name="robots" content="noindex" />}
-    {!noindex && alternates.map((a) => <link rel="alternate" hreflang={a.lang} href={a.href} />)}
-    {!noindex && <link rel="alternate" hreflang="x-default" href={alternates[0].href} />}
+    {hasAlternates && alternates.map((a) => <link rel="alternate" hreflang={a.lang} href={a.href} />)}
+    {hasAlternates && <link rel="alternate" hreflang="x-default" href={alternates[0].href} />}
     <meta name="theme-color" content={site.themeColor} />
     <!-- ?v= сбрасывает кэш браузера: старый значок держится по прежнему адресу месяцами. Менять при смене иконки. -->
     <link rel="icon" href={asset('/favicon.ico?v=2')} sizes="48x48" />
     <link rel="icon" href={asset('/favicon.svg?v=2')} type="image/svg+xml" />
     <link rel="apple-touch-icon" href={asset('/apple-touch-icon.png?v=2')} />
 
-    <meta property="og:type" content="website" />
+    <meta property="og:type" content={ogType} />
     <meta property="og:site_name" content={site.ogSiteName} />
-    <meta property="og:title" content={site.ogTitle} />
+    <meta property="og:title" content={ogTitle} />
     <meta property="og:description" content={ogDescription} />
     <meta property="og:url" content={canonical} />
     <meta property="og:image" content={ogImage} />
@@ -53,7 +56,7 @@ const jsonLd = JSON.stringify({
     <meta property="og:image:height" content="630" />
     <meta property="og:locale" content={t.ogLocale} />
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content={site.ogTitle} />
+    <meta name="twitter:title" content={ogTitle} />
     <meta name="twitter:description" content={ogDescription} />
     <meta name="twitter:image" content={ogImage} />
     <script type="application/ld+json" set:html={jsonLd} />
