@@ -14,6 +14,7 @@ npm run dev
 
 С чего начать:
 
+- [Handoff для следующего агента](docs/handoff.md)
 - [Статус и план](docs/implementation_plan.md)
 - [ТЗ](docs/brief.md)
 - [Архитектура](docs/architecture.md)

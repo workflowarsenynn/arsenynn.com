@@ -53,5 +53,6 @@ MVP собран, структура в `docs/architecture.md`.
 - `docs/implementation_plan.md` — план реализации
 - `docs/brief.md` — ТЗ владельца
 - `PROJECT_STANDARDS.md` — стандарт оформления, лежит в репозитории `workflowarsenynn/Projects-Standarts`
+- `docs/handoff.md` — передача проекта: состояние, рабочий цикл, открытые задачи, подводные камни
 - `AGENTS.md` — provider-neutral инструкции для AI Coding Agent
 - `docs/decisions_log.md` — журнал решений и исторического контекста
