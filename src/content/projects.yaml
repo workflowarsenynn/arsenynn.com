@@ -3,7 +3,8 @@
 # Короткие тексты из advisory (docs/Advisory/), About ждут утверждения владельца.
 # Проверка ссылок и открытые вопросы: docs/project_registry.md.
 # feed — публичный канал, по последнему посту которого проект поднимается наверх и получает огонёк.
-# parts — части @arsenynn: вступление (intro), главы-видео (chapters), позже youtube-плейлист части.
+# parts — части @arsenynn: вступление (intro), главы-видео (chapters).
+# youtube у главы или работы — ID видео, открывается в плеере на сайте. accent: true — хит, название красным.
 # contents — оглавление канала у annFlow: проект, подзаголовок, ссылка на первый пост (из поста «Навигация по проектам канала»).
 # en — английский текст для /en/ (обязателен), labelEn — английская подпись ссылки.
 # updatedAt — ручная дата (YYYY-MM-DD) для проектов без публичной ленты: bessmyslennost, without-streaming.
@@ -41,7 +42,6 @@
         - "Я задался целью найти триггер, который дал бы мне возможность оглянуться и наглядно структурировать свою память, исходя из отношения моих личных ассоциаций к твоей многогранной реплике, читатель."
         - "Мой поиск никак не мог закончиться просто на фотографии или конкретики в текстовом виде."
         - "Симбиоз из слова, звука и картинки, хоть и ненамного, но возвращает меня в ту реальность, которая уже является мертвой."
-      youtube: https://www.youtube.com/@arsenynn/videos
       chapters:
         - num: '0.1'
           title: "Hello to the future"
@@ -137,6 +137,7 @@
           youtube: GbpM4LVH_xo
         - num: '1.11.2'
           title: "Reflection"
+          accent: true
           duration: '2:04'
           url: https://t.me/arsenynn/22
           thumb: /thumbs/arsenynn-22.webp
@@ -167,7 +168,6 @@
         - "Бессмысленность и скоротечность как система сдержек и противовесов, как две направленные тенденции, работающие друг против друга."
         - "Подводя итог, хочется сказать, что «это» не является преимуществом и не несёт в себе никаких позитивных аспектов, скорее это отклонение от нормы, но именно оно является самым естественным и настоящим, а значит заслуживает исключительного права на существование."
         - "Я нашёл несложный способ проверить и почувствовать: если действительно хочешь что-то сделать - не делай. Правда в том, что тебе просто придётся это сделать независимо от твоих желаний, потому что твой недуг будет этого требовать. В этом заключается настоящее, в этом есть «это»."
-      youtube: https://www.youtube.com/@arsenynn/videos
       chapters:
         - num: '2.0'
           title: "Part Two"
@@ -213,6 +213,7 @@
           youtube: vTCiHmHByG8
         - num: '2.4.2'
           title: "I Left It There"
+          accent: true
           duration: '2:11'
           url: https://t.me/arsenynn/46
           thumb: /thumbs/arsenynn-46.webp
@@ -256,49 +257,72 @@
       primary: true
   contents:
     - title: "Окутало"
-      meta: '2025 · 3:23'
+      meta: '2025'
+      duration: '3:23'
       thumb: /thumbs/workflow-194.webp
       url: https://t.me/ww_arsenynn/194
+      youtube: dmTiMsocUFE
     - title: "ВТРНК Radio Show"
-      meta: '2025 · 2:18'
+      meta: '2025'
+      duration: '2:18'
       thumb: /thumbs/workflow-189.webp
       url: https://t.me/ww_arsenynn/189
+      youtube: qV_9IrCqz8c
     - title: "Dissociation"
-      meta: '2025 · 0:59'
+      meta: '2025'
+      duration: '0:59'
       thumb: /thumbs/workflow-180.webp
       url: https://t.me/ww_arsenynn/180
+      youtube: MVAzlGt1NjU
     - title: "Chexoв"
-      meta: '2025 · 1:02'
+      meta: '2025'
+      duration: '1:02'
       thumb: /thumbs/workflow-177.webp
       url: https://t.me/ww_arsenynn/177
+      youtube: 5uJBVZ38nUs
     - title: "The Wodka"
-      meta: '2024 · 1:19'
+      meta: '2024'
+      duration: '1:19'
       thumb: /thumbs/workflow-170.webp
       url: https://t.me/ww_arsenynn/170
+      youtube: t-qLV0Anktg
     - title: "UFO"
-      meta: '2024 · 1:00'
+      meta: '2024'
+      duration: '1:00'
       thumb: /thumbs/workflow-161.webp
       url: https://t.me/ww_arsenynn/161
+      youtube: GcwnBXtJq4Y
     - title: "Пробегая Года"
-      meta: '2024 · 1:17'
+      meta: '2024'
+      duration: '1:17'
       thumb: /thumbs/workflow-153.webp
       url: https://t.me/ww_arsenynn/153
+      youtube: M83ukI-CbkI
     - title: "HABAROVY"
-      meta: '2024 · 8:40'
+      meta: '2024'
+      duration: '8:40'
       thumb: /thumbs/workflow-150.webp
       url: https://t.me/ww_arsenynn/150
+      youtube: oo6bbosAZKc
     - title: "ВТРНК Radio Show"
-      meta: '2024 · 1:30'
+      meta: '2024'
+      duration: '1:30'
       thumb: /thumbs/workflow-143.webp
       url: https://t.me/ww_arsenynn/143
+      youtube: VE_qnP6Hf-M
     - title: "SODA"
-      meta: '2024 · 1:25'
+      meta: '2024'
+      duration: '1:25'
       thumb: /thumbs/workflow-135.webp
       url: https://t.me/ww_arsenynn/135
+      youtube: -4Ov9OlMzK8
     - title: "I left it there"
-      meta: '2024 · 2:11'
+      accent: true
+      meta: '2024'
+      duration: '2:11'
       thumb: /thumbs/workflow-119.webp
       url: https://t.me/ww_arsenynn/119
+      youtube: K1zETJwaEDY
   mark:
     src: /logos/workflow.svg
     width: 590
