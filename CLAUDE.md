@@ -1,11 +1,11 @@
 # CLAUDE.md
-LastUpdated: 2026-11-04 23:45 MSK
+LastUpdated: 2026-11-05 16:30 MSK
 
 ## Project
 Личный сайт arsenynn.com: mobile-first индекс семи проектов @arsenynn для людей, открывающих ссылку с телефона. У annFlow есть свой мир: весь канал на сайте.
 
 ## Stack
-- Astro со статической сборкой, Node.js 20+
+- Astro со статической сборкой, Node.js 22.23.4+ (версия CI в `.node-version`)
 - TypeScript для данных, обычный CSS с токенами
 - GitHub Pages, DNS в Cloudflare через `cf` CLI
 
