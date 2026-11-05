@@ -30,8 +30,9 @@ if (root) {
   const toggle = q<HTMLButtonElement>('toggle');
   const sound = q<HTMLButtonElement>('sound');
   const soundLabel = q('sound-label');
-  const next = q<HTMLButtonElement>('next');
-  const prev = q<HTMLButtonElement>('prev');
+  // Стрелок две пары: на кадре для мыши и под кадром для телефона.
+  const nexts = root.querySelectorAll<HTMLButtonElement>('[data-stream-next]');
+  const prevs = root.querySelectorAll<HTMLButtonElement>('[data-stream-prev]');
   const { stream, base, channel, pause, play, soundOn, soundOff } = root.dataset;
   const saveData = (navigator as Navigator & { connection?: { saveData?: boolean } }).connection?.saveData;
   const still = matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -151,7 +152,7 @@ if (root) {
     link.href = `${channel}/${post.post}`;
     count.textContent = `${(pos % posts.length) + 1} / ${posts.length}`;
     syncSound();
-    prev.disabled = pos === 0;
+    prevs.forEach((button) => { button.disabled = pos === 0; });
     resume();
     // Кадры соседей заранее: при свайпе край не пустой.
     const image = frameOf(peek(1));
@@ -285,8 +286,8 @@ if (root) {
   }
 
   toggle.addEventListener('click', () => setPaused(!paused));
-  next.addEventListener('click', () => { learned(); go(1); });
-  prev.addEventListener('click', () => { if (pos > 0) go(-1); });
+  nexts.forEach((button) => button.addEventListener('click', () => { learned(); go(1); }));
+  prevs.forEach((button) => button.addEventListener('click', () => { if (pos > 0) go(-1); }));
   sound.addEventListener('click', toggleSound);
   // Нажатие по самому кадру тоже включает звук, как в сторис. На паузе кадром управляет панель видео.
   stage.addEventListener('click', () => { if (!swiped && media === video && !paused) toggleSound(); });

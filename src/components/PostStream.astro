@@ -40,6 +40,8 @@ const first = posts.find((p) => p.kind === 'image')!;
       </svg>
       <span data-stream-sound-label>{t.streamSoundOn}</span>
     </button>
+    <button class="stream__side stream__side--prev" type="button" data-stream-prev aria-label={t.streamPrev} disabled>←</button>
+    <button class="stream__side stream__side--next" type="button" data-stream-next aria-label={t.streamNext}>→</button>
     <p class="stream__hint" data-stream-hint hidden><span aria-hidden="true">←</span> {t.streamHint} <span aria-hidden="true">→</span></p>
   </div>
 
@@ -149,6 +151,55 @@ const first = posts.find((p) => p.kind === 'image')!;
 
   .stream__hint[hidden] {
     display: none;
+  }
+
+  /* Стрелки на кадре только для мыши. На телефоне вместо них свайп. */
+  .stream__side {
+    display: none;
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .stream__hint {
+      display: none;
+    }
+
+    .stream__controls .stream__arrows {
+      display: none;
+    }
+
+    .stream__side {
+      position: absolute;
+      top: 50%;
+      display: grid;
+      place-items: center;
+      width: var(--tap);
+      height: var(--tap);
+      padding: 0;
+      transform: translateY(-50%);
+      background: color-mix(in srgb, var(--color-bg) 72%, transparent);
+      border: 1px solid color-mix(in srgb, var(--color-text) 22%, transparent);
+      border-radius: 50%;
+      color: var(--color-text);
+      font: inherit;
+      cursor: pointer;
+      transition: background var(--duration) ease;
+    }
+
+    .stream__side:hover {
+      background: var(--color-bg);
+    }
+
+    .stream__side:disabled {
+      display: none;
+    }
+
+    .stream__side--prev {
+      left: var(--space-1);
+    }
+
+    .stream__side--next {
+      right: var(--space-1);
+    }
   }
 
   /* Кнопка звука на самом кадре, там же, где её ищут в сторис и Reels.
