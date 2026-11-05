@@ -40,6 +40,7 @@ const first = posts.find((p) => p.kind === 'image')!;
       </svg>
       <span data-stream-sound-label>{t.streamSoundOn}</span>
     </button>
+    <p class="stream__hint" data-stream-hint hidden><span aria-hidden="true">←</span> {t.streamHint} <span aria-hidden="true">→</span></p>
   </div>
 
   <p class="stream__text" data-stream-text>{first.text}</p>
@@ -47,7 +48,10 @@ const first = posts.find((p) => p.kind === 'image')!;
 
   <div class="stream__controls only-js">
     <button class="stream__button" type="button" data-stream-toggle aria-pressed="false">{t.streamPause}</button>
-    <button class="stream__button stream__button--next" type="button" data-stream-next>{t.streamNext}<span aria-hidden="true">→</span></button>
+    <span class="stream__arrows">
+      <button class="stream__button stream__arrow" type="button" data-stream-prev aria-label={t.streamPrev} disabled>←</button>
+      <button class="stream__button stream__arrow" type="button" data-stream-next aria-label={t.streamNext}>→</button>
+    </span>
   </div>
 </section>
 
@@ -106,8 +110,45 @@ const first = posts.find((p) => p.kind === 'image')!;
     background: var(--color-press);
   }
 
-  .stream__stage :global(video) {
-    cursor: pointer;
+  .stream__stage {
+    touch-action: pan-y;
+    user-select: none;
+    -webkit-user-select: none;
+    -webkit-touch-callout: none;
+    cursor: grab;
+  }
+
+  .stream__stage:active {
+    cursor: grabbing;
+  }
+
+  /* Соседний пост во время свайпа. */
+  .stream__stage :global(.stream__ghost) {
+    position: absolute;
+    inset: 0;
+    background: var(--color-press) center / contain no-repeat;
+  }
+
+  /* Подсказка видна, пока человек ни разу не пролистал. */
+  .stream__hint {
+    position: absolute;
+    left: 50%;
+    bottom: var(--space-1);
+    display: flex;
+    gap: 0.5em;
+    margin: 0;
+    padding: 0.35rem 0.85rem;
+    transform: translateX(-50%);
+    background: color-mix(in srgb, var(--color-bg) 72%, transparent);
+    border-radius: 999px;
+    color: var(--color-text);
+    font-size: var(--text-meta);
+    white-space: nowrap;
+    pointer-events: none;
+  }
+
+  .stream__hint[hidden] {
+    display: none;
   }
 
   /* Кнопка звука на самом кадре, там же, где её ищут в сторис и Reels.
@@ -262,9 +303,20 @@ const first = posts.find((p) => p.kind === 'image')!;
     color: var(--color-text);
   }
 
-  .stream__button--next {
+  .stream__arrows {
+    display: flex;
     margin-left: auto;
+  }
+
+  .stream__arrow {
+    justify-content: center;
     color: var(--color-text);
+    font-size: var(--text-body);
+  }
+
+  .stream__arrow:disabled {
+    color: var(--color-line-strong);
+    cursor: default;
   }
 
   @media (prefers-reduced-motion: reduce) {

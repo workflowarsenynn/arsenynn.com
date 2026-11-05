@@ -267,6 +267,48 @@ test.describe('случайные посты «Бессмысленности»'
     }
   });
 
+  test('свайп листает вперёд и назад, кадр идёт за пальцем, звук не трогает', async ({ page }) => {
+    await page.setViewportSize({ width: 390, height: 844 });
+    await page.goto('/');
+    const stage = page.locator(`${block} [data-stream-stage]`);
+    await stage.scrollIntoViewIfNeeded();
+    await expect(stage.locator('> *')).toHaveCount(1);
+    const link = page.locator(`${block} [data-stream-link]`);
+    await expect(page.locator(`${block} [data-stream-hint]`)).toBeVisible();
+    await expect(page.locator(`${block} [data-stream-prev]`)).toBeDisabled();
+    const first = await link.getAttribute('href');
+    const box = (await stage.boundingBox())!;
+    const y = box.y + box.height / 2;
+    const swipe = async (from: number, to: number) => {
+      await page.mouse.move(from, y);
+      await page.mouse.down();
+      await page.mouse.move((from + to) / 2, y, { steps: 4 });
+      await page.mouse.move(to, y, { steps: 4 });
+      await page.mouse.up();
+    };
+    await page.mouse.move(box.x + 300, y);
+    await page.mouse.down();
+    await page.mouse.move(box.x + 200, y, { steps: 4 });
+    await expect(stage.locator('.stream__ghost')).toHaveCount(1);
+    await page.mouse.move(box.x + 280, y, { steps: 4 });
+    await page.waitForTimeout(250);
+    await page.mouse.up();
+    await page.waitForTimeout(300);
+    await expect(stage.locator('.stream__ghost')).toHaveCount(0);
+    expect(await link.getAttribute('href')).toBe(first);
+    await swipe(box.x + 320, box.x + 60);
+    await expect(link).not.toHaveAttribute('href', first!);
+    const second = await link.getAttribute('href');
+    await expect(page.locator(`${block} [data-stream-hint]`)).toBeHidden();
+    await expect(page.locator(`${block} [data-stream-count]`)).toHaveText('2 / 157');
+    await expect(stage.locator('> *')).toHaveCount(1);
+    await swipe(box.x + 60, box.x + 320);
+    await expect(link).toHaveAttribute('href', first!);
+    await page.locator(`${block} [data-stream-next]`).click();
+    await expect(link).toHaveAttribute('href', second!);
+    await expect(page.locator(`${block} [data-stream-sound]`)).not.toHaveAttribute('data-on');
+  });
+
   test('звук: кнопка на кадре и нажатие по кадру, выбор сохраняется на следующем видео', async ({ page }) => {
     await page.setViewportSize({ width: 390, height: 844 });
     await page.goto('/');
@@ -296,6 +338,11 @@ test.describe('случайные посты «Бессмысленности»'
     await stage.locator('video').click();
     expect(await muted()).toBe(true);
     await expect(sound).not.toHaveAttribute('data-on');
+    // На паузе звуком управляет панель видео, кнопка не должна на неё наезжать.
+    await page.locator(`${block} [data-stream-toggle]`).click();
+    await expect(sound).toBeHidden();
+    await page.locator(`${block} [data-stream-toggle]`).click();
+    await expect(sound).toBeVisible();
   });
 
   test('при reduced motion смена не запускается сама', async ({ page }) => {
