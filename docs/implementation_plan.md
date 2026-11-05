@@ -1,5 +1,5 @@
 # Implementation Plan
-LastUpdated: 2026-11-05 16:00 MSK
+LastUpdated: 2026-11-05 21:00 MSK
 
 ## Todoist Sync
 - Sync: manual
@@ -29,7 +29,7 @@ LastUpdated: 2026-11-05 16:00 MSK
 - PushPolicy: auto-safe
 
 ## Status
-- Stage: Build (первый мир: annFlow на сайте, индекс в проде на https://arsenynn.com, последняя фаза 29)
+- Stage: Build (первый мир: annFlow на сайте, индекс в проде на https://arsenynn.com, последняя фаза 30)
 - Направление задано `docs/Advisory/deep_research_and_implementation_direction.md`: оставить Astro и статику, развивать фазами, каждая фаза отдельным деплоем с точкой отката.
 - Сейчас на проде: hero с портретом, индекс из семи проектов по центру, части и главы @arsenynn и работы workflow со встроенным плеером YouTube, RU и /en/, только тёмная тема. Новая стадия: весь канал annFlow на сайте, 66 заметок в 8 сериях.
 - Передача проекта и рабочий цикл: `docs/handoff.md`.
@@ -63,6 +63,7 @@ LastUpdated: 2026-11-05 16:00 MSK
 - `rollback/phase-27`: плеер у workflow, хиты красным, номер и время разведены (e7bd0a0).
 - `rollback/phase-28`: мир annFlow, весь канал на сайте (0a7d9ef).
 - `rollback/phase-29`: видео постов 89, 100 и 108 в заметках annFlow (fc9c7e0).
+- `rollback/phase-30`: Node 22.23.4 закреплена в деплое и тестах (ca891a1).
 - Откат: PR из revert-коммита фазы в `main` или `git revert <merge-commit>`; GitHub Actions пересоберёт сайт за 1–2 минуты.
 
 ## Done
