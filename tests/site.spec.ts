@@ -152,8 +152,8 @@ test('@arsenynn: части открыты лентами с кадрами, с�
     const scrollable = await strip.locator('.strip__track').evaluate((el) => el.scrollWidth > el.clientWidth);
     expect(scrollable).toBe(true);
   }
-  // у первой части 16 кадров (0.2 и 1.0 без YouTube — заглушка с номером)
-  await expect(page.locator('#part-arsenynn-1 .strip__frame img')).toHaveCount(16);
+  // у всех глав первой части есть кадр
+  await expect(page.locator('#part-arsenynn-1 .strip__frame img')).toHaveCount(18);
 });
 
 test('@arsenynn: «Вступление» раскрывает текст введения внутри части', async ({ page }) => {
@@ -387,8 +387,45 @@ test.describe('случайные посты «Бессмысленности»'
   });
 });
 
+test.describe('главы @arsenynn на сайте', () => {
+  const block = '#arsenynn .stream';
+  const stage = `${block} [data-stream-stage]`;
+
+  test.beforeEach(async ({ page }) => {
+    await page.route(/arsenynn-media/, (route) => route.fulfill({ path: 'public/media/annflow/94.mp4', contentType: 'video/mp4' }));
+  });
+
+  test('блок над лентами, главы по порядку, 16:9, без запросов к YouTube', async ({ page }) => {
+    await page.setViewportSize({ width: 390, height: 844 });
+    const calls: string[] = [];
+    page.on('request', (r) => { if (/youtube/.test(r.url())) calls.push(r.url()); });
+    await page.goto('/');
+    await page.locator(stage).scrollIntoViewIfNeeded();
+    await expect(page.locator(`${block} [data-stream-count]`)).toHaveText('1 / 26');
+    await expect(page.locator(`${block} [data-stream-text]`)).toHaveText('Hello to the future');
+    await expect(page.locator(`${block} [data-stream-date]`)).toHaveText('Часть I · 0.1');
+    const box = (await page.locator(stage).boundingBox())!;
+    expect(Math.abs(box.width / box.height - 16 / 9)).toBeLessThan(0.02);
+    await page.locator(`${block} [data-stream-next]:visible`).click();
+    await expect(page.locator(`${block} [data-stream-text]`)).toHaveText('I can talk to you about the atmosphere');
+    expect(calls).toEqual([]);
+  });
+
+  test('глава из ленты играет в блоке со звуком, подкаст открывает плеер', async ({ page }) => {
+    await page.goto('/');
+    await expect(page.locator('#part-arsenynn-1 [data-video]')).toHaveCount(0);
+    await page.locator('#part-arsenynn-1 [data-chapter="22"]').click();
+    await expect(page.locator(`${block} [data-stream-text]`)).toHaveText('Reflection');
+    await expect(page.locator(`${block} [data-stream-sound]`)).toHaveAttribute('data-on');
+    await expect(page.locator(stage)).toBeInViewport();
+    await expect(page.locator('[data-player]')).toBeHidden();
+    await page.locator('#part-arsenynn-2 [data-video="ecPJAgF_-bM"]').click();
+    await expect(page.locator('[data-player]')).toBeVisible();
+  });
+});
+
 test.describe('плеер глав', () => {
-  const firstChapter = '#part-arsenynn-1 [data-video="Ko0993YuBsU"]';
+  const firstChapter = '#contents-workflow [data-video="dmTiMsocUFE"]';
 
   test.beforeEach(async ({ page }) => {
     await page.route(/youtube-nocookie\.com/, (route) => route.fulfill({ contentType: 'text/html', body: '<title>stub</title>' }));
@@ -402,9 +439,9 @@ test.describe('плеер глав', () => {
     await page.locator(firstChapter).click();
     const player = page.locator('[data-player]');
     await expect(player).toBeVisible();
-    await expect(player.locator('iframe')).toHaveAttribute('src', /youtube-nocookie\.com\/embed\/Ko0993YuBsU\?/);
-    await expect(player.locator('h2')).toHaveText('Hello to the future');
-    await expect(player.locator('[data-player-telegram]')).toHaveAttribute('href', 'https://t.me/arsenynn/6');
+    await expect(player.locator('iframe')).toHaveAttribute('src', /youtube-nocookie\.com\/embed\/dmTiMsocUFE\?/);
+    await expect(player.locator('h2')).toHaveText('Окутало');
+    await expect(player.locator('[data-player-telegram]')).toHaveAttribute('href', 'https://t.me/ww_arsenynn/194');
     expect(page.url()).not.toContain('youtube');
     expect(page.context().pages()).toHaveLength(1);
   });
@@ -416,7 +453,7 @@ test.describe('плеер глав', () => {
     const player = page.locator('[data-player]');
     await expect(player.locator('[data-player-prev]')).toBeDisabled();
     await player.locator('[data-player-next]').click();
-    await expect(player.locator('h2')).toHaveText('Come here');
+    await expect(player.locator('h2')).toHaveText('ВТРНК Radio Show');
     await page.keyboard.press('Escape');
     await expect(player).toBeHidden();
     await expect(player.locator('iframe')).toHaveCount(0);

@@ -1,5 +1,5 @@
 # Implementation Plan
-LastUpdated: 2026-11-06 12:30 MSK
+LastUpdated: 2026-11-06 13:00 MSK
 
 ## Todoist Sync
 - Sync: manual
@@ -104,6 +104,8 @@ LastUpdated: 2026-11-06 12:30 MSK
 - [ ] Проверить на iPhone и из РФ-сети, включая плеер глав и автозапуск
 - [ ] Если YouTube из РФ работает плохо: решить про Kinescope или Mux для глав
 - [ ] Шрифты первого экрана: 125 KB при бюджете advisory 120 KB
+- [ ] Владелец: запустить `scripts/publish-media.sh`, создать склад видео глав @arsenynn
+- [ ] Владелец: проверить скорость видео на телефоне без VPN
 - [ ] Следующий мир по тому же образцу: выбрать проект, advisory советует @arsenynn
 
 ## Risks

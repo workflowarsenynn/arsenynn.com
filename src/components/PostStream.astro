@@ -3,16 +3,19 @@
 // Без JS остаётся один пост со ссылкой на Telegram.
 import { toLocale, ui } from '../lib/i18n';
 import { asset } from '../data/asset';
-import posts from '../content/stream/bessmislennost.json';
+import { streamPosts } from '../lib/stream';
 
-type Props = { source: string; channel: string };
-const { source, channel } = Astro.props;
+type Props = { source: string; channel: string; label?: string; film?: boolean };
+const { source, channel, label, film = false } = Astro.props;
 const t = ui[toLocale(Astro.currentLocale)];
-const first = posts.find((p) => p.kind === 'image')!;
+const posts = streamPosts(source);
+const first = posts.find((p) => p.kind === 'image') ?? posts[0];
+const still = first.poster ?? first.src!;
 ---
 <section
-  class="stream"
-  aria-label={t.streamLabel}
+  class:list={['stream', { 'stream--film': film }]}
+  aria-label={label ?? t.streamLabel}
+  data-order={film ? 'sequence' : undefined}
   data-stream={asset(source)}
   data-base={asset('/')}
   data-channel={channel}
@@ -22,7 +25,7 @@ const first = posts.find((p) => p.kind === 'image')!;
   data-sound-off={t.streamSoundOff}
 >
   <div class="stream__head">
-    <h3 class="stream__label">{t.streamLabel} <span class="stream__count" data-stream-count>{posts.length}</span></h3>
+    <h3 class="stream__label">{label ?? t.streamLabel} <span class="stream__count" data-stream-count>{posts.length}</span></h3>
     <a class="stream__source" data-stream-link href={`${channel}/${first.post}`} target="_blank" rel="noopener">
       Telegram<span aria-hidden="true">↗</span><span class="visually-hidden">{t.newTab}</span>
     </a>
@@ -30,7 +33,7 @@ const first = posts.find((p) => p.kind === 'image')!;
 
   <div class="stream__screen">
     <div class="stream__stage" data-stream-stage>
-      <img src={asset(first.src!)} width={first.w} height={first.h} alt="" loading="lazy" decoding="async" />
+      <img src={asset(still)} width={first.w} height={first.h} alt="" loading="lazy" decoding="async" />
     </div>
     <button class="stream__sound" type="button" data-stream-sound hidden>
       <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true">
@@ -122,6 +125,11 @@ const first = posts.find((p) => p.kind === 'image')!;
 
   .stream__stage:active {
     cursor: grabbing;
+  }
+
+  /* Главы сняты в 16:9: сцена по кадру, без пустых полос. */
+  .stream--film .stream__stage {
+    aspect-ratio: 16 / 9;
   }
 
   /* Соседний пост во время свайпа. */
@@ -381,6 +389,10 @@ const first = posts.find((p) => p.kind === 'image')!;
     .stream__screen {
       max-width: 28rem;
       margin-inline: 0;
+    }
+
+    .stream--film .stream__screen {
+      max-width: none;
     }
   }
 </style>
