@@ -62,7 +62,10 @@
     "147": "Автоотклик в видимом режиме"
   },
   "videos": {
-    "94": "/media/annflow/94.mp4"
+    "89": "/media/annflow/89.mp4",
+    "94": "/media/annflow/94.mp4",
+    "100": "/media/annflow/100.mp4",
+    "108": "/media/annflow/89.mp4"
   },
   "files": {
     "79": "caps_lock_to_hyper.json",

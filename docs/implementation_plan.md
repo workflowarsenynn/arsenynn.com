@@ -1,5 +1,5 @@
 # Implementation Plan
-LastUpdated: 2026-11-04 23:45 MSK
+LastUpdated: 2026-11-05 15:20 MSK
 
 ## Todoist Sync
 - Sync: manual
@@ -29,7 +29,7 @@ LastUpdated: 2026-11-04 23:45 MSK
 - PushPolicy: auto-safe
 
 ## Status
-- Stage: Build (первый мир: annFlow на сайте, индекс в проде на https://arsenynn.com, последняя фаза 27)
+- Stage: Build (первый мир: annFlow на сайте, индекс в проде на https://arsenynn.com, последняя фаза 28)
 - Направление задано `docs/Advisory/deep_research_and_implementation_direction.md`: оставить Astro и статику, развивать фазами, каждая фаза отдельным деплоем с точкой отката.
 - Сейчас на проде: hero с портретом, индекс из семи проектов по центру, части и главы @arsenynn и работы workflow со встроенным плеером YouTube, RU и /en/, только тёмная тема. Новая стадия: весь канал annFlow на сайте, 66 заметок в 8 сериях.
 - Передача проекта и рабочий цикл: `docs/handoff.md`.
@@ -61,6 +61,7 @@ LastUpdated: 2026-11-04 23:45 MSK
 - `rollback/phase-25`: ленивые кадры панелей, `titleEn`, синхронизация документации (89f2de6).
 - `rollback/phase-26`: плеер глав @arsenynn, новый слоган, favicon NN (e21a7e0).
 - `rollback/phase-27`: плеер у workflow, хиты красным, номер и время разведены (e7bd0a0).
+- `rollback/phase-28`: мир annFlow, весь канал на сайте (0a7d9ef).
 - Откат: PR из revert-коммита фазы в `main` или `git revert <merge-commit>`; GitHub Actions пересоберёт сайт за 1–2 минуты.
 
 ## Done
@@ -94,8 +95,8 @@ LastUpdated: 2026-11-04 23:45 MSK
 - [ ] Проверить на iPhone и из РФ-сети, включая плеер глав и автозапуск
 - [ ] Если YouTube из РФ работает плохо: решить про Kinescope или Mux для глав
 - [ ] Шрифты первого экрана: 125 KB при бюджете advisory 120 KB
-- [ ] Владелец: прислать 9 видео annFlow (посты 89, 100, 102, 108, 147, 180, 183, 184, 189) и аудио из поста 83, Telegram не отдаёт их браузеру
-- [ ] Владелец: прочитать заметки annFlow и решить, оставлять ли имена людей на скриншотах (серия про бота)
+- [ ] Владелец: загрузить на Google Drive оставшиеся 6 видео annFlow (посты 102, 147, 180, 183, 184, 189) и аудио из поста 83, Telegram не отдаёт их браузеру
+- [ ] Встроить видео annFlow с Google Drive: сжать, положить в `public/media/annflow/`, прописать в `videos` в `channel.json`
 - [ ] Следующий мир по тому же образцу: выбрать проект, advisory советует @arsenynn
 
 ## Risks

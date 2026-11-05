@@ -336,6 +336,16 @@ test.describe('мир annFlow', () => {
     await expect(page.locator('.note-video')).toHaveAttribute('href', 'https://t.me/annsflow/189');
   });
 
+  test('видео от владельца: посты 89 и 108 один файл, ролики отдаются и читаются', async ({ page, request }) => {
+    for (const [note, file] of [['90', '89'], ['107', '89'], ['99', '100']]) {
+      await page.goto(`/annflow/notes/${note}/`);
+      await expect(page.locator('video source')).toHaveAttribute('src', `/media/annflow/${file}.mp4`);
+      await expect(page.locator('.note-video')).toHaveCount(0);
+      const res = await request.get(`/media/annflow/${file}.mp4`);
+      expect(res.status()).toBe(200);
+    }
+  });
+
   test('служебных хвостов Telegram в заметках нет, внутренние ссылки ведут на сайт', async ({ page }) => {
     await page.goto('/annflow/notes/115/');
     await expect(page.locator('.prose')).not.toContainText('Оглавление темы');
