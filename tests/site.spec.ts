@@ -362,21 +362,29 @@ test.describe('мир annFlow', () => {
     expect(JSON.parse(await res.text())).toBeTruthy();
   });
 
-  test('видео: файл на сайте играет здесь, без файла постер ведёт в Telegram', async ({ page }) => {
+  test('видео: файл играет на сайте и не грузится заранее', async ({ page }) => {
     await page.goto('/annflow/notes/93/');
     await expect(page.locator('video source')).toHaveAttribute('src', '/media/annflow/94.mp4');
     await expect(page.locator('video')).toHaveAttribute('preload', 'none');
-    await page.goto('/annflow/notes/189/');
-    await expect(page.locator('.note-video')).toHaveAttribute('href', 'https://t.me/annsflow/189');
   });
 
   test('видео от владельца: посты 89 и 108 один файл, ролики отдаются и читаются', async ({ page, request }) => {
-    for (const [note, file] of [['90', '89'], ['107', '89'], ['99', '100']]) {
+    for (const [note, file] of [['90', '89'], ['107', '89'], ['99', '100'], ['101', '102'], ['147', '147'], ['184', '184'], ['189', '189']]) {
       await page.goto(`/annflow/notes/${note}/`);
       await expect(page.locator('video source')).toHaveAttribute('src', `/media/annflow/${file}.mp4`);
       await expect(page.locator('.note-video')).toHaveCount(0);
       const res = await request.get(`/media/annflow/${file}.mp4`);
       expect(res.status()).toBe(200);
+    }
+    await page.goto('/annflow/notes/181/');
+    await expect(page.locator('video source')).toHaveCount(2);
+    await expect(page.locator('.note-video')).toHaveCount(0);
+  });
+
+  test('ни одно видео канала не уводит в Telegram', async ({ page }) => {
+    for (const slug of ['mac-automation', 'without-streaming', 'bessmyslennost', 'auto-apply', 'live-context']) {
+      await page.goto(`/annflow/projects/${slug}/`);
+      await expect(page.locator('.note-video')).toHaveCount(0);
     }
   });
 

@@ -56,6 +56,11 @@ const caption = images.find((m) => m.caption)?.caption;
     background: var(--color-press);
   }
 
+  /* Вертикальная запись экрана не должна занимать несколько экранов. */
+  .note-media video {
+    max-height: 85svh;
+  }
+
   /* Скриншоты нельзя обрезать: на телефоне идут в колонку, на широком экране по две. */
   .note-media--grid {
     display: grid;
