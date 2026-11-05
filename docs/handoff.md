@@ -1,5 +1,5 @@
 # Handoff
-LastUpdated: 2026-11-04 23:45 MSK
+LastUpdated: 2026-11-05 11:00 MSK
 
 Передача проекта следующему агенту. Прочитай целиком перед первой правкой. Дальше: `CLAUDE.md` → `AGENTS.md` → `docs/implementation_plan.md` → `docs/architecture.md` → `docs/decisions_log.md` (последние записи сверху).
 
@@ -21,7 +21,7 @@ LastUpdated: 2026-11-04 23:45 MSK
 5. Обновить доки (`docs/decisions_log.md` запись сверху, `architecture.md`, при необходимости `implementation_plan.md`, `LastUpdated`).
 6. Commit → push → PR в `main` через GitHub MCP → **дождаться зелёного workflow `Test`** на PR → merge.
 7. Проверить живой сайт (`curl` по маркеру из нового HTML, обычно 30–70 с после merge).
-8. Создать точку отката: ветка `rollback/phase-N` от `main` через `mcp__github__create_branch` (git-теги прокси сессии не пропускает). Последняя: `rollback/phase-27`.
+8. Создать точку отката: ветка `rollback/phase-N` от `main` через `mcp__github__create_branch` (git-теги прокси сессии не пропускает). Последняя: `rollback/phase-28`.
 9. Сообщить владельцу «опубликовано» только после проверки живого сайта. Он это проверяет.
 
 Откат: revert merge-коммита фазы отдельным PR (так уже откатывали светлую тему) или PR из нужной `rollback/phase-N`. Историю в `decisions_log.md` не удалять, а помечать `Status: reverted`.
@@ -85,6 +85,7 @@ LastUpdated: 2026-11-04 23:45 MSK
 - Кадры обложек: если в Telegram нет или плохой — брать с YouTube (`i.ytimg.com/vi/<id>/{maxresdefault,sd1,sd2,sd3}.jpg`, выбирать по яркости/контрасту/цвету/резкости, как уже сделано).
 - Только тёмная тема; красный — акцент текста #e5322d (контраст 4.55), графика #d9322b.
 - Шрифты: Source Serif 4 (заголовки, длинное чтение) + Manrope (интерфейс), self-hosted.
+- Скриншоты с именами людей и матом в заметках annFlow оставлены решением владельца, не цензурировать.
 - Тексты от владельца вставлять дословно; служебные хвосты Telegram («|», «t.me/arsenynn 🎶») убирать.
 
 ## 7. Подводные камни этой среды
