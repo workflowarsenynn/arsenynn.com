@@ -28,8 +28,18 @@ const first = posts.find((p) => p.kind === 'image')!;
     </a>
   </div>
 
-  <div class="stream__stage" data-stream-stage>
-    <img src={asset(first.src!)} width={first.w} height={first.h} alt="" loading="lazy" decoding="async" />
+  <div class="stream__screen">
+    <div class="stream__stage" data-stream-stage>
+      <img src={asset(first.src!)} width={first.w} height={first.h} alt="" loading="lazy" decoding="async" />
+    </div>
+    <button class="stream__sound" type="button" data-stream-sound hidden>
+      <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true">
+        <path class="stream__speaker" d="M4 9.5v5h3.5L12 18.5v-13L7.5 9.5z" />
+        <path class="stream__waves" d="M15 9a4 4 0 0 1 0 6M17.5 6.5a7.5 7.5 0 0 1 0 11" />
+        <path class="stream__cross" d="M15.5 9.5l5 5M20.5 9.5l-5 5" />
+      </svg>
+      <span data-stream-sound-label>{t.streamSoundOn}</span>
+    </button>
   </div>
 
   <p class="stream__text" data-stream-text>{first.text}</p>
@@ -37,7 +47,6 @@ const first = posts.find((p) => p.kind === 'image')!;
 
   <div class="stream__controls only-js">
     <button class="stream__button" type="button" data-stream-toggle aria-pressed="false">{t.streamPause}</button>
-    <button class="stream__button" type="button" data-stream-sound aria-pressed="false" hidden>{t.streamSoundOn}</button>
     <button class="stream__button stream__button--next" type="button" data-stream-next>{t.streamNext}<span aria-hidden="true">→</span></button>
   </div>
 </section>
@@ -82,15 +91,95 @@ const first = posts.find((p) => p.kind === 'image')!;
     color: var(--color-text);
   }
 
+  .stream__screen {
+    position: relative;
+    margin-inline: calc(var(--gutter) * -1);
+  }
+
   /* Постоянная сцена: вертикальные и горизонтальные посты не двигают страницу. */
   .stream__stage {
     position: relative;
     display: grid;
     place-items: center;
     aspect-ratio: 1;
-    margin-inline: calc(var(--gutter) * -1);
     overflow: hidden;
     background: var(--color-press);
+  }
+
+  .stream__stage :global(video) {
+    cursor: pointer;
+  }
+
+  /* Кнопка звука на самом кадре, там же, где её ищут в сторис и Reels.
+     Пока звук выключен, рядом со значком написано, что делать. Верхний угол не спорит с панелью видео. */
+  .stream__sound {
+    position: absolute;
+    top: var(--space-1);
+    right: var(--space-1);
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4em;
+    min-width: var(--tap);
+    min-height: var(--tap);
+    padding: 0 0.85rem 0 0.7rem;
+    background: color-mix(in srgb, var(--color-bg) 72%, transparent);
+    border: 1px solid color-mix(in srgb, var(--color-text) 22%, transparent);
+    border-radius: 999px;
+    color: var(--color-text);
+    font: inherit;
+    font-size: var(--text-meta);
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+    transition: background var(--duration) ease;
+  }
+
+  .stream__sound:hover {
+    background: var(--color-bg);
+  }
+
+  .stream__sound[hidden] {
+    display: none;
+  }
+
+  .stream__sound svg {
+    flex: none;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.8;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  .stream__speaker {
+    fill: currentColor;
+  }
+
+  .stream__waves {
+    display: none;
+  }
+
+  /* Звук включён: остаётся только значок, красный как акцент сайта. */
+  .stream__sound[data-on] {
+    justify-content: center;
+    padding: 0;
+    color: var(--color-accent);
+  }
+
+  .stream__sound[data-on] .stream__waves {
+    display: block;
+  }
+
+  .stream__sound[data-on] .stream__cross {
+    display: none;
+  }
+
+  .stream__sound[data-on] span {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
   }
 
   .stream__stage :global(img),
@@ -183,7 +272,7 @@ const first = posts.find((p) => p.kind === 'image')!;
   }
 
   @media (min-width: 48rem) {
-    .stream__stage {
+    .stream__screen {
       max-width: 30rem;
       margin-inline: 0;
     }

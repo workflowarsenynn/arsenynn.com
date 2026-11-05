@@ -244,6 +244,37 @@ test.describe('случайные посты «Бессмысленности»'
     expect(await page.evaluate(() => document.documentElement.scrollWidth - innerWidth)).toBeLessThanOrEqual(0);
   });
 
+  test('звук: кнопка на кадре и нажатие по кадру, выбор сохраняется на следующем видео', async ({ page }) => {
+    await page.setViewportSize({ width: 390, height: 844 });
+    await page.goto('/');
+    const stage = page.locator(`${block} [data-stream-stage]`);
+    await stage.scrollIntoViewIfNeeded();
+    await expect(stage.locator('> *')).toHaveCount(1);
+    const toVideo = async () => {
+      for (let i = 0; i < 40 && !(await stage.locator('video').count()); i += 1) await page.locator(`${block} [data-stream-next]`).click();
+      await expect(stage.locator('video')).toHaveCount(1);
+    };
+    await toVideo();
+    const sound = page.locator(`${block} [data-stream-sound]`);
+    const muted = () => stage.locator('video').evaluate((v: HTMLVideoElement) => v.muted);
+    await expect(sound).toBeVisible();
+    await expect(sound).toContainText('Включить звук');
+    const box = (await sound.boundingBox())!;
+    const frame = (await stage.boundingBox())!;
+    expect(box.height).toBeGreaterThanOrEqual(44);
+    expect(box.x + box.width).toBeLessThanOrEqual(frame.x + frame.width);
+    expect(box.y).toBeGreaterThanOrEqual(frame.y);
+    await sound.click();
+    expect(await muted()).toBe(false);
+    await expect(sound).toHaveAttribute('data-on');
+    await page.locator(`${block} [data-stream-next]`).click();
+    await toVideo();
+    await expect.poll(muted).toBe(false);
+    await stage.locator('video').click();
+    expect(await muted()).toBe(true);
+    await expect(sound).not.toHaveAttribute('data-on');
+  });
+
   test('при reduced motion смена не запускается сама', async ({ page }) => {
     await page.emulateMedia({ reducedMotion: 'reduce' });
     await page.goto('/');
