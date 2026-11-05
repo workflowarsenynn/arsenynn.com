@@ -1,5 +1,5 @@
 # Implementation Plan
-LastUpdated: 2026-11-05 11:00 MSK
+LastUpdated: 2026-11-05 15:20 MSK
 
 ## Todoist Sync
 - Sync: manual
@@ -95,7 +95,7 @@ LastUpdated: 2026-11-05 11:00 MSK
 - [ ] Проверить на iPhone и из РФ-сети, включая плеер глав и автозапуск
 - [ ] Если YouTube из РФ работает плохо: решить про Kinescope или Mux для глав
 - [ ] Шрифты первого экрана: 125 KB при бюджете advisory 120 KB
-- [ ] Владелец: загрузить на Google Drive 9 видео annFlow (посты 89, 100, 102, 108, 147, 180, 183, 184, 189) и аудио из поста 83, Telegram не отдаёт их браузеру
+- [ ] Владелец: загрузить на Google Drive оставшиеся 6 видео annFlow (посты 102, 147, 180, 183, 184, 189) и аудио из поста 83, Telegram не отдаёт их браузеру
 - [ ] Встроить видео annFlow с Google Drive: сжать, положить в `public/media/annflow/`, прописать в `videos` в `channel.json`
 - [ ] Следующий мир по тому же образцу: выбрать проект, advisory советует @arsenynn
 
