@@ -40,6 +40,8 @@ const projects = defineCollection({
           primary: z.boolean().optional(),
         }),
       ),
+      /** Страница всех проектов. Если задана, contents на главной идут раскрытой лентой. */
+      contentsAll: z.string().startsWith('/').optional(),
       /** Оглавление канала: проекты со ссылками на первые посты (пока только annFlow). */
       contents: z
         .array(
@@ -127,7 +129,7 @@ const annflow = defineCollection({
       media: z
         .array(
           z.object({
-            type: z.enum(['image', 'video', 'audio']),
+            type: z.enum(['image', 'video']),
             /** Картинка или постер видео. */
             src: image().optional(),
             /** Файл видео в public/. Без него постер ведёт в Telegram. */

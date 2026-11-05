@@ -1,5 +1,5 @@
 ---
-// Картинки, видео и аудио заметки. Видео без файла ведёт в Telegram: большие файлы канал наружу не отдаёт.
+// Картинки и видео заметки. Видео без файла ведёт в Telegram: большие файлы канал наружу не отдаёт.
 import { Image } from 'astro:assets';
 import { asset } from '../data/asset';
 import { telegramUrl, type Note } from '../lib/annflow';
@@ -28,7 +28,7 @@ const caption = images.find((m) => m.caption)?.caption;
       </video>
       {m.caption && <figcaption>{m.caption}</figcaption>}
     </figure>
-  ) : m.type === 'video' ? (
+  ) : (
     <figure class="note-media">
       <a class="note-video" href={telegramUrl(m.post)} target="_blank" rel="noopener">
         {m.src && <Image src={m.src} alt="" widths={widths} sizes={sizes} loading="lazy" decoding="async" />}
@@ -40,12 +40,6 @@ const caption = images.find((m) => m.caption)?.caption;
       </a>
       {m.caption && <figcaption>{m.caption}</figcaption>}
     </figure>
-  ) : (
-    <p class="note-audio">
-      <a class="action action--text" href={telegramUrl(m.post)} target="_blank" rel="noopener">
-        Аудио: {m.caption}<span class="action__arrow" aria-hidden="true">↗</span><span class="visually-hidden"> (откроется в новой вкладке)</span>
-      </a>
-    </p>
   )
 ))}
 
@@ -60,6 +54,11 @@ const caption = images.find((m) => m.caption)?.caption;
     width: 100%;
     height: auto;
     background: var(--color-press);
+  }
+
+  /* Вертикальная запись экрана не должна занимать несколько экранов. */
+  .note-media video {
+    max-height: 85svh;
   }
 
   /* Скриншоты нельзя обрезать: на телефоне идут в колонку, на широком экране по две. */
@@ -106,11 +105,6 @@ const caption = images.find((m) => m.caption)?.caption;
 
   .note-video__label svg {
     fill: currentColor;
-  }
-
-  .note-audio {
-    margin: var(--space-3) 0;
-    font-size: var(--text-meta);
   }
 
   @media (min-width: 48rem) {

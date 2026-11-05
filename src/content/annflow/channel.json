@@ -65,7 +65,13 @@
     "89": "/media/annflow/89.mp4",
     "94": "/media/annflow/94.mp4",
     "100": "/media/annflow/100.mp4",
-    "108": "/media/annflow/89.mp4"
+    "102": "/media/annflow/102.mp4",
+    "108": "/media/annflow/89.mp4",
+    "147": "/media/annflow/147.mp4",
+    "180": "/media/annflow/180.mp4",
+    "183": "/media/annflow/183.mp4",
+    "184": "/media/annflow/184.mp4",
+    "189": "/media/annflow/189.mp4"
   },
   "files": {
     "79": "caps_lock_to_hyper.json",

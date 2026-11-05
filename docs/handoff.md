@@ -1,5 +1,5 @@
 # Handoff
-LastUpdated: 2026-11-05 16:30 MSK
+LastUpdated: 2026-11-05 22:00 MSK
 
 Передача проекта следующему агенту. Прочитай целиком перед первой правкой. Дальше: `CLAUDE.md` → `AGENTS.md` → `docs/implementation_plan.md` → `docs/architecture.md` → `docs/decisions_log.md` (последние записи сверху).
 
@@ -21,7 +21,7 @@ LastUpdated: 2026-11-05 16:30 MSK
 5. Обновить доки (`docs/decisions_log.md` запись сверху, `architecture.md`, при необходимости `implementation_plan.md`, `LastUpdated`).
 6. Commit → push → PR в `main` через GitHub MCP → **дождаться зелёного workflow `Test`** на PR → merge.
 7. Проверить живой сайт (`curl` по маркеру из нового HTML, обычно 30–70 с после merge).
-8. Создать точку отката: ветка `rollback/phase-N` от `main` через `mcp__github__create_branch` (git-теги прокси сессии не пропускает). Последняя: `rollback/phase-29`.
+8. Создать точку отката: ветка `rollback/phase-N` от `main` через `mcp__github__create_branch` (git-теги прокси сессии не пропускает). Последняя: `rollback/phase-30`.
 9. Сообщить владельцу «опубликовано» только после проверки живого сайта. Он это проверяет.
 
 Откат: revert merge-коммита фазы отдельным PR (так уже откатывали светлую тему) или PR из нужной `rollback/phase-N`. Историю в `decisions_log.md` не удалять, а помечать `Status: reverted`.
@@ -35,7 +35,7 @@ LastUpdated: 2026-11-05 16:30 MSK
 | № | Проект | Знак/лого | Ссылки и раскрывашки |
 |---|---|---|---|
 | 01 | Party Protocol | маска | Telegram (главная), Website, About |
-| 02 | annFlow | логотип вместо названия | «Читать» (главная, `/annflow/`), Telegram, «Проекты» (7 серий, ведут на страницы сайта), About |
+| 02 | annFlow | логотип вместо названия | Telegram, лента «Проекты» (7 серий, вбок) со ссылкой «Все» на `/annflow/`, About |
 | 03 | Without Streaming | Ws | Listen, Telegram, About |
 | 04 | @arsenynn | NN; **название красное** (`accent`) | Telegram, «Часть I», «Часть II» («Вступление» с текстом, главы с кадрами открываются в плеере), About |
 | 05 | workflow@arsenynn | WW/NN | Telegram, «Проекты» (11 работ с кадрами, открываются в плеере), About. **Portfolio убрана владельцем** |
@@ -70,7 +70,7 @@ LastUpdated: 2026-11-05 16:30 MSK
 3. **Кадры для глав 0.2 и 1.0** @arsenynn: на YouTube их нет, сейчас заглушка с номером. Нужны видео или кадры от владельца.
 4. **Проверить переводы EN**, сделанные агентом (слоганы, About «Бессмысленности», Without Streaming, @arsenynn, annFlow, названия `titleEn` в оглавлении annFlow). Это оценка владельца: явных ошибок агент не нашёл, голос текста может судить только он.
 5. **Домен `arsenynn.quest` истекает 2026-11-15** (Porkbun, на нём Listen и Website Party Protocol). По whois на 2026-11-04 не продлён, сами поддомены отвечают 200. Владелец обещал продлить — напомнить и проверить. Голый `https://arsenynn.quest` не отвечает, сайт на него не ссылается.
-6. **Внутренние страницы:** annFlow сделан (`/annflow/`). 6 видео и аудио ждут файлов от владельца, список в `implementation_plan.md`. Файлы с Drive владельца скачиваются обычной ссылкой `drive.usercontent.google.com/download?id=<id>&export=download&confirm=t`, коннектор отдаёт base64 и для видео не годится. Следующий мир выбирает владелец, advisory советует `/arsenynn/`.
+6. **Внутренние страницы:** annFlow сделан (`/annflow/`). Все видео канала играют на сайте из `public/media/annflow/`. Новые ролики: файлы с Drive владельца скачиваются обычной ссылкой `drive.usercontent.google.com/download?id=<id>&export=download&confirm=t` (коннектор отдаёт base64 и для видео не годится), из Telegram через вход владельца в браузере приложения. Следующий мир выбирает владелец, advisory советует `/arsenynn/`.
 7. Ветка `docs/sync-live-status` (с Mac владельца) не смержена: один коммит, 66 коммитов позади `main`. Из нового в ней только запись журнала «Сайт в проде, документы отстали от факта», остальное устарело (Enforce HTTPS уже включён). Не трогать без владельца.
 8. Todoist из облачной сессии недоступен, из локальной работает `td`. Intake 2026-11-04 чистый, подзадач нет. Запись статуса только по запросу владельца.
 9. Шрифты первого экрана 125 KB при бюджете advisory 120 KB. Остальной бюджет выполнен, замер в `decisions_log.md` от 2026-11-04.
