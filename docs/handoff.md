@@ -1,5 +1,5 @@
 # Handoff
-LastUpdated: 2026-11-05 22:30 MSK
+LastUpdated: 2026-11-05 23:00 MSK
 
 Передача проекта следующему агенту. Прочитай целиком перед первой правкой. Дальше: `CLAUDE.md` → `AGENTS.md` → `docs/implementation_plan.md` → `docs/architecture.md` → `docs/decisions_log.md` (последние записи сверху).
 
@@ -16,7 +16,7 @@ LastUpdated: 2026-11-05 22:30 MSK
 
 1. Правки в ветке `claude/adoring-meitner-l33yf3` (перед началом `git fetch origin && git merge origin/main`).
 2. `npm run build` (включает `astro check`, должен быть «0 errors, 0 warnings»).
-3. Тесты: `npx astro preview --port 4321 &` затем `PW_CHROMIUM=/opt/pw-browsers/chromium-1243/chrome-linux64/chrome npx playwright test` (сейчас 47 тестов). Останавливать preview: `pkill -f "astro.mjs previe[w]"` — скобки нужны, иначе pkill убьёт собственную команду.
+3. Тесты: `npx astro preview --port 4321 &` затем `PW_CHROMIUM=/opt/pw-browsers/chromium-1243/chrome-linux64/chrome npx playwright test` (сейчас 51 тест). Останавливать preview: `pkill -f "astro.mjs previe[w]"` — скобки нужны, иначе pkill убьёт собственную команду.
 4. Визуальная проверка в Playwright на 390 и 1280/1440 px, отправить скриншоты владельцу.
 5. Обновить доки (`docs/decisions_log.md` запись сверху, `architecture.md`, при необходимости `implementation_plan.md`, `LastUpdated`).
 6. Commit → push → PR в `main` через GitHub MCP → **дождаться зелёного workflow `Test`** на PR → merge.
@@ -37,8 +37,8 @@ LastUpdated: 2026-11-05 22:30 MSK
 | 01 | Party Protocol | маска | Telegram (главная), Website, About |
 | 02 | annFlow | логотип вместо названия | Telegram, лента «Проекты» (7 серий, вбок) со ссылкой «Все» на `/annflow/`, About |
 | 03 | Without Streaming | Ws | Listen, Telegram, About |
-| 04 | @arsenynn | NN; **название красное** (`accent`) | Telegram, «Часть I», «Часть II» («Вступление» с текстом, главы с кадрами открываются в плеере), About |
-| 05 | workflow@arsenynn | WW/NN | Telegram, «Проекты» (11 работ с кадрами, открываются в плеере), About. **Portfolio убрана владельцем** |
+| 04 | @arsenynn | NN; **название красное** (`accent`) | Telegram, ленты «Часть I» и «Часть II» вбок («Вступление» с текстом, главы с кадрами открываются в плеере), About |
+| 05 | workflow@arsenynn | WW/NN | Telegram, лента «Проекты» (11 работ вбок, открываются в плеере), About. **Portfolio убрана владельцем** |
 | 06 | Бессмысленность и скоротечность | ann в кепке, круг | Telegram (группа), About |
 | 07 | Travel Log | — | Coming soon |
 | — | Work / Collaboration | — | Portfolio (хаб), IT / AI, Sales / Events, Video production — **«скоро», без ссылки** |
@@ -61,7 +61,7 @@ LastUpdated: 2026-11-05 22:30 MSK
 - `assets/logos/README.md` — инвентарь исходников и что где используется. Оригиналы владельца — Google Drive `assest/logos.zip` (см. ниже, как скачать).
 - `docs/Advisory/deep_research_and_implementation_direction.md` — направление развития (The Moving Index). Владелец просит «делать по advisory».
 - `docs/references/youtube-arsenynn-map.txt` — соответствие постов @arsenynn и видео YouTube.
-- `tests/site.spec.ts` — 47 тестов (ширины 320–1440, ссылки, раскрывашки, ленивые кадры, иконки, плеер, без JS, reduced motion, 404, axe, EN, порядок, оглавления, вступление, Work).
+- `tests/site.spec.ts` — 51 тест (ширины 320–1440, ссылки, раскрывашки, ленивые кадры, иконки, плеер, без JS, reduced motion, 404, axe, EN, порядок, оглавления, вступление, Work).
 
 ## 5. Открытые задачи
 

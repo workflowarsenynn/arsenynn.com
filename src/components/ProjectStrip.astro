@@ -1,30 +1,110 @@
 ---
-// Раскрытые проекты на главной: лента с прокруткой вбок, новые слева.
-// Следующая карточка выглядывает из-за края, так видно, что лента идёт дальше.
-import type { Project } from '../data/types';
+// Лента на главной: карточки с прокруткой вбок. Следующая выглядывает из-за края,
+// так видно, что лента идёт дальше. Главы и работы открываются в плеере.
 import { toLocale, ui } from '../lib/i18n';
 import { asset } from '../data/asset';
 
-type Props = { project: Project };
-const { project } = Astro.props;
-const items = project.contents ?? [];
+export type StripItem = {
+  title: string;
+  note?: string;
+  thumb?: string;
+  /** Страница на сайте, важнее url. */
+  path?: string;
+  url: string;
+  /** Номер главы или год. */
+  num?: string;
+  duration?: string;
+  youtube?: string;
+  accent?: boolean;
+};
+
+type Props = {
+  id: string;
+  label: string;
+  /** Для скринридера: чья это лента. */
+  owner: string;
+  items: StripItem[];
+  /** Страница со всем списком. */
+  all?: string;
+  /** Подпись в плеере. */
+  part?: string;
+  introId?: string;
+  introText?: string[];
+  introUrl?: string;
+};
+const { id, label, owner, items, all, part, introId, introText, introUrl } = Astro.props;
 const t = ui[toLocale(Astro.currentLocale)];
-const headingId = `strip-${project.id}`;
+const headingId = `${id}-label`;
 ---
-<section class="strip" aria-labelledby={headingId}>
+<section class="strip" id={id} aria-labelledby={headingId}>
   <div class="strip__head">
-    <h3 class="strip__label" id={headingId}>{t.contentsLabel} <span class="strip__count">{items.length}</span></h3>
-    <a class="strip__all" href={asset(project.contentsAll!)}>{t.allLabel}<span aria-hidden="true">→</span><span class="visually-hidden">: {project.title}</span></a>
+    <h3 class="strip__label" id={headingId}>{label} <span class="strip__count">{items.length}</span></h3>
+    {all && (
+      <a class="strip__side" href={asset(all)}>{t.allLabel}<span aria-hidden="true">→</span><span class="visually-hidden">: {owner}</span></a>
+    )}
+    {introText?.length ? (
+      <button class="strip__side strip__intro-toggle" type="button" aria-expanded="true" aria-controls={introId} data-about-toggle>
+        {t.introLabel}<span class="strip__sign" aria-hidden="true" data-sign>−</span>
+        <span class="visually-hidden">: {label}</span>
+      </button>
+    ) : introUrl && (
+      <a class="strip__side" href={introUrl} target="_blank" rel="noopener">{t.introLabel}<span aria-hidden="true">↗</span><span class="visually-hidden">{t.newTab}</span></a>
+    )}
   </div>
-  <ul class="strip__track">
+
+  {introText?.length && (
+    <div class="disclosure" id={introId}>
+      <div class="disclosure__inner">
+        <div class="reading">
+          {introText.map((para) => <p>{para}</p>)}
+          {introUrl && (
+            <a class="action action--text reading__source" href={introUrl} target="_blank" rel="noopener">
+              {t.readInTelegram}<span class="action__arrow" aria-hidden="true">↗</span><span class="visually-hidden">{t.newTab}</span>
+            </a>
+          )}
+        </div>
+      </div>
+    </div>
+  )}
+
+  <ul class="strip__track" data-part={part}>
     {items.map((item) => (
       <li class="strip__item">
-        <a class="strip__card" href={asset(item.path!)}>
+        <a
+          class:list={['strip__card', 'chapter', { 'chapter--accent': item.accent }]}
+          href={item.path ? asset(item.path) : item.url}
+          target={item.path ? undefined : '_blank'}
+          rel={item.path ? undefined : 'noopener'}
+          data-video={item.youtube}
+          aria-haspopup={item.youtube ? 'dialog' : undefined}
+        >
           <span class="strip__frame" aria-hidden="true">
-            {item.thumb && <img src={asset(item.thumb)} width="480" height="270" alt="" loading="lazy" decoding="async" />}
+            {item.thumb ? (
+              <img src={asset(item.thumb)} width="800" height="450" alt="" loading="lazy" decoding="async" />
+            ) : (
+              <span class="strip__frame-num">{item.num}</span>
+            )}
+            {item.youtube ? (
+              <>
+                <svg class="strip__mark only-js" viewBox="0 0 10 12" width="10" height="12"><path d="M0 0l10 6-10 6z" /></svg>
+                <span class="strip__mark only-nojs">↗</span>
+              </>
+            ) : !item.path && <span class="strip__mark">↗</span>}
           </span>
-          <span class="strip__title">{item.title}</span>
+          {item.num && (
+            <span class="strip__meta" aria-hidden="true">
+              <span class="chapter__num">{item.num}</span>
+              {item.duration && <span class="chapter__time">{item.duration}</span>}
+            </span>
+          )}
+          <span class="chapter__title">{item.title}</span>
           {item.note && <span class="strip__note">{item.note}</span>}
+          {item.youtube ? (
+            <>
+              <span class="visually-hidden only-js">{`${item.num ?? ''}${t.playVideo}`}</span>
+              <span class="visually-hidden only-nojs">{`${item.num ?? ''}${t.newTab}`}</span>
+            </>
+          ) : !item.path && <span class="visually-hidden">{`${item.num ?? ''}${t.newTab}`}</span>}
         </a>
       </li>
     ))}
@@ -56,12 +136,12 @@ const headingId = `strip-${project.id}`;
     font-variant-numeric: tabular-nums;
   }
 
-  .strip__all {
+  .strip__side {
+    display: inline-flex;
+    align-items: center;
     justify-content: flex-end;
     gap: 0.3em;
     min-width: var(--tap);
-    display: inline-flex;
-    align-items: center;
     min-height: var(--tap);
     color: var(--color-muted);
     font-size: var(--text-meta);
@@ -69,12 +149,28 @@ const headingId = `strip-${project.id}`;
     transition: color var(--duration) ease;
   }
 
-  .strip__all:hover {
+  .strip__side:hover {
     color: var(--color-text);
+  }
+
+  .strip__intro-toggle {
+    padding: 0;
+    background: none;
+    border: 0;
+    font-family: inherit;
+    cursor: pointer;
+  }
+
+  .strip__sign {
+    display: inline-block;
+    width: 1em;
+    text-align: center;
+    font-size: 1.1em;
   }
 
   /* Лента доходит до края экрана: карточка обрезается краем, а не полем страницы. */
   .strip__track {
+    position: relative; /* скрытые подписи не должны расширять страницу */
     display: flex;
     gap: var(--space-2);
     margin: 0 calc(var(--gutter) * -1);
@@ -103,7 +199,9 @@ const headingId = `strip-${project.id}`;
   }
 
   .strip__frame {
-    display: block;
+    position: relative;
+    display: grid;
+    place-items: center;
     aspect-ratio: 16 / 9;
     margin-bottom: 0.4rem;
     overflow: hidden;
@@ -123,15 +221,75 @@ const headingId = `strip-${project.id}`;
     opacity: 0.8;
   }
 
-  .strip__title {
+  .strip__frame-num {
+    color: var(--color-muted);
+    font-family: var(--font-display);
+    font-size: var(--text-lead);
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* Значок на кадре: тень держит его видимым на светлых обложках. */
+  .strip__mark {
+    position: absolute;
+    left: 0.6rem;
+    bottom: 0.5rem;
+    color: #fff;
+    fill: currentColor;
+    filter: drop-shadow(0 1px 3px rgb(0 0 0 / 0.8));
+  }
+
+  /* Номер слева, время справа. */
+  .strip__meta {
+    display: flex;
+    justify-content: space-between;
+    gap: var(--space-2);
+    color: var(--color-muted);
+    font-size: var(--text-meta);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .chapter__title {
     font-family: var(--font-display);
     line-height: 1.25;
+  }
+
+  /* Хиты: красное название. */
+  .chapter--accent .chapter__title {
+    color: var(--color-accent);
   }
 
   .strip__note {
     color: var(--color-muted);
     font-size: var(--text-meta);
     line-height: 1.4;
+  }
+
+  /* Текст вступления: advisory, long reading — Source Serif 4, мера ~62ch, 18/19 px, 1.6. */
+  .reading {
+    max-width: 62ch;
+    padding: var(--space-2) 0 var(--space-3);
+    font-family: var(--font-display);
+    font-size: var(--text-body);
+    line-height: 1.62;
+    color: var(--color-text);
+    font-feature-settings: 'kern', 'liga';
+    hanging-punctuation: first;
+    text-wrap: pretty;
+  }
+
+  .reading p + p {
+    margin-top: 1em;
+  }
+
+  .reading p:first-child::first-letter {
+    color: var(--color-accent);
+  }
+
+  .reading__source {
+    margin-top: var(--space-3);
+    font-family: var(--font-ui);
+    font-size: var(--text-meta);
+    color: var(--color-muted);
   }
 
   /* Мышью вбок не потянуть, поэтому там лента показывает тонкую полосу прокрутки. */
