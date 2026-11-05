@@ -21,7 +21,7 @@ for (const [width, height] of viewports) {
           if (hasText && el.getBoundingClientRect().width && parseFloat(getComputedStyle(el).fontSize) < 14) out.small.push(el.tagName);
         }
         for (const el of document.querySelectorAll('a, button')) {
-          if (el.closest('dialog:not([open])')) continue;
+          if (el.closest('dialog:not([open]), [hidden]')) continue;
           const b = el.getBoundingClientRect();
           if (b.width < 44 || b.height < 44) out.tiny.push(`${el.textContent!.trim()} ${Math.round(b.width)}x${Math.round(b.height)}`);
         }
@@ -205,6 +205,60 @@ test('иконки: ссылки с версией ведут на сущест�
   const ico = await request.get('/favicon.ico');
   expect(ico.status()).toBe(200);
   expect([...(await ico.body()).subarray(0, 4)]).toEqual([0, 0, 1, 0]);
+});
+
+test.describe('случайные посты «Бессмысленности»', () => {
+  const block = '#bessmyslennost .stream';
+
+  test('список грузится только у блока, все файлы из списка на месте', async ({ page, request }) => {
+    const calls: string[] = [];
+    page.on('request', (r) => { if (/\/stream\/|\/media\/bis\//.test(r.url())) calls.push(r.url()); });
+    await page.goto('/', { waitUntil: 'networkidle' });
+    expect(calls).toEqual([]);
+    const list = await (await request.get('/stream/bessmislennost.json')).json();
+    expect(list).toHaveLength(157);
+    for (const p of list.filter((_: unknown, i: number) => i % 10 === 0)) {
+      if (p.src) expect((await request.head(p.src)).status()).toBe(200);
+      if (p.poster) expect((await request.head(p.poster)).status()).toBe(200);
+      expect(p.text.includes('#')).toBe(false);
+    }
+  });
+
+  test('посты идут в случайном порядке и не повторяются, ссылка меняется, страница не едет', async ({ page }) => {
+    await page.setViewportSize({ width: 390, height: 844 });
+    await page.goto('/');
+    await page.locator(`${block} [data-stream-stage]`).scrollIntoViewIfNeeded();
+    const link = page.locator(`${block} [data-stream-link]`);
+    await expect(page.locator(`${block} [data-stream-stage] > *`)).toHaveCount(1);
+    await page.locator(`${block} [data-stream-toggle]`).click();
+    await expect(page.locator(`${block} [data-stream-toggle]`)).toHaveAttribute('aria-pressed', 'true');
+    const seen = new Set<string>();
+    const stage = await page.locator(`${block} [data-stream-stage]`).boundingBox();
+    for (let i = 0; i < 12; i += 1) {
+      seen.add((await link.getAttribute('href'))!);
+      await page.locator(`${block} [data-stream-next]`).click();
+    }
+    expect(seen.size).toBe(12);
+    const after = await page.locator(`${block} [data-stream-stage]`).boundingBox();
+    expect(after!.height).toBe(stage!.height);
+    expect(await page.evaluate(() => document.documentElement.scrollWidth - innerWidth)).toBeLessThanOrEqual(0);
+  });
+
+  test('при reduced motion смена не запускается сама', async ({ page }) => {
+    await page.emulateMedia({ reducedMotion: 'reduce' });
+    await page.goto('/');
+    await page.locator(`${block} [data-stream-stage]`).scrollIntoViewIfNeeded();
+    await expect(page.locator(`${block} [data-stream-toggle]`)).toHaveAttribute('aria-pressed', 'true');
+    const video = page.locator(`${block} video`);
+    if (await video.count()) expect(await video.evaluate((v: HTMLVideoElement) => v.paused)).toBe(true);
+  });
+
+  test('axe: блок без serious и critical нарушений', async ({ page }) => {
+    await page.goto('/');
+    await page.locator(`${block} [data-stream-stage]`).scrollIntoViewIfNeeded();
+    const { violations } = await new AxeBuilder({ page }).include(block).analyze();
+    expect(violations.filter((v) => ['serious', 'critical'].includes(v.impact ?? ''))).toEqual([]);
+  });
 });
 
 test.describe('плеер глав', () => {

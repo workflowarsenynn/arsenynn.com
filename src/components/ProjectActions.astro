@@ -2,6 +2,7 @@
 import type { Project } from '../data/types';
 import ActionLink from './ActionLink.astro';
 import ProjectStrip from './ProjectStrip.astro';
+import PostStream from './PostStream.astro';
 import { toLocale, ui } from '../lib/i18n';
 
 type Props = { project: Project };
@@ -40,6 +41,7 @@ const t = ui[locale];
       all={project.contentsAll}
     />
   )}
+  {project.stream && <PostStream source={project.stream} channel={project.links[0].url} />}
   {hasAbout && (
     <button
       class="action action--row project-actions__about"

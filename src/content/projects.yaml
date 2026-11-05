@@ -354,6 +354,7 @@
       url: https://t.me/bessmislennost
       type: telegram
       primary: true
+  stream: /stream/bessmislennost.json
   mark:
     src: /logos/bessmyslennost.webp
     width: 240
