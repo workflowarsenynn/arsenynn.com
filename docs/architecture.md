@@ -1,5 +1,5 @@
 # Architecture
-LastUpdated: 2026-11-04 23:45 MSK
+LastUpdated: 2026-11-05 16:30 MSK
 
 Статус: MVP реализован по этой архитектуре. Требования и их причины находятся в `docs/brief.md`, здесь только технические решения.
 
@@ -9,7 +9,7 @@ LastUpdated: 2026-11-04 23:45 MSK
 - TypeScript для данных, чтобы опечатка в проекте или ссылке ломала сборку, а не страницу.
 - Обычный CSS с design tokens. Без Tailwind, без UI-библиотек, без icon packs: стрелка `↗` это текст.
 - Шрифты (advisory phase 2): Source Serif 4 Variable для заголовков, hero-строки и литературного текста, Manrope Variable для интерфейса и текста. Оба OFL-1.1, с кириллицей, self-hosted через `@fontsource-variable/*`, только ось wght (без opsz): около 126 KB woff2 на первый просмотр с кириллицей и латиницей.
-- Node.js 20 или новее.
+- Node.js 22.23.4 или новее: этого требует Astro. Деплой и тесты берут версию из `.node-version`.
 
 ## Repository structure
 
