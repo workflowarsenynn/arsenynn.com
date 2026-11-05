@@ -22,6 +22,7 @@ if (root) {
   const link = q<HTMLAnchorElement>('link');
   const toggle = q<HTMLButtonElement>('toggle');
   const sound = q<HTMLButtonElement>('sound');
+  const soundLabel = q('sound-label');
   const next = q<HTMLButtonElement>('next');
   const { stream, base, channel, pause, play, soundOn, soundOff } = root.dataset;
   const saveData = (navigator as Navigator & { connection?: { saveData?: boolean } }).connection?.saveData;
@@ -34,6 +35,14 @@ if (root) {
   let muted = true;
   let timer = 0;
   let media: HTMLMediaElement | null = null;
+
+  // Один элемент на все ролики: iOS разрешает звук тому видео, которое включили нажатием.
+  const video = document.createElement('video');
+  video.playsInline = true;
+  video.muted = true;
+  video.preload = 'metadata';
+  video.addEventListener('ended', () => advance());
+  video.addEventListener('error', () => { if (media === video) advance(); });
 
   const url = (path: string) => `${base}${path.replace(/^\//, '')}`;
 
@@ -54,11 +63,13 @@ if (root) {
   // Видео идёт до конца, картинка и текст держатся несколько секунд.
   function resume() {
     clearTimeout(timer);
-    if (media instanceof HTMLVideoElement && !paused && visible) {
-      media.muted = muted;
-      media.play().catch(() => {
-        if (media) media.muted = true;
-        media?.play().catch(hold);
+    if (media === video && !paused && visible) {
+      video.muted = muted;
+      video.play().catch((error) => {
+        if (error.name !== 'NotAllowedError') return;
+        if (muted) { hold(); return; }
+        setMuted(true);
+        video.play().catch(hold);
       });
     } else {
       hold();
@@ -67,7 +78,20 @@ if (root) {
 
   function halt() {
     clearTimeout(timer);
-    if (media instanceof HTMLVideoElement) media.pause();
+    if (media === video) video.pause();
+  }
+
+  function setMuted(value: boolean) {
+    muted = value;
+    video.muted = muted;
+    soundLabel.textContent = muted ? soundOn! : soundOff!;
+    sound.toggleAttribute('data-on', !muted);
+  }
+
+  // Нажатие включает звук и, если браузер не дал видео стартовать само, запускает его.
+  function toggleSound() {
+    setMuted(!muted);
+    if (media === video && video.paused && !paused) resume();
   }
 
   function show(post: Post) {
@@ -75,14 +99,9 @@ if (root) {
     media = null;
     let el: HTMLElement;
     if (post.kind === 'video') {
-      const video = document.createElement('video');
       video.src = url(post.src!);
       video.poster = url(post.poster!);
-      video.playsInline = true;
-      video.muted = true;
-      video.preload = 'metadata';
-      video.addEventListener('ended', advance);
-      video.addEventListener('error', advance);
+      video.controls = paused;
       media = video;
       el = video;
     } else if (post.kind === 'audio') {
@@ -110,7 +129,6 @@ if (root) {
     date.textContent = post.date;
     link.href = `${channel}/${post.post}`;
     sound.hidden = post.kind !== 'video';
-    if (media instanceof HTMLVideoElement && paused) media.controls = true;
     resume();
     // Постер следующего поста заранее: смена без пустого кадра.
     const upcoming = queue.at(-1);
@@ -127,19 +145,16 @@ if (root) {
     paused = value;
     toggle.textContent = paused ? play! : pause!;
     toggle.setAttribute('aria-pressed', String(paused));
-    if (media instanceof HTMLVideoElement) media.controls = paused;
+    video.controls = paused;
     if (paused) halt();
     else resume();
   }
 
   toggle.addEventListener('click', () => setPaused(!paused));
   next.addEventListener('click', advance);
-  sound.addEventListener('click', () => {
-    muted = !muted;
-    sound.textContent = muted ? soundOn! : soundOff!;
-    sound.setAttribute('aria-pressed', String(!muted));
-    if (media instanceof HTMLVideoElement) media.muted = muted;
-  });
+  sound.addEventListener('click', toggleSound);
+  // Нажатие по самому кадру тоже включает звук, как в сторис. На паузе кадром управляет панель видео.
+  stage.addEventListener('click', () => { if (media === video && !paused) toggleSound(); });
   document.addEventListener('visibilitychange', () => {
     if (document.hidden) halt();
     else if (visible) resume();
