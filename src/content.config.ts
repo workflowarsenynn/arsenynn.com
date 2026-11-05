@@ -40,6 +40,8 @@ const projects = defineCollection({
           primary: z.boolean().optional(),
         }),
       ),
+      /** Лента случайных постов канала: адрес списка на сайте. */
+      stream: z.string().startsWith('/').optional(),
       /** Страница всех проектов. Если задана, contents на главной идут раскрытой лентой. */
       contentsAll: z.string().startsWith('/').optional(),
       /** Оглавление канала: проекты со ссылками на первые посты (пока только annFlow). */

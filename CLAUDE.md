@@ -1,5 +1,5 @@
 # CLAUDE.md
-LastUpdated: 2026-11-05 16:30 MSK
+LastUpdated: 2026-11-06 00:00 MSK
 
 ## Project
 Личный сайт arsenynn.com: mobile-first индекс семи проектов @arsenynn для людей, открывающих ссылку с телефона. У annFlow есть свой мир: весь канал на сайте.
@@ -17,6 +17,7 @@ MVP собран, структура в `docs/architecture.md`.
 - `src/content/projects.yaml` — проекты: тексты, теги, ссылки, логотипы (Content Collection, схема в `src/content.config.ts`)
 - `src/data/site.ts` — hero, header, блок Work, footer, SEO
 - `src/content/annflow/` — заметки канала annFlow, картинки, серии (`channel.json`)
+- `src/content/stream/` — случайные посты на главной, файлы в `public/media/bis/`
 - `src/components/`, `src/styles/` — разметка и design tokens
 
 ## Commands
@@ -31,7 +32,7 @@ MVP собран, структура в `docs/architecture.md`.
 ## Code style
 - Контент и URL только в `src/content/` и `src/data/site.ts`, никогда в компонентах.
 - Цвета и отступы только через токены.
-- Минимум JavaScript: два маленьких скрипта, About и плеер глав, без `client:*`.
+- Минимум JavaScript: три маленьких скрипта, About, плеер глав и случайные посты, без `client:*`.
 - Стили сначала для телефона, расширение через `min-width`.
 
 ## Testing
