@@ -1,5 +1,5 @@
 # Handoff
-LastUpdated: 2026-11-05 15:20 MSK
+LastUpdated: 2026-11-05 16:00 MSK
 
 Передача проекта следующему агенту. Прочитай целиком перед первой правкой. Дальше: `CLAUDE.md` → `AGENTS.md` → `docs/implementation_plan.md` → `docs/architecture.md` → `docs/decisions_log.md` (последние записи сверху).
 
@@ -21,7 +21,7 @@ LastUpdated: 2026-11-05 15:20 MSK
 5. Обновить доки (`docs/decisions_log.md` запись сверху, `architecture.md`, при необходимости `implementation_plan.md`, `LastUpdated`).
 6. Commit → push → PR в `main` через GitHub MCP → **дождаться зелёного workflow `Test`** на PR → merge.
 7. Проверить живой сайт (`curl` по маркеру из нового HTML, обычно 30–70 с после merge).
-8. Создать точку отката: ветка `rollback/phase-N` от `main` через `mcp__github__create_branch` (git-теги прокси сессии не пропускает). Последняя: `rollback/phase-28`.
+8. Создать точку отката: ветка `rollback/phase-N` от `main` через `mcp__github__create_branch` (git-теги прокси сессии не пропускает). Последняя: `rollback/phase-29`.
 9. Сообщить владельцу «опубликовано» только после проверки живого сайта. Он это проверяет.
 
 Откат: revert merge-коммита фазы отдельным PR (так уже откатывали светлую тему) или PR из нужной `rollback/phase-N`. Историю в `decisions_log.md` не удалять, а помечать `Status: reverted`.
@@ -89,6 +89,8 @@ LastUpdated: 2026-11-05 15:20 MSK
 - Тексты от владельца вставлять дословно; служебные хвосты Telegram («|», «t.me/arsenynn 🎶») убирать.
 
 ## 7. Подводные камни этой среды
+
+- Деплой может упасть на `Run npm run build` с ошибкой `Node.js v22.23.3 is not supported by Astro`: разные раннеры GitHub держат в кэше разные 22.x. Код ни при чём, помогает `gh run rerun <id> --failed` (случай PR 36).
 
 - **Картинки, вставленные в сообщение,** до сессии файлом часто не доходят (кроме тех, что сохранились в `…/images/`). Файлы через «@» доходят в `/root/.claude/uploads/…`. Путь на Mac/iCloud недоступен.
 - **Google Drive по ссылке-шаре:** большие файлы качать напрямую `curl -L "https://drive.usercontent.google.com/download?id=<ID>&export=download&confirm=t"`, а не через MCP (base64). Находить ID через `mcp__Google_Drive__search_files` с `parentId`.
