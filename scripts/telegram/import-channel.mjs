@@ -208,7 +208,6 @@ for (const series of map.series) {
         media.push({ type: 'video', src: v.poster ? await download(v.poster, `${post.id}-video-${i + 1}.jpg`) : undefined, file: map.videos?.[post.id], duration: v.duration, caption: captionUsed ? undefined : caption, source: post.id });
         captionUsed = true;
       }
-      if (post.audio) media.push({ type: 'audio', caption: post.audio, source: post.id });
       if (post !== head && post.md && !captionUsed) body += `\n\n${post.md}`;
     }
 

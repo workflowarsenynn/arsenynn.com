@@ -418,14 +418,11 @@
     - "Архитектура, реализация и эксплуатация. От идеи до работающей системы."
   status: active
   links:
-    - label: Читать
-      labelEn: Read (in Russian)
-      url: /annflow/
-      type: site
-      primary: true
     - label: Telegram
       url: https://t.me/annsflow
       type: telegram
+      primary: true
+  contentsAll: /annflow/
   contents:
     - title: "LiveContext"
       note: "Как связать живой разговор с памятью проекта"

@@ -1,5 +1,5 @@
 # Architecture
-LastUpdated: 2026-11-05 16:30 MSK
+LastUpdated: 2026-11-05 21:30 MSK
 
 Статус: MVP реализован по этой архитектуре. Требования и их причины находятся в `docs/brief.md`, здесь только технические решения.
 
@@ -99,7 +99,7 @@ type Project = {
 - У annFlow и workflow@arsenynn строка «Проекты». У workflow — 11 работ канала (кадр, год слева и время справа, название), обложки из альбомов стоп-кадров перед каждым видео, работы открываются в плеере. У annFlow (EN Projects) раскрывает оглавление канала: проект, обложка серии из поста (оформленные заставки канала), подзаголовок, ссылка на первый пост. Поля строки: title, titleEn, meta, duration, note, noteEn, thumb, url, youtube, accent. Данные в `contents` проекта в `projects.yaml` (схема требует https), источник — пост канала «Навигация по проектам канала» и новые серии после него.
 - Панель — `.disclosure` в `global.css`, тот же скрипт `about.ts` (data-about-toggle): без JS открыта, с JS свёрнута. Закрытая панель держит `content-visibility: hidden`, иначе lazy-кадры внутри грузятся сразу.
 - Оглавление на /en/: `noteEn` и необязательное `titleEn`, имена собственные остаются как есть.
-- Мир annFlow: коллекция `annflow` (`src/content/annflow/notes/*.md`), серии в `channel.json`, страницы `src/pages/annflow/`, данные и подсчёты в `src/lib/annflow.ts`, текст заметки в классе `.prose` в `global.css`. На страницах чтения нет клиентского JS, оглавление в `<details>`. `Base.astro` принимает `title`, `description`, `ogTitle`, `ogType`. hreflang есть только у главной.
+- Мир annFlow: коллекция `annflow` (`src/content/annflow/notes/*.md`), серии в `channel.json`, страницы `src/pages/annflow/`, данные и подсчёты в `src/lib/annflow.ts`, текст заметки в классе `.prose` в `global.css`. На страницах чтения нет клиентского JS, оглавление заметки в `<details>`. Страница серии показывает оглавление и под ним все посты, тело поста общее: `NoteBody.astro`. Лента проектов на главной: `ProjectStrip.astro`, включается полем `contentsAll` в `projects.yaml`. `Base.astro` принимает `title`, `description`, `ogTitle`, `ogType`. hreflang есть только у главной.
 - Плеер: `VideoPlayer.astro` и `src/scripts/player.ts`. Строка главы или работы с `youtube` получает `data-video`, скрипт открывает `<dialog>` и создаёт iframe по нажатию. Без JS это ссылка на Telegram. Адреса провайдера в `site.video`.
 
 ## Languages

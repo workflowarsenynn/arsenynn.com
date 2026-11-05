@@ -91,25 +91,38 @@ test('порядок проектов задан владельцем, номе�
 
 test('кадры закрытых панелей не грузятся, пока панель не открыта', async ({ page }) => {
   const thumbs: string[] = [];
-  page.on('request', (r) => { if (r.url().includes('/thumbs/')) thumbs.push(r.url()); });
+  page.on('request', (r) => { if (r.url().includes('/thumbs/') && !r.url().includes('annflow-')) thumbs.push(r.url()); });
   await page.goto('/', { waitUntil: 'networkidle' });
   expect(thumbs).toEqual([]);
-  await page.locator('#annflow [aria-controls="contents-annflow"]').click();
+  await page.locator('#workflow [aria-controls="contents-workflow"]').click();
   await expect.poll(() => thumbs.length).toBeGreaterThan(0);
 });
 
-test('annFlow: кнопка «Проекты» раскрывает оглавление с обложками и ссылками на серии', async ({ page }) => {
+test('annFlow: проекты раскрыты лентой, следующая карточка выглядывает, «Все» ведёт в мир', async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
   await page.goto('/');
-  const button = page.locator('#annflow [aria-controls="contents-annflow"]');
-  const panel = page.locator('#contents-annflow');
-  await expect(button).toHaveAttribute('aria-expanded', 'false');
-  await expect(panel).toBeHidden();
-  await button.click();
-  await expect(panel).toBeVisible();
-  const links = panel.locator('a');
-  await expect(links).toHaveCount(7);
-  for (const link of await links.all()) await expect(link).toHaveAttribute('href', /^\/annflow\/projects\/[a-z-]+\/$/);
-  await expect(panel.locator('.chapter__frame img')).toHaveCount(7);
+  const section = page.locator('#annflow');
+  await expect(section.getByRole('link', { name: 'Читать', exact: true })).toHaveCount(0);
+  await expect(section.locator('[aria-controls="contents-annflow"]')).toHaveCount(0);
+  const cards = section.locator('.strip__card');
+  await expect(cards).toHaveCount(7);
+  for (const link of await cards.all()) await expect(link).toHaveAttribute('href', /^\/annflow\/projects\/[a-z-]+\/$/);
+  await expect(cards.first()).toContainText('LiveContext');
+  await expect(section.locator('.strip__count')).toHaveText('7');
+  const track = section.locator('.strip__track');
+  await track.scrollIntoViewIfNeeded();
+  const m = await track.evaluate((el) => ({
+    scrollable: el.scrollWidth > el.clientWidth,
+    second: el.children[1].getBoundingClientRect().left,
+    page: document.documentElement.scrollWidth - innerWidth,
+  }));
+  expect(m.scrollable).toBe(true);
+  expect(m.second).toBeLessThan(390);
+  expect(m.page).toBeLessThanOrEqual(0);
+  await track.evaluate((el) => { el.scrollLeft = el.scrollWidth; });
+  await expect(cards.last()).toBeInViewport();
+  await section.locator('.strip__all').click();
+  await expect(page).toHaveURL(/\/annflow\/$/);
 });
 
 test('workflow: без Portfolio, «Проекты» раскрывают 11 работ с кадрами', async ({ page }) => {
@@ -120,8 +133,8 @@ test('workflow: без Portfolio, «Проекты» раскрывают 11 р�
   await expect(links).toHaveCount(11);
   for (const link of await links.all()) await expect(link).toHaveAttribute('href', /^https:\/\/t\.me\/ww_arsenynn\/\d+$/);
   await expect(page.locator('#contents-workflow .chapter__frame img')).toHaveCount(11);
-  // всего два оглавления: annFlow и workflow
-  await expect(page.locator('[id^="contents-"]')).toHaveCount(2);
+  // панель оглавления одна: у annFlow вместо неё лента
+  await expect(page.locator('[id^="contents-"]')).toHaveCount(1);
 });
 
 test('@arsenynn: части раскрываются главами с кадрами, ссылки на Telegram и строка YouTube', async ({ page }) => {
@@ -175,7 +188,7 @@ test('английская версия: /en/, переключатель язы
 
 test('английская версия: служебные названия оглавления annFlow переведены', async ({ page }) => {
   await page.goto('/en/');
-  const titles = page.locator('#contents-annflow .contents__title');
+  const titles = page.locator('#annflow .strip__title');
   await expect(titles.filter({ hasText: 'MCP server' })).toHaveCount(1);
   await expect(titles.filter({ hasText: 'Auto-apply' })).toHaveCount(1);
 });
@@ -293,13 +306,34 @@ test.describe('плеер глав', () => {
 });
 
 test.describe('мир annFlow', () => {
-  test('главная ведёт в чтение, серии открываются на сайте', async ({ page }) => {
+  test('с главной проект открывается на сайте', async ({ page }) => {
     await page.goto('/');
-    const read = page.locator('#annflow a[href="/annflow/"]');
-    await expect(read).toHaveText(/Читать/);
-    await expect(read).not.toHaveAttribute('target');
-    await page.locator('#annflow [aria-controls="contents-annflow"]').click();
-    await expect(page.locator('#contents-annflow a[href^="/annflow/projects/"]')).toHaveCount(7);
+    const card = page.locator('#annflow .strip__card', { hasText: 'LiveContext' });
+    await expect(card).not.toHaveAttribute('target');
+    await card.click();
+    await expect(page).toHaveURL(/\/annflow\/projects\/live-context\/$/);
+  });
+
+  test('серия: посты идут сразу под оглавлением, оглавление ведёт к ним', async ({ page }) => {
+    await page.goto('/annflow/projects/voxbase/');
+    await expect(page.locator('.post')).toHaveCount(9);
+    await expect(page.locator('.post .prose').first()).not.toBeEmpty();
+    const toc = (await page.locator('.toc').boundingBox())!;
+    const post = (await page.locator('.post').first().boundingBox())!;
+    expect(post.y).toBeGreaterThanOrEqual(toc.y + toc.height);
+    await page.locator('.toc a').nth(3).click();
+    await expect(page).toHaveURL(/#note-\d+$/);
+    await expect(page.locator('.post').nth(3).locator('h2')).toBeInViewport();
+    await page.locator('.post').nth(3).locator('.post__up a').click();
+    await expect(page.locator('.toc')).toBeInViewport();
+  });
+
+  test('серия лёгкая: видео без предзагрузки, дальние картинки не грузятся сразу', async ({ page }) => {
+    const media: string[] = [];
+    page.on('request', (r) => { if (r.url().includes('/media/annflow/')) media.push(r.url()); });
+    await page.goto('/annflow/projects/without-streaming/', { waitUntil: 'networkidle' });
+    expect(media).toEqual([]);
+    for (const v of await page.locator('video').all()) await expect(v).toHaveAttribute('preload', 'none');
   });
 
   test('от серии до заметки и дальше по порядку', async ({ page }) => {
@@ -308,7 +342,7 @@ test.describe('мир annFlow', () => {
     await page.locator('.series-row', { hasText: 'VoxBase' }).click();
     await expect(page).toHaveURL(/\/annflow\/projects\/voxbase\/$/);
     await expect(page.locator('.toc li')).toHaveCount(9);
-    await page.getByRole('link', { name: 'Начать читать' }).click();
+    await page.locator('#note-155 h2 a').click();
     await expect(page).toHaveURL(/\/annflow\/notes\/155\/$/);
     await expect(page.locator('.note__meta')).toContainText('1 из 9');
     await page.locator('.note__step--next').click();
@@ -372,7 +406,7 @@ test.describe('мир annFlow', () => {
   }
 
   test('axe: страницы annFlow без serious и critical нарушений', async ({ page }) => {
-    for (const path of ['/annflow/', '/annflow/projects/voxbase/', '/annflow/notes/146/']) {
+    for (const path of ['/annflow/', '/annflow/projects/voxbase/', '/annflow/projects/mac-automation/', '/annflow/notes/146/']) {
       await page.goto(path);
       const { violations } = await new AxeBuilder({ page }).analyze();
       expect(violations.filter((v) => ['serious', 'critical'].includes(v.impact ?? '')), path).toEqual([]);

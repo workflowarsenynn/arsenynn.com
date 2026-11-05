@@ -1,9 +1,10 @@
 ---
 import Base from '../../../layouts/Base.astro';
 import WorldBar from '../../../components/WorldBar.astro';
+import NoteBody from '../../../components/NoteBody.astro';
 import SiteFooter from '../../../components/SiteFooter.astro';
 import { asset } from '../../../data/asset';
-import { getSeries, minutesOf, plural, type Series } from '../../../lib/annflow';
+import { formatDate, getSeries, minutesOf, plural, type Series } from '../../../lib/annflow';
 
 export async function getStaticPaths() {
   const all = await getSeries();
@@ -15,7 +16,6 @@ export async function getStaticPaths() {
 
 type Props = { series: Series; next?: Series };
 const { series, next } = Astro.props;
-const first = series.notes[0];
 ---
 <Base title={`${series.title} — annFlow`} description={series.note}>
   <WorldBar crumbs={[{ label: 'annFlow', href: '/annflow/' }]} />
@@ -24,14 +24,13 @@ const first = series.notes[0];
       <h1>{series.title}</h1>
       <p class="series__note">{series.note}</p>
       <p class="series__meta">{series.notes.length} {plural(series.notes.length, 'заметка', 'заметки', 'заметок')} · {series.minutes} мин</p>
-      <a class="series__start" href={asset(`/annflow/notes/${first.id}/`)}>Начать читать <span aria-hidden="true">→</span></a>
     </header>
 
-    <h2 class="visually-hidden">Оглавление</h2>
+    <h2 class="visually-hidden" id="toc">Оглавление</h2>
     <ol class="toc">
       {series.notes.map((n, i) => (
         <li>
-          <a href={asset(`/annflow/notes/${n.id}/`)}>
+          <a href={`#note-${n.id}`}>
             <span class="toc__num" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
             <span class="toc__title">{n.data.title}</span>
             <span class="toc__time">{minutesOf(n)} мин</span>
@@ -39,6 +38,23 @@ const first = series.notes[0];
         </li>
       ))}
     </ol>
+
+    <div class="posts">
+      {series.notes.map((n, i) => (
+        <article class="post" id={`note-${n.id}`}>
+          <header class="post__head">
+            <p class="post__meta">
+              <span>{i + 1} из {series.notes.length}</span>
+              <span>{minutesOf(n)} мин</span>
+              <time datetime={n.data.publishedAt.toISOString()}>{formatDate(n.data.publishedAt)}</time>
+            </p>
+            <h2><a href={asset(`/annflow/notes/${n.id}/`)}>{n.data.title}</a></h2>
+          </header>
+          <NoteBody note={n} />
+          <p class="post__up"><a href="#toc">К оглавлению <span aria-hidden="true">↑</span></a></p>
+        </article>
+      ))}
+    </div>
 
     {next && (
       <p class="series__next">
@@ -84,16 +100,6 @@ const first = series.notes[0];
     font-variant-numeric: tabular-nums;
   }
 
-  .series__start {
-    display: inline-flex;
-    align-items: center;
-    gap: var(--space-1);
-    min-height: var(--tap);
-    margin-top: var(--space-2);
-    color: var(--color-accent);
-    text-decoration: none;
-  }
-
   .toc {
     margin: 0;
     padding: 0;
@@ -131,6 +137,67 @@ const first = series.notes[0];
     flex: 1;
     min-width: 0;
     line-height: 1.35;
+  }
+
+  #toc,
+  .post {
+    scroll-margin-top: var(--space-3);
+  }
+
+  .post {
+    max-width: 44rem;
+    margin-inline: auto;
+    padding-block: var(--space-4);
+    border-bottom: 1px solid var(--color-line);
+  }
+
+  .post__head {
+    margin-bottom: var(--space-2);
+  }
+
+  .post__meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0 var(--space-2);
+    margin: 0 0 var(--space-2);
+    color: var(--color-muted);
+    font-size: var(--text-meta);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .post h2 {
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: clamp(1.5rem, 1.25rem + 1.2vw, 2rem);
+    font-weight: 400;
+    line-height: 1.15;
+    text-wrap: balance;
+  }
+
+  .post h2 a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .post h2 a:hover {
+    color: var(--color-accent);
+  }
+
+  .post__up {
+    margin: var(--space-1) 0 0;
+    font-size: var(--text-meta);
+  }
+
+  .post__up a {
+    display: inline-flex;
+    align-items: center;
+    min-height: var(--tap);
+    color: var(--color-muted);
+    text-decoration: none;
+  }
+
+  .post__up a:hover {
+    color: var(--color-text);
   }
 
   .series__next {

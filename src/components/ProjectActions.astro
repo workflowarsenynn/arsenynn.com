@@ -1,6 +1,7 @@
 ---
 import type { Project } from '../data/types';
 import ActionLink from './ActionLink.astro';
+import ProjectStrip from './ProjectStrip.astro';
 import { toLocale, ui } from '../lib/i18n';
 import { asset } from '../data/asset';
 
@@ -105,7 +106,8 @@ const t = ui[locale];
       </div>
     </>
   ))}
-  {project.contents?.length && (
+  {project.contentsAll && <ProjectStrip project={project} />}
+  {!project.contentsAll && project.contents?.length && (
     <>
       <button
         class="action action--row project-actions__toggle"
