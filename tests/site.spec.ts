@@ -21,7 +21,7 @@ for (const [width, height] of viewports) {
           if (hasText && el.getBoundingClientRect().width && parseFloat(getComputedStyle(el).fontSize) < 14) out.small.push(el.tagName);
         }
         for (const el of document.querySelectorAll('a, button')) {
-          if (el.closest('dialog:not([open]), [hidden]')) continue;
+          if (el.closest('dialog:not([open]), [hidden]') || !el.getClientRects().length) continue;
           const b = el.getBoundingClientRect();
           if (b.width < 44 || b.height < 44) out.tiny.push(`${el.textContent!.trim()} ${Math.round(b.width)}x${Math.round(b.height)}`);
         }
@@ -236,7 +236,7 @@ test.describe('случайные посты «Бессмысленности»'
     const stage = await page.locator(`${block} [data-stream-stage]`).boundingBox();
     for (let i = 0; i < 12; i += 1) {
       seen.add((await link.getAttribute('href'))!);
-      await page.locator(`${block} [data-stream-next]`).click();
+      await page.locator(`${block} [data-stream-next]:visible`).click();
     }
     expect(seen.size).toBe(12);
     const after = await page.locator(`${block} [data-stream-stage]`).boundingBox();
@@ -263,7 +263,7 @@ test.describe('случайные посты «Бессмысленности»'
         expect(r.wide).toBeLessThanOrEqual(1);
         expect(r.fit).toBe('contain');
       }
-      await page.locator(`${block} [data-stream-next]`).click();
+      await page.locator(`${block} [data-stream-next]:visible`).click();
     }
   });
 
@@ -274,8 +274,8 @@ test.describe('случайные посты «Бессмысленности»'
     await stage.scrollIntoViewIfNeeded();
     await expect(stage.locator('> *')).toHaveCount(1);
     const link = page.locator(`${block} [data-stream-link]`);
-    await expect(page.locator(`${block} [data-stream-hint]`)).toBeVisible();
-    await expect(page.locator(`${block} [data-stream-prev]`)).toBeDisabled();
+    await expect(page.locator(`${block} [data-stream-prev]`).first()).toBeDisabled();
+    await expect(page.locator(`${block} [data-stream-count]`)).toHaveText("1 / 157");
     const first = await link.getAttribute('href');
     const box = (await stage.boundingBox())!;
     const y = box.y + box.height / 2;
@@ -299,14 +299,39 @@ test.describe('случайные посты «Бессмысленности»'
     await swipe(box.x + 320, box.x + 60);
     await expect(link).not.toHaveAttribute('href', first!);
     const second = await link.getAttribute('href');
-    await expect(page.locator(`${block} [data-stream-hint]`)).toBeHidden();
     await expect(page.locator(`${block} [data-stream-count]`)).toHaveText('2 / 157');
     await expect(stage.locator('> *')).toHaveCount(1);
     await swipe(box.x + 60, box.x + 320);
     await expect(link).toHaveAttribute('href', first!);
-    await page.locator(`${block} [data-stream-next]`).click();
+    await page.locator(`${block} [data-stream-next]:visible`).click();
     await expect(link).toHaveAttribute('href', second!);
     await expect(page.locator(`${block} [data-stream-sound]`)).not.toHaveAttribute('data-on');
+  });
+
+  test('компьютер: нет подсказки про свайп, стрелки на кадре листают', async ({ page }) => {
+    await page.setViewportSize({ width: 1440, height: 900 });
+    await page.goto('/');
+    await page.locator(`${block} [data-stream-stage]`).scrollIntoViewIfNeeded();
+    await expect(page.locator(`${block} [data-stream-count]`)).toHaveText('1 / 157');
+    await expect(page.locator(`${block} [data-stream-hint]`)).toBeHidden();
+    await expect(page.locator(`${block} .stream__side--prev`)).toBeHidden();
+    await page.locator(`${block} .stream__side--next`).click();
+    await expect(page.locator(`${block} [data-stream-count]`)).toHaveText('2 / 157');
+    await page.locator(`${block} .stream__side--prev`).click();
+    await expect(page.locator(`${block} [data-stream-count]`)).toHaveText('1 / 157');
+  });
+
+  test('телефон: подсказка про свайп видна и исчезает после листания, стрелок на кадре нет', async ({ browser }) => {
+    const context = await browser.newContext({ hasTouch: true, isMobile: true, viewport: { width: 390, height: 844 } });
+    const page = await context.newPage();
+    await page.goto('/');
+    await page.locator(`${block} [data-stream-stage]`).scrollIntoViewIfNeeded();
+    const hint = page.locator(`${block} [data-stream-hint]`);
+    await expect(hint).toBeVisible();
+    await expect(page.locator(`${block} .stream__side--next`)).toBeHidden();
+    await page.locator(`${block} [data-stream-next]:visible`).click();
+    await expect(hint).toBeHidden();
+    await context.close();
   });
 
   test('звук: кнопка на кадре и нажатие по кадру, выбор сохраняется на следующем видео', async ({ page }) => {
@@ -316,7 +341,7 @@ test.describe('случайные посты «Бессмысленности»'
     await stage.scrollIntoViewIfNeeded();
     await expect(stage.locator('> *')).toHaveCount(1);
     const toVideo = async () => {
-      for (let i = 0; i < 40 && !(await stage.locator('video').count()); i += 1) await page.locator(`${block} [data-stream-next]`).click();
+      for (let i = 0; i < 40 && !(await stage.locator('video').count()); i += 1) await page.locator(`${block} [data-stream-next]:visible`).click();
       await expect(stage.locator('video')).toHaveCount(1);
     };
     await toVideo();
@@ -332,7 +357,7 @@ test.describe('случайные посты «Бессмысленности»'
     await sound.click();
     expect(await muted()).toBe(false);
     await expect(sound).toHaveAttribute('data-on');
-    await page.locator(`${block} [data-stream-next]`).click();
+    await page.locator(`${block} [data-stream-next]:visible`).click();
     await toVideo();
     await expect.poll(muted).toBe(false);
     await stage.locator('video').click();
