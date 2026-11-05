@@ -101,7 +101,7 @@ const first = posts.find((p) => p.kind === 'image')!;
     position: relative;
     display: grid;
     place-items: center;
-    aspect-ratio: 1;
+    aspect-ratio: 4 / 5;
     overflow: hidden;
     background: var(--color-press);
   }
@@ -182,9 +182,12 @@ const first = posts.find((p) => p.kind === 'image')!;
     white-space: nowrap;
   }
 
+  /* Абсолютная привязка к сцене: в Safari height: 100% внутри aspect-ratio не работает,
+     и вертикальный кадр вырастал за сцену, а низ обрезался. */
   .stream__stage :global(img),
   .stream__stage :global(video) {
-    grid-area: 1 / 1;
+    position: absolute;
+    inset: 0;
     display: block;
     width: 100%;
     height: 100%;
@@ -273,7 +276,7 @@ const first = posts.find((p) => p.kind === 'image')!;
 
   @media (min-width: 48rem) {
     .stream__screen {
-      max-width: 30rem;
+      max-width: 28rem;
       margin-inline: 0;
     }
   }

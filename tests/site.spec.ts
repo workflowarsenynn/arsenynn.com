@@ -244,6 +244,29 @@ test.describe('случайные посты «Бессмысленности»'
     expect(await page.evaluate(() => document.documentElement.scrollWidth - innerWidth)).toBeLessThanOrEqual(0);
   });
 
+  test('кадр целиком внутри сцены: вертикальные посты не обрезаются', async ({ page }) => {
+    await page.setViewportSize({ width: 390, height: 844 });
+    await page.goto('/');
+    const stage = page.locator(`${block} [data-stream-stage]`);
+    await stage.scrollIntoViewIfNeeded();
+    await expect(stage.locator('> *')).toHaveCount(1);
+    await page.locator(`${block} [data-stream-toggle]`).click();
+    for (let i = 0; i < 15; i += 1) {
+      const r = await stage.evaluate((el) => {
+        const s = el.getBoundingClientRect();
+        const m = el.firstElementChild!;
+        const b = m.getBoundingClientRect();
+        return { over: b.height - s.height, wide: b.width - s.width, fit: getComputedStyle(m).objectFit, tag: m.tagName };
+      });
+      if (r.tag === 'IMG' || r.tag === 'VIDEO') {
+        expect(r.over).toBeLessThanOrEqual(1);
+        expect(r.wide).toBeLessThanOrEqual(1);
+        expect(r.fit).toBe('contain');
+      }
+      await page.locator(`${block} [data-stream-next]`).click();
+    }
+  });
+
   test('звук: кнопка на кадре и нажатие по кадру, выбор сохраняется на следующем видео', async ({ page }) => {
     await page.setViewportSize({ width: 390, height: 844 });
     await page.goto('/');
