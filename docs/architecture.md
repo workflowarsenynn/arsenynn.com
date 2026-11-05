@@ -1,5 +1,5 @@
 # Architecture
-LastUpdated: 2026-11-05 21:30 MSK
+LastUpdated: 2026-11-05 23:00 MSK
 
 Статус: MVP реализован по этой архитектуре. Требования и их причины находятся в `docs/brief.md`, здесь только технические решения.
 
@@ -86,20 +86,20 @@ type Project = {
 
 ## Parts and contents
 
-- У @arsenynn строки «Часть I» и «Часть II» раскрывают главы: вступление (текст части), затем видео строками `кадр 16:9 | номер слева и время справа над названием | ▶`, нажатие открывает плеер, без YouTube-ID остаётся ссылка на Telegram с ↗. Данные: `parts` в `projects.yaml` (label, labelEn, intro, chapters с thumb, youtube ID и accent). Кадры: `public/thumbs/arsenynn-<post>.webp` 288×162, выбраны из кадров YouTube (обложка и автокадры начала/середины/конца) по яркости, контрасту, цвету и резкости, цвет чуть приглушён. Без кадра — заглушка с номером главы. Соответствие постов и видео: `docs/references/youtube-arsenynn-map.txt`.
+- У @arsenynn «Часть I» и «Часть II» это ленты глав: вступление (текст части), затем видео строками `кадр 16:9 | номер слева и время справа над названием | ▶`, нажатие открывает плеер, без YouTube-ID остаётся ссылка на Telegram с ↗. Данные: `parts` в `projects.yaml` (label, labelEn, intro, chapters с thumb, youtube ID и accent). Кадры: `public/thumbs/arsenynn-<post>.webp` 288×162, выбраны из кадров YouTube (обложка и автокадры начала/середины/конца) по яркости, контрасту, цвету и резкости, цвет чуть приглушён. Без кадра — заглушка с номером главы. Соответствие постов и видео: `docs/references/youtube-arsenynn-map.txt`.
 - Правила: один уровень раскрытия, одна ссылка на строку (вложенные аккордеоны и двойные цели в строке не используются).
 - Кнопки частей и «Проекты» белые (`project-actions__toggle`), About серый.
 
 ## Intro reading
 
-- «Вступление» в частях @arsenynn раскрывает полный текст введения (`introText`, дословно из постов 5 и 28) блоком `.reading`: Source Serif 4, мера 62ch, 18/19 px, line-height 1.62, `text-wrap: pretty`, первая буква красным, внизу «Читать в Telegram». На /en/ текста нет перевода, поэтому строка «Introduction (RU)» ведёт в Telegram (advisory: без смешанного языка).
+- Кнопка «Вступление» в заголовке части раскрывает полный текст введения (`introText`, дословно из постов 5 и 28) блоком `.reading`: Source Serif 4, мера 62ch, 18/19 px, line-height 1.62, `text-wrap: pretty`, первая буква красным, внизу «Читать в Telegram». На /en/ текста нет перевода, поэтому строка «Introduction (RU)» ведёт в Telegram (advisory: без смешанного языка).
 
 ## annFlow and workflow contents
 
-- У annFlow и workflow@arsenynn строка «Проекты». У workflow — 11 работ канала (кадр, год слева и время справа, название), обложки из альбомов стоп-кадров перед каждым видео, работы открываются в плеере. У annFlow (EN Projects) раскрывает оглавление канала: проект, обложка серии из поста (оформленные заставки канала), подзаголовок, ссылка на первый пост. Поля строки: title, titleEn, meta, duration, note, noteEn, thumb, url, youtube, accent. Данные в `contents` проекта в `projects.yaml` (схема требует https), источник — пост канала «Навигация по проектам канала» и новые серии после него.
+- У annFlow и workflow@arsenynn лента «Проекты». У workflow — 11 работ канала (кадр, год слева и время справа, название), обложки из альбомов стоп-кадров перед каждым видео, работы открываются в плеере. У annFlow (EN Projects) раскрывает оглавление канала: проект, обложка серии из поста (оформленные заставки канала), подзаголовок, ссылка на первый пост. Поля строки: title, titleEn, meta, duration, note, noteEn, thumb, url, youtube, accent. Данные в `contents` проекта в `projects.yaml` (схема требует https), источник — пост канала «Навигация по проектам канала» и новые серии после него.
 - Панель — `.disclosure` в `global.css`, тот же скрипт `about.ts` (data-about-toggle): без JS открыта, с JS свёрнута. Закрытая панель держит `content-visibility: hidden`, иначе lazy-кадры внутри грузятся сразу.
 - Оглавление на /en/: `noteEn` и необязательное `titleEn`, имена собственные остаются как есть.
-- Мир annFlow: коллекция `annflow` (`src/content/annflow/notes/*.md`), серии в `channel.json`, страницы `src/pages/annflow/`, данные и подсчёты в `src/lib/annflow.ts`, текст заметки в классе `.prose` в `global.css`. На страницах чтения нет клиентского JS, оглавление заметки в `<details>`. Страница серии показывает оглавление и под ним все посты, тело поста общее: `NoteBody.astro`. Лента проектов на главной: `ProjectStrip.astro`, включается полем `contentsAll` в `projects.yaml`. `Base.astro` принимает `title`, `description`, `ogTitle`, `ogType`. hreflang есть только у главной.
+- Мир annFlow: коллекция `annflow` (`src/content/annflow/notes/*.md`), серии в `channel.json`, страницы `src/pages/annflow/`, данные и подсчёты в `src/lib/annflow.ts`, текст заметки в классе `.prose` в `global.css`. На страницах чтения нет клиентского JS, оглавление заметки в `<details>`. Страница серии показывает оглавление и под ним все посты, тело поста общее: `NoteBody.astro`. Ленты на главной: `ProjectStrip.astro` у всех `parts` и `contents`, поле `contentsAll` в `projects.yaml` добавляет ссылку «Все». Кадры в `public/thumbs/` 800×450. `Base.astro` принимает `title`, `description`, `ogTitle`, `ogType`. hreflang есть только у главной.
 - Плеер: `VideoPlayer.astro` и `src/scripts/player.ts`. Строка главы или работы с `youtube` получает `data-video`, скрипт открывает `<dialog>` и создаёт iframe по нажатию. Без JS это ссылка на Telegram. Адреса провайдера в `site.video`.
 
 ## Languages

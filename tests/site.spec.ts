@@ -89,13 +89,15 @@ test('порядок проектов задан владельцем, номе�
   await expect(page.locator('#work')).toBeVisible();
 });
 
-test('кадры закрытых панелей не грузятся, пока панель не открыта', async ({ page }) => {
+test('кадры лент ленивые: дальние карточки не грузятся при открытии', async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
   const thumbs: string[] = [];
-  page.on('request', (r) => { if (r.url().includes('/thumbs/') && !r.url().includes('annflow-')) thumbs.push(r.url()); });
+  page.on('request', (r) => { if (r.url().includes('/thumbs/')) thumbs.push(r.url()); });
   await page.goto('/', { waitUntil: 'networkidle' });
-  expect(thumbs).toEqual([]);
-  await page.locator('#workflow [aria-controls="contents-workflow"]').click();
-  await expect.poll(() => thumbs.length).toBeGreaterThan(0);
+  const total = await page.locator('.strip__frame img').count();
+  expect(total).toBeGreaterThan(40);
+  expect(thumbs.length).toBeLessThan(total);
+  for (const img of await page.locator('.strip__frame img').all()) await expect(img).toHaveAttribute('loading', 'lazy');
 });
 
 test('annFlow: проекты раскрыты лентой, следующая карточка выглядывает, «Все» ведёт в мир', async ({ page }) => {
@@ -103,8 +105,7 @@ test('annFlow: проекты раскрыты лентой, следующая 
   await page.goto('/');
   const section = page.locator('#annflow');
   await expect(section.getByRole('link', { name: 'Читать', exact: true })).toHaveCount(0);
-  await expect(section.locator('[aria-controls="contents-annflow"]')).toHaveCount(0);
-  const cards = section.locator('.strip__card');
+    const cards = section.locator('.strip__card');
   await expect(cards).toHaveCount(7);
   for (const link of await cards.all()) await expect(link).toHaveAttribute('href', /^\/annflow\/projects\/[a-z-]+\/$/);
   await expect(cards.first()).toContainText('LiveContext');
@@ -121,42 +122,42 @@ test('annFlow: проекты раскрыты лентой, следующая 
   expect(m.page).toBeLessThanOrEqual(0);
   await track.evaluate((el) => { el.scrollLeft = el.scrollWidth; });
   await expect(cards.last()).toBeInViewport();
-  await section.locator('.strip__all').click();
+  await section.locator('.strip__side').click();
   await expect(page).toHaveURL(/\/annflow\/$/);
 });
 
-test('workflow: без Portfolio, «Проекты» раскрывают 11 работ с кадрами', async ({ page }) => {
+test('workflow: без Portfolio, 11 работ лентой, кадры и видео', async ({ page }) => {
   await page.goto('/');
   await expect(page.locator('#workflow a[href*="portfolio.arsenynn.com"]')).toHaveCount(0);
-  await page.locator('#workflow [aria-controls="contents-workflow"]').click();
-  const links = page.locator('#contents-workflow a');
+  const strip = page.locator('#contents-workflow');
+  await expect(strip).toBeVisible();
+  await expect(strip.locator('.strip__count')).toHaveText('11');
+  const links = strip.locator('a.strip__card');
   await expect(links).toHaveCount(11);
   for (const link of await links.all()) await expect(link).toHaveAttribute('href', /^https:\/\/t\.me\/ww_arsenynn\/\d+$/);
-  await expect(page.locator('#contents-workflow .chapter__frame img')).toHaveCount(11);
-  // панель оглавления одна: у annFlow вместо неё лента
-  await expect(page.locator('[id^="contents-"]')).toHaveCount(1);
+  await expect(strip.locator('.strip__frame img')).toHaveCount(11);
 });
 
-test('@arsenynn: части раскрываются главами с кадрами, ссылки на Telegram и строка YouTube', async ({ page }) => {
+test('@arsenynn: части открыты лентами с кадрами, ссылки на Telegram, без строки YouTube', async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
   await page.goto('/');
   for (const [id, count] of [['part-arsenynn-1', 18], ['part-arsenynn-2', 9]] as const) {
-    const button = page.locator(`[aria-controls="${id}"]`);
-    const panel = page.locator(`#${id}`);
-    await expect(panel).toBeHidden();
-    await button.click();
-    await expect(panel).toBeVisible();
-    const chapters = panel.locator('a.chapter');
+    const strip = page.locator(`#${id}`);
+    await expect(strip).toBeVisible();
+    await expect(strip.locator('.strip__count')).toHaveText(String(count));
+    const chapters = strip.locator('a.strip__card');
     await expect(chapters).toHaveCount(count);
     for (const link of await chapters.all()) await expect(link).toHaveAttribute('href', /^https:\/\/t\.me\/arsenynn\/\d+$/);
-    await expect(panel.locator('a[href*="youtube.com"]')).toHaveCount(0);
+    await expect(strip.locator('a[href*="youtube.com"]')).toHaveCount(0);
+    const scrollable = await strip.locator('.strip__track').evaluate((el) => el.scrollWidth > el.clientWidth);
+    expect(scrollable).toBe(true);
   }
-  // кадры загружаются: у первой части 16 кадров (0.2 и 1.0 без YouTube — заглушка с номером)
-  await expect(page.locator('#part-arsenynn-1 .chapter__frame img')).toHaveCount(16);
+  // у первой части 16 кадров (0.2 и 1.0 без YouTube — заглушка с номером)
+  await expect(page.locator('#part-arsenynn-1 .strip__frame img')).toHaveCount(16);
 });
 
 test('@arsenynn: «Вступление» раскрывает текст введения внутри части', async ({ page }) => {
   await page.goto('/');
-  await page.locator('[aria-controls="part-arsenynn-1"]').click();
   const toggle = page.locator('[aria-controls="intro-arsenynn-1"]');
   const text = page.locator('#intro-arsenynn-1 .reading');
   await expect(text).toBeHidden();
@@ -188,7 +189,7 @@ test('английская версия: /en/, переключатель язы
 
 test('английская версия: служебные названия оглавления annFlow переведены', async ({ page }) => {
   await page.goto('/en/');
-  const titles = page.locator('#annflow .strip__title');
+  const titles = page.locator('#annflow .chapter__title');
   await expect(titles.filter({ hasText: 'MCP server' })).toHaveCount(1);
   await expect(titles.filter({ hasText: 'Auto-apply' })).toHaveCount(1);
 });
@@ -218,8 +219,6 @@ test.describe('плеер глав', () => {
     page.on('request', (r) => { if (/youtube/.test(r.url())) calls.push(r.url()); });
     await page.goto('/', { waitUntil: 'networkidle' });
     expect(calls).toEqual([]);
-
-    await page.locator('[aria-controls="part-arsenynn-1"]').click();
     await page.locator(firstChapter).click();
     const player = page.locator('[data-player]');
     await expect(player).toBeVisible();
@@ -232,7 +231,6 @@ test.describe('плеер глав', () => {
 
   test('«Дальше» пропускает главы без видео, закрытие убирает iframe и возвращает фокус', async ({ page }) => {
     await page.goto('/');
-    await page.locator('[aria-controls="part-arsenynn-1"]').click();
     const link = page.locator(firstChapter);
     await link.click();
     const player = page.locator('[data-player]');
@@ -247,7 +245,6 @@ test.describe('плеер глав', () => {
 
   test('workflow: работа открывается в плеере, все 11 работ с видео', async ({ page }) => {
     await page.goto('/');
-    await page.locator('[aria-controls="contents-workflow"]').click();
     const works = page.locator('#contents-workflow [data-video]');
     await expect(works).toHaveCount(11);
     await works.first().click();
@@ -261,7 +258,6 @@ test.describe('плеер глав', () => {
   test('хиты выделены красным, номер и время разведены', async ({ page }) => {
     await page.goto('/');
     await expect(page.locator('.chapter--accent')).toHaveCount(3);
-    await page.locator('[aria-controls="part-arsenynn-1"]').click();
     const hit = page.locator('#part-arsenynn-1 .chapter--accent');
     await expect(hit.locator('.chapter__title')).toHaveText('Reflection');
     await expect(hit.locator('.chapter__title')).toHaveCSS('color', 'rgb(229, 50, 45)');
@@ -282,7 +278,6 @@ test.describe('плеер глав', () => {
 
   test('axe: открытый плеер без serious и critical нарушений', async ({ page }) => {
     await page.goto('/');
-    await page.locator('[aria-controls="part-arsenynn-1"]').click();
     await page.locator(firstChapter).click();
     await expect(page.locator('[data-player] iframe')).toHaveCount(1);
     await expect(page.locator('[data-player]')).toHaveCSS('opacity', '1');
@@ -294,7 +289,6 @@ test.describe('плеер глав', () => {
     test(`кадр 16:9 помещается в экран ${width}x${height}`, async ({ page }) => {
       await page.setViewportSize({ width, height });
       await page.goto('/');
-      await page.locator('[aria-controls="part-arsenynn-1"]').click();
       await page.locator(firstChapter).click();
       const box = (await page.locator('[data-player-frame]').boundingBox())!;
       expect(box.x).toBeGreaterThanOrEqual(0);
