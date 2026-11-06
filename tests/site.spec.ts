@@ -38,7 +38,7 @@ test('все семь проектов на месте, прямые ссылк�
   await page.goto('/');
   await expect(page.locator('article.project')).toHaveCount(7);
   const primary = page.locator('article.project .action--primary');
-  await expect(primary).toHaveCount(6); // у Travel Log ссылки нет
+  await expect(primary).toHaveCount(7); // у Travel Log ссылки нет, у Party Protocol ещё пробный доступ
   for (const link of await primary.all()) {
     await expect(link).toBeVisible();
     await expect(link).toHaveAttribute('href', /^(https:\/\/|\/annflow\/)/);
@@ -481,9 +481,14 @@ test.describe('главы @arsenynn на сайте', () => {
   });
 });
 
-test('пробный VPN выключен: ни кнопки, ни ссылки на бота в HTML', async ({ request }) => {
-  // Когда кнопку включат после PASS canary, этот тест заменить проверкой кнопки.
-  for (const path of ['/', '/en/']) expect(await (await request.get(path)).text()).not.toContain('partyproto_bot');
+test('пробный VPN: кнопка с точной ссылкой и условиями, только на русской версии', async ({ page, request }) => {
+  await page.goto('/');
+  const link = page.locator('#party-protocol a[href="https://t.me/partyproto_bot?start=site_arsenynn"]');
+  await expect(link).toContainText('Попробовать VPN бесплатно — 3 дня');
+  await expect(link).toHaveAttribute('target', '_blank');
+  await expect(link).toHaveAttribute('rel', 'noopener noreferrer');
+  await expect(page.locator('#party-protocol .project-actions__note')).toContainText('Один пробный период на аккаунт');
+  expect(await (await request.get('/en/')).text()).not.toContain('partyproto_bot');
 });
 
 test.describe('звук на сайте один', () => {
