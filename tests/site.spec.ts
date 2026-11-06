@@ -481,6 +481,11 @@ test.describe('главы @arsenynn на сайте', () => {
   });
 });
 
+test('пробный VPN выключен: ни кнопки, ни ссылки на бота в HTML', async ({ request }) => {
+  // Когда кнопку включат после PASS canary, этот тест заменить проверкой кнопки.
+  for (const path of ['/', '/en/']) expect(await (await request.get(path)).text()).not.toContain('partyproto_bot');
+});
+
 test.describe('радио на сайте', () => {
   const block = '#without-streaming';
 

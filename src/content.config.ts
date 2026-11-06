@@ -42,6 +42,15 @@ const projects = defineCollection({
       ),
       /** Лента случайных постов канала: адрес списка на сайте. */
       stream: z.string().startsWith('/').optional(),
+      /** Пробный доступ. Пока enabled: false, в HTML нет ни кнопки, ни ссылки. Только русская версия. */
+      trial: z
+        .object({
+          enabled: z.boolean(),
+          label: z.string().min(1),
+          note: z.string().min(1),
+          url: z.url().refine((u) => u.startsWith('https://'), 'Ссылка должна начинаться с https://'),
+        })
+        .optional(),
       /** Сайт эфира: играет в маленьком окне на главной. */
       radio: z.url().optional(),
       /** Страница всех проектов. Если задана, contents на главной идут раскрытой лентой. */

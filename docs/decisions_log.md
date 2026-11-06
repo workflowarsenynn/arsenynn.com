@@ -1,9 +1,34 @@
 # Decisions Log
-LastUpdated: 2026-11-06 16:13 MSK
+LastUpdated: 2026-11-06 16:35 MSK
 
 Этот файл хранит историю проекта: важные решения, изменения подхода, причины архитектурных поворотов, rejected options, runtime findings и выводы, которые помогают понять, как проект развивался.
 
 Записи идут в обратном хронологическом порядке: новые сверху.
+
+---
+
+## 2026-11-06 — Кнопка пробного VPN подготовлена выключенной
+
+**Type:** decision
+**Project:** arsenynn.com
+**Status:** accepted
+**Related files:** `src/content/projects.yaml`, `src/components/ProjectActions.astro`, `src/components/ActionLink.astro`
+
+### Context
+annVPN попросил подготовить кнопку «Попробовать VPN бесплатно — 3 дня», владелец согласился. Backend ещё не выкачен, username бота не подтверждён на production canary.
+
+### Decision
+- Поле `trial` у Party Protocol с `enabled: false`. Пока флаг выключен, кнопки, текста и ссылки нет в HTML: скрытая разметка показала бы неподтверждённую ссылку всем, кто откроет код страницы.
+- Кнопка только на русской версии: английский текст условий annVPN не передавал, сочинять условия нельзя.
+- Переход только по нажатию, `target="_blank" rel="noopener noreferrer"`. Параметр `site_arsenynn` не менять.
+- Событие `vpn_trial_click` не добавлено: на сайте нет аналитики.
+
+### Consequences
+- Включить: `enabled: true`, заменить тест на проверку кнопки, отдельный PR. Только после сообщения annVPN о PASS production canary и подтверждения владельца.
+- Адрес бота лежит в `projects.yaml` публичного репозитория, на сайте его нет.
+
+### Source
+Сообщение сессии annVPN и согласие владельца 2026-11-06, `docs/handoffs/arsenynn-site-trial-2026-11-05.md` в annVPN.
 
 ---
 

@@ -1,5 +1,5 @@
 # Implementation Plan
-LastUpdated: 2026-11-06 16:33 MSK
+LastUpdated: 2026-11-06 16:35 MSK
 
 ## Todoist Sync
 - Sync: manual
@@ -108,6 +108,7 @@ LastUpdated: 2026-11-06 16:33 MSK
 - [ ] Если главы из РФ грузятся медленно: перенести на VK Видео
 - [ ] Шрифты первого экрана: 125 KB при бюджете advisory 120 KB
 - [ ] Владелец: проверить скорость видео на телефоне без VPN
+- [ ] Включить кнопку пробного VPN (`trial.enabled`) после PASS production canary от annVPN и подтверждения владельца
 - [ ] Следующий мир по тому же образцу: выбрать проект, advisory советует @arsenynn
 
 ## Risks

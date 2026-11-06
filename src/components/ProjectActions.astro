@@ -20,6 +20,12 @@ const postOf = (url: string) => Number(url.split('/').pop());
 const chapterOf = (url: string) => (staged.has(postOf(url)) ? postOf(url) : undefined);
 ---
 <div class="project-actions action-list">
+  {project.trial?.enabled && locale === 'ru' && (
+    <>
+      <ActionLink label={project.trial.label} url={project.trial.url} primary rel="noopener noreferrer" />
+      <p class="project-actions__note">{project.trial.note}</p>
+    </>
+  )}
   {project.links.map((link) => (
     <ActionLink label={link.label} url={link.url} primary={link.primary} live={link.type === 'listen'} />
   ))}
@@ -74,6 +80,14 @@ const chapterOf = (url: string) => (staged.has(postOf(url)) ? postOf(url) : unde
   .project-actions__about,
   .project-actions__status {
     color: var(--color-muted);
+  }
+
+  .project-actions__note {
+    margin: 0;
+    padding-block: var(--space-1);
+    border-bottom: 1px solid var(--color-line);
+    color: var(--color-muted);
+    font-size: var(--text-meta);
   }
 
   .project-actions__status {
