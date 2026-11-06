@@ -22,7 +22,7 @@ export const ui = {
     newTab: ' (откроется в новой вкладке)',
     updated: 'Обновлено',
     contentsLabel: 'Проекты',
-    contactLabel: 'Написать',
+    contactLabel: 'Контакты',
     annflow: {
       noteOne: 'заметка', noteFew: 'заметки', noteMany: 'заметок',
       series: 'серий',

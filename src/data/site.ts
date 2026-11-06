@@ -30,15 +30,18 @@ export const site = {
     line: 'Финальная битва между самоценным и рациональным',
   },
 
-  // Как написать лично. Почту arsenynn@arsenynn.com добавить сюда, когда адрес заработает.
+  // Как написать лично.
   contact: {
-    links: [{ label: 'Telegram', detail: '@arsenynnn', url: 'https://t.me/arsenynnn' }],
+    links: [
+      { label: 'Telegram', detail: '@arsenynnn', url: 'https://t.me/arsenynnn' },
+      { label: 'Email', detail: 'arsenynn@arsenynn.com', url: 'mailto:arsenynn@arsenynn.com' },
+    ],
   },
 
   work: {
     title: 'Work / Collaboration',
     descriptor: 'collaboration / hiring / portfolio',
-    text: 'Портфолио для сотрудничества и найма: AI-автоматизация, продажи и события, видеопродакшн.',
+    text: 'Портфолио для сотрудничества и найма: AI-автоматизация, продажи и организация мероприятий, видеопродакшн.',
     links: [
       { label: 'Portfolio', url: 'https://portfolio.arsenynn.com/', primary: true },
       { label: 'IT / AI', url: 'https://portfolio.arsenynn.com/it-ai/' },
