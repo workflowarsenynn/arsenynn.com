@@ -574,12 +574,12 @@ test('вступления заканчиваются номером части,
   await expect(page.locator('#part-arsenynn-2 .reading p').last()).toHaveText('II');
 });
 
-test('метрика выключена, пока нет номера счётчика', async ({ page }) => {
+test('счётчика нет, пока Umami не настроен: ни баннера, ни запросов к трекерам', async ({ page }) => {
   const calls: string[] = [];
-  page.on('request', (r) => { if (/mc\.yandex/.test(r.url())) calls.push(r.url()); });
+  page.on('request', (r) => { if (/yandex|umami|stats\./.test(r.url())) calls.push(r.url()); });
   await page.goto('/', { waitUntil: 'networkidle' });
-  await expect(page.locator('[data-consent]')).toHaveCount(0);
-  await expect(page.locator('.site-footer a')).toHaveCount(0);
+  await expect(page.locator('script[data-website-id]')).toHaveCount(0);
+  await expect(page.locator('.consent')).toHaveCount(0);
   expect(calls).toEqual([]);
 });
 

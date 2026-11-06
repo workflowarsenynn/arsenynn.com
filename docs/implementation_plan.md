@@ -1,5 +1,5 @@
 # Implementation Plan
-LastUpdated: 2026-11-06 22:20 MSK
+LastUpdated: 2026-11-06 22:24 MSK
 
 ## Todoist Sync
 - Sync: manual
@@ -115,7 +115,7 @@ LastUpdated: 2026-11-06 22:20 MSK
 - [ ] Владелец: проверить скорость видео на телефоне без VPN
 - [ ] Владелец: создать почту `arsenynn@arsenynn.com`, адрес уже показан на сайте
 - [ ] Владелец: проверить переводы annFlow, сделанные агентом
-- [ ] Владелец: создать счётчик Яндекс Метрики и прислать номер, включить `site.metrics.yandexId`
+- [ ] Поставить Umami на сервер радио и включить `site.metrics` по `docs/umami_setup.md`, нужен доступ к серверу
 - [ ] Следующий мир по тому же образцу: выбрать проект, advisory советует @arsenynn
 
 ## Risks

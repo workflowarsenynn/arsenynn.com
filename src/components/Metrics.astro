@@ -1,0 +1,10 @@
+---
+// Счётчик Umami: без cookie, поэтому без баннера. Запрет отслеживания в браузере уважается.
+import { site } from '../data/site';
+const { src, websiteId } = site.metrics;
+---
+{src && websiteId && <script is:inline defer src={src} data-website-id={websiteId} data-domains="arsenynn.com" data-do-not-track="true"></script>}
+
+<script>
+  import '../scripts/metrics.ts';
+</script>
