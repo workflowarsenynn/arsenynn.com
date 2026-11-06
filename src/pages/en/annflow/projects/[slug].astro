@@ -1,0 +1,7 @@
+---
+import SeriesPage from '../../../../components/annflow/SeriesPage.astro';
+import { seriesPaths } from '../../../../lib/annflow';
+
+export const getStaticPaths = () => seriesPaths('en');
+---
+<SeriesPage {...Astro.props} />

@@ -7,19 +7,19 @@ import '@fontsource-variable/manrope/wght.css';
 import '../styles/tokens.css';
 import '../styles/global.css';
 
-type Props = { noindex?: boolean; title?: string; description?: string; ogTitle?: string; ogType?: string };
-const { noindex = false, title: pageTitle, description: pageDescription, ogTitle: pageOgTitle, ogType = 'website' } = Astro.props;
+type Props = { noindex?: boolean; title?: string; description?: string; ogTitle?: string; ogType?: string; alternate?: string };
+const { noindex = false, title: pageTitle, description: pageDescription, ogTitle: pageOgTitle, ogType = 'website', alternate } = Astro.props;
 const locale = toLocale(Astro.currentLocale);
 const t = ui[locale];
 const title = pageTitle ?? (locale === 'en' ? site.en.title : site.title);
 const description = pageDescription ?? (locale === 'en' ? site.en.description : site.description);
 const ogDescription = pageDescription ?? (locale === 'en' ? site.en.ogDescription : site.ogDescription);
 const ogTitle = pageOgTitle ?? pageTitle ?? site.ogTitle;
-// Языковые версии есть только у главной: внутренние страницы пока на русском.
-const hasAlternates = !noindex && !pageTitle;
+// Языковые версии есть у главной и у мира annFlow. alternate: путь страницы без языка.
+const hasAlternates = !noindex && (!pageTitle || Boolean(alternate));
 const canonical = new URL(Astro.url.pathname, site.url).href;
 // hreflang: обе версии ссылаются друг на друга, x-default ведёт на русскую (advisory).
-const alternates = locales.map((l) => ({ lang: l, href: new URL(localePath(l), site.url).href }));
+const alternates = locales.map((l) => ({ lang: l, href: new URL(localePath(l, alternate), site.url).href }));
 const ogImage = new URL(site.ogImage, site.url).href;
 const jsonLd = JSON.stringify({
   '@context': 'https://schema.org',

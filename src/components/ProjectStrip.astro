@@ -1,7 +1,7 @@
 ---
 // Лента на главной: карточки с прокруткой вбок. Следующая выглядывает из-за края,
 // так видно, что лента идёт дальше. Главы и работы открываются в плеере.
-import { toLocale, ui } from '../lib/i18n';
+import { localePath, toLocale, ui } from '../lib/i18n';
 import { asset } from '../data/asset';
 
 export type StripItem = {
@@ -35,14 +35,15 @@ type Props = {
   introUrl?: string;
 };
 const { id, label, owner, items, all, part, introId, introText, introUrl } = Astro.props;
-const t = ui[toLocale(Astro.currentLocale)];
+const locale = toLocale(Astro.currentLocale);
+const t = ui[locale];
 const headingId = `${id}-label`;
 ---
 <section class="strip" id={id} aria-labelledby={headingId}>
   <div class="strip__head">
     <h3 class="strip__label" id={headingId}>{label} <span class="strip__count">{items.length}</span></h3>
     {all && (
-      <a class="strip__side" href={asset(all)}>{t.allLabel}<span aria-hidden="true">→</span><span class="visually-hidden">: {owner}</span></a>
+      <a class="strip__side" href={asset(localePath(locale, all))}>{t.allLabel}<span aria-hidden="true">→</span><span class="visually-hidden">: {owner}</span></a>
     )}
     {introText?.length ? (
       <button class="strip__side strip__intro-toggle" type="button" aria-expanded="true" aria-controls={introId} data-about-toggle>
@@ -74,7 +75,7 @@ const headingId = `${id}-label`;
       <li class="strip__item">
         <a
           class:list={['strip__card', 'chapter', { 'chapter--accent': item.accent }]}
-          href={item.path ? asset(item.path) : item.url}
+          href={item.path ? asset(localePath(locale, item.path)) : item.url}
           target={item.path ? undefined : '_blank'}
           rel={item.path ? undefined : 'noopener'}
           data-video={item.chapter ? undefined : item.youtube}

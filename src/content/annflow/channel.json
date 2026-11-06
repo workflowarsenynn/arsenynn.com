@@ -9,6 +9,8 @@
       "slug": "live-context",
       "title": "LiveContext",
       "note": "Как связать живой разговор с памятью проекта",
+      "titleEn": "LiveContext",
+      "noteEn": "Linking a live conversation to project memory",
       "notes": [[186], [187], [188], [189]],
       "planned": [
         "Почему Whisper оказался далеко не самой сложной частью",
@@ -18,42 +20,63 @@
         "Почему я не даю LLM искать по всей базе знаний",
         "Как одна реплика превращается в нужную информацию из Obsidian",
         "Почему память не должна автоматически переписывать саму себя"
+      ],
+      "plannedEn": [
+        "Why Whisper turned out to be far from the hardest part",
+        "A conversation is not a transcript. It is a state",
+        "How LiveContext knows which context is needed right now",
+        "How I turned Obsidian from an archive into working memory",
+        "Why I don't let the LLM search the whole knowledge base",
+        "How one line turns into the right information from Obsidian",
+        "Why memory must not rewrite itself automatically"
       ]
     },
     {
       "slug": "mcp-server",
       "title": "MCP-сервер",
       "note": "Как я построил MCP-сервер для своей рабочей системы",
+      "titleEn": "MCP server",
+      "noteEn": "An MCP server for my working system",
       "notes": [[171, 172], [173], [174], [175], [176], [178]]
     },
     {
       "slug": "voxbase",
       "title": "VoxBase",
       "note": "Как превратить голос, видео и подкасты в память",
+      "titleEn": "VoxBase",
+      "noteEn": "Turning voice, video and podcasts into memory",
       "notes": [[155], [156], [158, 159], [160, 161], [163], [164, 165], [166], [167, 168], [169]]
     },
     {
       "slug": "auto-apply",
       "title": "Автоотклики",
       "note": "Как превратить поиск работы в форму порядка",
+      "titleEn": "Auto-apply",
+      "noteEn": "Turning a job search into a form of order",
       "notes": [[136], [137], [141, 142], [143, 144], [145], [146], [147], [148], [149], [150], [151], [152], [184]]
     },
     {
       "slug": "bessmyslennost",
       "title": "Бессмысленность и скоротечность",
       "note": "Философия, встроенная в память, разговор и код",
+      "titleEn": "Bessmyslennost i skorotechnost",
+      "noteEn": "Philosophy built into memory, conversation and recirculation",
       "notes": [[107, 108], [110, 111], [112], [113], [114], [115, 116], [120, 121], [124], [125, 126], [127, 128], [133, 134]]
     },
     {
       "slug": "without-streaming",
       "title": "Without Streaming",
       "note": "Telegram-канал как радиостанция",
+      "titleEn": "Without Streaming",
+      "noteEn": "A Telegram channel as a radio station",
       "notes": [[93, 94], [95], [98], [99, 100], [101, 102], [103, 104], [181, 180, 182, 183]]
     },
     {
       "slug": "mac-automation",
       "title": "Mac Automation Stack",
       "note": "Как я строю клавиатурные слои, чтобы ускорить работу",
+      "titleEn": "Mac Automation Stack",
+      "noteEn": "Keyboard layers that speed up work on a Mac",
       "notes": [[74], [75], [78], [79], [80], [81], [82, 83], [84], [85], [86], [87], [88], [90, 89], [91]]
     }
   ],

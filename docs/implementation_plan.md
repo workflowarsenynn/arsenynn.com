@@ -1,5 +1,5 @@
 # Implementation Plan
-LastUpdated: 2026-11-06 21:23 MSK
+LastUpdated: 2026-11-06 21:44 MSK
 
 ## Todoist Sync
 - Sync: manual
@@ -29,7 +29,7 @@ LastUpdated: 2026-11-06 21:23 MSK
 - PushPolicy: auto-safe
 
 ## Status
-- Stage: Build (первый мир: annFlow на сайте, индекс в проде на https://arsenynn.com, последняя фаза 43)
+- Stage: Build (первый мир: annFlow на сайте, индекс в проде на https://arsenynn.com, последняя фаза 44)
 - Направление задано `docs/Advisory/deep_research_and_implementation_direction.md`: оставить Astro и статику, развивать фазами, каждая фаза отдельным деплоем с точкой отката.
 - Сейчас на проде: hero с портретом, индекс из семи проектов по центру, главы @arsenynn играют на сайте со склада `workflowarsenynn/arsenynn-media`, работы workflow в таком же блоке, подкаст 2.5 в плеере YouTube, RU и /en/, только тёмная тема. Новая стадия: весь канал annFlow на сайте, 7 серий.
 - Передача проекта и рабочий цикл: `docs/handoff.md`.
@@ -77,6 +77,7 @@ LastUpdated: 2026-11-06 21:23 MSK
 - `rollback/phase-41`: окно радио и кнопка «Слушать эфир» (98febfa).
 - `rollback/phase-42`: на сайте звучит что-то одно, кнопка VPN выключена (487084a).
 - `rollback/phase-43`: кнопка пробного VPN включена (4ae7e31).
+- `rollback/phase-44`: контакт, одно оглавление annFlow, английская главная (3222bd6).
 - Откат: PR из revert-коммита фазы в `main` или `git revert <merge-commit>`; GitHub Actions пересоберёт сайт за 1–2 минуты.
 
 ## Done
@@ -110,8 +111,8 @@ LastUpdated: 2026-11-06 21:23 MSK
 - [ ] Если главы из РФ грузятся медленно: перенести на VK Видео
 - [ ] Шрифты первого экрана: 125 KB при бюджете advisory 120 KB
 - [ ] Владелец: проверить скорость видео на телефоне без VPN
-- [ ] Владелец: решить про почту на домене для блока контакта (нужна настройка DNS)
-- [ ] Владелец: решить про английскую версию мира annFlow
+- [ ] Настроить почту `arsenynn@arsenynn.com` (DNS, с подтверждения владельца) и добавить её в блок контакта
+- [ ] Владелец: проверить переводы annFlow, сделанные агентом
 - [ ] Следующий мир по тому же образцу: выбрать проект, advisory советует @arsenynn
 
 ## Risks
