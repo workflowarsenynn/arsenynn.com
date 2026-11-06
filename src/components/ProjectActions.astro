@@ -4,6 +4,7 @@ import ActionLink from './ActionLink.astro';
 import ProjectStrip from './ProjectStrip.astro';
 import PostStream from './PostStream.astro';
 import { toLocale, ui } from '../lib/i18n';
+import { streamPosts } from '../lib/stream';
 
 type Props = { project: Project };
 const { project } = Astro.props;
@@ -11,6 +12,8 @@ const hasAbout = Boolean(project.longDescription?.length);
 const detailsId = `about-${project.id}`;
 const locale = toLocale(Astro.currentLocale);
 const t = ui[locale];
+const staged = new Set(project.parts && project.stream ? streamPosts(project.stream).map((p) => p.post) : []);
+const postOf = (url: string) => Number(url.split('/').pop());
 ---
 <div class="project-actions action-list">
   {project.links.map((link) => (
@@ -19,13 +22,16 @@ const t = ui[locale];
   {project.links.length === 0 && project.statusLabel && (
     <span class="action action--row project-actions__status">{project.statusLabel}</span>
   )}
+  {project.stream && (
+    <PostStream source={project.stream} channel={project.links[0].url} film={Boolean(project.parts)} label={project.parts ? t.streamFilm : undefined} />
+  )}
   {project.parts?.map((part, i) => (
     <ProjectStrip
       id={`part-${project.id}-${i + 1}`}
       label={part.label}
       owner={project.title}
       part={part.label}
-      items={part.chapters}
+      items={part.chapters.map((ch) => ({ ...ch, chapter: staged.has(postOf(ch.url)) ? postOf(ch.url) : undefined }))}
       introId={`intro-${project.id}-${i + 1}`}
       introText={locale === 'ru' ? part.introText : undefined}
       introUrl={part.intro}
@@ -41,7 +47,6 @@ const t = ui[locale];
       all={project.contentsAll}
     />
   )}
-  {project.stream && <PostStream source={project.stream} channel={project.links[0].url} />}
   {hasAbout && (
     <button
       class="action action--row project-actions__about"

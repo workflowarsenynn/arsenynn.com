@@ -30,6 +30,7 @@
       url: https://t.me/arsenynn
       type: telegram
       primary: true
+  stream: /stream/arsenynn.json
   parts:
     - label: Часть I
       labelEn: Part I
@@ -53,10 +54,12 @@
           title: "I can talk to you about the atmosphere"
           duration: '0:39'
           url: https://t.me/arsenynn/7
+          thumb: /thumbs/arsenynn-7.webp
         - num: '1.0'
           title: "When will you finally grow up?"
           duration: '0:36'
           url: https://t.me/arsenynn/8
+          thumb: /thumbs/arsenynn-8.webp
         - num: '1.1.1'
           title: "Come here"
           duration: '0:24'

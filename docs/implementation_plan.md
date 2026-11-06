@@ -1,5 +1,5 @@
 # Implementation Plan
-LastUpdated: 2026-11-06 11:30 MSK
+LastUpdated: 2026-11-06 13:00 MSK
 
 ## Todoist Sync
 - Sync: manual
@@ -29,7 +29,7 @@ LastUpdated: 2026-11-06 11:30 MSK
 - PushPolicy: auto-safe
 
 ## Status
-- Stage: Build (первый мир: annFlow на сайте, индекс в проде на https://arsenynn.com, последняя фаза 36)
+- Stage: Build (первый мир: annFlow на сайте, индекс в проде на https://arsenynn.com, последняя фаза 37)
 - Направление задано `docs/Advisory/deep_research_and_implementation_direction.md`: оставить Astro и статику, развивать фазами, каждая фаза отдельным деплоем с точкой отката.
 - Сейчас на проде: hero с портретом, индекс из семи проектов по центру, части и главы @arsenynn и работы workflow со встроенным плеером YouTube, RU и /en/, только тёмная тема. Новая стадия: весь канал annFlow на сайте, 66 заметок в 8 сериях.
 - Передача проекта и рабочий цикл: `docs/handoff.md`.
@@ -70,6 +70,7 @@ LastUpdated: 2026-11-06 11:30 MSK
 - `rollback/phase-34`: кнопка звука на кадре случайных постов (e24f3b6).
 - `rollback/phase-35`: случайные посты без обрезки в Safari (3c9bfbc).
 - `rollback/phase-36`: свайп по случайным постам (1235d4e).
+- `rollback/phase-37`: стрелки на кадре для мыши (40afe31).
 - Откат: PR из revert-коммита фазы в `main` или `git revert <merge-commit>`; GitHub Actions пересоберёт сайт за 1–2 минуты.
 
 ## Done
@@ -103,6 +104,8 @@ LastUpdated: 2026-11-06 11:30 MSK
 - [ ] Проверить на iPhone и из РФ-сети, включая плеер глав и автозапуск
 - [ ] Если YouTube из РФ работает плохо: решить про Kinescope или Mux для глав
 - [ ] Шрифты первого экрана: 125 KB при бюджете advisory 120 KB
+- [ ] Владелец: запустить `scripts/publish-media.sh`, создать склад видео глав @arsenynn
+- [ ] Владелец: проверить скорость видео на телефоне без VPN
 - [ ] Следующий мир по тому же образцу: выбрать проект, advisory советует @arsenynn
 
 ## Risks

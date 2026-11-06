@@ -17,9 +17,8 @@ const SWIPE_START = 10;
 const SWIPE_SHARE = 0.2;
 const SWIPE_SPEED = 0.45;
 const SEEN_KEY = 'stream-swiped';
-const root = document.querySelector<HTMLElement>('[data-stream]');
 
-if (root) {
+function setup(root: HTMLElement) {
   const q = <T extends HTMLElement>(name: string) => root.querySelector<T>(`[data-stream-${name}]`)!;
   const stage = q('stage');
   const text = q('text');
@@ -33,7 +32,7 @@ if (root) {
   // Стрелок две пары: на кадре для мыши и под кадром для телефона.
   const nexts = root.querySelectorAll<HTMLButtonElement>('[data-stream-next]');
   const prevs = root.querySelectorAll<HTMLButtonElement>('[data-stream-prev]');
-  const { stream, base, channel, pause, play, soundOn, soundOff } = root.dataset;
+  const { stream, base, channel, pause, play, soundOn, soundOff, order: mode } = root.dataset;
   const saveData = (navigator as Navigator & { connection?: { saveData?: boolean } }).connection?.saveData;
   const still = matchMedia('(prefers-reduced-motion: reduce)').matches;
   const calm = still || Boolean(saveData);
@@ -41,6 +40,7 @@ if (root) {
   let posts: Post[] = [];
   // Порядок растёт новыми перемешанными кругами, поэтому назад можно вернуться к уже виденному.
   let order: Post[] = [];
+  let failures = 0;
   let pos = -1;
   let paused = calm;
   let visible = false;
@@ -55,13 +55,20 @@ if (root) {
   video.muted = true;
   video.preload = 'metadata';
   video.addEventListener('ended', () => go(1));
-  video.addEventListener('error', () => { if (media === video) go(1); });
+  video.addEventListener('playing', () => { failures = 0; });
+  // Несколько сбоев подряд: файлы недоступны, крутить список бесполезно.
+  video.addEventListener('error', () => {
+    failures += 1;
+    if (media === video && failures < 3) go(1);
+  });
 
-  const url = (path: string) => `${base}${path.replace(/^\//, '')}`;
+  const url = (path: string) => (path.startsWith('http') ? path : `${base}${path.replace(/^\//, '')}`);
   const frameOf = (post?: Post) => post?.poster ?? (post?.kind === 'image' ? post.src : undefined);
 
+  // Главы идут по порядку, посты вперемешку.
   function shuffled(list: Post[]) {
     const out = [...list];
+    if (mode === 'sequence') return out;
     for (let i = out.length - 1; i > 0; i -= 1) {
       const j = Math.floor(Math.random() * (i + 1));
       [out[i], out[j]] = [out[j], out[i]];
@@ -303,12 +310,33 @@ if (root) {
   swipeable();
   setPaused(paused);
 
+  async function load() {
+    if (posts.length) return;
+    posts = await fetch(stream!).then((r) => r.json());
+    order = shuffled(posts);
+  }
+
+  // Глава из ленты играет здесь же, со звуком: человек сам её выбрал.
+  root.closest('.project')?.querySelectorAll<HTMLAnchorElement>('[data-chapter]').forEach((card) => {
+    card.addEventListener('click', async (event) => {
+      if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+      event.preventDefault();
+      setMuted(false);
+      await load();
+      visible = true;
+      stage.scrollIntoView({ behavior: still ? 'auto' : 'smooth', block: 'center' });
+      const index = order.findIndex((post) => post.post === Number(card.dataset.chapter));
+      if (index < 0) return;
+      pos = index;
+      show(order[pos]);
+    });
+  });
+
   new IntersectionObserver(async ([entry]) => {
     if (entry.isIntersecting && !posts.length) {
-      posts = await fetch(stream!).then((r) => r.json());
-      order = shuffled(posts);
+      await load();
       visible = true;
-      go(1);
+      if (pos < 0) go(1);
       hint.hidden = Boolean(localStorage.getItem(SEEN_KEY));
       return;
     }
@@ -318,3 +346,5 @@ if (root) {
     else halt();
   }, { threshold: 0.4 }).observe(stage);
 }
+
+document.querySelectorAll<HTMLElement>('[data-stream]').forEach(setup);
