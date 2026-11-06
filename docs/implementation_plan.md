@@ -1,5 +1,5 @@
 # Implementation Plan
-LastUpdated: 2026-11-06 08:38 MSK
+LastUpdated: 2026-11-06 08:43 MSK
 
 ## Todoist Sync
 - Sync: manual
@@ -29,9 +29,9 @@ LastUpdated: 2026-11-06 08:38 MSK
 - PushPolicy: auto-safe
 
 ## Status
-- Stage: Build (первый мир: annFlow на сайте, индекс в проде на https://arsenynn.com, последняя фаза 38)
+- Stage: Build (первый мир: annFlow на сайте, индекс в проде на https://arsenynn.com, последняя фаза 39)
 - Направление задано `docs/Advisory/deep_research_and_implementation_direction.md`: оставить Astro и статику, развивать фазами, каждая фаза отдельным деплоем с точкой отката.
-- Сейчас на проде: hero с портретом, индекс из семи проектов по центру, главы @arsenynn играют на сайте со склада `workflowarsenynn/arsenynn-media`, подкаст 2.5 и работы workflow в плеере YouTube (работы переходят на сайт следующей фазой), RU и /en/, только тёмная тема. Новая стадия: весь канал annFlow на сайте, 66 заметок в 8 сериях.
+- Сейчас на проде: hero с портретом, индекс из семи проектов по центру, главы @arsenynn играют на сайте со склада `workflowarsenynn/arsenynn-media`, работы workflow в таком же блоке, подкаст 2.5 в плеере YouTube, RU и /en/, только тёмная тема. Новая стадия: весь канал annFlow на сайте, 66 заметок в 8 сериях.
 - Передача проекта и рабочий цикл: `docs/handoff.md`.
 
 ## Rollback
@@ -72,6 +72,7 @@ LastUpdated: 2026-11-06 08:38 MSK
 - `rollback/phase-36`: свайп по случайным постам (1235d4e).
 - `rollback/phase-37`: стрелки на кадре для мыши (40afe31).
 - `rollback/phase-38`: главы @arsenynn играют на сайте (2d07b70).
+- `rollback/phase-39`: весь экран, Reflection 5 years, работы workflow на сайте (c9425b8).
 - Откат: PR из revert-коммита фазы в `main` или `git revert <merge-commit>`; GitHub Actions пересоберёт сайт за 1–2 минуты.
 
 ## Done
