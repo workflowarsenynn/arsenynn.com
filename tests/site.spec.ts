@@ -481,6 +481,41 @@ test.describe('главы @arsenynn на сайте', () => {
   });
 });
 
+test.describe('радио на сайте', () => {
+  const block = '#without-streaming';
+
+  test.beforeEach(async ({ page }) => {
+    await page.route('https://radio.arsenynn.quest/**', (route) => route.fulfill({ contentType: 'text/html', body: '<title>stub</title>' }));
+  });
+
+  test('кнопка по-русски с огоньком эфира, на /en/ по-английски', async ({ page }) => {
+    await page.goto('/');
+    const link = page.locator(`${block} a.action--primary`);
+    await expect(link).toContainText('Слушать эфир');
+    await expect(link.locator('.action__live')).toBeVisible();
+    await expect(link).toHaveAttribute('href', 'https://radio.arsenynn.quest');
+    await page.goto('/en/');
+    await expect(page.locator(`${block} a.action--primary`)).toContainText('Listen live');
+  });
+
+  test('окно радио ленивое, без автозапуска, рядом ссылка на сайт радио', async ({ page }) => {
+    await page.setViewportSize({ width: 390, height: 844 });
+    await page.goto('/');
+    const frame = page.locator(`${block} .radio iframe`);
+    await expect(frame).not.toHaveAttribute('src');
+    await expect(frame).toHaveAttribute('title', 'Without Streaming');
+    expect(await frame.getAttribute('allow')).toBeNull();
+    await expect(page.locator(`${block} .radio__open`)).toHaveAttribute('href', 'https://radio.arsenynn.quest');
+    await frame.scrollIntoViewIfNeeded();
+    await expect(frame).toHaveAttribute('src', 'https://radio.arsenynn.quest');
+    const box = (await page.locator(`${block} .radio__screen`).boundingBox())!;
+    expect(box.width).toBe(390);
+    expect(Math.abs(box.width / box.height - 16 / 9)).toBeLessThan(0.02);
+    expect((await frame.boundingBox())!.width).toBeCloseTo(390, 0);
+    expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBe(390);
+  });
+});
+
 test.describe('работы workflow на сайте', () => {
   const block = '#workflow .stream';
 
