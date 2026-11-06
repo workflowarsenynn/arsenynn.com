@@ -159,4 +159,13 @@ const annflow = defineCollection({
     }),
 });
 
-export const collections = { projects, annflow };
+// Английские тексты заметок: заголовок, подписи к медиа по порядку, текст. Медиа общие с русской заметкой.
+const annflowEn = defineCollection({
+  loader: glob({ pattern: '*.md', base: './src/content/annflow/en' }),
+  schema: z.object({
+    title: z.string().min(1),
+    captions: z.array(z.string().nullable()).optional(),
+  }),
+});
+
+export const collections = { projects, annflow, annflowEn };

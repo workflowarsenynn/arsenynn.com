@@ -30,7 +30,7 @@ export const site = {
     line: 'Финальная битва между самоценным и рациональным',
   },
 
-  // Как написать лично. Почта появится здесь, когда заработает адрес.
+  // Как написать лично. Почту arsenynn@arsenynn.com добавить сюда, когда адрес заработает.
   contact: {
     links: [{ label: 'Telegram', detail: '@arsenynnn', url: 'https://t.me/arsenynnn' }],
   },

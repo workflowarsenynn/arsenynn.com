@@ -7,13 +7,13 @@ import type { Note } from '../lib/annflow';
 
 type Props = { note: Note };
 const { note } = Astro.props;
-const { Content } = await render(note);
+const { Content } = await render(note.text);
 const { title, source, media = [], files = [] } = note.data;
 const lead = media.filter((m) => m.post === source[0]);
 const after = media.filter((m) => m.post !== source[0]);
 ---
 {lead.length > 0 && <NoteMedia items={lead} title={title} />}
-{note.body?.trim() && <div class="prose"><Content /></div>}
+{note.text.body?.trim() && <div class="prose"><Content /></div>}
 {after.length > 0 && <NoteMedia items={after} title={title} />}
 
 {files.length > 0 && (

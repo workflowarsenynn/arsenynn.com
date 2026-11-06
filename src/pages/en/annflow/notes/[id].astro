@@ -1,0 +1,12 @@
+---
+import NotePage from '../../../../components/annflow/NotePage.astro';
+import { asset } from '../../../../data/asset';
+import { notePaths, seriesPath, type Note, type Series } from '../../../../lib/annflow';
+
+export const getStaticPaths = () => notePaths('en');
+
+// Первый пост серии живёт на её странице. Редирект работает только в самой странице, не в компоненте.
+const { note, series } = Astro.props as { note?: Note; series: Series };
+if (!note) return Astro.redirect(asset(seriesPath('en', series.slug)), 301);
+---
+<NotePage {...Astro.props} />

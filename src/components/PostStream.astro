@@ -45,7 +45,7 @@ const still = first.poster ?? first.src!;
     <p class="stream__hint" data-stream-hint hidden><span aria-hidden="true">←</span> {t.streamHint} <span aria-hidden="true">→</span></p>
   </div>
 
-  <p class="stream__text" data-stream-text>{first.text}</p>
+  <p class="stream__text" data-stream-text>{(locale === 'en' && first.textEn) || first.text}</p>
   <p class="stream__date" data-stream-date>{locale === 'en' ? englishDate(first.date) : first.date}</p>
 
   <div class="stream__controls only-js">

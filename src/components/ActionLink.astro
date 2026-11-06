@@ -1,14 +1,15 @@
 ---
-import { toLocale, ui } from '../lib/i18n';
+import { localePath, toLocale, ui } from '../lib/i18n';
 import { asset } from '../data/asset';
 type Props = { label: string; url: string; primary?: boolean; variant?: 'row' | 'text'; live?: boolean; rel?: string };
 const { label, url, primary = false, variant = 'row', live = false, rel = 'noopener' } = Astro.props;
-const t = ui[toLocale(Astro.currentLocale)];
+const locale = toLocale(Astro.currentLocale);
+const t = ui[locale];
 const internal = url.startsWith('/');
 ---
 <a
   class:list={['action', `action--${variant}`, { 'action--primary': primary }]}
-  href={internal ? asset(url) : url}
+  href={internal ? asset(localePath(locale, url)) : url}
   target={internal ? undefined : '_blank'}
   rel={internal ? undefined : rel}
 >

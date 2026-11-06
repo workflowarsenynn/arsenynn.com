@@ -693,6 +693,41 @@ test.describe('плеер глав', () => {
   }
 });
 
+test.describe('английская версия annFlow', () => {
+  test('с /en/ в английский мир, серия, заметка, обратно на русский', async ({ page }) => {
+    await page.goto('/en/');
+    await page.locator('#annflow .strip__card', { hasText: 'LiveContext' }).click();
+    await expect(page).toHaveURL(/\/en\/annflow\/projects\/live-context\/$/);
+    await expect(page.locator('html')).toHaveAttribute('lang', 'en');
+    await expect(page.locator('.toc li')).toHaveCount(10);
+    await expect(page.locator('.toc li').first()).toContainText("Why simply saving conversations wasn't enough for me");
+    await expect(page.locator('.toc__planned').first()).toContainText('soon');
+    await page.locator('#note-187 h2 a').click();
+    await expect(page).toHaveURL(/\/en\/annflow\/notes\/187\/$/);
+    await expect(page.locator('.note__meta')).toContainText('1 of 10');
+    await expect(page.locator('.prose a[href="/en/annflow/notes/155/"]').first()).toBeVisible();
+    await page.locator('.world-bar__lang').click();
+    await expect(page).toHaveURL(/\/annflow\/notes\/187\/$/);
+    await expect(page.locator('html')).toHaveAttribute('lang', 'ru');
+  });
+
+  test('все страницы мира на английском: нет кириллицы в тексте', async ({ page, request }) => {
+    const list = await (await request.get('/en/annflow/')).text();
+    const slugs = [...list.matchAll(/\/en\/annflow\/projects\/([a-z-]+)\//g)].map((m) => m[1]);
+    expect(new Set(slugs).size).toBe(7);
+    const pages = ['/en/annflow/', ...new Set(slugs.map((s) => `/en/annflow/projects/${s}/`))];
+    for (const path of pages) {
+      await page.goto(path);
+      const text = await page.locator('body').evaluate((b) => {
+        const c = b.cloneNode(true) as HTMLElement;
+        c.querySelectorAll('.world-bar__lang, .site-footer').forEach((e) => e.remove());
+        return c.textContent ?? '';
+      });
+      expect(text.match(/[а-яё]+/gi) ?? [], path).toEqual([]);
+    }
+  });
+});
+
 test.describe('мир annFlow', () => {
   test('с главной проект открывается на сайте', async ({ page }) => {
     await page.goto('/');

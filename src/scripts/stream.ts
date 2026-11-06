@@ -14,6 +14,8 @@ type Post = {
   url?: string;
   /** Идёт первым, порядок таких постов случайный. */
   lead?: boolean;
+  /** Перевод подписи. Названия роликов не переводятся. */
+  textEn?: string;
 };
 
 import { englishDate } from '../lib/stream-date';
@@ -202,12 +204,13 @@ function setup(root: HTMLElement) {
     } else {
       el = document.createElement('p');
       el.className = 'stream__quote';
-      el.textContent = post.text;
+      el.textContent = ('en' in root.dataset && post.textEn) || post.text;
     }
     el.style.transform = '';
     el.style.animation = instant ? 'none' : '';
     stage.replaceChildren(el);
-    text.textContent = post.kind === 'text' ? '' : post.text;
+    const caption = ('en' in root.dataset && post.textEn) || post.text;
+    text.textContent = post.kind === 'text' ? '' : caption;
     date.textContent = 'en' in root.dataset ? englishDate(post.date) : post.date;
     link.href = post.url ?? `${channel}/${post.post}`;
     count.textContent = `${(pos % posts.length) + 1} / ${posts.length}`;

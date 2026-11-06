@@ -1,5 +1,5 @@
 # CLAUDE.md
-LastUpdated: 2026-11-06 00:00 MSK
+LastUpdated: 2026-11-06 21:44 MSK
 
 ## Project
 Личный сайт arsenynn.com: mobile-first индекс семи проектов @arsenynn для людей, открывающих ссылку с телефона. У annFlow есть свой мир: весь канал на сайте.
@@ -25,7 +25,7 @@ MVP собран, структура в `docs/architecture.md`.
 - запуск: `npm run dev`
 - сборка с проверкой типов: `npm run build` (результат в `dist/`)
 - OG image, apple-touch-icon и favicon.ico: `NODE_PATH=$(npm root -g) node scripts/render-images.mjs`
-- импорт новых постов annFlow: `node scripts/telegram/import-channel.mjs`, результат смотреть в diff
+- импорт новых постов annFlow: `node scripts/telegram/import-channel.mjs`, результат смотреть в diff, перевод новой заметки положить в `src/content/annflow/en/`
 - векторизовать одноцветный логотип: `python3 scripts/trace-logo.py <in> public/logos/<slug>.svg '#hex'`
 - тесты: `npm test` (Playwright + axe против `astro preview`, нужна сборка). В облачной сессии Claude: `PW_CHROMIUM=/opt/pw-browsers/chromium-1243/chrome-linux64/chrome npm test`. В CI их запускает `.github/workflows/test.yml`. Локально: `npx playwright install chromium`; в worktree внутри `.claude/` сборка падает, см. `docs/handoff.md` раздел 7
 

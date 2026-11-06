@@ -3,9 +3,11 @@
 import { Image } from 'astro:assets';
 import { asset } from '../data/asset';
 import { telegramUrl, type Note } from '../lib/annflow';
+import { toLocale, ui } from '../lib/i18n';
 
 type Props = { items: NonNullable<Note['data']['media']>; title: string };
 const { items, title } = Astro.props;
+const t = ui[toLocale(Astro.currentLocale)];
 const images = items.filter((m) => m.type === 'image');
 const others = items.filter((m) => m.type !== 'image');
 const widths = [480, 800, 1280];
@@ -15,7 +17,7 @@ const caption = images.find((m) => m.caption)?.caption;
 {images.length > 0 && (
   <figure class:list={['note-media', { 'note-media--grid': images.length > 1 }]}>
     {images.map((m, i) => (
-      <Image src={m.src!} alt={m.caption ?? `${title}: иллюстрация ${i + 1}`} widths={widths} sizes={sizes} loading="lazy" decoding="async" />
+      <Image src={m.src!} alt={m.caption ?? `${title}: ${t.annflow.illustration} ${i + 1}`} widths={widths} sizes={sizes} loading="lazy" decoding="async" />
     ))}
     {caption && <figcaption>{caption}</figcaption>}
   </figure>
@@ -34,8 +36,8 @@ const caption = images.find((m) => m.caption)?.caption;
         {m.src && <Image src={m.src} alt="" widths={widths} sizes={sizes} loading="lazy" decoding="async" />}
         <span class="note-video__label">
           <svg viewBox="0 0 10 12" width="10" height="12" aria-hidden="true"><path d="M0 0l10 6-10 6z" /></svg>
-          Смотреть в Telegram{m.duration && ` · ${m.duration}`}
-          <span class="visually-hidden"> (откроется в новой вкладке)</span>
+          {t.annflow.watchTelegram}{m.duration && ` · ${m.duration}`}
+          <span class="visually-hidden">{t.newTab}</span>
         </span>
       </a>
       {m.caption && <figcaption>{m.caption}</figcaption>}
