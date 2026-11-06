@@ -68,7 +68,7 @@ function setup(root: HTMLElement) {
   video.muted = true;
   video.preload = 'metadata';
   // Пока кадр тянут пальцем, смена вырвала бы его из-под пальца.
-  video.addEventListener('ended', () => { if (!dragging) go(1); });
+  video.addEventListener('ended', () => { metric('video_finished'); if (!dragging) go(1); });
   video.addEventListener('playing', () => { failures = 0; });
   // Несколько сбоев подряд: файлы недоступны, крутить список бесполезно.
   video.addEventListener('error', () => {
@@ -149,6 +149,7 @@ function setup(root: HTMLElement) {
       return;
     }
     setMuted(false);
+    metric('video_fullscreen');
     if (paused) setPaused(false);
     else resume();
     if (document.fullscreenEnabled) {
@@ -161,12 +162,17 @@ function setup(root: HTMLElement) {
     (video as HTMLVideoElement & { webkitEnterFullscreen?: () => void }).webkitEnterFullscreen?.();
   }
 
+  const metric = (name: string) => document.dispatchEvent(new CustomEvent('site-metric', {
+    detail: { name, params: { block: stream, title: order[pos]?.text ?? '' } },
+  }));
+
   function setMuted(value: boolean) {
     muted = value;
     video.muted = muted;
     soundLabel.textContent = muted ? soundOn! : soundOff!;
     sound.toggleAttribute('data-on', !muted);
     if (!muted) document.dispatchEvent(new CustomEvent('site-sound', { detail: root }));
+    if (!muted) metric('video_sound');
   }
 
   // Нажатие включает звук и, если браузер не дал видео стартовать само, запускает его.

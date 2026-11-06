@@ -1,0 +1,71 @@
+---
+// Вопрос о Метрике. Появляется, только если задан номер счётчика и посетитель ещё не отвечал.
+import { site } from '../data/site';
+import { asset } from '../data/asset';
+import { localePath, toLocale, ui } from '../lib/i18n';
+const locale = toLocale(Astro.currentLocale);
+const t = ui[locale];
+---
+{site.metrics.yandexId && (
+  <aside class="consent" data-consent={site.metrics.yandexId} aria-label={t.consentMore} hidden>
+    <p class="consent__text">{t.consentText} <a href={asset(localePath(locale, '/privacy/'))}>{t.consentMore}</a></p>
+    <div class="consent__actions">
+      <button type="button" data-consent-yes>{t.consentYes}</button>
+      <button type="button" data-consent-no>{t.consentNo}</button>
+    </div>
+  </aside>
+)}
+
+<script>
+  import '../scripts/metrics.ts';
+</script>
+
+<style>
+  .consent {
+    position: fixed;
+    z-index: 5;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0 var(--space-3);
+    padding: var(--space-1) var(--gutter) max(var(--space-1), env(safe-area-inset-bottom));
+    background: var(--color-bg);
+    border-top: 1px solid var(--color-line);
+    font-size: var(--text-meta);
+  }
+
+  .consent[hidden] {
+    display: none;
+  }
+
+  .consent__text {
+    flex: 1 1 20rem;
+    margin: 0;
+    padding-block: var(--space-1);
+    color: var(--color-muted);
+  }
+
+  .consent__text a {
+    color: var(--color-text);
+  }
+
+  .consent__actions {
+    display: flex;
+    gap: var(--space-3);
+  }
+
+  .consent button {
+    min-width: var(--tap);
+    min-height: var(--tap);
+    padding: 0;
+    background: none;
+    border: 0;
+    color: var(--color-text);
+    font: inherit;
+    cursor: pointer;
+  }
+</style>

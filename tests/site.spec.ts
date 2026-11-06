@@ -431,10 +431,12 @@ test.describe('главы @arsenynn на сайте', () => {
       await page.locator(`${block} [data-stream-next]:visible`).click();
     }
     expect(lead.sort()).toEqual(['I Left It There', 'Reflection', 'Reflection 5 years']);
-    await expect(page.locator(`${block} [data-stream-text]`)).toHaveText('Hello to the future');
-    await expect(page.locator(`${block} [data-stream-date]`)).toHaveText('Часть I · 0.1');
+    await expect(page.locator(`${block} [data-stream-text]`)).toHaveText('We must not go back');
+    await expect(page.locator(`${block} [data-stream-date]`)).toHaveText('2.4.1');
     await page.locator(`${block} [data-stream-next]:visible`).click();
-    await expect(page.locator(`${block} [data-stream-text]`)).toHaveText('I can talk to you about the atmosphere');
+    await expect(page.locator(`${block} [data-stream-text]`)).toHaveText('Obsession BST');
+    await page.locator(`${block} [data-stream-next]:visible`).click();
+    await expect(page.locator(`${block} [data-stream-text]`)).toHaveText('Obsession');
     expect(calls).toEqual([]);
   });
 
@@ -493,18 +495,23 @@ test('пробный VPN: кнопка с точной ссылкой и усл�
   await expect(page.locator('#party-protocol .project-actions__note')).toContainText('One trial per account');
 });
 
-test('контакт: шапка ведёт к блоку, блок Work тоже, ссылка на личный Telegram', async ({ page }) => {
+test('контакты: шапка ведёт к блоку, личный Telegram и почта', async ({ page }) => {
   await page.setViewportSize({ width: 320, height: 700 });
   await page.goto('/');
   await expect(page.locator('.site-header a[href*="portfolio"]')).toHaveCount(0);
   await page.locator('.site-header a[href="#contact"]').click();
   await expect(page.locator('#contact')).toBeInViewport();
-  const link = page.locator('#contact a');
-  await expect(link).toHaveCount(1);
-  await expect(link).toHaveAttribute('href', 'https://t.me/arsenynnn');
+  await expect(page.locator('.site-header a[href="#contact"]')).toHaveText('Контакты');
+  await expect(page.locator('#contact-title')).toHaveText('Контакты');
+  await expect(page.locator('#contact a')).toHaveCount(2);
+  const link = page.locator('#contact a[href="https://t.me/arsenynnn"]');
   await expect(link).toContainText('@arsenynnn');
   expect((await link.boundingBox())!.height).toBeGreaterThanOrEqual(44);
-  await expect(page.locator('#work a[href="#contact"]')).toHaveCount(1);
+  const mail = page.locator('#contact a[href="mailto:arsenynn@arsenynn.com"]');
+  await expect(mail).toContainText('arsenynn@arsenynn.com');
+  await expect(mail).not.toHaveAttribute('target');
+  expect((await mail.boundingBox())!.height).toBeGreaterThanOrEqual(44);
+  await expect(page.locator('#work a[href="#contact"]')).toHaveCount(0);
   expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBe(320);
   await page.goto('/en/');
   await expect(page.locator('.site-header a[href="#contact"]')).toHaveText('Contact');
@@ -556,6 +563,24 @@ test.describe('звук на сайте один', () => {
     await expect(page.locator(sound('arsenynn'))).not.toHaveAttribute('data-on');
     await expect(frame).toHaveAttribute('src', 'https://radio.arsenynn.quest');
   });
+});
+
+test('вступления заканчиваются номером части, на /en/ текст на английском', async ({ page }) => {
+  await page.goto('/');
+  await expect(page.locator('#part-arsenynn-1 .reading p').last()).toHaveText('I');
+  await expect(page.locator('#part-arsenynn-2 .reading p').last()).toHaveText('II');
+  await page.goto('/en/');
+  await expect(page.locator('#part-arsenynn-1 .reading p').first()).toContainText('Standing at the point');
+  await expect(page.locator('#part-arsenynn-2 .reading p').last()).toHaveText('II');
+});
+
+test('метрика выключена, пока нет номера счётчика', async ({ page }) => {
+  const calls: string[] = [];
+  page.on('request', (r) => { if (/mc\.yandex/.test(r.url())) calls.push(r.url()); });
+  await page.goto('/', { waitUntil: 'networkidle' });
+  await expect(page.locator('[data-consent]')).toHaveCount(0);
+  await expect(page.locator('.site-footer a')).toHaveCount(0);
+  expect(calls).toEqual([]);
 });
 
 test.describe('радио на сайте', () => {

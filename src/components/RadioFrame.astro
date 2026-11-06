@@ -40,7 +40,9 @@ const t = ui[toLocale(Astro.currentLocale)];
 
     // Нажатие внутри окна видно только по уходу фокуса со страницы. На iPhone такого сигнала может не быть.
     window.addEventListener('blur', () => {
-      if (document.activeElement === frame) document.dispatchEvent(new CustomEvent('site-sound', { detail: frame }));
+      if (document.activeElement !== frame) return;
+      document.dispatchEvent(new CustomEvent('site-sound', { detail: frame }));
+      document.dispatchEvent(new CustomEvent('site-metric', { detail: { name: 'radio_start' } }));
     });
   });
 </script>

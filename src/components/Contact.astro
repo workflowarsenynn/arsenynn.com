@@ -9,9 +9,9 @@ const t = ui[toLocale(Astro.currentLocale)];
     <h2 class="contact__title" id="contact-title">{t.contactLabel}</h2>
     <div class="action-list">
       {site.contact.links.map((link) => (
-        <a class="action action--row" href={link.url} target="_blank" rel="noopener">
+        <a class="action action--row" href={link.url} {...(link.url.startsWith('http') ? { target: '_blank', rel: 'noopener' } : {})}>
           <span class="contact__row">{link.label}<span class="contact__detail">{link.detail}</span></span>
-          <span class="action__arrow" aria-hidden="true">↗</span><span class="visually-hidden">{t.newTab}</span>
+          <span class="action__arrow" aria-hidden="true">↗</span>{link.url.startsWith('http') && <span class="visually-hidden">{t.newTab}</span>}
         </a>
       ))}
     </div>

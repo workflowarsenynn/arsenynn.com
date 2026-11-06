@@ -30,15 +30,21 @@ export const site = {
     line: 'Финальная битва между самоценным и рациональным',
   },
 
-  // Как написать лично. Почту arsenynn@arsenynn.com добавить сюда, когда адрес заработает.
+  // Яндекс Метрика: номер счётчика. Пока пусто, на сайте нет ни баннера, ни счётчика.
+  metrics: { yandexId: '' },
+
+  // Как написать лично.
   contact: {
-    links: [{ label: 'Telegram', detail: '@arsenynnn', url: 'https://t.me/arsenynnn' }],
+    links: [
+      { label: 'Telegram', detail: '@arsenynnn', url: 'https://t.me/arsenynnn' },
+      { label: 'Email', detail: 'arsenynn@arsenynn.com', url: 'mailto:arsenynn@arsenynn.com' },
+    ],
   },
 
   work: {
     title: 'Work / Collaboration',
     descriptor: 'collaboration / hiring / portfolio',
-    text: 'Портфолио для сотрудничества и найма: AI-автоматизация, продажи и события, видеопродакшн.',
+    text: 'Портфолио для сотрудничества и найма: AI-автоматизация, продажи и организация мероприятий, видеопродакшн.',
     links: [
       { label: 'Portfolio', url: 'https://portfolio.arsenynn.com/', primary: true },
       { label: 'IT / AI', url: 'https://portfolio.arsenynn.com/it-ai/' },
@@ -60,5 +66,31 @@ export const site = {
 
   footer: {
     name: '© @arsenynn',
+  },
+
+  // Страница о данных. Показывается вместе с Метрикой.
+  privacy: {
+    ru: {
+      title: 'Данные и cookie',
+      text: [
+        'Этот сайт использует Яндекс Метрику, чтобы понимать, что смотрят посетители и что на сайте работает плохо. Она включается только после вашего согласия.',
+        'Метрика собирает cookie, данные об устройстве и браузере, примерное местоположение, адрес страниц, источник перехода и действия на сайте: нажатия, прокрутку, запуск видео. Вебвизор записывает выборку визитов, записи хранятся 15 дней.',
+        'Данные обрабатывает ООО «Яндекс» на условиях сервиса Яндекс Метрика. Сайт не просит имя, телефон, оплату или другие данные.',
+        'Согласие можно отозвать кнопкой ниже: счётчик перестанет загружаться. Вопросы можно задать по адресу arsenynn@arsenynn.com.',
+      ],
+      reset: 'Отозвать согласие',
+      done: 'Согласие отозвано',
+    },
+    en: {
+      title: 'Data and cookies',
+      text: [
+        'This site uses Yandex Metrica to understand what visitors watch and what works badly on the site. It turns on only after your consent.',
+        'Metrica collects cookies, device and browser data, approximate location, page addresses, the referring source and actions on the site: clicks, scrolling, starting a video. Session Replay records a sample of visits, recordings are kept for 15 days.',
+        'The data is processed by Yandex LLC under the terms of the Yandex Metrica service. The site does not ask for your name, phone number, payment or any other data.',
+        'You can withdraw consent with the button below: the counter will stop loading. Questions: arsenynn@arsenynn.com.',
+      ],
+      reset: 'Withdraw consent',
+      done: 'Consent withdrawn',
+    },
   },
 } as const;
