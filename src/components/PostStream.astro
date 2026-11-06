@@ -37,20 +37,6 @@ const still = first.poster ?? first.src!;
     <div class="stream__stage" data-stream-stage>
       <img src={asset(still)} width={first.w} height={first.h} alt="" loading="lazy" decoding="async" />
     </div>
-    <button class="stream__sound" type="button" data-stream-sound hidden>
-      <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true">
-        <path class="stream__speaker" d="M4 9.5v5h3.5L12 18.5v-13L7.5 9.5z" />
-        <path class="stream__waves" d="M15 9a4 4 0 0 1 0 6M17.5 6.5a7.5 7.5 0 0 1 0 11" />
-        <path class="stream__cross" d="M15.5 9.5l5 5M20.5 9.5l-5 5" />
-      </svg>
-      <span data-stream-sound-label>{t.streamSoundOn}</span>
-    </button>
-    <button class="stream__full" type="button" data-stream-full aria-label={t.streamFullOn} hidden>
-      <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true">
-        <path class="stream__expand" d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5" />
-        <path class="stream__shrink" d="M9 4v5H4M15 4v5h5M9 20v-5H4M15 20v-5h5" />
-      </svg>
-    </button>
     <button class="stream__side stream__side--prev" type="button" data-stream-prev aria-label={t.streamPrev} disabled>←</button>
     <button class="stream__side stream__side--next" type="button" data-stream-next aria-label={t.streamNext}>→</button>
     <p class="stream__hint" data-stream-hint hidden><span aria-hidden="true">←</span> {t.streamHint} <span aria-hidden="true">→</span></p>
@@ -60,10 +46,31 @@ const still = first.poster ?? first.src!;
   <p class="stream__date" data-stream-date>{first.date}</p>
 
   <div class="stream__controls only-js">
-    <button class="stream__button" type="button" data-stream-toggle aria-pressed="false">{t.streamPause}</button>
-    <span class="stream__arrows">
-      <button class="stream__button stream__arrow" type="button" data-stream-prev aria-label={t.streamPrev} disabled>←</button>
-      <button class="stream__button stream__arrow" type="button" data-stream-next aria-label={t.streamNext}>→</button>
+    <button class="stream__button stream__icon" type="button" data-stream-toggle aria-pressed="false" aria-label={t.streamPause}>
+      <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true">
+        <path class="stream__pause" d="M8 5v14M16 5v14" />
+        <path class="stream__play" d="M7 4.5v15L19.5 12z" />
+      </svg>
+    </button>
+    <button class="stream__button stream__sound" type="button" data-stream-sound hidden>
+      <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true">
+        <path class="stream__speaker" d="M4 9.5v5h3.5L12 18.5v-13L7.5 9.5z" />
+        <path class="stream__waves" d="M15 9a4 4 0 0 1 0 6M17.5 6.5a7.5 7.5 0 0 1 0 11" />
+        <path class="stream__cross" d="M15.5 9.5l5 5M20.5 9.5l-5 5" />
+      </svg>
+      <span data-stream-sound-label>{t.streamSoundOn}</span>
+    </button>
+    <span class="stream__tools">
+      <button class="stream__button stream__icon" type="button" data-stream-full aria-label={t.streamFullOn} hidden>
+        <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true">
+          <path class="stream__expand" d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5" />
+          <path class="stream__shrink" d="M9 4v5H4M15 4v5h5M9 20v-5H4M15 20v-5h5" />
+        </svg>
+      </button>
+      <span class="stream__arrows">
+        <button class="stream__button stream__arrow" type="button" data-stream-prev aria-label={t.streamPrev} disabled>←</button>
+        <button class="stream__button stream__arrow" type="button" data-stream-next aria-label={t.streamNext}>→</button>
+      </span>
     </span>
   </div>
 </section>
@@ -217,135 +224,6 @@ const still = first.poster ?? first.src!;
     }
   }
 
-  /* Кнопка звука на самом кадре, там же, где её ищут в сторис и Reels.
-     Пока звук выключен, рядом со значком написано, что делать. Верхний угол не спорит с панелью видео. */
-  .stream__sound {
-    position: absolute;
-    top: var(--space-1);
-    right: var(--space-1);
-    display: inline-flex;
-    align-items: center;
-    gap: 0.4em;
-    min-width: var(--tap);
-    min-height: var(--tap);
-    padding: 0 0.85rem 0 0.7rem;
-    background: color-mix(in srgb, var(--color-bg) 72%, transparent);
-    border: 1px solid color-mix(in srgb, var(--color-text) 22%, transparent);
-    border-radius: 999px;
-    color: var(--color-text);
-    font: inherit;
-    font-size: var(--text-meta);
-    cursor: pointer;
-    -webkit-tap-highlight-color: transparent;
-    transition: background var(--duration) ease;
-  }
-
-  .stream__sound:hover {
-    background: var(--color-bg);
-  }
-
-  .stream__sound[hidden] {
-    display: none;
-  }
-
-  /* На весь экран: левый верхний угол, правый занят звуком. */
-  .stream__full {
-    position: absolute;
-    top: var(--space-1);
-    left: var(--space-1);
-    display: grid;
-    place-items: center;
-    width: var(--tap);
-    height: var(--tap);
-    padding: 0;
-    background: color-mix(in srgb, var(--color-bg) 72%, transparent);
-    border: 1px solid color-mix(in srgb, var(--color-text) 22%, transparent);
-    border-radius: 50%;
-    color: var(--color-text);
-    cursor: pointer;
-    -webkit-tap-highlight-color: transparent;
-    transition: background var(--duration) ease;
-  }
-
-  .stream__full:hover {
-    background: var(--color-bg);
-  }
-
-  .stream__full[hidden] {
-    display: none;
-  }
-
-  .stream__full svg {
-    fill: none;
-    stroke: currentColor;
-    stroke-width: 1.8;
-    stroke-linecap: round;
-    stroke-linejoin: round;
-  }
-
-  .stream__shrink,
-  .stream__full[data-on] .stream__expand {
-    display: none;
-  }
-
-  .stream__full[data-on] .stream__shrink {
-    display: inline;
-  }
-
-  .stream__screen:fullscreen {
-    width: 100%;
-    height: 100%;
-    margin: 0;
-    background: var(--color-press);
-  }
-
-  .stream__screen:fullscreen .stream__stage {
-    width: 100%;
-    height: 100%;
-    aspect-ratio: auto;
-  }
-
-  .stream__sound svg {
-    flex: none;
-    fill: none;
-    stroke: currentColor;
-    stroke-width: 1.8;
-    stroke-linecap: round;
-    stroke-linejoin: round;
-  }
-
-  .stream__speaker {
-    fill: currentColor;
-  }
-
-  .stream__waves {
-    display: none;
-  }
-
-  /* Звук включён: остаётся только значок, красный как акцент сайта. */
-  .stream__sound[data-on] {
-    justify-content: center;
-    padding: 0;
-    color: var(--color-accent);
-  }
-
-  .stream__sound[data-on] .stream__waves {
-    display: block;
-  }
-
-  .stream__sound[data-on] .stream__cross {
-    display: none;
-  }
-
-  .stream__sound[data-on] span {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    overflow: hidden;
-    clip-path: inset(50%);
-    white-space: nowrap;
-  }
-
   /* Абсолютная привязка к сцене: в Safari height: 100% внутри aspect-ratio не работает,
      и вертикальный кадр вырастал за сцену, а низ обрезался. */
   .stream__stage :global(img),
@@ -359,7 +237,10 @@ const still = first.poster ?? first.src!;
     animation: stream-in var(--duration-reveal, 300ms) ease both;
   }
 
+  /* Плеер сверху, а не по центру: он забирает касания себе, и свайп по середине кадра не работал бы. */
   .stream__stage :global(audio) {
+    position: absolute;
+    top: var(--space-2);
     width: calc(100% - var(--gutter) * 2);
   }
 
@@ -398,6 +279,7 @@ const still = first.poster ?? first.src!;
   }
 
   .stream__controls {
+    gap: 0;
     margin-top: var(--space-1);
     justify-content: flex-start;
   }
@@ -426,9 +308,138 @@ const still = first.poster ?? first.src!;
     color: var(--color-text);
   }
 
+  /* Кадр остаётся чистым: всё управление в одном ряду под ним. */
+  .stream__tools,
   .stream__arrows {
     display: flex;
+  }
+
+  .stream__tools {
     margin-left: auto;
+  }
+
+  .stream__icon {
+    justify-content: center;
+    color: var(--color-text);
+  }
+
+  .stream__button svg {
+    flex: none;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.8;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  .stream__play,
+  .stream__shrink,
+  [aria-pressed='true'] .stream__pause,
+  [data-on] .stream__expand {
+    display: none;
+  }
+
+  [aria-pressed='true'] .stream__play,
+  [data-on] .stream__shrink {
+    display: inline;
+  }
+
+  .stream__play {
+    fill: currentColor;
+  }
+
+  /* Пока звук выключен, рядом со значком написано, что делать. На самых узких экранах только значок. */
+  .stream__sound {
+    justify-content: center;
+    color: var(--color-text);
+  }
+
+  .stream__sound span {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+
+  @media (min-width: 22.5rem) {
+    .stream__sound {
+      flex: none;
+    }
+
+    .stream__sound:not([data-on]) span {
+      position: static;
+      width: auto;
+      height: auto;
+      overflow: visible;
+      clip-path: none;
+    }
+  }
+
+  .stream__speaker {
+    fill: currentColor;
+  }
+
+  .stream__waves {
+    display: none;
+  }
+
+  /* Звук включён: красный значок, как акцент сайта. */
+  .stream__sound[data-on] {
+    color: var(--color-accent);
+  }
+
+  .stream__sound[data-on] .stream__waves {
+    display: block;
+  }
+
+  .stream__sound[data-on] .stream__cross {
+    display: none;
+  }
+
+  /* На весь экран: только кадр, ряд кнопок сверху и исчезает, пока его не трогают.
+     Сверху, потому что низ на паузе занят панелью видео. */
+  .stream:fullscreen {
+    position: relative;
+    margin: 0;
+    background: var(--color-press);
+  }
+
+  .stream:fullscreen .stream__head,
+  .stream:fullscreen .stream__text,
+  .stream:fullscreen .stream__date {
+    display: none;
+  }
+
+  .stream:fullscreen .stream__screen {
+    position: absolute;
+    inset: 0;
+    max-width: none;
+    margin: 0;
+  }
+
+  .stream:fullscreen .stream__stage {
+    height: 100%;
+    aspect-ratio: auto;
+  }
+
+  .stream:fullscreen .stream__controls {
+    position: absolute;
+    inset: 0 0 auto;
+    margin: 0;
+    padding: var(--space-1) var(--gutter);
+    background: linear-gradient(color-mix(in srgb, var(--color-bg) 80%, transparent), transparent);
+    transition: opacity var(--duration) ease;
+  }
+
+  .stream[data-idle]:fullscreen {
+    cursor: none;
+  }
+
+  .stream[data-idle]:fullscreen .stream__controls {
+    opacity: 0;
+    pointer-events: none;
   }
 
   .stream__arrow {

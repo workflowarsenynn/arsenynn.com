@@ -267,6 +267,25 @@ test.describe('случайные посты «Бессмысленности»'
     }
   });
 
+  test('пост с аудио тоже листается свайпом по середине кадра', async ({ page }) => {
+    await page.setViewportSize({ width: 390, height: 844 });
+    await page.route('**/stream/bessmislennost.json', async (route) => {
+      const list = await (await route.fetch()).json();
+      await route.fulfill({ json: list.filter((p: { kind: string }) => p.kind === 'audio') });
+    });
+    await page.goto('/');
+    const stage = page.locator(`${block} [data-stream-stage]`);
+    await stage.scrollIntoViewIfNeeded();
+    await expect(stage.locator('audio')).toHaveCount(1);
+    const box = (await stage.boundingBox())!;
+    const y = box.y + box.height / 2;
+    await page.mouse.move(box.x + 300, y);
+    await page.mouse.down();
+    await page.mouse.move(box.x + 200, y, { steps: 4 });
+    await expect(stage.locator('.stream__ghost')).toHaveCount(1);
+    await page.mouse.up();
+  });
+
   test('свайп листает вперёд и назад, кадр идёт за пальцем, звук не трогает', async ({ page }) => {
     await page.setViewportSize({ width: 390, height: 844 });
     await page.goto('/');
@@ -352,8 +371,7 @@ test.describe('случайные посты «Бессмысленности»'
     const box = (await sound.boundingBox())!;
     const frame = (await stage.boundingBox())!;
     expect(box.height).toBeGreaterThanOrEqual(44);
-    expect(box.x + box.width).toBeLessThanOrEqual(frame.x + frame.width);
-    expect(box.y).toBeGreaterThanOrEqual(frame.y);
+    expect(box.y).toBeGreaterThanOrEqual(frame.y + frame.height);
     await sound.click();
     expect(await muted()).toBe(false);
     await expect(sound).toHaveAttribute('data-on');
@@ -363,11 +381,12 @@ test.describe('случайные посты «Бессмысленности»'
     await stage.locator('video').click();
     expect(await muted()).toBe(true);
     await expect(sound).not.toHaveAttribute('data-on');
-    // На паузе звуком управляет панель видео, кнопка не должна на неё наезжать.
+    // Кнопка под кадром и не спорит с панелью видео на паузе.
     await page.locator(`${block} [data-stream-toggle]`).click();
-    await expect(sound).toBeHidden();
-    await page.locator(`${block} [data-stream-toggle]`).click();
+    await expect(page.locator(`${block} [data-stream-toggle]`)).toHaveAttribute('aria-label', 'Смотреть дальше');
     await expect(sound).toBeVisible();
+    await page.locator(`${block} [data-stream-toggle]`).click();
+    await expect(page.locator(`${block} [data-stream-toggle]`)).toHaveAttribute('aria-label', 'Пауза');
   });
 
   test('при reduced motion смена не запускается сама', async ({ page }) => {
@@ -446,9 +465,11 @@ test.describe('главы @arsenynn на сайте', () => {
     await page.locator(stage).scrollIntoViewIfNeeded();
     const full = page.locator(`${block} [data-stream-full]`);
     await expect(full).toBeVisible();
+    await expect(page.locator(`${block} .stream__controls [data-stream-sound]`)).toBeVisible();
+    await expect(page.locator(`${block} .stream__controls [data-stream-full]`)).toBeVisible();
     await expect(full).toHaveAttribute('aria-label', 'На весь экран');
     await full.click();
-    await expect.poll(() => page.evaluate(() => document.fullscreenElement?.className ?? '')).toContain('stream__screen');
+    await expect.poll(() => page.evaluate(() => document.fullscreenElement?.className ?? '')).toContain('stream--film');
     await expect(full).toHaveAttribute('aria-label', 'Свернуть');
     await expect(page.locator(`${block} [data-stream-sound]`)).toHaveAttribute('data-on');
     const box = (await page.locator(stage).boundingBox())!;

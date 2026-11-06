@@ -17,6 +17,7 @@ type Post = {
 };
 
 const HOLD_MS = 9000;
+const IDLE_MS = 3000;
 const SWIPE_START = 10;
 const SWIPE_SHARE = 0.2;
 const SWIPE_SPEED = 0.45;
@@ -33,7 +34,6 @@ function setup(root: HTMLElement) {
   const toggle = q<HTMLButtonElement>('toggle');
   const sound = q<HTMLButtonElement>('sound');
   const full = q<HTMLButtonElement>('full');
-  const frame = stage.parentElement!;
   const soundLabel = q('sound-label');
   // Стрелок две пары: на кадре для мыши и под кадром для телефона.
   const nexts = root.querySelectorAll<HTMLButtonElement>('[data-stream-next]');
@@ -54,13 +54,17 @@ function setup(root: HTMLElement) {
   let timer = 0;
   let media: HTMLMediaElement | null = null;
   let swiped = false;
+  let dragging = false;
+  let idle = 0;
+  let woke = false;
 
   // Один элемент на все ролики: iOS разрешает звук тому видео, которое включили нажатием.
   const video = document.createElement('video');
   video.playsInline = true;
   video.muted = true;
   video.preload = 'metadata';
-  video.addEventListener('ended', () => go(1));
+  // Пока кадр тянут пальцем, смена вырвала бы его из-под пальца.
+  video.addEventListener('ended', () => { if (!dragging) go(1); });
   video.addEventListener('playing', () => { failures = 0; });
   // Несколько сбоев подряд: файлы недоступны, крутить список бесполезно.
   video.addEventListener('error', () => {
@@ -112,18 +116,25 @@ function setup(root: HTMLElement) {
     if (media === video) video.pause();
   }
 
-  // На паузе у видео своя панель со звуком: наша кнопка наехала бы на неё.
   function syncSound() {
-    sound.hidden = media !== video || paused;
+    sound.hidden = media !== video;
     full.hidden = media !== video && !document.fullscreenElement;
   }
 
   function syncFull() {
-    const on = document.fullscreenElement === frame;
+    const on = document.fullscreenElement === root;
     full.toggleAttribute('data-on', on);
     full.setAttribute('aria-label', on ? fullOff! : fullOn!);
     syncSound();
+    awake();
     if (!on) (screen.orientation as ScreenOrientation & { unlock?: () => void }).unlock?.();
+  }
+
+  // На весь экран ряд кнопок прячется, пока его не трогают.
+  function awake() {
+    root.removeAttribute('data-idle');
+    clearTimeout(idle);
+    if (document.fullscreenElement === root) idle = window.setTimeout(() => root.setAttribute('data-idle', ''), IDLE_MS);
   }
 
   // Кадр на весь экран вместе с нашими кнопками и свайпом. iPhone так не умеет, там открывается
@@ -137,7 +148,7 @@ function setup(root: HTMLElement) {
     if (paused) setPaused(false);
     else resume();
     if (document.fullscreenEnabled) {
-      frame.requestFullscreen().then(() => {
+      root.requestFullscreen().then(() => {
         const lock = (screen.orientation as ScreenOrientation & { lock?: (to: string) => Promise<void> }).lock;
         if (video.videoWidth > video.videoHeight) lock?.call(screen.orientation, 'landscape').catch(() => {});
       }).catch(() => {});
@@ -224,7 +235,7 @@ function setup(root: HTMLElement) {
 
   function setPaused(value: boolean) {
     paused = value;
-    toggle.textContent = paused ? play! : pause!;
+    toggle.setAttribute('aria-label', paused ? play! : pause!);
     toggle.setAttribute('aria-pressed', String(paused));
     video.controls = paused;
     syncSound();
@@ -246,7 +257,6 @@ function setup(root: HTMLElement) {
 
   function swipeable() {
     let start: { x: number; y: number; t: number; id: number } | null = null;
-    let dragging = false;
     let dx = 0;
     let step = 0;
     let ghost: HTMLElement | null = null;
@@ -340,7 +350,10 @@ function setup(root: HTMLElement) {
   // Системный плеер iPhone при закрытии ставит видео на паузу.
   video.addEventListener('webkitendfullscreen', () => resume());
   // Нажатие по самому кадру тоже включает звук, как в сторис. На паузе кадром управляет панель видео.
-  stage.addEventListener('click', () => { if (!swiped && media === video && !paused) toggleSound(); });
+  stage.addEventListener('click', () => { if (!swiped && !woke && media === video && !paused) toggleSound(); });
+  // Первое касание на весь экран только возвращает кнопки.
+  root.addEventListener('pointerdown', () => { woke = root.hasAttribute('data-idle'); awake(); });
+  root.addEventListener('pointermove', awake);
   root.addEventListener('keydown', (event) => {
     if (event.key === 'ArrowRight') go(1);
     else if (event.key === 'ArrowLeft' && pos > 0) go(-1);
