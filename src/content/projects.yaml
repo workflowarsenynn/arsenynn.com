@@ -513,9 +513,8 @@
     - label: Website
       url: https://partyprotocol.arsenynn.quest
       type: website
-  # Включать только после сообщения annVPN о PASS production canary и подтверждения владельца.
   trial:
-    enabled: false
+    enabled: true
     label: Попробовать VPN бесплатно — 3 дня
     note: 3 дня Party Protocol бесплатно для новых пользователей. Без оплаты и привязки карты. Один пробный период на аккаунт. Активация — в Telegram-боте.
     url: https://t.me/partyproto_bot?start=site_arsenynn
