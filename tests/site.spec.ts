@@ -431,10 +431,12 @@ test.describe('главы @arsenynn на сайте', () => {
       await page.locator(`${block} [data-stream-next]:visible`).click();
     }
     expect(lead.sort()).toEqual(['I Left It There', 'Reflection', 'Reflection 5 years']);
-    await expect(page.locator(`${block} [data-stream-text]`)).toHaveText('Hello to the future');
-    await expect(page.locator(`${block} [data-stream-date]`)).toHaveText('Часть I · 0.1');
+    await expect(page.locator(`${block} [data-stream-text]`)).toHaveText('We must not go back');
+    await expect(page.locator(`${block} [data-stream-date]`)).toHaveText('2.4.1');
     await page.locator(`${block} [data-stream-next]:visible`).click();
-    await expect(page.locator(`${block} [data-stream-text]`)).toHaveText('I can talk to you about the atmosphere');
+    await expect(page.locator(`${block} [data-stream-text]`)).toHaveText('Obsession BST');
+    await page.locator(`${block} [data-stream-next]:visible`).click();
+    await expect(page.locator(`${block} [data-stream-text]`)).toHaveText('Obsession');
     expect(calls).toEqual([]);
   });
 
@@ -561,6 +563,24 @@ test.describe('звук на сайте один', () => {
     await expect(page.locator(sound('arsenynn'))).not.toHaveAttribute('data-on');
     await expect(frame).toHaveAttribute('src', 'https://radio.arsenynn.quest');
   });
+});
+
+test('вступления заканчиваются номером части, на /en/ текст на английском', async ({ page }) => {
+  await page.goto('/');
+  await expect(page.locator('#part-arsenynn-1 .reading p').last()).toHaveText('I');
+  await expect(page.locator('#part-arsenynn-2 .reading p').last()).toHaveText('II');
+  await page.goto('/en/');
+  await expect(page.locator('#part-arsenynn-1 .reading p').first()).toContainText('Standing at the point');
+  await expect(page.locator('#part-arsenynn-2 .reading p').last()).toHaveText('II');
+});
+
+test('метрика выключена, пока нет номера счётчика', async ({ page }) => {
+  const calls: string[] = [];
+  page.on('request', (r) => { if (/mc\.yandex/.test(r.url())) calls.push(r.url()); });
+  await page.goto('/', { waitUntil: 'networkidle' });
+  await expect(page.locator('[data-consent]')).toHaveCount(0);
+  await expect(page.locator('.site-footer a')).toHaveCount(0);
+  expect(calls).toEqual([]);
 });
 
 test.describe('радио на сайте', () => {

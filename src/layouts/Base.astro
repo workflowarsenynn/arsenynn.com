@@ -6,6 +6,7 @@ import '@fontsource-variable/source-serif-4/wght.css';
 import '@fontsource-variable/manrope/wght.css';
 import '../styles/tokens.css';
 import '../styles/global.css';
+import Consent from '../components/Consent.astro';
 
 type Props = { noindex?: boolean; title?: string; description?: string; ogTitle?: string; ogType?: string; alternate?: string };
 const { noindex = false, title: pageTitle, description: pageDescription, ogTitle: pageOgTitle, ogType = 'website', alternate } = Astro.props;
@@ -63,5 +64,6 @@ const jsonLd = JSON.stringify({
   </head>
   <body>
     <slot />
+    <Consent />
   </body>
 </html>

@@ -69,6 +69,7 @@ if (dialog && typeof dialog.showModal === 'function') {
       show(link);
       dialog.showModal();
       document.dispatchEvent(new CustomEvent('site-sound', { detail: dialog }));
+      document.dispatchEvent(new CustomEvent('site-metric', { detail: { name: 'podcast_open' } }));
     });
   });
 

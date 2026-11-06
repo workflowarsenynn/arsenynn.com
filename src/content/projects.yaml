@@ -43,6 +43,16 @@
         - "Я задался целью найти триггер, который дал бы мне возможность оглянуться и наглядно структурировать свою память, исходя из отношения моих личных ассоциаций к твоей многогранной реплике, читатель."
         - "Мой поиск никак не мог закончиться просто на фотографии или конкретики в текстовом виде."
         - "Симбиоз из слова, звука и картинки, хоть и ненамного, но возвращает меня в ту реальность, которая уже является мертвой."
+        - "I"
+      introTextEn:
+        - "Standing at the point of \"now\", I am fully aware of what is happening to me today, a week ago, perhaps a month ago. I can try to make sense of what happened to me a year ago, but what came before that is a great chasm. I think it is in our nature to divide life into periods and stretches, so as to give some structure to what happens and preserve an idea of the past, however superficial."
+        - "The thing is, I know for certain that in absolutely every period of my life my thoughts, for all their endless wavering in search of the essence, were formulated around things fundamental to me. But I have no memory at all of what I was thinking, what everyday conversations were about, what I wanted at that moment, what I looked like, or what kind of person I even was."
+        - "People are also prone to changing their attitude to things, yielding to the experience acting on them and to a given that does not depend on them. In view of this, I can suppose that I and those I spoke with in the distant yesterday and today are a clot of invisible changes in thinking that have happened to them, and so are completely different people. A multitude of dead personalities, destroyed somewhere in the depths of the one that was forced to adapt to the mechanisms of the everyday."
+        - "But what they reproduced at a specific moment of their life is a finished thought, not yet altered by transience."
+        - "I set myself the goal of finding a trigger that would let me look back and give my memory a visible structure, based on how my personal associations relate to your many-sided remark, reader."
+        - "My search could not end with just a photograph or something concrete in text form."
+        - "A symbiosis of word, sound and image returns me, if only slightly, to a reality that is already dead."
+        - "I"
       chapters:
         - num: '0.1'
           title: "Hello to the future"
@@ -176,6 +186,25 @@
         - "Бессмысленность и скоротечность как система сдержек и противовесов, как две направленные тенденции, работающие друг против друга."
         - "Подводя итог, хочется сказать, что «это» не является преимуществом и не несёт в себе никаких позитивных аспектов, скорее это отклонение от нормы, но именно оно является самым естественным и настоящим, а значит заслуживает исключительного права на существование."
         - "Я нашёл несложный способ проверить и почувствовать: если действительно хочешь что-то сделать - не делай. Правда в том, что тебе просто придётся это сделать независимо от твоих желаний, потому что твой недуг будет этого требовать. В этом заключается настоящее, в этом есть «это»."
+        - "II"
+      introTextEn:
+        - "As I see it, there are only a couple of things capable of causing \"this\" to appear."
+        - "As for the first thing, it flashes through my head every time I am asked: \"Why?\". In most cases the question is asked in the context of rather base categories of life, expecting an answer that is clear and rational to the other person, based on their usual formulations and leading to a goal they understand."
+        - "At the same time there is a global question that sounds exactly the same, and to which, at this stage of general development, neither I, nor the person I am talking to, nor you, reader, can give any answer. In most cases this context of the question is ignored and is out of place. That is, a person is interested in the base without seeking an answer to the global, for if that were so, the question would not exist at all."
+        - "In view of this, it is almost never of value to me to formulate and give any answer. It makes more sense for the other person to ask their God first."
+        - "As for \"this\", it is always meaningless, and that is the most important factor of its existence."
+        - "After all, everything aimed at meaning and interest exists in the utilitarian spheres of life, and works excellently there, but if we are talking about \"this\", it will always be useless."
+        - "The problem with this way of thinking is that it embodies a kind of black hole. An endless reflection of things incredible in scale and depth, yet useless and not applicable to anything, which will always lead to everything and in fact to nothing. The interest, though, is that this can work in the opposite direction too. Which means that not everything useless is so. What matters is the very principle of thinking."
+        - "The second thing that affects \"this\" and works as a counterweight to the first is transience and timeliness. By and large, a premonition of death. It works as a kind of temporary not giving a fuck about your own principles and passes through all the established mechanisms of thinking."
+        - "A sharp simplification of reality and ease in making decisions."
+        - "Absolutely everything that has been lucky enough to materialise in one form or another exists only thanks to this thing."
+        - "I had a sticker on the mirror with what passed for a Tolstoy quote: \"Better to do nothing than to do nothing\"."
+        - "An incredible anchor for falling silent forever, but that is its essence."
+        - "From time to time I turn these words over, because my agreement with and contradiction of the phrase gave me two contradictory things I have learned to cope with."
+        - "Meaninglessness and transience as a system of checks and balances, as two directed tendencies working against each other."
+        - "To sum up, I would say that \"this\" is not an advantage and carries no positive aspects, it is rather a deviation from the norm, but it is the most natural and real thing, which means it deserves an exclusive right to exist."
+        - "I found a simple way to check and feel it: if you really want to do something, don't. The truth is that you will simply have to do it regardless of your wishes, because your affliction will demand it. In this lies the real thing, in this there is \"this\"."
+        - "II"
       chapters:
         - num: '2.0'
           title: "Part Two"

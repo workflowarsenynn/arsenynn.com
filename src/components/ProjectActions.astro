@@ -44,7 +44,7 @@ const chapterOf = (url: string) => (staged.has(postOf(url)) ? postOf(url) : unde
       part={part.label}
       items={part.chapters.map((ch) => ({ ...ch, chapter: chapterOf(ch.url) }))}
       introId={`intro-${project.id}-${i + 1}`}
-      introText={locale === 'ru' ? part.introText : undefined}
+      introText={locale === 'ru' ? part.introText : part.introTextEn}
       introUrl={part.intro}
     />
   ))}

@@ -5,5 +5,4 @@ const months: Record<string, string> = {
 };
 
 export const englishDate = (date: string) => date
-  .replace('Часть', 'Part')
   .replace(/^(\d+) ([а-я]+) (\d{4})$/, (_, day, month, year) => `${months[month]} ${day}, ${year}`);
