@@ -267,6 +267,25 @@ test.describe('случайные посты «Бессмысленности»'
     }
   });
 
+  test('пост с аудио тоже листается свайпом по середине кадра', async ({ page }) => {
+    await page.setViewportSize({ width: 390, height: 844 });
+    await page.route('**/stream/bessmislennost.json', async (route) => {
+      const list = await (await route.fetch()).json();
+      await route.fulfill({ json: list.filter((p: { kind: string }) => p.kind === 'audio') });
+    });
+    await page.goto('/');
+    const stage = page.locator(`${block} [data-stream-stage]`);
+    await stage.scrollIntoViewIfNeeded();
+    await expect(stage.locator('audio')).toHaveCount(1);
+    const box = (await stage.boundingBox())!;
+    const y = box.y + box.height / 2;
+    await page.mouse.move(box.x + 300, y);
+    await page.mouse.down();
+    await page.mouse.move(box.x + 200, y, { steps: 4 });
+    await expect(stage.locator('.stream__ghost')).toHaveCount(1);
+    await page.mouse.up();
+  });
+
   test('свайп листает вперёд и назад, кадр идёт за пальцем, звук не трогает', async ({ page }) => {
     await page.setViewportSize({ width: 390, height: 844 });
     await page.goto('/');

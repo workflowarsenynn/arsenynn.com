@@ -54,6 +54,7 @@ function setup(root: HTMLElement) {
   let timer = 0;
   let media: HTMLMediaElement | null = null;
   let swiped = false;
+  let dragging = false;
   let idle = 0;
   let woke = false;
 
@@ -62,7 +63,8 @@ function setup(root: HTMLElement) {
   video.playsInline = true;
   video.muted = true;
   video.preload = 'metadata';
-  video.addEventListener('ended', () => go(1));
+  // Пока кадр тянут пальцем, смена вырвала бы его из-под пальца.
+  video.addEventListener('ended', () => { if (!dragging) go(1); });
   video.addEventListener('playing', () => { failures = 0; });
   // Несколько сбоев подряд: файлы недоступны, крутить список бесполезно.
   video.addEventListener('error', () => {
@@ -255,7 +257,6 @@ function setup(root: HTMLElement) {
 
   function swipeable() {
     let start: { x: number; y: number; t: number; id: number } | null = null;
-    let dragging = false;
     let dx = 0;
     let step = 0;
     let ghost: HTMLElement | null = null;

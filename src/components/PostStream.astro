@@ -237,7 +237,10 @@ const still = first.poster ?? first.src!;
     animation: stream-in var(--duration-reveal, 300ms) ease both;
   }
 
+  /* Плеер сверху, а не по центру: он забирает касания себе, и свайп по середине кадра не работал бы. */
   .stream__stage :global(audio) {
+    position: absolute;
+    top: var(--space-2);
     width: calc(100% - var(--gutter) * 2);
   }
 
