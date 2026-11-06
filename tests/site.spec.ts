@@ -141,19 +141,19 @@ test('workflow: без Portfolio, 11 работ лентой, кадры и ви
 test('@arsenynn: части открыты лентами с кадрами, ссылки на Telegram, без строки YouTube', async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
   await page.goto('/');
-  for (const [id, count] of [['part-arsenynn-1', 18], ['part-arsenynn-2', 9]] as const) {
+  for (const [id, count] of [['part-arsenynn-1', 19], ['part-arsenynn-2', 9]] as const) {
     const strip = page.locator(`#${id}`);
     await expect(strip).toBeVisible();
     await expect(strip.locator('.strip__count')).toHaveText(String(count));
     const chapters = strip.locator('a.strip__card');
     await expect(chapters).toHaveCount(count);
-    for (const link of await chapters.all()) await expect(link).toHaveAttribute('href', /^https:\/\/t\.me\/arsenynn\/\d+$/);
+    for (const link of await chapters.all()) await expect(link).toHaveAttribute('href', /^https:\/\/t\.me\/(arsenynn|bessmislennost)\/\d+$/);
     await expect(strip.locator('a[href*="youtube.com"]')).toHaveCount(0);
     const scrollable = await strip.locator('.strip__track').evaluate((el) => el.scrollWidth > el.clientWidth);
     expect(scrollable).toBe(true);
   }
   // у всех глав первой части есть кадр
-  await expect(page.locator('#part-arsenynn-1 .strip__frame img')).toHaveCount(18);
+  await expect(page.locator('#part-arsenynn-1 .strip__frame img')).toHaveCount(19);
 });
 
 test('@arsenynn: «Вступление» раскрывает текст введения внутри части', async ({ page }) => {
@@ -401,11 +401,19 @@ test.describe('главы @arsenynn на сайте', () => {
     page.on('request', (r) => { if (/youtube/.test(r.url())) calls.push(r.url()); });
     await page.goto('/');
     await page.locator(stage).scrollIntoViewIfNeeded();
-    await expect(page.locator(`${block} [data-stream-count]`)).toHaveText('1 / 26');
-    await expect(page.locator(`${block} [data-stream-text]`)).toHaveText('Hello to the future');
-    await expect(page.locator(`${block} [data-stream-date]`)).toHaveText('Часть I · 0.1');
+    await expect(page.locator(`${block} [data-stream-count]`)).toHaveText('1 / 27');
+    await expect(page.locator(`${block} .stream__label`)).toHaveText(/^Смотреть\s*1 \/ 27$/);
+    await expect(page.locator(`${block} .stream__label .visually-hidden`)).toHaveCSS('position', 'absolute');
     const box = (await page.locator(stage).boundingBox())!;
     expect(Math.abs(box.width / box.height - 16 / 9)).toBeLessThan(0.02);
+    const lead = [];
+    for (let i = 0; i < 3; i += 1) {
+      lead.push(await page.locator(`${block} [data-stream-text]`).textContent());
+      await page.locator(`${block} [data-stream-next]:visible`).click();
+    }
+    expect(lead.sort()).toEqual(['I Left It There', 'Reflection', 'Reflection 5 years']);
+    await expect(page.locator(`${block} [data-stream-text]`)).toHaveText('Hello to the future');
+    await expect(page.locator(`${block} [data-stream-date]`)).toHaveText('Часть I · 0.1');
     await page.locator(`${block} [data-stream-next]:visible`).click();
     await expect(page.locator(`${block} [data-stream-text]`)).toHaveText('I can talk to you about the atmosphere');
     expect(calls).toEqual([]);
@@ -422,10 +430,60 @@ test.describe('главы @arsenynn на сайте', () => {
     await page.locator('#part-arsenynn-2 [data-video="ecPJAgF_-bM"]').click();
     await expect(page.locator('[data-player]')).toBeVisible();
   });
+
+  test('Reflection 5 years в конце части I, ссылка ведёт в её канал', async ({ page }) => {
+    await page.goto('/');
+    const card = page.locator('#part-arsenynn-1 .strip__item').last().locator('[data-chapter]');
+    await expect(card).toHaveAttribute('data-chapter', '2102');
+    await card.click();
+    await expect(page.locator(`${block} [data-stream-text]`)).toHaveText('Reflection 5 years');
+    await expect(page.locator(`${block} [data-stream-link]`)).toHaveAttribute('href', 'https://t.me/bessmislennost/2102');
+  });
+
+  test('на весь экран: кадр заполняет экран, звук включён, выход возвращает блок', async ({ page }) => {
+    await page.setViewportSize({ width: 1280, height: 720 });
+    await page.goto('/');
+    await page.locator(stage).scrollIntoViewIfNeeded();
+    const full = page.locator(`${block} [data-stream-full]`);
+    await expect(full).toBeVisible();
+    await expect(full).toHaveAttribute('aria-label', 'На весь экран');
+    await full.click();
+    await expect.poll(() => page.evaluate(() => document.fullscreenElement?.className ?? '')).toContain('stream__screen');
+    await expect(full).toHaveAttribute('aria-label', 'Свернуть');
+    await expect(page.locator(`${block} [data-stream-sound]`)).toHaveAttribute('data-on');
+    const box = (await page.locator(stage).boundingBox())!;
+    expect(box.width).toBe(1280);
+    expect(box.height).toBe(720);
+    await full.click();
+    await expect.poll(() => page.evaluate(() => document.fullscreenElement)).toBeNull();
+    await expect(full).toHaveAttribute('aria-label', 'На весь экран');
+  });
+});
+
+test.describe('работы workflow на сайте', () => {
+  const block = '#workflow .stream';
+
+  test.beforeEach(async ({ page }) => {
+    await page.route(/\/media\/workflow\/|arsenynn-media/, (route) => route.fulfill({ path: 'public/media/annflow/94.mp4', contentType: 'video/mp4' }));
+  });
+
+  test('блок над лентой, работы по порядку, карточка играет в блоке со звуком', async ({ page }) => {
+    await page.goto('/');
+    await page.locator(`${block} [data-stream-stage]`).scrollIntoViewIfNeeded();
+    await expect(page.locator(`${block} [data-stream-count]`)).toHaveText('1 / 11');
+    await expect(page.locator(`${block} [data-stream-text]`)).toHaveText('Окутало');
+    await expect(page.locator('#contents-workflow [data-video]')).toHaveCount(0);
+    await expect(page.locator('#contents-workflow [data-chapter]')).toHaveCount(11);
+    await page.locator('#contents-workflow [data-chapter="150"]').click();
+    await expect(page.locator(`${block} [data-stream-text]`)).toHaveText('HABAROVY');
+    await expect(page.locator(`${block} [data-stream-link]`)).toHaveAttribute('href', 'https://t.me/ww_arsenynn/150');
+    await expect(page.locator(`${block} [data-stream-sound]`)).toHaveAttribute('data-on');
+    await expect(page.locator('[data-player]')).toBeHidden();
+  });
 });
 
 test.describe('плеер глав', () => {
-  const firstChapter = '#contents-workflow [data-video="dmTiMsocUFE"]';
+  const firstChapter = '#part-arsenynn-2 [data-video="ecPJAgF_-bM"]';
 
   test.beforeEach(async ({ page }) => {
     await page.route(/youtube-nocookie\.com/, (route) => route.fulfill({ contentType: 'text/html', body: '<title>stub</title>' }));
@@ -439,37 +497,23 @@ test.describe('плеер глав', () => {
     await page.locator(firstChapter).click();
     const player = page.locator('[data-player]');
     await expect(player).toBeVisible();
-    await expect(player.locator('iframe')).toHaveAttribute('src', /youtube-nocookie\.com\/embed\/dmTiMsocUFE\?/);
-    await expect(player.locator('h2')).toHaveText('Окутало');
-    await expect(player.locator('[data-player-telegram]')).toHaveAttribute('href', 'https://t.me/ww_arsenynn/194');
+    await expect(player.locator('iframe')).toHaveAttribute('src', /youtube-nocookie\.com\/embed\/ecPJAgF_-bM\?/);
+    await expect(player.locator('h2')).toHaveText('Backstage podcast #1');
+    await expect(player.locator('[data-player-telegram]')).toHaveAttribute('href', 'https://t.me/arsenynn/54');
     expect(page.url()).not.toContain('youtube');
     expect(page.context().pages()).toHaveLength(1);
   });
 
-  test('«Дальше» пропускает главы без видео, закрытие убирает iframe и возвращает фокус', async ({ page }) => {
+  test('закрытие убирает iframe и возвращает фокус', async ({ page }) => {
     await page.goto('/');
     const link = page.locator(firstChapter);
     await link.click();
     const player = page.locator('[data-player]');
-    await expect(player.locator('[data-player-prev]')).toBeDisabled();
-    await player.locator('[data-player-next]').click();
-    await expect(player.locator('h2')).toHaveText('ВТРНК Radio Show');
+    await expect(player).toBeVisible();
     await page.keyboard.press('Escape');
     await expect(player).toBeHidden();
     await expect(player.locator('iframe')).toHaveCount(0);
     await expect(link).toBeFocused();
-  });
-
-  test('workflow: работа открывается в плеере, все 11 работ с видео', async ({ page }) => {
-    await page.goto('/');
-    const works = page.locator('#contents-workflow [data-video]');
-    await expect(works).toHaveCount(11);
-    await works.first().click();
-    const player = page.locator('[data-player]');
-    await expect(player).toBeVisible();
-    await expect(player.locator('h2')).toHaveText('Окутало');
-    await expect(player.locator('[data-player-meta]')).toHaveText('workflow@arsenynn · 2025');
-    await expect(player.locator('iframe')).toHaveAttribute('src', /embed\/dmTiMsocUFE\?/);
   });
 
   test('хиты выделены красным, номер и время разведены', async ({ page }) => {

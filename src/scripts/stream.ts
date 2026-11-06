@@ -10,6 +10,10 @@ type Post = {
   poster?: string;
   w?: number;
   h?: number;
+  /** Пост в другом канале. */
+  url?: string;
+  /** Идёт первым, порядок таких постов случайный. */
+  lead?: boolean;
 };
 
 const HOLD_MS = 9000;
@@ -28,11 +32,13 @@ function setup(root: HTMLElement) {
   const hint = q('hint');
   const toggle = q<HTMLButtonElement>('toggle');
   const sound = q<HTMLButtonElement>('sound');
+  const full = q<HTMLButtonElement>('full');
+  const frame = stage.parentElement!;
   const soundLabel = q('sound-label');
   // Стрелок две пары: на кадре для мыши и под кадром для телефона.
   const nexts = root.querySelectorAll<HTMLButtonElement>('[data-stream-next]');
   const prevs = root.querySelectorAll<HTMLButtonElement>('[data-stream-prev]');
-  const { stream, base, channel, pause, play, soundOn, soundOff, order: mode } = root.dataset;
+  const { stream, base, channel, pause, play, soundOn, soundOff, fullOn, fullOff, order: mode } = root.dataset;
   const saveData = (navigator as Navigator & { connection?: { saveData?: boolean } }).connection?.saveData;
   const still = matchMedia('(prefers-reduced-motion: reduce)').matches;
   const calm = still || Boolean(saveData);
@@ -65,15 +71,19 @@ function setup(root: HTMLElement) {
   const url = (path: string) => (path.startsWith('http') ? path : `${base}${path.replace(/^\//, '')}`);
   const frameOf = (post?: Post) => post?.poster ?? (post?.kind === 'image' ? post.src : undefined);
 
-  // Главы идут по порядку, посты вперемешку.
-  function shuffled(list: Post[]) {
+  function mixed(list: Post[]) {
     const out = [...list];
-    if (mode === 'sequence') return out;
     for (let i = out.length - 1; i > 0; i -= 1) {
       const j = Math.floor(Math.random() * (i + 1));
       [out[i], out[j]] = [out[j], out[i]];
     }
     return out;
+  }
+
+  // Посты вперемешку. Главы по порядку, главные из них вперёд и каждый раз в другом порядке.
+  function shuffled(list: Post[]) {
+    if (mode !== 'sequence') return mixed(list);
+    return [...mixed(list.filter((post) => post.lead)), ...list.filter((post) => !post.lead)];
   }
 
   function hold() {
@@ -105,6 +115,35 @@ function setup(root: HTMLElement) {
   // На паузе у видео своя панель со звуком: наша кнопка наехала бы на неё.
   function syncSound() {
     sound.hidden = media !== video || paused;
+    full.hidden = media !== video && !document.fullscreenElement;
+  }
+
+  function syncFull() {
+    const on = document.fullscreenElement === frame;
+    full.toggleAttribute('data-on', on);
+    full.setAttribute('aria-label', on ? fullOff! : fullOn!);
+    syncSound();
+    if (!on) (screen.orientation as ScreenOrientation & { unlock?: () => void }).unlock?.();
+  }
+
+  // Кадр на весь экран вместе с нашими кнопками и свайпом. iPhone так не умеет, там открывается
+  // системный плеер. Человек сам решил смотреть, поэтому сразу со звуком.
+  function toggleFull() {
+    if (document.fullscreenElement) {
+      document.exitFullscreen();
+      return;
+    }
+    setMuted(false);
+    if (paused) setPaused(false);
+    else resume();
+    if (document.fullscreenEnabled) {
+      frame.requestFullscreen().then(() => {
+        const lock = (screen.orientation as ScreenOrientation & { lock?: (to: string) => Promise<void> }).lock;
+        if (video.videoWidth > video.videoHeight) lock?.call(screen.orientation, 'landscape').catch(() => {});
+      }).catch(() => {});
+      return;
+    }
+    (video as HTMLVideoElement & { webkitEnterFullscreen?: () => void }).webkitEnterFullscreen?.();
   }
 
   function setMuted(value: boolean) {
@@ -156,7 +195,7 @@ function setup(root: HTMLElement) {
     stage.replaceChildren(el);
     text.textContent = post.kind === 'text' ? '' : post.text;
     date.textContent = post.date;
-    link.href = `${channel}/${post.post}`;
+    link.href = post.url ?? `${channel}/${post.post}`;
     count.textContent = `${(pos % posts.length) + 1} / ${posts.length}`;
     syncSound();
     prevs.forEach((button) => { button.disabled = pos === 0; });
@@ -296,6 +335,10 @@ function setup(root: HTMLElement) {
   nexts.forEach((button) => button.addEventListener('click', () => { learned(); go(1); }));
   prevs.forEach((button) => button.addEventListener('click', () => { if (pos > 0) go(-1); }));
   sound.addEventListener('click', toggleSound);
+  full.addEventListener('click', toggleFull);
+  document.addEventListener('fullscreenchange', syncFull);
+  // Системный плеер iPhone при закрытии ставит видео на паузу.
+  video.addEventListener('webkitendfullscreen', () => resume());
   // Нажатие по самому кадру тоже включает звук, как в сторис. На паузе кадром управляет панель видео.
   stage.addEventListener('click', () => { if (!swiped && media === video && !paused) toggleSound(); });
   root.addEventListener('keydown', (event) => {

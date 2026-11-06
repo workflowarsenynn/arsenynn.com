@@ -48,3 +48,6 @@ jobs:
     steps:
       - id: deployment
         uses: actions/deploy-pages@v4
+        # Сайт с видео весит больше 500 MB: стандартных 10 минут может не хватить.
+        with:
+          timeout: 1800000
