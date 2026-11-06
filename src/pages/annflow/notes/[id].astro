@@ -20,7 +20,7 @@ export async function getStaticPaths() {
 
 type Props = { note: Note; series: Series; index: number; prev?: Note; next?: Note; nextSeries?: Series };
 const { note, series, index, prev, next, nextSeries } = Astro.props as Props;
-if (!note) return Astro.redirect(asset(`/annflow/projects/${series.slug}/`));
+if (!note) return Astro.redirect(asset(`/annflow/projects/${series.slug}/`), 301);
 const { title, publishedAt } = note.data;
 const description = (note.body ?? '').replace(/[*_`#>\\[\]]|\(http[^)]*\)|\(\/[^)]*\)/g, '').replace(/\s+/g, ' ').trim().slice(0, 155);
 const crossing = next && nextSeries && nextSeries.slug !== series.slug;
