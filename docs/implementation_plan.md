@@ -1,5 +1,5 @@
 # Implementation Plan
-LastUpdated: 2026-11-06 16:35 MSK
+LastUpdated: 2026-11-06 16:57 MSK
 
 ## Todoist Sync
 - Sync: manual
@@ -29,7 +29,7 @@ LastUpdated: 2026-11-06 16:35 MSK
 - PushPolicy: auto-safe
 
 ## Status
-- Stage: Build (первый мир: annFlow на сайте, индекс в проде на https://arsenynn.com, последняя фаза 41)
+- Stage: Build (первый мир: annFlow на сайте, индекс в проде на https://arsenynn.com, последняя фаза 42)
 - Направление задано `docs/Advisory/deep_research_and_implementation_direction.md`: оставить Astro и статику, развивать фазами, каждая фаза отдельным деплоем с точкой отката.
 - Сейчас на проде: hero с портретом, индекс из семи проектов по центру, главы @arsenynn играют на сайте со склада `workflowarsenynn/arsenynn-media`, работы workflow в таком же блоке, подкаст 2.5 в плеере YouTube, RU и /en/, только тёмная тема. Новая стадия: весь канал annFlow на сайте, 66 заметок в 8 сериях.
 - Передача проекта и рабочий цикл: `docs/handoff.md`.
@@ -75,6 +75,7 @@ LastUpdated: 2026-11-06 16:35 MSK
 - `rollback/phase-39`: весь экран, Reflection 5 years, работы workflow на сайте (c9425b8).
 - `rollback/phase-40`: управление плеером в ряд под кадром, свайп на постах с аудио (cfd1cb1).
 - `rollback/phase-41`: окно радио и кнопка «Слушать эфир» (98febfa).
+- `rollback/phase-42`: на сайте звучит что-то одно, кнопка VPN выключена (487084a).
 - Откат: PR из revert-коммита фазы в `main` или `git revert <merge-commit>`; GitHub Actions пересоберёт сайт за 1–2 минуты.
 
 ## Done
