@@ -1,8 +1,8 @@
 ---
 import { toLocale, ui } from '../lib/i18n';
 import { asset } from '../data/asset';
-type Props = { label: string; url: string; primary?: boolean; variant?: 'row' | 'text' };
-const { label, url, primary = false, variant = 'row' } = Astro.props;
+type Props = { label: string; url: string; primary?: boolean; variant?: 'row' | 'text'; live?: boolean };
+const { label, url, primary = false, variant = 'row', live = false } = Astro.props;
 const t = ui[toLocale(Astro.currentLocale)];
 const internal = url.startsWith('/');
 ---
@@ -12,5 +12,5 @@ const internal = url.startsWith('/');
   target={internal ? undefined : '_blank'}
   rel={internal ? undefined : 'noopener'}
 >
-  {label}<span class="action__arrow" aria-hidden="true">{internal ? '→' : '↗'}</span>{!internal && <span class="visually-hidden">{t.newTab}</span>}
+  <span class="action__label">{label}{live && <span class="action__live" aria-hidden="true"></span>}</span><span class="action__arrow" aria-hidden="true">{internal ? '→' : '↗'}</span>{!internal && <span class="visually-hidden">{t.newTab}</span>}
 </a>

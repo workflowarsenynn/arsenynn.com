@@ -120,6 +120,42 @@ html:not(.js) .only-js {
   color: var(--color-accent);
 }
 
+.action__label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6em;
+}
+
+/* Огонёк эфира: мигает, как лампа ON AIR. */
+.action__live {
+  flex: none;
+  width: 0.55em;
+  height: 0.55em;
+  background: var(--color-accent);
+  border-radius: 50%;
+  animation: on-air 1.6s ease-out infinite;
+}
+
+@keyframes on-air {
+  0% {
+    box-shadow: 0 0 0 0 color-mix(in srgb, var(--color-accent) 60%, transparent);
+  }
+
+  50% {
+    opacity: 0.55;
+  }
+
+  100% {
+    box-shadow: 0 0 0 0.6em transparent;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .action__live {
+    animation: none;
+  }
+}
+
 .action__arrow {
   flex: none;
   font-size: 1.1em;

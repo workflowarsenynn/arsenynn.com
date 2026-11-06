@@ -1,0 +1,98 @@
+---
+// Радио в маленьком окне: настоящий сайт эфира, уменьшенный целиком, поэтому кнопки в нём
+// остаются пропорциональными кадру. Запуск кнопкой внутри окна: так звук разрешён и на iPhone.
+// allow="autoplay" не ставим, иначе эфир сам заиграет при прокрутке страницы.
+import { toLocale, ui } from '../lib/i18n';
+
+type Props = { url: string; title: string };
+const { url, title } = Astro.props;
+const t = ui[toLocale(Astro.currentLocale)];
+---
+<section class="radio" aria-label={t.radioLabel}>
+  <div class="radio__head">
+    <h3 class="radio__label">{t.radioLabel}</h3>
+    <a class="radio__open" href={url} target="_blank" rel="noopener">
+      {t.radioOpen}<span aria-hidden="true">↗</span><span class="visually-hidden">{t.newTab}</span>
+    </a>
+  </div>
+  <div class="radio__screen">
+    <iframe data-radio={url} title={title}></iframe>
+  </div>
+</section>
+
+<script>
+  // Эфир грузится, только когда окно на экране: сразу тянет около 7 MB и считает слушателя.
+  document.querySelectorAll<HTMLIFrameElement>('[data-radio]').forEach((frame) => {
+    const seen = new IntersectionObserver(([entry]) => {
+      if (!entry.isIntersecting) return;
+      frame.src = frame.dataset.radio!;
+      seen.disconnect();
+    }, { rootMargin: '200px' });
+    seen.observe(frame);
+  });
+</script>
+
+<style>
+  .radio {
+    --radio-scale: 0.6;
+    margin-block: var(--space-2);
+  }
+
+  .radio__head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-2);
+    min-height: var(--tap);
+  }
+
+  .radio__label {
+    margin: 0;
+    color: var(--color-muted);
+    font: inherit;
+    font-size: var(--text-meta);
+  }
+
+  .radio__open {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3em;
+    min-height: var(--tap);
+    color: var(--color-muted);
+    font-size: var(--text-meta);
+    text-decoration: none;
+  }
+
+  .radio__open:hover {
+    color: var(--color-text);
+  }
+
+  .radio__screen {
+    position: relative;
+    margin-inline: calc(var(--gutter) * -1);
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+    background: var(--color-press);
+  }
+
+  .radio__screen iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: calc(100% / var(--radio-scale));
+    height: calc(100% / var(--radio-scale));
+    border: 0;
+    transform: scale(var(--radio-scale));
+    transform-origin: 0 0;
+  }
+
+  @media (min-width: 48rem) {
+    .radio {
+      --radio-scale: 0.8;
+    }
+
+    .radio__screen {
+      margin-inline: 0;
+    }
+  }
+</style>

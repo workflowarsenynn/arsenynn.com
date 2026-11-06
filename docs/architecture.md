@@ -1,5 +1,5 @@
 # Architecture
-LastUpdated: 2026-11-06 08:38 MSK
+LastUpdated: 2026-11-06 16:13 MSK
 
 Статус: MVP реализован по этой архитектуре. Требования и их причины находятся в `docs/brief.md`, здесь только технические решения.
 
@@ -101,6 +101,7 @@ type Project = {
 - Оглавление на /en/: `noteEn` и необязательное `titleEn`, имена собственные остаются как есть.
 - Мир annFlow: коллекция `annflow` (`src/content/annflow/notes/*.md`), серии в `channel.json`, страницы `src/pages/annflow/`, данные и подсчёты в `src/lib/annflow.ts`, текст заметки в классе `.prose` в `global.css`. На страницах чтения нет клиентского JS, оглавление заметки в `<details>`. Страница серии показывает оглавление и под ним все посты, тело поста общее: `NoteBody.astro`. Ленты на главной: `ProjectStrip.astro` у всех `parts` и `contents`, поле `contentsAll` в `projects.yaml` добавляет ссылку «Все». Кадры в `public/thumbs/` 800×450. `Base.astro` принимает `title`, `description`, `ogTitle`, `ogType`. hreflang есть только у главной.
 - Главы @arsenynn: тот же блок в режиме `film` (по порядку, 16:9), список `src/content/stream/arsenynn.json`, файлы на `workflowarsenynn.github.io/arsenynn-media/`. Карточка с `data-chapter` включает главу в блоке, плеер YouTube остался у workflow и подкаста.
+- Радио: `RadioFrame.astro`, адрес в поле `radio` проекта, iframe с сайтом эфира получает адрес, когда окно у экрана.
 - Работы workflow: тот же блок, список `src/content/stream/workflow.json`. Файлы частью на складе, частью в `public/media/workflow/`: склад заполнен.
 - Случайные посты: `PostStream.astro`, `src/scripts/stream.ts`, список `src/content/stream/bessmislennost.json` отдаётся как `/stream/bessmislennost.json`, файлы в `public/media/bis/`. Включается полем `stream` в `projects.yaml`.
 - Плеер: `VideoPlayer.astro` и `src/scripts/player.ts`. Строка главы или работы с `youtube` получает `data-video`, скрипт открывает `<dialog>` и создаёт iframe по нажатию. Без JS это ссылка на Telegram. Адреса провайдера в `site.video`.
