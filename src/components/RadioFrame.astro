@@ -29,6 +29,19 @@ const t = ui[toLocale(Astro.currentLocale)];
       seen.disconnect();
     }, { rootMargin: '200px' });
     seen.observe(frame);
+
+    // Звук на сайте один. Окно чужое, поставить его на паузу нельзя, поэтому выгружаем:
+    // эфир замолкает, а когда окно снова на экране, загружается с кнопкой запуска.
+    document.addEventListener('site-sound', (event) => {
+      if ((event as CustomEvent).detail === frame || !frame.src.startsWith('http')) return;
+      frame.src = 'about:blank';
+      seen.observe(frame);
+    });
+
+    // Нажатие внутри окна видно только по уходу фокуса со страницы. На iPhone такого сигнала может не быть.
+    window.addEventListener('blur', () => {
+      if (document.activeElement === frame) document.dispatchEvent(new CustomEvent('site-sound', { detail: frame }));
+    });
   });
 </script>
 
