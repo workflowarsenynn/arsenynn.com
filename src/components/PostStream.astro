@@ -4,10 +4,12 @@
 import { toLocale, ui } from '../lib/i18n';
 import { asset } from '../data/asset';
 import { streamPosts } from '../lib/stream';
+import { englishDate } from '../lib/stream-date';
 
 type Props = { source: string; channel: string; label?: string; film?: boolean };
 const { source, channel, label, film = false } = Astro.props;
-const t = ui[toLocale(Astro.currentLocale)];
+const locale = toLocale(Astro.currentLocale);
+const t = ui[locale];
 const posts = streamPosts(source);
 const first = posts.find((p) => p.lead) ?? posts.find((p) => p.kind === 'image') ?? posts[0];
 const still = first.poster ?? first.src!;
@@ -25,6 +27,7 @@ const still = first.poster ?? first.src!;
   data-sound-off={t.streamSoundOff}
   data-full-on={t.streamFullOn}
   data-full-off={t.streamFullOff}
+  data-en={locale === 'en' ? '' : undefined}
 >
   <div class="stream__head">
     <h3 class="stream__label"><span class="visually-hidden">{label ?? t.streamLabel}</span><span class="stream__count" data-stream-count>{posts.length}</span></h3>
@@ -43,7 +46,7 @@ const still = first.poster ?? first.src!;
   </div>
 
   <p class="stream__text" data-stream-text>{first.text}</p>
-  <p class="stream__date" data-stream-date>{first.date}</p>
+  <p class="stream__date" data-stream-date>{locale === 'en' ? englishDate(first.date) : first.date}</p>
 
   <div class="stream__controls only-js">
     <button class="stream__button stream__icon" type="button" data-stream-toggle aria-pressed="false" aria-label={t.streamPause}>

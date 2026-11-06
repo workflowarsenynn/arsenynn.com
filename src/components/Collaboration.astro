@@ -3,7 +3,9 @@ import { site } from '../data/site';
 import ActionLink from './ActionLink.astro';
 import { toLocale, ui } from '../lib/i18n';
 const { work } = site;
-const text = toLocale(Astro.currentLocale) === 'en' ? site.en.workText : work.text;
+const locale = toLocale(Astro.currentLocale);
+const text = locale === 'en' ? site.en.workText : work.text;
+const t = ui[locale];
 ---
 <section class="work container" id="work" aria-labelledby="work-title">
   <div class="work__inner">
@@ -14,12 +16,13 @@ const text = toLocale(Astro.currentLocale) === 'en' ? site.en.workText : work.te
       {work.links.map((link) =>
         'soon' in link && link.soon ? (
           <span class="action action--row work__soon" aria-disabled="true">
-            {link.label}<span class="work__soon-label">{ui[toLocale(Astro.currentLocale)].soon}</span>
+            {link.label}<span class="work__soon-label">{t.soon}</span>
           </span>
         ) : (
           <ActionLink label={link.label} url={link.url} primary={'primary' in link && link.primary} />
         )
       )}
+      <a class="action action--row" href="#contact">{t.contactLabel}<span class="action__arrow" aria-hidden="true">↓</span></a>
     </div>
   </div>
 </section>

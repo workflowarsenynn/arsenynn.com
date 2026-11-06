@@ -481,14 +481,33 @@ test.describe('главы @arsenynn на сайте', () => {
   });
 });
 
-test('пробный VPN: кнопка с точной ссылкой и условиями, только на русской версии', async ({ page, request }) => {
+test('пробный VPN: кнопка с точной ссылкой и условиями на обеих версиях', async ({ page }) => {
   await page.goto('/');
   const link = page.locator('#party-protocol a[href="https://t.me/partyproto_bot?start=site_arsenynn"]');
   await expect(link).toContainText('Попробовать VPN бесплатно — 3 дня');
   await expect(link).toHaveAttribute('target', '_blank');
   await expect(link).toHaveAttribute('rel', 'noopener noreferrer');
   await expect(page.locator('#party-protocol .project-actions__note')).toContainText('Один пробный период на аккаунт');
-  expect(await (await request.get('/en/')).text()).not.toContain('partyproto_bot');
+  await page.goto('/en/');
+  await expect(link).toContainText('Try the VPN free for 3 days');
+  await expect(page.locator('#party-protocol .project-actions__note')).toContainText('One trial per account');
+});
+
+test('контакт: шапка ведёт к блоку, блок Work тоже, ссылка на личный Telegram', async ({ page }) => {
+  await page.setViewportSize({ width: 320, height: 700 });
+  await page.goto('/');
+  await expect(page.locator('.site-header a[href*="portfolio"]')).toHaveCount(0);
+  await page.locator('.site-header a[href="#contact"]').click();
+  await expect(page.locator('#contact')).toBeInViewport();
+  const link = page.locator('#contact a');
+  await expect(link).toHaveCount(1);
+  await expect(link).toHaveAttribute('href', 'https://t.me/arsenynnn');
+  await expect(link).toContainText('@arsenynnn');
+  expect((await link.boundingBox())!.height).toBeGreaterThanOrEqual(44);
+  await expect(page.locator('#work a[href="#contact"]')).toHaveCount(1);
+  expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBe(320);
+  await page.goto('/en/');
+  await expect(page.locator('.site-header a[href="#contact"]')).toHaveText('Contact');
 });
 
 test.describe('звук на сайте один', () => {
@@ -685,7 +704,7 @@ test.describe('мир annFlow', () => {
 
   test('серия: посты идут сразу под оглавлением, оглавление ведёт к ним', async ({ page }) => {
     await page.goto('/annflow/projects/voxbase/');
-    await expect(page.locator('.post')).toHaveCount(9);
+    await expect(page.locator('.post')).toHaveCount(8);
     await expect(page.locator('.post .prose').first()).not.toBeEmpty();
     const toc = (await page.locator('.toc').boundingBox())!;
     const post = (await page.locator('.post').first().boundingBox())!;
@@ -707,21 +726,42 @@ test.describe('мир annFlow', () => {
 
   test('от серии до заметки и дальше по порядку', async ({ page }) => {
     await page.goto('/annflow/');
-    await expect(page.locator('.series-row')).toHaveCount(8);
+    await expect(page.locator('.series-row')).toHaveCount(7);
+    await expect(page.getByText('С чего всё началось')).toHaveCount(0);
     await page.locator('.series-row', { hasText: 'VoxBase' }).click();
     await expect(page).toHaveURL(/\/annflow\/projects\/voxbase\/$/);
-    await expect(page.locator('.toc li')).toHaveCount(9);
-    await page.locator('#note-155 h2 a').click();
-    await expect(page).toHaveURL(/\/annflow\/notes\/155\/$/);
-    await expect(page.locator('.note__meta')).toContainText('1 из 9');
-    await page.locator('.note__step--next').click();
+    await expect(page.locator('.toc li')).toHaveCount(8);
+    await page.locator('#note-156 h2 a').click();
     await expect(page).toHaveURL(/\/annflow\/notes\/156\/$/);
+    await expect(page.locator('.note__meta')).toContainText('1 из 8');
     await expect(page.locator('h1')).toHaveText('Почему голосовые заметки обычно умирают');
+    await page.locator('.note__step--next').click();
+    await expect(page).toHaveURL(/\/annflow\/notes\/158\/$/);
   });
 
-  test('заметка: оглавление серии, источник, файл', async ({ page, request }) => {
+  test('LiveContext: одно оглавление на 10 частей, вышедшие ссылками, значки фото и видео', async ({ page }) => {
+    await page.goto('/annflow/projects/live-context/');
+    await expect(page.locator('.toc')).toHaveCount(1);
+    await expect(page.locator('.toc li')).toHaveCount(10);
+    await expect(page.locator('.toc a')).toHaveCount(3);
+    await expect(page.locator('.toc li').first()).toContainText('Почему мне оказалось недостаточно');
+    await expect(page.locator('.toc li').last()).toContainText('Почему память не должна автоматически переписывать саму себя');
+    await expect(page.locator('.toc__planned')).toHaveCount(7);
+    await expect(page.locator('.toc__planned').first()).toContainText('скоро');
+    await expect(page.locator('.toc a', { hasText: 'в реальном разговоре' }).locator('.toc__media')).toContainText('видео');
+    await expect(page.locator('.series__intro .prose')).toHaveCount(0);
+    await expect(page.locator('.series__intro img')).toHaveCount(1);
+    await expect(page.getByText('Оригинал в Telegram')).toHaveCount(0);
+  });
+
+  test('первый пост серии ведёт на её страницу', async ({ page }) => {
+    await page.goto('/annflow/notes/186/');
+    await expect(page).toHaveURL(/\/annflow\/projects\/live-context\/$/);
+  });
+
+  test('заметка: оглавление серии, файл, без ссылки на оригинал', async ({ page, request }) => {
     await page.goto('/annflow/notes/79/');
-    await expect(page.locator('.note__source a')).toHaveAttribute('href', 'https://t.me/annsflow/79');
+    await expect(page.getByText('Оригинал в Telegram')).toHaveCount(0);
     await page.locator('.note__toc summary').click();
     await expect(page.locator('.note__toc [aria-current="page"]')).toContainText('Caps Lock');
     const file = page.locator('.note__files a');
@@ -732,9 +772,9 @@ test.describe('мир annFlow', () => {
   });
 
   test('видео: файл играет на сайте и не грузится заранее', async ({ page }) => {
-    await page.goto('/annflow/notes/93/');
-    await expect(page.locator('video source')).toHaveAttribute('src', '/media/annflow/94.mp4');
-    await expect(page.locator('video')).toHaveAttribute('preload', 'none');
+    await page.goto('/annflow/projects/without-streaming/');
+    await expect(page.locator('.series__intro video source')).toHaveAttribute('src', '/media/annflow/94.mp4');
+    await expect(page.locator('.series__intro video')).toHaveAttribute('preload', 'none');
   });
 
   test('видео от владельца: посты 89 и 108 один файл, ролики отдаются и читаются', async ({ page, request }) => {

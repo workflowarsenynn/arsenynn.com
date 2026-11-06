@@ -9,14 +9,18 @@ import { formatDate, getSeries, minutesOf, type Note, type Series } from '../../
 export async function getStaticPaths() {
   const all = await getSeries();
   const flat = all.flatMap((series) => series.notes.map((note, index) => ({ note, series, index })));
-  return flat.map((item, i) => ({
+  const notes = flat.map((item, i) => ({
     params: { id: item.note.id },
     props: { ...item, prev: flat[i - 1]?.note, next: flat[i + 1]?.note, nextSeries: flat[i + 1]?.series },
   }));
+  // Первый пост серии живёт на её странице, старые ссылки ведут туда.
+  const intros = all.map((series) => ({ params: { id: series.intro.id }, props: { series } }));
+  return [...notes, ...intros];
 }
 
 type Props = { note: Note; series: Series; index: number; prev?: Note; next?: Note; nextSeries?: Series };
-const { note, series, index, prev, next, nextSeries } = Astro.props;
+const { note, series, index, prev, next, nextSeries } = Astro.props as Props;
+if (!note) return Astro.redirect(asset(`/annflow/projects/${series.slug}/`));
 const { title, publishedAt } = note.data;
 const description = (note.body ?? '').replace(/[*_`#>\\[\]]|\(http[^)]*\)|\(\/[^)]*\)/g, '').replace(/\s+/g, ' ').trim().slice(0, 155);
 const crossing = next && nextSeries && nextSeries.slug !== series.slug;

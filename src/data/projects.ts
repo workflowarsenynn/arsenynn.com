@@ -25,10 +25,12 @@ export async function getProjects(locale: Locale = 'ru'): Promise<ProjectView[]>
       const localized =
         locale === 'en'
           ? {
+              title: d.en.title ?? d.title,
               shortDescription: d.en.shortDescription,
               longDescription: d.en.longDescription,
               statusLabel: d.en.statusLabel ?? d.statusLabel,
               links: d.links.map((l) => ({ ...l, label: l.labelEn ?? l.label })),
+              trial: d.trial && { ...d.trial, label: d.trial.labelEn, note: d.trial.noteEn },
               contents: d.contents?.map((c) => ({ ...c, title: c.titleEn ?? c.title, note: c.noteEn ?? c.note })),
               parts: d.parts?.map((p) => ({ ...p, label: p.labelEn })),
             }
