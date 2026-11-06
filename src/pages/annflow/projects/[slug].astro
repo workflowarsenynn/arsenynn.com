@@ -4,7 +4,7 @@ import WorldBar from '../../../components/WorldBar.astro';
 import NoteBody from '../../../components/NoteBody.astro';
 import SiteFooter from '../../../components/SiteFooter.astro';
 import { asset } from '../../../data/asset';
-import { formatDate, getSeries, minutesOf, plural, type Series } from '../../../lib/annflow';
+import { formatDate, getSeries, minutesOf, plural, type Note, type Series } from '../../../lib/annflow';
 
 export async function getStaticPaths() {
   const all = await getSeries();
@@ -16,6 +16,10 @@ export async function getStaticPaths() {
 
 type Props = { series: Series; next?: Series };
 const { series, next } = Astro.props;
+// Значки в оглавлении: что есть в посте, кроме текста.
+const labels = { video: 'видео', image: 'фото' } as const;
+const glyphs = { video: 'M5 3.5v9l7.5-4.5z', image: 'M2.5 3.5h11v9h-11zM2.5 10.5l3-3 2.5 2.5 2-2 3.5 3.5' };
+const kinds = (n: Note) => (['video', 'image'] as const).filter((kind) => n.data.media?.some((m) => m.type === kind));
 ---
 <Base title={`${series.title} — annFlow`} description={series.note}>
   <WorldBar crumbs={[{ label: 'annFlow', href: '/annflow/' }]} />
@@ -26,6 +30,8 @@ const { series, next } = Astro.props;
       <p class="series__meta">{series.notes.length} {plural(series.notes.length, 'заметка', 'заметки', 'заметок')} · {series.minutes} мин</p>
     </header>
 
+    {series.intro.data.media?.length && <div class="series__intro"><NoteBody note={series.intro} /></div>}
+
     <h2 class="visually-hidden" id="toc">Оглавление</h2>
     <ol class="toc">
       {series.notes.map((n, i) => (
@@ -33,8 +39,21 @@ const { series, next } = Astro.props;
           <a href={`#note-${n.id}`}>
             <span class="toc__num" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
             <span class="toc__title">{n.data.title}</span>
+            {kinds(n).map((kind) => (
+              <span class="toc__media" title={labels[kind]}>
+                <svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path d={glyphs[kind]} /></svg>
+                <span class="visually-hidden">{labels[kind]}</span>
+              </span>
+            ))}
             <span class="toc__time">{minutesOf(n)} мин</span>
           </a>
+        </li>
+      ))}
+      {series.planned.map((title, i) => (
+        <li class="toc__planned">
+          <span class="toc__num" aria-hidden="true">{String(series.notes.length + i + 1).padStart(2, '0')}</span>
+          <span class="toc__title">{title}</span>
+          <span class="toc__time">скоро</span>
         </li>
       ))}
     </ol>
@@ -44,7 +63,7 @@ const { series, next } = Astro.props;
         <article class="post" id={`note-${n.id}`}>
           <header class="post__head">
             <p class="post__meta">
-              <span>{i + 1} из {series.notes.length}</span>
+              <span>{i + 1} из {series.notes.length + series.planned.length}</span>
               <span>{minutesOf(n)} мин</span>
               <time datetime={n.data.publishedAt.toISOString()}>{formatDate(n.data.publishedAt)}</time>
             </p>
@@ -107,13 +126,39 @@ const { series, next } = Astro.props;
     border-top: 1px solid var(--color-line);
   }
 
-  .toc a {
+  .series__intro {
+    margin-bottom: var(--space-3);
+  }
+
+  .toc a,
+  .toc__planned {
     display: flex;
     align-items: baseline;
     gap: var(--space-2);
     min-height: var(--tap-row);
     padding-block: 0.9rem;
     border-bottom: 1px solid var(--color-line);
+  }
+
+  .toc__planned {
+    color: var(--color-muted);
+  }
+
+  .toc__media {
+    flex: none;
+    align-self: center;
+    display: inline-flex;
+    margin-right: calc(var(--space-1) * -1);
+  }
+
+  .toc__media svg {
+    fill: none;
+    stroke: var(--color-accent);
+    stroke-width: 1.3;
+    stroke-linejoin: round;
+  }
+
+  .toc a {
     color: var(--color-text);
     text-decoration: none;
     -webkit-tap-highlight-color: transparent;

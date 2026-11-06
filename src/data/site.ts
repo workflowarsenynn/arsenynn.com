@@ -30,9 +30,9 @@ export const site = {
     line: 'Финальная битва между самоценным и рациональным',
   },
 
-  // Портфолио-хаб для сотрудничества и HR: IT / AI, продажи и события, видео.
-  header: {
-    link: { label: 'Portfolio', url: 'https://portfolio.arsenynn.com/' },
+  // Как написать лично. Почта появится здесь, когда заработает адрес.
+  contact: {
+    links: [{ label: 'Telegram', detail: '@arsenynnn', url: 'https://t.me/arsenynnn' }],
   },
 
   work: {

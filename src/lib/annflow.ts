@@ -6,7 +6,11 @@ export type Series = {
   slug: string;
   title: string;
   note: string;
+  /** Первый пост серии: кадр и заголовок. Оглавлением служит список на странице. */
+  intro: Note;
   notes: Note[];
+  /** Части, которых ещё нет на канале. Вышедшие выпадают по совпадению заголовка. */
+  planned: string[];
   minutes: number;
   cover?: NonNullable<Note['data']['media']>[number]['src'];
 };
@@ -24,14 +28,17 @@ export const channelUrl = `https://t.me/${channel.channel}`;
 export async function getSeries(): Promise<Series[]> {
   const all = await getCollection('annflow');
   return channel.series.map((s) => {
-    const notes = all.filter((n) => n.data.series === s.slug).sort((a, b) => a.data.order - b.data.order);
+    const [intro, ...notes] = all.filter((n) => n.data.series === s.slug).sort((a, b) => a.data.order - b.data.order);
+    const published = new Set(notes.map((n) => n.data.title));
     return {
       slug: s.slug,
       title: s.title,
       note: s.note,
+      intro,
       notes,
+      planned: ('planned' in s ? (s.planned as string[]) : []).filter((title) => !published.has(title)),
       minutes: notes.reduce((sum, n) => sum + minutesOf(n), 0),
-      cover: notes.flatMap((n) => n.data.media ?? []).find((m) => m.type === 'image')?.src,
+      cover: [intro, ...notes].flatMap((n) => n.data.media ?? []).find((m) => m.type === 'image')?.src,
     };
   });
 }

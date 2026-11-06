@@ -371,6 +371,7 @@
     scale: 1.2
     photo: true
   en:
+    title: Bessmyslennost i skorotechnost
     shortDescription: "A space where what is published does not become the past, and understanding need not coincide with the moment of appearance."
     longDescription:
       - "“Bessmyslennost i skorotechnost” (Meaninglessness and Transience) grew as a continuation of @arsenynn: a space for material, conversations and observations that live outside the main project."
@@ -463,6 +464,7 @@
       url: https://t.me/annsflow/136
       path: /annflow/projects/auto-apply/
     - title: "Бессмысленность и скоротечность"
+      titleEn: "Bessmyslennost i skorotechnost"
       note: "Философия, встроенная в память, разговор и рециркуляцию"
       noteEn: "Philosophy built into memory, conversation and recirculation"
       thumb: /thumbs/annflow-107.webp
@@ -516,7 +518,9 @@
   trial:
     enabled: true
     label: Попробовать VPN бесплатно — 3 дня
+    labelEn: Try the VPN free for 3 days
     note: 3 дня Party Protocol бесплатно для новых пользователей. Без оплаты и привязки карты. Один пробный период на аккаунт. Активация — в Telegram-боте.
+    noteEn: 3 days of Party Protocol free for new users. No payment, no card. One trial per account. Activated in the Telegram bot.
     url: https://t.me/partyproto_bot?start=site_arsenynn
   mark:
     src: /logos/party-protocol.svg

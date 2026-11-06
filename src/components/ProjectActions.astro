@@ -20,7 +20,7 @@ const postOf = (url: string) => Number(url.split('/').pop());
 const chapterOf = (url: string) => (staged.has(postOf(url)) ? postOf(url) : undefined);
 ---
 <div class="project-actions action-list">
-  {project.trial?.enabled && locale === 'ru' && (
+  {project.trial?.enabled && (
     <>
       <ActionLink label={project.trial.label} url={project.trial.url} primary rel="noopener noreferrer" />
       <p class="project-actions__note">{project.trial.note}</p>

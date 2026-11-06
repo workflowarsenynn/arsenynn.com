@@ -1,9 +1,9 @@
 ---
-// Тело заметки: медиа, текст, файлы, оригинал. Общее для страницы заметки и страницы серии.
+// Тело заметки: медиа, текст, файлы. Общее для страницы заметки и страницы серии.
 import { render } from 'astro:content';
 import NoteMedia from './NoteMedia.astro';
 import { asset } from '../data/asset';
-import { telegramUrl, type Note } from '../lib/annflow';
+import type { Note } from '../lib/annflow';
 
 type Props = { note: Note };
 const { note } = Astro.props;
@@ -13,7 +13,7 @@ const lead = media.filter((m) => m.post === source[0]);
 const after = media.filter((m) => m.post !== source[0]);
 ---
 {lead.length > 0 && <NoteMedia items={lead} title={title} />}
-<div class="prose"><Content /></div>
+{note.body?.trim() && <div class="prose"><Content /></div>}
 {after.length > 0 && <NoteMedia items={after} title={title} />}
 
 {files.length > 0 && (
@@ -24,22 +24,11 @@ const after = media.filter((m) => m.post !== source[0]);
   </ul>
 )}
 
-<p class="note__source">
-  <a class="action action--text" href={telegramUrl(source[0])} target="_blank" rel="noopener">
-    Оригинал в Telegram<span class="action__arrow" aria-hidden="true">↗</span><span class="visually-hidden"> (откроется в новой вкладке)</span>
-  </a>
-</p>
-
 <style>
   .note__files {
     margin: var(--space-3) 0 0;
     padding: 0;
     list-style: none;
-    font-size: var(--text-meta);
-  }
-
-  .note__source {
-    margin: var(--space-3) 0 0;
     font-size: var(--text-meta);
   }
 </style>

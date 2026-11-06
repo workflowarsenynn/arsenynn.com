@@ -42,12 +42,14 @@ const projects = defineCollection({
       ),
       /** Лента случайных постов канала: адрес списка на сайте. */
       stream: z.string().startsWith('/').optional(),
-      /** Пробный доступ. Пока enabled: false, в HTML нет ни кнопки, ни ссылки. Только русская версия. */
+      /** Пробный доступ. Пока enabled: false, в HTML нет ни кнопки, ни ссылки. */
       trial: z
         .object({
           enabled: z.boolean(),
           label: z.string().min(1),
+          labelEn: z.string().min(1),
           note: z.string().min(1),
+          noteEn: z.string().min(1),
           url: z.url().refine((u) => u.startsWith('https://'), 'Ссылка должна начинаться с https://'),
         })
         .optional(),
@@ -114,6 +116,7 @@ const projects = defineCollection({
       updatedAt: z.coerce.date().optional(),
       /** Английский текст для /en/. Обязателен: смешанного языка на странице быть не должно. */
       en: z.object({
+        title: z.string().min(1).optional(),
         shortDescription: z.string().min(1),
         longDescription: z.array(z.string()).max(4).optional(),
         statusLabel: z.string().optional(),

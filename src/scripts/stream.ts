@@ -16,6 +16,8 @@ type Post = {
   lead?: boolean;
 };
 
+import { englishDate } from '../lib/stream-date';
+
 const HOLD_MS = 9000;
 const IDLE_MS = 3000;
 const SWIPE_START = 10;
@@ -206,7 +208,7 @@ function setup(root: HTMLElement) {
     el.style.animation = instant ? 'none' : '';
     stage.replaceChildren(el);
     text.textContent = post.kind === 'text' ? '' : post.text;
-    date.textContent = post.date;
+    date.textContent = 'en' in root.dataset ? englishDate(post.date) : post.date;
     link.href = post.url ?? `${channel}/${post.post}`;
     count.textContent = `${(pos % posts.length) + 1} / ${posts.length}`;
     syncSound();

@@ -1,7 +1,5 @@
 ---
-import { site } from '../data/site';
 import { localePath, toLocale, ui } from '../lib/i18n';
-import ActionLink from './ActionLink.astro';
 // Имя автора не дублируется: wordmark @arsenynn стоит в hero сразу ниже.
 const locale = toLocale(Astro.currentLocale);
 const other = locale === 'ru' ? 'en' : 'ru';
@@ -11,7 +9,7 @@ const t = ui[locale];
   <a class="site-header__lang" href={localePath(other)} hreflang={other} lang={other}>
     <span aria-hidden="true">{t.switchLabel}</span><span class="visually-hidden">{t.switchName}</span>
   </a>
-  <ActionLink label={site.header.link.label} url={site.header.link.url} variant="text" />
+  <a class="action action--text" href="#contact">{t.contactLabel}</a>
 </header>
 
 <style>

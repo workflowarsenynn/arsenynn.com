@@ -27,7 +27,7 @@ LastUpdated: 2026-11-04 23:15 MSK
 
 - **Переводы EN.** Сделаны агентом, ждут проверки владельца. Тексты живут в `src/content/projects.yaml`.
 - **Домен `arsenynn.quest`.** Истекает 2026-11-15, по whois на 2026-11-04 не продлён. Адреса Listen и Website не меняются.
-- **Контакт в блоке Work.** Сейчас в блоке Work стоят Portfolio и Telegram-канал workflow. Личный Telegram `https://t.me/arsenynnn` (три n) и email не добавлены: ждут подтверждения владельца.
+- **Почта.** Личный Telegram `https://t.me/arsenynnn` стоит в блоке контакта. Адрес почты на домене ждёт решения владельца.
 
 - **YouTube 0.2 и 1.0.** Главы 0.2 «I can talk to you about the atmosphere» и 1.0 «When will you finally grow up?» не найдены на youtube.com/@arsenynn: без кадра и без плеера, ведут на Telegram.
 
