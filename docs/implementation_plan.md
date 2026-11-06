@@ -1,5 +1,5 @@
 # Implementation Plan
-LastUpdated: 2026-11-06 08:08 MSK
+LastUpdated: 2026-11-06 08:38 MSK
 
 ## Todoist Sync
 - Sync: manual
@@ -31,7 +31,7 @@ LastUpdated: 2026-11-06 08:08 MSK
 ## Status
 - Stage: Build (первый мир: annFlow на сайте, индекс в проде на https://arsenynn.com, последняя фаза 38)
 - Направление задано `docs/Advisory/deep_research_and_implementation_direction.md`: оставить Astro и статику, развивать фазами, каждая фаза отдельным деплоем с точкой отката.
-- Сейчас на проде: hero с портретом, индекс из семи проектов по центру, главы @arsenynn играют на сайте со склада `workflowarsenynn/arsenynn-media`, подкаст 2.5 и работы workflow в плеере YouTube, RU и /en/, только тёмная тема. Новая стадия: весь канал annFlow на сайте, 66 заметок в 8 сериях.
+- Сейчас на проде: hero с портретом, индекс из семи проектов по центру, главы @arsenynn играют на сайте со склада `workflowarsenynn/arsenynn-media`, подкаст 2.5 и работы workflow в плеере YouTube (работы переходят на сайт следующей фазой), RU и /en/, только тёмная тема. Новая стадия: весь канал annFlow на сайте, 66 заметок в 8 сериях.
 - Передача проекта и рабочий цикл: `docs/handoff.md`.
 
 ## Rollback

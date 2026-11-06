@@ -151,6 +151,11 @@
           url: https://t.me/arsenynn/24
           thumb: /thumbs/arsenynn-24.webp
           youtube: oAfntW93Lt8
+        - num: '1.11.4'
+          title: "Reflection 5 years"
+          duration: '1:46'
+          url: https://t.me/bessmislennost/2102
+          thumb: /thumbs/arsenynn-2102.webp
     - label: Часть II
       labelEn: Part II
       intro: https://t.me/arsenynn/28
@@ -258,6 +263,7 @@
       url: https://t.me/ww_arsenynn
       type: telegram
       primary: true
+  stream: /stream/workflow.json
   contents:
     - title: "Окутало"
       meta: '2025'

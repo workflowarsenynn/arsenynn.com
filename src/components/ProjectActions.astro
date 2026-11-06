@@ -12,8 +12,11 @@ const hasAbout = Boolean(project.longDescription?.length);
 const detailsId = `about-${project.id}`;
 const locale = toLocale(Astro.currentLocale);
 const t = ui[locale];
-const staged = new Set(project.parts && project.stream ? streamPosts(project.stream).map((p) => p.post) : []);
+// Главы и работы идут в блоке по порядку, карточки в лентах включают их там же.
+const film = Boolean(project.parts || project.contents);
+const staged = new Set(film && project.stream ? streamPosts(project.stream).map((p) => p.post) : []);
 const postOf = (url: string) => Number(url.split('/').pop());
+const chapterOf = (url: string) => (staged.has(postOf(url)) ? postOf(url) : undefined);
 ---
 <div class="project-actions action-list">
   {project.links.map((link) => (
@@ -23,7 +26,7 @@ const postOf = (url: string) => Number(url.split('/').pop());
     <span class="action action--row project-actions__status">{project.statusLabel}</span>
   )}
   {project.stream && (
-    <PostStream source={project.stream} channel={project.links[0].url} film={Boolean(project.parts)} label={project.parts ? t.streamFilm : undefined} />
+    <PostStream source={project.stream} channel={project.links[0].url} film={film} label={film ? t.streamFilm : undefined} />
   )}
   {project.parts?.map((part, i) => (
     <ProjectStrip
@@ -31,7 +34,7 @@ const postOf = (url: string) => Number(url.split('/').pop());
       label={part.label}
       owner={project.title}
       part={part.label}
-      items={part.chapters.map((ch) => ({ ...ch, chapter: staged.has(postOf(ch.url)) ? postOf(ch.url) : undefined }))}
+      items={part.chapters.map((ch) => ({ ...ch, chapter: chapterOf(ch.url) }))}
       introId={`intro-${project.id}-${i + 1}`}
       introText={locale === 'ru' ? part.introText : undefined}
       introUrl={part.intro}
@@ -43,7 +46,7 @@ const postOf = (url: string) => Number(url.split('/').pop());
       label={t.contentsLabel}
       owner={project.title}
       part={project.title}
-      items={project.contents.map((item) => ({ ...item, num: item.meta }))}
+      items={project.contents.map((item) => ({ ...item, num: item.meta, chapter: chapterOf(item.url) }))}
       all={project.contentsAll}
     />
   )}

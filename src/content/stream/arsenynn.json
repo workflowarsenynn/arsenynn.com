@@ -167,7 +167,8 @@
   "src": "https://workflowarsenynn.github.io/arsenynn-media/1.11.2.mp4",
   "poster": "/thumbs/arsenynn-22.webp",
   "w": 800,
-  "h": 450
+  "h": 450,
+  "lead": true
  },
  {
   "post": 24,
@@ -178,6 +179,18 @@
   "poster": "/thumbs/arsenynn-24.webp",
   "w": 800,
   "h": 450
+ },
+ {
+  "post": 2102,
+  "text": "Reflection 5 years",
+  "date": "Часть I · 1.11.4",
+  "kind": "video",
+  "src": "https://workflowarsenynn.github.io/arsenynn-media/1.11.4.mp4",
+  "poster": "/thumbs/arsenynn-2102.webp",
+  "w": 800,
+  "h": 450,
+  "url": "https://t.me/bessmislennost/2102",
+  "lead": true
  },
  {
   "post": 29,
@@ -257,6 +270,7 @@
   "src": "https://workflowarsenynn.github.io/arsenynn-media/2.4.2.mp4",
   "poster": "/thumbs/arsenynn-46.webp",
   "w": 800,
-  "h": 450
+  "h": 450,
+  "lead": true
  }
 ]
