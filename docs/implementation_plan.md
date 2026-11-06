@@ -1,5 +1,5 @@
 # Implementation Plan
-LastUpdated: 2026-11-06 13:00 MSK
+LastUpdated: 2026-11-06 08:08 MSK
 
 ## Todoist Sync
 - Sync: manual
@@ -29,9 +29,9 @@ LastUpdated: 2026-11-06 13:00 MSK
 - PushPolicy: auto-safe
 
 ## Status
-- Stage: Build (первый мир: annFlow на сайте, индекс в проде на https://arsenynn.com, последняя фаза 37)
+- Stage: Build (первый мир: annFlow на сайте, индекс в проде на https://arsenynn.com, последняя фаза 38)
 - Направление задано `docs/Advisory/deep_research_and_implementation_direction.md`: оставить Astro и статику, развивать фазами, каждая фаза отдельным деплоем с точкой отката.
-- Сейчас на проде: hero с портретом, индекс из семи проектов по центру, части и главы @arsenynn и работы workflow со встроенным плеером YouTube, RU и /en/, только тёмная тема. Новая стадия: весь канал annFlow на сайте, 66 заметок в 8 сериях.
+- Сейчас на проде: hero с портретом, индекс из семи проектов по центру, главы @arsenynn играют на сайте со склада `workflowarsenynn/arsenynn-media`, подкаст 2.5 и работы workflow в плеере YouTube, RU и /en/, только тёмная тема. Новая стадия: весь канал annFlow на сайте, 66 заметок в 8 сериях.
 - Передача проекта и рабочий цикл: `docs/handoff.md`.
 
 ## Rollback
@@ -71,6 +71,7 @@ LastUpdated: 2026-11-06 13:00 MSK
 - `rollback/phase-35`: случайные посты без обрезки в Safari (3c9bfbc).
 - `rollback/phase-36`: свайп по случайным постам (1235d4e).
 - `rollback/phase-37`: стрелки на кадре для мыши (40afe31).
+- `rollback/phase-38`: главы @arsenynn играют на сайте (2d07b70).
 - Откат: PR из revert-коммита фазы в `main` или `git revert <merge-commit>`; GitHub Actions пересоберёт сайт за 1–2 минуты.
 
 ## Done
@@ -98,13 +99,11 @@ LastUpdated: 2026-11-06 13:00 MSK
 - [ ] Владелец: продлить домен `arsenynn.quest` до 2026-11-15 (Porkbun), на нём Listen и Website Party Protocol
 - [ ] Владелец: прислать видео или анимацию радио для Without Streaming, блок не увеличивать
 - [ ] Владелец: создать бота в @BotFather, добавить админом в @without_streaming и @bessmislennost, сохранить токен в секрет `TELEGRAM_BOT_TOKEN`
-- [ ] Владелец: прислать кадры для глав 0.2 и 1.0 @arsenynn
 - [ ] Владелец: проверить переводы EN, сделанные агентом
 - [ ] Владелец: решить судьбу ветки `docs/sync-live-status`
 - [ ] Проверить на iPhone и из РФ-сети, включая плеер глав и автозапуск
-- [ ] Если YouTube из РФ работает плохо: решить про Kinescope или Mux для глав
+- [ ] Если главы из РФ грузятся медленно: перенести на VK Видео
 - [ ] Шрифты первого экрана: 125 KB при бюджете advisory 120 KB
-- [ ] Владелец: запустить `scripts/publish-media.sh`, создать склад видео глав @arsenynn
 - [ ] Владелец: проверить скорость видео на телефоне без VPN
 - [ ] Следующий мир по тому же образцу: выбрать проект, advisory советует @arsenynn
 
