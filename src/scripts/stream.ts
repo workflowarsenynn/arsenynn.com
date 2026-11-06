@@ -162,6 +162,7 @@ function setup(root: HTMLElement) {
     video.muted = muted;
     soundLabel.textContent = muted ? soundOn! : soundOff!;
     sound.toggleAttribute('data-on', !muted);
+    if (!muted) document.dispatchEvent(new CustomEvent('site-sound', { detail: root }));
   }
 
   // Нажатие включает звук и, если браузер не дал видео стартовать само, запускает его.
@@ -345,6 +346,10 @@ function setup(root: HTMLElement) {
   nexts.forEach((button) => button.addEventListener('click', () => { learned(); go(1); }));
   prevs.forEach((button) => button.addEventListener('click', () => { if (pos > 0) go(-1); }));
   sound.addEventListener('click', toggleSound);
+  // Звук на сайте один: заиграло другое, этот блок молчит.
+  document.addEventListener('site-sound', (event) => {
+    if ((event as CustomEvent).detail !== root && !muted) setMuted(true);
+  });
   full.addEventListener('click', toggleFull);
   document.addEventListener('fullscreenchange', syncFull);
   // Системный плеер iPhone при закрытии ставит видео на паузу.

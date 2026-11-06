@@ -68,6 +68,7 @@ if (dialog && typeof dialog.showModal === 'function') {
       event.preventDefault();
       show(link);
       dialog.showModal();
+      document.dispatchEvent(new CustomEvent('site-sound', { detail: dialog }));
     });
   });
 

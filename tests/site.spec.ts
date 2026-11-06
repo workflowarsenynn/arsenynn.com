@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect, type Page } from '@playwright/test';
 import AxeBuilder from '@axe-core/playwright';
 
 // Матрица ширин из advisory (Claude Code implementation brief, TESTS).
@@ -484,6 +484,54 @@ test.describe('главы @arsenynn на сайте', () => {
 test('пробный VPN выключен: ни кнопки, ни ссылки на бота в HTML', async ({ request }) => {
   // Когда кнопку включат после PASS canary, этот тест заменить проверкой кнопки.
   for (const path of ['/', '/en/']) expect(await (await request.get(path)).text()).not.toContain('partyproto_bot');
+});
+
+test.describe('звук на сайте один', () => {
+  const sound = (id: string) => `#${id} .stream [data-stream-sound]`;
+
+  test.beforeEach(async ({ page }) => {
+    await page.route(/arsenynn-media|\/media\/workflow\//, (route) => route.fulfill({ path: 'public/media/annflow/94.mp4', contentType: 'video/mp4' }));
+    await page.route('https://radio.arsenynn.quest/**', (route) => route.fulfill({ contentType: 'text/html', body: '<button id="go">play</button>' }));
+    await page.route(/youtube-nocookie\.com/, (route) => route.fulfill({ contentType: 'text/html', body: '<title>stub</title>' }));
+  });
+
+  const start = async (page: Page, id: string) => {
+    await page.locator(`#${id} [data-stream-stage]`).scrollIntoViewIfNeeded();
+    await expect(page.locator(sound(id))).toBeVisible();
+    await page.locator(sound(id)).click();
+    await expect(page.locator(sound(id))).toHaveAttribute('data-on');
+  };
+
+  test('звук в одном блоке выключает другой, плеер подкаста тоже', async ({ page }) => {
+    await page.goto('/');
+    await start(page, 'arsenynn');
+    await start(page, 'workflow');
+    await expect(page.locator(sound('arsenynn'))).not.toHaveAttribute('data-on');
+    await page.locator('#part-arsenynn-2 [data-video="ecPJAgF_-bM"]').click();
+    await expect(page.locator(sound('workflow'))).not.toHaveAttribute('data-on');
+  });
+
+  test('звук видео выгружает радио, окно потом возвращается с кнопкой', async ({ page }) => {
+    await page.goto('/');
+    const frame = page.locator('#without-streaming .radio iframe');
+    await frame.scrollIntoViewIfNeeded();
+    await expect(frame).toHaveAttribute('src', 'https://radio.arsenynn.quest');
+    await start(page, 'arsenynn');
+    await expect(frame).toHaveAttribute('src', 'about:blank');
+    await frame.scrollIntoViewIfNeeded();
+    await expect(frame).toHaveAttribute('src', 'https://radio.arsenynn.quest');
+  });
+
+  test('запуск радио выключает звук видео', async ({ page }) => {
+    await page.goto('/');
+    await start(page, 'arsenynn');
+    const frame = page.locator('#without-streaming .radio iframe');
+    await frame.scrollIntoViewIfNeeded();
+    await expect(frame).toHaveAttribute('src', 'https://radio.arsenynn.quest');
+    await page.frameLocator('#without-streaming .radio iframe').locator('#go').click();
+    await expect(page.locator(sound('arsenynn'))).not.toHaveAttribute('data-on');
+    await expect(frame).toHaveAttribute('src', 'https://radio.arsenynn.quest');
+  });
 });
 
 test.describe('радио на сайте', () => {
