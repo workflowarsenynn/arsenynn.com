@@ -590,6 +590,14 @@ test('счётчик Umami со своего сервера: без баннер
   expect(calls).toEqual([]);
 });
 
+test('портрет сливается с фоном на любом мониторе: lighten, подложка картинки равна фону', async ({ page }) => {
+  await page.goto('/');
+  const portrait = page.locator('.hero__portrait');
+  await expect(portrait).toHaveCSS('mix-blend-mode', 'lighten');
+  const bg = await page.evaluate(() => getComputedStyle(document.body).backgroundColor);
+  expect(bg).toBe('rgb(10, 10, 10)');
+});
+
 test.describe('радио на сайте', () => {
   const block = '#without-streaming';
 

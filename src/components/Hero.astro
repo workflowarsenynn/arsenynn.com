@@ -54,6 +54,10 @@ const line = toLocale(Astro.currentLocale) === 'en' ? site.en.heroLine : hero.li
     margin-bottom: var(--space-2);
     -webkit-mask-image: radial-gradient(ellipse 70% 72% at 58% 40%, #000 45%, transparent 100%);
     mask-image: radial-gradient(ellipse 70% 72% at 58% 40%, #000 45%, transparent 100%);
+    /* Подложка кадра равна фону (#0a0a0a), но некоторые мониторы рисуют картинку темнее CSS-цвета,
+       и вокруг головы проступает тёмный прямоугольник. lighten берёт более светлое из двух: фон перекрывает
+       всё, что темнее него, а лицо светлее фона и не меняется. */
+    mix-blend-mode: lighten;
     pointer-events: none;
     user-select: none;
   }
