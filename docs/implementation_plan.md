@@ -1,5 +1,5 @@
 # Implementation Plan
-LastUpdated: 2026-11-07 18:10 MSK
+LastUpdated: 2026-11-07 18:35 MSK
 
 ## Todoist Sync
 - Sync: manual
@@ -29,7 +29,7 @@ LastUpdated: 2026-11-07 18:10 MSK
 - PushPolicy: auto-safe
 
 ## Status
-- Stage: Build (первый мир: annFlow на сайте, индекс в проде на https://arsenynn.com, последняя фаза 47)
+- Stage: Build (первый мир: annFlow на сайте, индекс в проде на https://arsenynn.com, последняя фаза 48)
 - Направление задано `docs/Advisory/deep_research_and_implementation_direction.md`: оставить Astro и статику, развивать фазами, каждая фаза отдельным деплоем с точкой отката.
 - Сейчас на проде: hero с портретом, индекс из семи проектов по центру, главы @arsenynn играют на сайте со склада `workflowarsenynn/arsenynn-media`, работы workflow в таком же блоке, подкаст 2.5 в плеере YouTube, RU и /en/, только тёмная тема. Новая стадия: весь канал annFlow на сайте, 7 серий.
 - Передача проекта и рабочий цикл: `docs/handoff.md`.
@@ -81,6 +81,7 @@ LastUpdated: 2026-11-07 18:10 MSK
 - `rollback/phase-45`: мир annFlow на английском (af7330b).
 - `rollback/phase-46`: контакты, порядок глав, номера частей, метрики за флагом (82f2596).
 - `rollback/phase-47`: счётчик Umami на stats.arsenynn.com без баннера, код Яндекса убран (95127b6).
+- `rollback/phase-48`: волна у кнопки радио, «Website» вместо «Слушать эфир», портрет без прямоугольника на любом мониторе (73b95d0).
 - Откат: PR из revert-коммита фазы в `main` или `git revert <merge-commit>`; GitHub Actions пересоберёт сайт за 1–2 минуты.
 
 ## Done
