@@ -1,5 +1,5 @@
 # Architecture
-LastUpdated: 2026-11-06 22:13 MSK
+LastUpdated: 2026-11-06 22:24 MSK
 
 Статус: MVP реализован по этой архитектуре. Требования и их причины находятся в `docs/brief.md`, здесь только технические решения.
 
@@ -102,7 +102,7 @@ type Project = {
 - Мир annFlow: коллекция `annflow` (`src/content/annflow/notes/*.md`), серии в `channel.json`, страницы `src/pages/annflow/`, данные и подсчёты в `src/lib/annflow.ts`, текст заметки в классе `.prose` в `global.css`. На страницах чтения нет клиентского JS, оглавление заметки в `<details>`. Страница серии показывает оглавление и под ним все посты, тело поста общее: `NoteBody.astro`. Ленты на главной: `ProjectStrip.astro` у всех `parts` и `contents`, поле `contentsAll` в `projects.yaml` добавляет ссылку «Все». Кадры в `public/thumbs/` 800×450. `Base.astro` принимает `title`, `description`, `ogTitle`, `ogType`. hreflang есть только у главной.
 - Главы @arsenynn: тот же блок в режиме `film` (по порядку, 16:9), список `src/content/stream/arsenynn.json`, файлы на `workflowarsenynn.github.io/arsenynn-media/`. Карточка с `data-chapter` включает главу в блоке, плеер YouTube остался у workflow и подкаста.
 - Английский мир annFlow: маршруты в `src/pages/en/annflow/`, страницы общие в `src/components/annflow/`, тексты в коллекции `annflowEn` (`src/content/annflow/en/`).
-- Метрики: `Consent.astro` и `src/scripts/metrics.ts`, номер счётчика в `site.metrics.yandexId`. Блоки шлют событие `site-metric`, оно уходит в Метрику только после согласия.
+- Метрики: `Metrics.astro` и `src/scripts/metrics.ts`, адрес счётчика Umami в `site.metrics`. Блоки шлют событие `site-metric`.
 - Контакт: `Contact.astro`, данные в `site.contact`, ведут к нему шапка и блок Work.
 - Радио: `RadioFrame.astro`, адрес в поле `radio` проекта, iframe с сайтом эфира получает адрес, когда окно у экрана.
 - Работы workflow: тот же блок, список `src/content/stream/workflow.json`. Файлы частью на складе, частью в `public/media/workflow/`: склад заполнен.

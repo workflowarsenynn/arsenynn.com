@@ -23,10 +23,6 @@ export const ui = {
     updated: 'Обновлено',
     contentsLabel: 'Проекты',
     contactLabel: 'Контакты',
-    consentText: 'Сайт хочет включить Яндекс Метрику, чтобы понимать, что смотрят посетители. Без вашего согласия она не работает.',
-    consentMore: 'Подробнее',
-    consentYes: 'Принять',
-    consentNo: 'Отклонить',
     annflow: {
       noteOne: 'заметка', noteFew: 'заметки', noteMany: 'заметок',
       series: 'серий',
@@ -86,10 +82,6 @@ export const ui = {
     updated: 'Updated',
     contentsLabel: 'Projects',
     contactLabel: 'Contact',
-    consentText: 'The site would like to turn on Yandex Metrica to understand what visitors watch. It stays off without your consent.',
-    consentMore: 'Details',
-    consentYes: 'Accept',
-    consentNo: 'Decline',
     annflow: {
       noteOne: 'note', noteFew: 'notes', noteMany: 'notes',
       series: 'series',

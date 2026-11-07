@@ -1,13 +1,10 @@
 ---
 import { site } from '../data/site';
-import { asset } from '../data/asset';
-import { localePath, toLocale } from '../lib/i18n';
 // Год вычисляется при сборке.
 const year = new Date().getFullYear();
-const locale = toLocale(Astro.currentLocale);
 ---
 <footer class="site-footer container meta">
-  <p class="site-footer__inner">{site.footer.name} <span>{year}</span>{site.metrics.yandexId && <> · <a href={asset(localePath(locale, '/privacy/'))}>{site.privacy[locale].title}</a></>}</p>
+  <p class="site-footer__inner">{site.footer.name} <span>{year}</span></p>
 </footer>
 
 <style>

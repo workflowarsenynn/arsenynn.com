@@ -574,12 +574,19 @@ test('вступления заканчиваются номером части,
   await expect(page.locator('#part-arsenynn-2 .reading p').last()).toHaveText('II');
 });
 
-test('метрика выключена, пока нет номера счётчика', async ({ page }) => {
+test('счётчик Umami со своего сервера: без баннера и чужих трекеров', async ({ page }) => {
   const calls: string[] = [];
-  page.on('request', (r) => { if (/mc\.yandex/.test(r.url())) calls.push(r.url()); });
+  page.on('request', (r) => { if (/yandex|google-analytics|googletagmanager/.test(r.url())) calls.push(r.url()); });
+  // Настоящий счётчик в тестах не грузим, чтобы не засорять статистику.
+  await page.route('https://stats.arsenynn.com/**', (route) => route.fulfill({ contentType: 'text/javascript', body: '' }));
   await page.goto('/', { waitUntil: 'networkidle' });
-  await expect(page.locator('[data-consent]')).toHaveCount(0);
-  await expect(page.locator('.site-footer a')).toHaveCount(0);
+  const tag = page.locator('script[data-website-id]');
+  await expect(tag).toHaveCount(1);
+  await expect(tag).toHaveAttribute('src', 'https://stats.arsenynn.com/script.js');
+  await expect(tag).toHaveAttribute('data-website-id', '34e4f895-c331-409d-96e9-0ffb001fa009');
+  await expect(tag).toHaveAttribute('data-domains', 'arsenynn.com');
+  await expect(tag).toHaveAttribute('data-do-not-track', 'true');
+  await expect(page.locator('.consent')).toHaveCount(0);
   expect(calls).toEqual([]);
 });
 
@@ -891,10 +898,12 @@ test.describe('мир annFlow', () => {
   });
 
   test('заметка лёгкая: картинки ниже экрана не грузятся сразу, нет лишних скриптов', async ({ page }) => {
-    const kinds: string[] = [];
-    page.on('request', (r) => kinds.push(r.resourceType()));
+    const scripts: string[] = [];
+    // Счётчик Umami разрешён, всё остальное лишнее. Настоящий счётчик в тестах не грузим.
+    await page.route('https://stats.arsenynn.com/**', (route) => route.fulfill({ contentType: 'text/javascript', body: '' }));
+    page.on('request', (r) => { if (r.resourceType() === 'script') scripts.push(r.url()); });
     await page.goto('/annflow/notes/146/', { waitUntil: 'networkidle' });
-    expect(kinds.filter((k) => k === 'script')).toEqual([]);
+    expect(scripts).toEqual(['https://stats.arsenynn.com/script.js']);
   });
 });
 
