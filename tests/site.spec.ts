@@ -605,7 +605,7 @@ test.describe('радио на сайте', () => {
     await page.route('https://radio.arsenynn.quest/**', (route) => route.fulfill({ contentType: 'text/html', body: '<title>stub</title>' }));
   });
 
-  test('ссылка Website без дубля, огонёк у «Сейчас в эфире», подсказка куда нажать', async ({ page }) => {
+  test('ссылка Website без дубля, огонёк у «Сейчас в эфире», без лишнего текста', async ({ page }) => {
     await page.goto('/');
     const link = page.locator(`${block} a.action--primary`);
     await expect(link).toContainText('Website');
@@ -613,10 +613,9 @@ test.describe('радио на сайте', () => {
     await expect(link.locator('.action__live')).toHaveCount(0);
     await expect(page.locator(`${block} a[href="https://radio.arsenynn.quest"]`)).toHaveCount(1);
     await expect(page.locator(`${block} .radio__label .action__live`)).toBeVisible();
-    await expect(page.locator(`${block} .radio__hint`)).toContainText('Нажмите ▶, чтобы слушать');
+    await expect(page.locator(`${block} .radio__head`)).toHaveText('Сейчас в эфире');
     await page.goto('/en/');
     await expect(page.locator(`${block} .radio__label`)).toContainText('On air now');
-    await expect(page.locator(`${block} .radio__hint`)).toContainText('Press ▶ to listen');
   });
 
   test('окно радио ленивое, без автозапуска', async ({ page }) => {

@@ -11,32 +11,32 @@ const t = ui[toLocale(Astro.currentLocale)];
 <section class="radio" aria-label={t.radioLabel}>
   <div class="radio__head">
     <h3 class="radio__label">{t.radioLabel}<span class="action__live" aria-hidden="true"></span></h3>
-    <!-- Кнопка запуска внутри чужого окна внизу справа: подсказка над ней показывает, куда нажать. -->
-    <p class="radio__hint">{t.radioHint}<span aria-hidden="true">↘</span></p>
   </div>
   <div class="radio__screen">
     <iframe data-radio={url} title={title}></iframe>
+    <!-- Волна вокруг кнопки запуска внутри окна: без слов показывает, куда нажать. Клики проходят насквозь. -->
+    <span class="radio__nudge" aria-hidden="true"></span>
   </div>
 </section>
 
 <script>
   // Эфир грузится, только когда окно на экране: сразу тянет около 7 MB и считает слушателя.
   document.querySelectorAll<HTMLIFrameElement>('[data-radio]').forEach((frame) => {
+    const radio = frame.closest('.radio')!;
     const seen = new IntersectionObserver(([entry]) => {
       if (!entry.isIntersecting) return;
       frame.src = frame.dataset.radio!;
+      radio.classList.add('is-live');
       seen.disconnect();
     }, { rootMargin: '200px' });
     seen.observe(frame);
-
-    const radio = frame.closest('.radio')!;
 
     // Звук на сайте один. Окно чужое, поставить его на паузу нельзя, поэтому выгружаем:
     // эфир замолкает, а когда окно снова на экране, загружается с кнопкой запуска.
     document.addEventListener('site-sound', (event) => {
       if ((event as CustomEvent).detail === frame || !frame.src.startsWith('http')) return;
       frame.src = 'about:blank';
-      radio.classList.remove('is-playing');
+      radio.classList.remove('is-live', 'is-playing');
       seen.observe(frame);
     });
 
@@ -58,12 +58,8 @@ const t = ui[toLocale(Astro.currentLocale)];
 
   .radio__head {
     display: flex;
-    flex-wrap: wrap;
     align-items: center;
-    justify-content: space-between;
-    column-gap: var(--space-2);
     min-height: var(--tap);
-    padding-block: 0.4em;
   }
 
   .radio__label {
@@ -77,22 +73,8 @@ const t = ui[toLocale(Astro.currentLocale)];
     white-space: nowrap;
   }
 
-  .radio__hint {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.3em;
-    margin: 0 0 0 auto;
-    color: var(--color-text);
-    white-space: nowrap;
-    font-size: var(--text-meta);
-    transition: opacity 0.4s ease;
-  }
-
-  .is-playing .radio__hint {
-    opacity: 0;
-  }
-
   .radio__screen {
+    container: radio-screen / inline-size;
     position: relative;
     margin-inline: calc(var(--gutter) * -1);
     aspect-ratio: 16 / 9;
@@ -111,6 +93,75 @@ const t = ui[toLocale(Astro.currentLocale)];
     transform-origin: 0 0;
   }
 
+  /* Кнопка запуска на сайте радио: окно уже 800 px сайта — 78 px в 20 px от угла, шире — 84 px в 30 и 26 px.
+     Пиксели сайта радио переводим в наши через масштаб окна. */
+  .radio__nudge {
+    --size: 78px;
+    --right: 20px;
+    --bottom: 20px;
+    position: absolute;
+    right: calc(var(--right) * var(--radio-scale));
+    bottom: calc(var(--bottom) * var(--radio-scale));
+    width: calc(var(--size) * var(--radio-scale));
+    aspect-ratio: 1;
+    border-radius: 50%;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.6s ease;
+  }
+
+  .radio__nudge::before,
+  .radio__nudge::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border: 1px solid var(--color-accent);
+    border-radius: 50%;
+    opacity: 0;
+    animation: radio-nudge 2.8s cubic-bezier(0.2, 0.6, 0.3, 1) infinite;
+  }
+
+  .radio__nudge::after {
+    animation-delay: 1.4s;
+  }
+
+  .is-live:not(.is-playing) .radio__nudge {
+    opacity: 1;
+    transition-delay: 1.2s;
+  }
+
+  @keyframes radio-nudge {
+    0% {
+      transform: scale(1);
+      opacity: 0.9;
+    }
+
+    100% {
+      transform: scale(1.4);
+      opacity: 0;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .radio__nudge::before {
+      animation: none;
+      transform: scale(1.12);
+      opacity: 0.7;
+    }
+
+    .radio__nudge::after {
+      display: none;
+    }
+  }
+
+  @container radio-screen (min-width: 480px) {
+    .radio__nudge {
+      --size: 84px;
+      --right: 30px;
+      --bottom: 26px;
+    }
+  }
+
   @media (min-width: 48rem) {
     .radio {
       --radio-scale: 0.8;
@@ -118,6 +169,17 @@ const t = ui[toLocale(Astro.currentLocale)];
 
     .radio__screen {
       margin-inline: 0;
+    }
+  }
+
+  /* На широком экране масштаб 0.8: 800 px сайта радио — это 640 px окна. */
+  @media (min-width: 48rem) {
+    @container radio-screen (max-width: 639.98px) {
+      .radio__nudge {
+        --size: 78px;
+        --right: 20px;
+        --bottom: 20px;
+      }
     }
   }
 </style>
