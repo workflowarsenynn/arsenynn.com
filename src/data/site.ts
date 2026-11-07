@@ -30,8 +30,8 @@ export const site = {
     line: 'Финальная битва между самоценным и рациональным',
   },
 
-  // Umami на своём сервере: без cookie и баннера. Пока пусто, счётчика на сайте нет. Настройка: docs/umami_setup.md.
-  metrics: { src: '', websiteId: '' },
+  // Umami на своём сервере: без cookie и баннера. Пустые поля выключают счётчик. Настройка: docs/umami_setup.md.
+  metrics: { src: 'https://stats.arsenynn.com/script.js', websiteId: '34e4f895-c331-409d-96e9-0ffb001fa009' },
 
   // Как написать лично.
   contact: {
