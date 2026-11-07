@@ -10,10 +10,9 @@ const t = ui[toLocale(Astro.currentLocale)];
 ---
 <section class="radio" aria-label={t.radioLabel}>
   <div class="radio__head">
-    <h3 class="radio__label">{t.radioLabel}</h3>
-    <a class="radio__open" href={url} target="_blank" rel="noopener">
-      {t.radioOpen}<span aria-hidden="true">↗</span><span class="visually-hidden">{t.newTab}</span>
-    </a>
+    <h3 class="radio__label">{t.radioLabel}<span class="action__live" aria-hidden="true"></span></h3>
+    <!-- Кнопка запуска внутри чужого окна внизу справа: подсказка над ней показывает, куда нажать. -->
+    <p class="radio__hint">{t.radioHint}<span aria-hidden="true">↘</span></p>
   </div>
   <div class="radio__screen">
     <iframe data-radio={url} title={title}></iframe>
@@ -30,17 +29,21 @@ const t = ui[toLocale(Astro.currentLocale)];
     }, { rootMargin: '200px' });
     seen.observe(frame);
 
+    const radio = frame.closest('.radio')!;
+
     // Звук на сайте один. Окно чужое, поставить его на паузу нельзя, поэтому выгружаем:
     // эфир замолкает, а когда окно снова на экране, загружается с кнопкой запуска.
     document.addEventListener('site-sound', (event) => {
       if ((event as CustomEvent).detail === frame || !frame.src.startsWith('http')) return;
       frame.src = 'about:blank';
+      radio.classList.remove('is-playing');
       seen.observe(frame);
     });
 
     // Нажатие внутри окна видно только по уходу фокуса со страницы. На iPhone такого сигнала может не быть.
     window.addEventListener('blur', () => {
       if (document.activeElement !== frame) return;
+      radio.classList.add('is-playing');
       document.dispatchEvent(new CustomEvent('site-sound', { detail: frame }));
       document.dispatchEvent(new CustomEvent('site-metric', { detail: { name: 'radio_start' } }));
     });
@@ -55,31 +58,38 @@ const t = ui[toLocale(Astro.currentLocale)];
 
   .radio__head {
     display: flex;
+    flex-wrap: wrap;
     align-items: center;
     justify-content: space-between;
-    gap: var(--space-2);
+    column-gap: var(--space-2);
     min-height: var(--tap);
+    padding-block: 0.4em;
   }
 
   .radio__label {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6em;
     margin: 0;
     color: var(--color-muted);
     font: inherit;
     font-size: var(--text-meta);
+    white-space: nowrap;
   }
 
-  .radio__open {
+  .radio__hint {
     display: inline-flex;
     align-items: center;
     gap: 0.3em;
-    min-height: var(--tap);
-    color: var(--color-muted);
+    margin: 0 0 0 auto;
+    color: var(--color-text);
+    white-space: nowrap;
     font-size: var(--text-meta);
-    text-decoration: none;
+    transition: opacity 0.4s ease;
   }
 
-  .radio__open:hover {
-    color: var(--color-text);
+  .is-playing .radio__hint {
+    opacity: 0;
   }
 
   .radio__screen {

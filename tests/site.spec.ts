@@ -605,24 +605,27 @@ test.describe('радио на сайте', () => {
     await page.route('https://radio.arsenynn.quest/**', (route) => route.fulfill({ contentType: 'text/html', body: '<title>stub</title>' }));
   });
 
-  test('кнопка по-русски с огоньком эфира, на /en/ по-английски', async ({ page }) => {
+  test('ссылка Website без дубля, огонёк у «Сейчас в эфире», подсказка куда нажать', async ({ page }) => {
     await page.goto('/');
     const link = page.locator(`${block} a.action--primary`);
-    await expect(link).toContainText('Слушать эфир');
-    await expect(link.locator('.action__live')).toBeVisible();
+    await expect(link).toContainText('Website');
     await expect(link).toHaveAttribute('href', 'https://radio.arsenynn.quest');
+    await expect(link.locator('.action__live')).toHaveCount(0);
+    await expect(page.locator(`${block} a[href="https://radio.arsenynn.quest"]`)).toHaveCount(1);
+    await expect(page.locator(`${block} .radio__label .action__live`)).toBeVisible();
+    await expect(page.locator(`${block} .radio__hint`)).toContainText('Нажмите ▶, чтобы слушать');
     await page.goto('/en/');
-    await expect(page.locator(`${block} a.action--primary`)).toContainText('Listen live');
+    await expect(page.locator(`${block} .radio__label`)).toContainText('On air now');
+    await expect(page.locator(`${block} .radio__hint`)).toContainText('Press ▶ to listen');
   });
 
-  test('окно радио ленивое, без автозапуска, рядом ссылка на сайт радио', async ({ page }) => {
+  test('окно радио ленивое, без автозапуска', async ({ page }) => {
     await page.setViewportSize({ width: 390, height: 844 });
     await page.goto('/');
     const frame = page.locator(`${block} .radio iframe`);
     await expect(frame).not.toHaveAttribute('src');
     await expect(frame).toHaveAttribute('title', 'Without Streaming');
     expect(await frame.getAttribute('allow')).toBeNull();
-    await expect(page.locator(`${block} .radio__open`)).toHaveAttribute('href', 'https://radio.arsenynn.quest');
     await frame.scrollIntoViewIfNeeded();
     await expect(frame).toHaveAttribute('src', 'https://radio.arsenynn.quest');
     const box = (await page.locator(`${block} .radio__screen`).boundingBox())!;
