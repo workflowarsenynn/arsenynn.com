@@ -50,6 +50,8 @@ function setup(root: HTMLElement) {
   let posts: Post[] = [];
   // Порядок растёт новыми перемешанными кругами, поэтому назад можно вернуться к уже виденному.
   let order: Post[] = [];
+  // Человек выбрал главу в ленте: дальше всё идёт по порядку ленты, а не по порядку плеера.
+  let sequence: Post[] | null = null;
   let failures = 0;
   let pos = -1;
   let paused = calm;
@@ -229,7 +231,7 @@ function setup(root: HTMLElement) {
   }
 
   function peek(step: number) {
-    if (pos + step >= order.length) order.push(...shuffled(posts));
+    if (pos + step >= order.length) order.push(...(sequence ?? shuffled(posts)));
     return order[pos + step];
   }
 
@@ -388,8 +390,18 @@ function setup(root: HTMLElement) {
     order = shuffled(posts);
   }
 
-  // Глава из ленты играет здесь же, со звуком: человек сам её выбрал.
-  root.closest('.project')?.querySelectorAll<HTMLAnchorElement>('[data-chapter]').forEach((card) => {
+  const cards = [...(root.closest('.project')?.querySelectorAll<HTMLAnchorElement>('[data-chapter]') ?? [])];
+
+  // Порядок карточек в лентах (Часть I, затем Часть II), посты без карточки в конце.
+  function listOrder() {
+    const byPost = new Map(posts.map((post) => [post.post, post]));
+    const listed = [...new Set(cards.map((card) => Number(card.dataset.chapter)))].flatMap((n) => byPost.get(n) ?? []);
+    return [...listed, ...posts.filter((post) => !listed.includes(post))];
+  }
+
+  // Глава из ленты играет здесь же, со звуком: человек сам её выбрал. За ней идут следующие
+  // по ленте, после последней снова первая. Уже сыгранное остаётся позади, туда ведёт «назад».
+  cards.forEach((card) => {
     card.addEventListener('click', async (event) => {
       if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
       event.preventDefault();
@@ -397,9 +409,11 @@ function setup(root: HTMLElement) {
       await load();
       visible = true;
       stage.scrollIntoView({ behavior: still ? 'auto' : 'smooth', block: 'center' });
-      const index = order.findIndex((post) => post.post === Number(card.dataset.chapter));
+      sequence = listOrder();
+      const index = sequence.findIndex((post) => post.post === Number(card.dataset.chapter));
       if (index < 0) return;
-      pos = index;
+      order = [...order.slice(0, pos + 1), ...sequence.slice(index), ...sequence.slice(0, index)];
+      pos += 1;
       show(order[pos]);
     });
   });

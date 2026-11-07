@@ -452,6 +452,38 @@ test.describe('главы @arsenynn на сайте', () => {
     await expect(page.locator('[data-player]')).toBeVisible();
   });
 
+  test('после выбранной главы дальше по порядку ленты: в конце части I — часть II, после последней — первая', async ({ page }) => {
+    await page.goto('/');
+    const title = page.locator(`${block} [data-stream-text]`);
+    const next = page.locator(`${block} [data-stream-next]:visible`);
+    await page.locator('#part-arsenynn-1 [data-chapter="21"]').click();
+    await expect(title).toHaveText('Nothing has changed');
+    await next.click();
+    await expect(title).toHaveText('Reflection');
+    await next.click();
+    await expect(title).toHaveText('Reflection BST');
+    await next.click();
+    await expect(title).toHaveText('Reflection 5 years');
+    await next.click();
+    await expect(title).toHaveText('Part Two');
+    // «Назад» ведёт к уже сыгранному.
+    await page.locator(`${block} [data-stream-prev]:visible`).click();
+    await expect(title).toHaveText('Reflection 5 years');
+    await page.locator('#part-arsenynn-2 [data-chapter="46"]').click();
+    await expect(title).toHaveText('I Left It There');
+    await next.click();
+    await expect(title).toHaveText('Hello to the future');
+  });
+
+  test('конец ролика тоже ведёт к следующей главе ленты', async ({ page }) => {
+    await page.goto('/');
+    await page.locator('#part-arsenynn-1 [data-chapter="6"]').click();
+    const title = page.locator(`${block} [data-stream-text]`);
+    await expect(title).toHaveText('Hello to the future');
+    await page.locator(`${block} video`).evaluate((v: HTMLVideoElement) => v.dispatchEvent(new Event('ended')));
+    await expect(title).toHaveText('I can talk to you about the atmosphere');
+  });
+
   test('Reflection 5 years в конце части I, ссылка ведёт в её канал', async ({ page }) => {
     await page.goto('/');
     const card = page.locator('#part-arsenynn-1 .strip__item').last().locator('[data-chapter]');
