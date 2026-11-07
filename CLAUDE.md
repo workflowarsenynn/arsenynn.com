@@ -1,5 +1,5 @@
 # CLAUDE.md
-LastUpdated: 2026-11-06 21:44 MSK
+LastUpdated: 2026-11-07 00:30 MSK
 
 ## Project
 Личный сайт arsenynn.com: mobile-first индекс семи проектов @arsenynn для людей, открывающих ссылку с телефона. У annFlow есть свой мир: весь канал на сайте.
@@ -57,5 +57,6 @@ MVP собран, структура в `docs/architecture.md`.
 - `docs/brief.md` — ТЗ владельца
 - `PROJECT_STANDARDS.md` — стандарт оформления, лежит в репозитории `workflowarsenynn/Projects-Standarts`
 - `docs/handoff.md` — передача проекта: состояние, рабочий цикл, открытые задачи, подводные камни
+- `docs/handoff_session_2026-11-07.md` — свежий handoff: на чём остановились, метрики Umami на сервере радио
 - `AGENTS.md` — provider-neutral инструкции для AI Coding Agent
 - `docs/decisions_log.md` — журнал решений и исторического контекста

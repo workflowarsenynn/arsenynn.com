@@ -1,7 +1,7 @@
 # Handoff
-LastUpdated: 2026-11-06 22:20 MSK
+LastUpdated: 2026-11-07 00:30 MSK
 
-Передача проекта следующему агенту. Прочитай целиком перед первой правкой. Дальше: `CLAUDE.md` → `AGENTS.md` → `docs/implementation_plan.md` → `docs/architecture.md` → `docs/decisions_log.md` (последние записи сверху).
+Передача проекта следующему агенту. **Сначала прочитай `docs/handoff_session_2026-11-07.md`**: там свежее состояние, на чём остановились (метрики Umami, PR 54) и что из разделов 3 и 6 ниже устарело. Потом этот файл целиком перед первой правкой. Дальше: `CLAUDE.md` → `AGENTS.md` → `docs/implementation_plan.md` → `docs/architecture.md` → `docs/decisions_log.md` (последние записи сверху).
 
 ## 1. Что это и где
 
