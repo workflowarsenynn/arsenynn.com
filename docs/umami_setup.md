@@ -1,68 +1,60 @@
 # Umami на сервере радио
-LastUpdated: 2026-11-06 22:24 MSK
+LastUpdated: 2026-11-07 00:00 MSK
 
-Счётчик посетителей без cookie и баннера. На сайте всё готово, не хватает сервера и двух значений в `site.metrics`.
+Счётчик посетителей без cookie и баннера. Хост `asus-debian-lab` (ssh-алиас), тот же, что у радио.
 
-Хост `asus-debian-lab` несёт рабочий эфир, 4 GB памяти. Перед шагами прочитать `docs/asus_operations_runbook.md` в репозитории Without Streaming: снимок состояния, резервная копия, самое маленькое изменение, проверка.
+## Состояние
 
-## 1. Проверить запас
+| Шаг | Статус |
+|---|---|
+| Umami и Postgres в Docker, `~/umami/compose.yaml`, порт только `127.0.0.1:3100` | сделано 2026-11-06 |
+| Лимиты: Umami 512 MB и 1 CPU, база 256 MB и 0.5 CPU | сделано |
+| Стандартный пароль `admin` заменён случайным, лежит в `~/umami/admin-password` (права 600) | сделано, вход проверен |
+| Сайт `arsenynn.com` в Umami, Website ID `34e4f895-c331-409d-96e9-0ffb001fa009` | сделано |
+| DNS `stats.arsenynn.com` | ждёт владельца: агенту запрещено менять DNS |
+| Блок в Caddy | ждёт владельца: нужен пароль sudo |
+| Счётчик на сайте (`site.metrics`) | после двух шагов выше |
+
+На момент установки: Umami около 180 MB, база около 37 MB, свободно около 2,5 GB памяти, все службы радио `active`.
+
+## 1. DNS
+
+В Cloudflare: запись A `stats` → `94.19.110.215`, только DNS, без прокси. Или командой:
 
 ```bash
-free -m
-df -h /
-docker --version
+cf dns records create -z arsenynn.com --body '{"type":"A","name":"stats.arsenynn.com","content":"94.19.110.215","proxied":false,"ttl":1,"comment":"Umami on the radio host"}'
 ```
 
-Нужно не меньше 1 GB свободной памяти. Если меньше, Umami на этот хост не ставить: эфир важнее.
+## 2. Caddy
 
-## 2. Поднять Umami с лимитом памяти
+Не заменять рабочий Caddyfile, только дописать блок. Резервная копия, проверка, `reload` без перезапуска эфира:
 
-`/opt/umami/compose.yaml`, секреты в `/opt/umami/.env` (`APP_SECRET`, `POSTGRES_PASSWORD`, значения сгенерировать на хосте):
-
-```yaml
-services:
-  umami:
-    image: ghcr.io/umami-software/umami:postgresql-latest
-    restart: unless-stopped
-    ports: ['127.0.0.1:3100:3000']
-    environment:
-      DATABASE_URL: postgresql://umami:${POSTGRES_PASSWORD}@db:5432/umami
-      APP_SECRET: ${APP_SECRET}
-    depends_on: [db]
-    mem_limit: 512m
-  db:
-    image: postgres:16-alpine
-    restart: unless-stopped
-    environment:
-      POSTGRES_DB: umami
-      POSTGRES_USER: umami
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
-    volumes: ['/opt/umami/db:/var/lib/postgresql/data']
-    mem_limit: 256m
+```bash
+ssh -t asus-debian-lab
+sudo cp /etc/caddy/Caddyfile /etc/caddy/Caddyfile.before-umami-$(date +%Y%m%dT%H%M%S)
+printf '\nstats.arsenynn.com {\n\treverse_proxy 127.0.0.1:3100\n}\n' | sudo tee -a /etc/caddy/Caddyfile
+sudo caddy validate --config /etc/caddy/Caddyfile --adapter caddyfile && sudo systemctl reload caddy
 ```
 
-## 3. Адрес
+Проверка: `https://stats.arsenynn.com/script.js` отвечает 200, `https://radio.arsenynn.quest/` по-прежнему работает.
 
-- DNS в Cloudflare: `stats.arsenynn.com`, запись A на адрес радио, только DNS, без прокси.
-- Блок в рабочем Caddyfile, не заменяя файл целиком. Сначала резервная копия и `caddy validate`, затем `reload`, а не `restart`:
+## 3. Включить на сайте
 
-```
-stats.arsenynn.com {
-  reverse_proxy 127.0.0.1:3100
-}
-```
-
-## 4. Включить на сайте
-
-В Umami сменить пароль администратора, добавить сайт `arsenynn.com`, взять Website ID. В `src/data/site.ts`:
+В `src/data/site.ts`:
 
 ```ts
-metrics: { src: 'https://stats.arsenynn.com/script.js', websiteId: '...' },
+metrics: { src: 'https://stats.arsenynn.com/script.js', websiteId: '34e4f895-c331-409d-96e9-0ffb001fa009' },
 ```
 
-## 5. Проверка
+## Вход
 
-Открыть сайт, увидеть визит в Umami. Убедиться, что HLS эфира и `free -m` на хосте не изменились.
+`https://stats.arsenynn.com`, пользователь `admin`, пароль на хосте: `cat ~/umami/admin-password`. После первого входа можно сменить пароль в настройках Umami.
+
+## Обслуживание
+
+- Перезапуск: `cd ~/umami && docker compose restart`.
+- Обновление: `docker compose pull && docker compose up -d`.
+- Остановить, если мешает эфиру: `docker compose stop`. Сайт продолжит работать, просто перестанет считать.
 
 ## События
 
