@@ -423,10 +423,9 @@
     - "Визуалы из @arsenynn, workflow@arsenynn, «Бессмысленность и скоротечность» и самого Without Streaming сменяются независимо от музыки."
   status: active
   links:
-    - label: Слушать эфир
-      labelEn: Listen live
+    - label: Website
       url: https://radio.arsenynn.quest
-      type: listen
+      type: website
       primary: true
     - label: Telegram
       url: https://t.me/without_streaming

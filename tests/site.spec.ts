@@ -590,6 +590,14 @@ test('счётчик Umami со своего сервера: без баннер
   expect(calls).toEqual([]);
 });
 
+test('портрет сливается с фоном на любом мониторе: lighten, подложка картинки равна фону', async ({ page }) => {
+  await page.goto('/');
+  const portrait = page.locator('.hero__portrait');
+  await expect(portrait).toHaveCSS('mix-blend-mode', 'lighten');
+  const bg = await page.evaluate(() => getComputedStyle(document.body).backgroundColor);
+  expect(bg).toBe('rgb(10, 10, 10)');
+});
+
 test.describe('радио на сайте', () => {
   const block = '#without-streaming';
 
@@ -597,24 +605,26 @@ test.describe('радио на сайте', () => {
     await page.route('https://radio.arsenynn.quest/**', (route) => route.fulfill({ contentType: 'text/html', body: '<title>stub</title>' }));
   });
 
-  test('кнопка по-русски с огоньком эфира, на /en/ по-английски', async ({ page }) => {
+  test('ссылка Website без дубля, огонёк у «Сейчас в эфире», без лишнего текста', async ({ page }) => {
     await page.goto('/');
     const link = page.locator(`${block} a.action--primary`);
-    await expect(link).toContainText('Слушать эфир');
-    await expect(link.locator('.action__live')).toBeVisible();
+    await expect(link).toContainText('Website');
     await expect(link).toHaveAttribute('href', 'https://radio.arsenynn.quest');
+    await expect(link.locator('.action__live')).toHaveCount(0);
+    await expect(page.locator(`${block} a[href="https://radio.arsenynn.quest"]`)).toHaveCount(1);
+    await expect(page.locator(`${block} .radio__label .action__live`)).toBeVisible();
+    await expect(page.locator(`${block} .radio__head`)).toHaveText('Сейчас в эфире');
     await page.goto('/en/');
-    await expect(page.locator(`${block} a.action--primary`)).toContainText('Listen live');
+    await expect(page.locator(`${block} .radio__label`)).toContainText('On air now');
   });
 
-  test('окно радио ленивое, без автозапуска, рядом ссылка на сайт радио', async ({ page }) => {
+  test('окно радио ленивое, без автозапуска', async ({ page }) => {
     await page.setViewportSize({ width: 390, height: 844 });
     await page.goto('/');
     const frame = page.locator(`${block} .radio iframe`);
     await expect(frame).not.toHaveAttribute('src');
     await expect(frame).toHaveAttribute('title', 'Without Streaming');
     expect(await frame.getAttribute('allow')).toBeNull();
-    await expect(page.locator(`${block} .radio__open`)).toHaveAttribute('href', 'https://radio.arsenynn.quest');
     await frame.scrollIntoViewIfNeeded();
     await expect(frame).toHaveAttribute('src', 'https://radio.arsenynn.quest');
     const box = (await page.locator(`${block} .radio__screen`).boundingBox())!;
