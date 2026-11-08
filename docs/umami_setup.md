@@ -58,4 +58,4 @@ metrics: { src: 'https://stats.arsenynn.com/script.js', websiteId: '34e4f895-c33
 
 ## События
 
-`video_sound`, `video_fullscreen`, `video_finished` с параметрами `block` и `title`, `radio_start`, `podcast_open`, `vpn_trial_click`, `contact_click`, `contact_open`, `language_switch`, `about_open`, `outbound_click`.
+`video_sound`, `video_fullscreen`, `video_finished` с параметрами `block` и `title`, `radio_start`, `podcast_open`, `vpn_trial_click`, `contact_click` (у почты в About ещё `project`), `contact_open`, `language_switch`, `about_open`, `outbound_click`.

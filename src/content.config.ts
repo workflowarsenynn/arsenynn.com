@@ -40,6 +40,8 @@ const projects = defineCollection({
           primary: z.boolean().optional(),
         }),
       ),
+      /** Почта проекта: строка внизу About. */
+      email: z.email().optional(),
       /** Лента случайных постов канала: адрес списка на сайте. */
       stream: z.string().startsWith('/').optional(),
       /** Пробный доступ. Пока enabled: false, в HTML нет ни кнопки, ни ссылки. */

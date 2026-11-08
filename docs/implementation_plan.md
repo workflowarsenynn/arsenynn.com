@@ -1,5 +1,5 @@
 # Implementation Plan
-LastUpdated: 2026-11-07 18:35 MSK
+LastUpdated: 2026-11-08 13:10 MSK
 
 ## Todoist Sync
 - Sync: manual
@@ -13,7 +13,7 @@ LastUpdated: 2026-11-07 18:35 MSK
 - SubtaskMaterialization: explicit-boundaries
 - SubtaskBoundaryMarker: TODOIST:SUBTASK
 - StatusCommentSource: Status
-- LastUpdated: 2026-11-07
+- LastUpdated: 2026-11-08
 - ProjectPath: /Users/arsey/Documents/arsenynn.com
 - ObsidianProjectPath: N/A
 - PathRegistry: N/A
@@ -29,7 +29,7 @@ LastUpdated: 2026-11-07 18:35 MSK
 - PushPolicy: auto-safe
 
 ## Status
-- Stage: Build (первый мир: annFlow на сайте, индекс в проде на https://arsenynn.com, последняя фаза 48)
+- Stage: Build (первый мир: annFlow на сайте, индекс в проде на https://arsenynn.com, последняя фаза 49)
 - Направление задано `docs/Advisory/deep_research_and_implementation_direction.md`: оставить Astro и статику, развивать фазами, каждая фаза отдельным деплоем с точкой отката.
 - Сейчас на проде: hero с портретом, индекс из семи проектов по центру, главы @arsenynn играют на сайте со склада `workflowarsenynn/arsenynn-media`, работы workflow в таком же блоке, подкаст 2.5 в плеере YouTube, RU и /en/, только тёмная тема. Новая стадия: весь канал annFlow на сайте, 7 серий.
 - Передача проекта и рабочий цикл: `docs/handoff.md`.
@@ -82,6 +82,7 @@ LastUpdated: 2026-11-07 18:35 MSK
 - `rollback/phase-46`: контакты, порядок глав, номера частей, метрики за флагом (82f2596).
 - `rollback/phase-47`: счётчик Umami на stats.arsenynn.com без баннера, код Яндекса убран (95127b6).
 - `rollback/phase-48`: волна у кнопки радио, «Website» вместо «Слушать эфир», портрет без прямоугольника на любом мониторе (73b95d0).
+- `rollback/phase-49`: выбранная глава играет дальше по порядку лент (7dfda9b).
 - Откат: PR из revert-коммита фазы в `main` или `git revert <merge-commit>`; GitHub Actions пересоберёт сайт за 1–2 минуты.
 
 ## Done
@@ -115,6 +116,7 @@ LastUpdated: 2026-11-07 18:35 MSK
 - [ ] Если главы из РФ грузятся медленно: перенести на VK Видео
 - [ ] Владелец: проверить скорость видео на телефоне без VPN
 - [ ] Владелец: создать почту `arsenynn@arsenynn.com`, адрес уже показан на сайте
+- [ ] Владелец: создать `workflow@arsenynn.com`, `annflow@arsenynn.com`, `support@partyproto.com` по `docs/email_setup.md`, потом выложить почту в About (ветка `claude/docs-handoff-sync`)
 - [ ] Владелец: проверить переводы annFlow, сделанные агентом
 - [ ] Записать установку Umami в документацию Without Streaming (runbook хоста радио)
 - [ ] Следующий мир по тому же образцу: выбрать проект, advisory советует @arsenynn

@@ -7,6 +7,11 @@ const { project } = Astro.props;
   <div class="project-details" id={`about-${project.id}`} data-about-panel>
     <div class="project-details__inner">
       {project.longDescription.map((p) => <p>{p}</p>)}
+      {project.email && (
+        <p class="project-details__email">
+          <a href={`mailto:${project.email}`}>{project.email}</a>
+        </p>
+      )}
     </div>
   </div>
 ) : null}
@@ -41,6 +46,24 @@ const { project } = Astro.props;
 
   .project-details__inner p {
     margin-top: var(--space-2);
+  }
+
+  /* Почта проекта: сам адрес, без подписи. Белый на приглушённом тексте, высота пальца. */
+  .project-details__email a {
+    display: inline-flex;
+    align-items: center;
+    min-height: var(--tap);
+    color: var(--color-text);
+    text-decoration: underline;
+    text-decoration-color: var(--color-line-strong);
+    text-underline-offset: 0.25em;
+    overflow-wrap: anywhere;
+    transition: text-decoration-color var(--duration) ease;
+  }
+
+  .project-details__email a:hover,
+  .project-details__email a:focus-visible {
+    text-decoration-color: var(--color-accent);
   }
 
   .project-details__inner p:last-child {

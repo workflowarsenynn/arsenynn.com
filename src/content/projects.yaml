@@ -292,6 +292,7 @@
       url: https://t.me/ww_arsenynn
       type: telegram
       primary: true
+  email: workflow@arsenynn.com
   stream: /stream/workflow.json
   contents:
     - title: "Окутало"
@@ -463,6 +464,7 @@
       url: https://t.me/annsflow
       type: telegram
       primary: true
+  email: annflow@arsenynn.com
   contentsAll: /annflow/
   contents:
     - title: "LiveContext"
@@ -543,6 +545,7 @@
     - label: Website
       url: https://partyprotocol.arsenynn.quest
       type: website
+  email: support@partyproto.com
   trial:
     enabled: true
     label: Попробовать VPN бесплатно — 3 дня

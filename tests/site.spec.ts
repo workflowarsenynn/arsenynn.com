@@ -60,6 +60,27 @@ test('About раскрывается и закрывается с клавиат
   await expect(button).toHaveAttribute('aria-expanded', 'false');
 });
 
+test('почта проекта внизу About: скрыта, пока About закрыт, открывает письмо', async ({ page }) => {
+  for (const locale of ['/', '/en/']) {
+    await page.goto(locale);
+    const emails = {
+      workflow: 'workflow@arsenynn.com',
+      annflow: 'annflow@arsenynn.com',
+      'party-protocol': 'support@partyproto.com',
+    };
+    for (const [id, email] of Object.entries(emails)) {
+      const link = page.locator(`#about-${id} .project-details__email a`);
+      await expect(link).toHaveAttribute('href', `mailto:${email}`);
+      await expect(link).toBeHidden();
+      await page.locator(`[aria-controls="about-${id}"]`).click();
+      await expect(link).toBeVisible();
+      await expect(link).toHaveText(email);
+      expect((await link.boundingBox())!.height).toBeGreaterThanOrEqual(44);
+    }
+    await expect(page.locator('.project-details__email')).toHaveCount(3);
+  }
+});
+
 test('без JavaScript текст About виден, ссылки работают', async ({ browser }) => {
   const context = await browser.newContext({ javaScriptEnabled: false });
   const page = await context.newPage();
