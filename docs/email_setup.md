@@ -1,14 +1,14 @@
 # Почта проектов
 LastUpdated: 2026-11-08 13:10 MSK
 
-Адреса показаны внизу About своего проекта (поле `email` в `src/content/projects.yaml`). Общий личный адрес `arsenynn@arsenynn.com` стоит в блоке «Контакты».
+Адрес проекта стоит последней строкой «Email» под кнопкой About и виден без раскрытия (поле `email` в `src/content/projects.yaml`). Общий личный адрес `arsenynn@arsenynn.com` стоит в блоке «Контакты».
 
 | Адрес | Где на сайте | Где живёт почта | Статус |
 |---|---|---|---|
 | `arsenynn@arsenynn.com` | Контакты | iCloud+, домен arsenynn.com | проверить, создан ли |
-| `workflow@arsenynn.com` | About у workflow@arsenynn | iCloud+, домен arsenynn.com | создать |
-| `annflow@arsenynn.com` | About у annFlow | iCloud+, домен arsenynn.com | создать |
-| `support@partyproto.com` | About у Party Protocol | iCloud+, домен partyproto.com | подключить домен, создать |
+| `workflow@arsenynn.com` | под About у workflow@arsenynn | iCloud+, домен arsenynn.com | создать |
+| `annflow@arsenynn.com` | под About у annFlow | iCloud+, домен arsenynn.com | создать |
+| `support@partyproto.com` | под About у Party Protocol | iCloud+, домен partyproto.com | подключить домен, создать |
 
 Состояние DNS на 2026-11-08 (`dig`):
 
@@ -45,7 +45,7 @@ LastUpdated: 2026-11-08 13:10 MSK
 
 ## 3. После создания
 
-Написать агенту «почта готова». Тогда он выложит адреса на сайт (ветка с изменениями уже собрана) и отметит строки таблицы. До этого адреса на сайт не выкладываются: письмо на несуществующий адрес вернётся отправителю.
+Адреса на сайте с 2026-11-08 (фаза 50, по решению владельца). Пока ящик не создан, письмо на него вернётся отправителю, поэтому создать стоит в ближайшее время. Когда всё работает, написать агенту «почта готова»: он отметит строки таблицы.
 
 ## Чего не делать
 
