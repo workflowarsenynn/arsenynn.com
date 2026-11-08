@@ -7,14 +7,17 @@ const { project } = Astro.props;
   <div class="project-details" id={`about-${project.id}`} data-about-panel>
     <div class="project-details__inner">
       {project.longDescription.map((p) => <p>{p}</p>)}
-      {project.email && (
-        <p class="project-details__email">
-          <a href={`mailto:${project.email}`}>{project.email}</a>
-        </p>
-      )}
     </div>
   </div>
 ) : null}
+{project.email && (
+  <div class="project-contact">
+    <a class="action action--row" href={`mailto:${project.email}`}>
+      <span class="project-contact__row">Email<span class="project-contact__detail">{project.email}</span></span>
+      <span class="action__arrow" aria-hidden="true">↗</span>
+    </a>
+  </div>
+)}
 
 <style>
   .project-details {
@@ -48,25 +51,33 @@ const { project } = Astro.props;
     margin-top: var(--space-2);
   }
 
-  /* Почта проекта: сам адрес, без подписи. Белый на приглушённом тексте, высота пальца. */
-  .project-details__email a {
-    display: inline-flex;
-    align-items: center;
-    min-height: var(--tap);
-    color: var(--color-text);
-    text-decoration: underline;
-    text-decoration-color: var(--color-line-strong);
-    text-underline-offset: 0.25em;
-    overflow-wrap: anywhere;
-    transition: text-decoration-color var(--duration) ease;
-  }
-
-  .project-details__email a:hover,
-  .project-details__email a:focus-visible {
-    text-decoration-color: var(--color-accent);
-  }
-
   .project-details__inner p:last-child {
     padding-bottom: var(--space-1);
+  }
+
+  /* Прямой контакт проекта: последняя строка под About, видна всегда.
+     Как строка почты в «Контактах»: подпись, адрес приглушённо, стрелка справа. */
+  .project-contact {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .project-details[data-open] + .project-contact {
+    margin-top: var(--space-2);
+    border-top: 1px solid var(--color-line);
+  }
+
+  .project-contact__row {
+    display: inline-flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0 0.75em;
+    min-width: 0;
+  }
+
+  .project-contact__detail {
+    color: var(--color-muted);
+    font-size: var(--text-meta);
+    overflow-wrap: anywhere;
   }
 </style>

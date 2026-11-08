@@ -60,7 +60,7 @@ test('About раскрывается и закрывается с клавиат
   await expect(button).toHaveAttribute('aria-expanded', 'false');
 });
 
-test('почта проекта внизу About: скрыта, пока About закрыт, открывает письмо', async ({ page }) => {
+test('почта проекта последней строкой под About, видна без раскрытия', async ({ page }) => {
   for (const locale of ['/', '/en/']) {
     await page.goto(locale);
     const emails = {
@@ -69,15 +69,21 @@ test('почта проекта внизу About: скрыта, пока About �
       'party-protocol': 'support@partyproto.com',
     };
     for (const [id, email] of Object.entries(emails)) {
-      const link = page.locator(`#about-${id} .project-details__email a`);
-      await expect(link).toHaveAttribute('href', `mailto:${email}`);
-      await expect(link).toBeHidden();
-      await page.locator(`[aria-controls="about-${id}"]`).click();
+      const link = page.locator(`#${id} .project-contact a`);
       await expect(link).toBeVisible();
-      await expect(link).toHaveText(email);
+      await expect(link).toHaveAttribute('href', `mailto:${email}`);
+      await expect(link).toContainText(email);
       expect((await link.boundingBox())!.height).toBeGreaterThanOrEqual(44);
+      // Строка почты ниже кнопки About и остаётся ниже раскрытого текста.
+      const about = page.locator(`[aria-controls="about-${id}"]`);
+      expect((await link.boundingBox())!.y).toBeGreaterThan((await about.boundingBox())!.y);
+      await about.click();
+      const text = page.locator(`#about-${id}`);
+      await expect(text).toBeVisible();
+      const t = (await text.boundingBox())!;
+      expect((await link.boundingBox())!.y).toBeGreaterThanOrEqual(t.y + t.height - 1);
     }
-    await expect(page.locator('.project-details__email')).toHaveCount(3);
+    await expect(page.locator('.project-contact')).toHaveCount(3);
   }
 });
 
