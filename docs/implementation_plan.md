@@ -1,5 +1,5 @@
 # Implementation Plan
-LastUpdated: 2026-11-07 18:55 MSK
+LastUpdated: 2026-11-08 13:10 MSK
 
 ## Todoist Sync
 - Sync: manual
@@ -13,7 +13,7 @@ LastUpdated: 2026-11-07 18:55 MSK
 - SubtaskMaterialization: explicit-boundaries
 - SubtaskBoundaryMarker: TODOIST:SUBTASK
 - StatusCommentSource: Status
-- LastUpdated: 2026-11-07
+- LastUpdated: 2026-11-08
 - ProjectPath: /Users/arsey/Documents/arsenynn.com
 - ObsidianProjectPath: N/A
 - PathRegistry: N/A
@@ -116,6 +116,7 @@ LastUpdated: 2026-11-07 18:55 MSK
 - [ ] Если главы из РФ грузятся медленно: перенести на VK Видео
 - [ ] Владелец: проверить скорость видео на телефоне без VPN
 - [ ] Владелец: создать почту `arsenynn@arsenynn.com`, адрес уже показан на сайте
+- [ ] Владелец: создать `workflow@arsenynn.com`, `annflow@arsenynn.com`, `support@partyproto.com` по `docs/email_setup.md`, потом выложить почту в About (ветка `claude/docs-handoff-sync`)
 - [ ] Владелец: проверить переводы annFlow, сделанные агентом
 - [ ] Записать установку Umami в документацию Without Streaming (runbook хоста радио)
 - [ ] Следующий мир по тому же образцу: выбрать проект, advisory советует @arsenynn

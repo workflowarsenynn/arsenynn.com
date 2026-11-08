@@ -16,6 +16,7 @@ document.addEventListener('click', (event) => {
   const href = link.getAttribute('href') ?? '';
   if (href.includes('partyproto_bot')) track('vpn_trial_click', { source: 'arsenynn.com' });
   else if (link.closest('#contact')) track('contact_click', { type: href.startsWith('mailto:') ? 'email' : 'telegram' });
+  else if (href.startsWith('mailto:')) track('contact_click', { type: 'email', project: link.closest('.project')?.id ?? '' });
   else if (href === '#contact') track('contact_open');
   else if (link.hasAttribute('hreflang')) track('language_switch', { to: link.getAttribute('hreflang')! });
   else if (link.matches('[data-about-toggle]')) track('about_open');
