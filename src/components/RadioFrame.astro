@@ -94,14 +94,15 @@ const t = ui[toLocale(Astro.currentLocale)];
   }
 
   /* Кнопка запуска на сайте радио: окно уже 800 px сайта — 78 px в 20 px от угла, шире — 84 px в 30 и 26 px.
-     Пиксели сайта радио переводим в наши через масштаб окна. */
+     Кнопка также учитывает safe area iPhone, в том числе во встроенных браузерах.
+     Пиксели сайта радио вместе с safe area переводим в наши через масштаб окна. */
   .radio__nudge {
     --size: 78px;
     --right: 20px;
     --bottom: 20px;
     position: absolute;
-    right: calc(var(--right) * var(--radio-scale));
-    bottom: calc(var(--bottom) * var(--radio-scale));
+    right: calc((var(--right) + env(safe-area-inset-right, 0px)) * var(--radio-scale));
+    bottom: calc((var(--bottom) + env(safe-area-inset-bottom, 0px)) * var(--radio-scale));
     width: calc(var(--size) * var(--radio-scale));
     aspect-ratio: 1;
     border-radius: 50%;
