@@ -392,7 +392,7 @@ function setup(root: HTMLElement) {
 
   const cards = [...(root.closest('.project')?.querySelectorAll<HTMLAnchorElement>('[data-chapter]') ?? [])];
 
-  // Порядок карточек в лентах (Часть I, затем Часть II), посты без карточки в конце.
+  // Порядок карточек в лентах на странице (новые части сверху), посты без карточки в конце.
   function listOrder() {
     const byPost = new Map(posts.map((post) => [post.post, post]));
     const listed = [...new Set(cards.map((card) => Number(card.dataset.chapter)))].flatMap((n) => byPost.get(n) ?? []);
