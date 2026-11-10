@@ -15,6 +15,8 @@ const locale = toLocale(Astro.currentLocale);
 const t = ui[locale];
 // Главы и работы идут в блоке по порядку, карточки в лентах включают их там же.
 const film = Boolean(project.parts || project.contents);
+// Новые части сверху; исходные номера сохраняют стабильные id и ссылки вступлений.
+const parts = project.parts?.map((part, i) => ({ part, number: i + 1 })).reverse();
 const staged = new Set(film && project.stream ? streamPosts(project.stream).map((p) => p.post) : []);
 const postOf = (url: string) => Number(url.split('/').pop());
 const chapterOf = (url: string) => (staged.has(postOf(url)) ? postOf(url) : undefined);
@@ -36,14 +38,14 @@ const chapterOf = (url: string) => (staged.has(postOf(url)) ? postOf(url) : unde
   {project.stream && (
     <PostStream source={project.stream} channel={project.links[0].url} film={film} label={film ? t.streamFilm : undefined} />
   )}
-  {project.parts?.map((part, i) => (
+  {parts?.map(({ part, number }) => (
     <ProjectStrip
-      id={`part-${project.id}-${i + 1}`}
+      id={`part-${project.id}-${number}`}
       label={part.label}
       owner={project.title}
       part={part.label}
       items={part.chapters.map((ch) => ({ ...ch, chapter: chapterOf(ch.url) }))}
-      introId={`intro-${project.id}-${i + 1}`}
+      introId={`intro-${project.id}-${number}`}
       introText={locale === 'ru' ? part.introText : part.introTextEn}
       introUrl={part.intro}
     />

@@ -42,7 +42,7 @@ const still = first.poster ?? first.src!;
     </div>
     <button class="stream__side stream__side--prev" type="button" data-stream-prev aria-label={t.streamPrev} disabled>←</button>
     <button class="stream__side stream__side--next" type="button" data-stream-next aria-label={t.streamNext}>→</button>
-    <p class="stream__hint" data-stream-hint hidden><span aria-hidden="true">←</span> {t.streamHint} <span aria-hidden="true">→</span></p>
+    <p class="stream__hint" data-stream-hint hidden><span aria-hidden="true">←</span> <span aria-hidden="true">→</span></p>
   </div>
 
   <p class="stream__text" data-stream-text>{(locale === 'en' && first.textEn) || first.text}</p>
