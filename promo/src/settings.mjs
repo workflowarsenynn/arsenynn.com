@@ -7,7 +7,13 @@ export const impactScenes = {
   MatchCut: {duration: 5.6, preset: 'dynamic', enter: 'fade', tone: 'dark'},
 };
 
+export const storyScenes = {
+  ProjectStory: {duration: 48, project: 'annflow', enter: 'fade'},
+  AnnflowSeries: {duration: 15, project: 'annflow', enter: 'fade'},
+};
+
 export const scenes = {
+  ...storyScenes,
   ...impactScenes,
   WordmarkEmergence: {duration: 4, y: 690},
   FloatingWebsite: {duration: 5, side: 'left'},
@@ -23,7 +29,7 @@ export const presets = {
   dynamic: {transition: 0.46, travel: 1.25, zoom: 1.18},
 };
 
-export function settings(projects) {
+export function settings(projects, series = ['live-context']) {
   return z.object({
     duration: z.number().min(0.5).max(120),
     fps: z.number().min(12).max(120),
@@ -34,17 +40,17 @@ export function settings(projects) {
     enter: z.enum(['slide', 'fade', 'cut']), exit: z.enum(['slide', 'fade', 'cut']),
     preset: z.enum(['subtle', 'editorial', 'dynamic']),
     side: z.enum(['left', 'center', 'right']),
-    project: z.enum(projects),
+    project: z.enum(projects), series: z.enum(series),
     scrollFrom: z.enum(['hero', ...projects]), scrollTo: z.enum(projects),
     text: z.boolean(), tone: z.enum(['light', 'dark']), background: z.enum(['transparent', 'opaque']),
   });
 }
 
-export function defaults(scene, projects) {
+export function defaults(scene, projects, series = ['live-context']) {
   return {
     fps: 30, width: 1080, height: 1920, x: 540, y: 880, scale: 1,
     opacity: 1, speed: 1, enter: 'slide', exit: 'fade', side: 'center',
-    preset: 'editorial', project: projects[0], scrollFrom: 'hero',
+    preset: 'editorial', project: projects[0], series: series[0], scrollFrom: 'hero',
     scrollTo: projects.at(-1), text: true, tone: 'light', background: 'transparent',
     ...scenes[scene],
   };

@@ -6,9 +6,11 @@ import {clamp, defaults, ease, mix, presets, scenes, scrollAt, settings} from '.
 
 import {black, white, Page, Mark} from './artwork';
 import {Impact} from './Impact';
+import {Story} from './Story';
 
 const projects = capture.projects.map(project => project.slug);
-const schema = settings(projects);
+const series = Object.keys(capture.series);
+const schema = settings(projects, series);
 type Props = z.infer<typeof schema>;
 type Scene = keyof typeof scenes;
 
@@ -34,6 +36,13 @@ function Film({scene, ...props}: Props & {scene: Scene}) {
 
   let content: React.ReactNode;
   switch (scene) {
+    case 'ProjectStory':
+    case 'AnnflowSeries': {
+      const shots = scene === 'ProjectStory' ? capture.catalog[props.project] : capture.series[props.series].shots;
+      content = <Story shots={shots} phase={time / length} zoom={profile.zoom} speed={props.speed}
+        length={length} project={props.project} />;
+      break;
+    }
     case 'WordmarkPortal':
     case 'ShutterReveal':
     case 'ProjectOrbit':
@@ -115,7 +124,7 @@ function Root() {
   return <>{(Object.keys(scenes) as Scene[]).map(scene => {
     const Component = (props: Props) => <Film scene={scene} {...props} />;
     return <Composition key={scene} id={scene} component={Component} schema={schema}
-      defaultProps={defaults(scene, projects)} width={1080} height={1920} fps={30} durationInFrames={150}
+      defaultProps={defaults(scene, projects, series)} width={1080} height={1920} fps={30} durationInFrames={150}
       calculateMetadata={({props}) => ({
         width: props.width, height: props.height, fps: props.fps,
         durationInFrames: Math.round(props.duration * props.fps),

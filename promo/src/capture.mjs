@@ -3,6 +3,7 @@ import {execFileSync, spawn} from 'node:child_process';
 import {copyFile, mkdir, readFile, writeFile} from 'node:fs/promises';
 import {chromium} from 'playwright';
 import {parse} from 'yaml';
+import {captureStories} from './capture-stories.mjs';
 
 const source = new URL('../../', import.meta.url);
 const output = new URL('../public/', import.meta.url);
@@ -15,7 +16,12 @@ assert.equal(new Set(projects.map(({order}) => order)).size, 7);
 await mkdir(output, {recursive: true});
 const revision = execFileSync('git', ['rev-parse', 'HEAD'], {cwd: source, encoding: 'utf8'}).trim();
 const siteTree = execFileSync('git', ['rev-parse', 'HEAD:src', 'HEAD:public'], {cwd: source, encoding: 'utf8'}).trim();
-const server = spawn('python3', ['-m', 'http.server', String(port), '--bind', '127.0.0.1', '--directory', 'dist'], {cwd: source, stdio: 'inherit', detached: true});
+const server = spawn('python3', ['-c', [
+  'from functools import partial',
+  'from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer',
+  'ThreadingHTTPServer.request_queue_size = 128',
+  `ThreadingHTTPServer(("127.0.0.1", ${port}), partial(SimpleHTTPRequestHandler, directory="dist")).serve_forever()`,
+].join('\n')], {cwd: source, stdio: 'inherit', detached: true});
 let browser;
 try {
   for (let attempt = 0; ; attempt++) {
@@ -26,12 +32,13 @@ try {
   }
   browser = await chromium.launch({executablePath: process.env.PW_CHROMIUM});
   const viewport = {width: 390, height: 694};
-  const page = await browser.newPage({viewport, deviceScaleFactor: 2.75, colorScheme: 'dark', reducedMotion: 'reduce'});
+  const context = await browser.newContext({viewport, deviceScaleFactor: 2.75, colorScheme: 'dark', reducedMotion: 'reduce'});
+  const page = await context.newPage();
   await page.addInitScript(() => {
     const NativeObserver = window.IntersectionObserver;
     window.IntersectionObserver = class extends NativeObserver {
       observe(element) {
-        if (!element.matches('[data-stream-stage]')) super.observe(element);
+        if (!element.matches('[data-stream-stage], [data-radio]')) super.observe(element);
       }
     };
   });
@@ -80,7 +87,8 @@ try {
   }
   const font = new URL('node_modules/@fontsource-variable/manrope/files/manrope-latin-wght-normal.woff2', source);
   await copyFile(font, new URL('manrope.woff2', output));
-  await writeFile(new URL('capture.json', output), JSON.stringify({...manifest, revision, siteTree}, null, 2));
+  const stories = await captureStories(page, origin, output, projects);
+  await writeFile(new URL('capture.json', output), JSON.stringify({...manifest, ...stories, revision, siteTree}, null, 2));
   console.log('Captured', projects.map(p => p.slug).join(' → '), 'from', revision);
 } finally {
   await browser?.close();

@@ -9,7 +9,8 @@
     "studio": "remotion studio src/index.tsx",
     "render:all": "node src/render.mjs",
     "composite": "node src/composite.mjs",
-    "render:impact": "node src/render.mjs --impact && node src/reel.mjs"
+    "render:impact": "node src/render.mjs --impact && node src/reel.mjs",
+    "render:stories": "node src/render.mjs --stories"
   },
   "keywords": [],
   "author": "",
