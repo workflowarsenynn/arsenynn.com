@@ -265,11 +265,6 @@
     src: /logos/nn.svg
     width: 3398
     height: 1881
-  sticker:
-    src: /logos/parts-sticker.webp
-    width: 640
-    height: 268
-    alt: parts
   feed: arsenynn
   en:
     shortDescription: "Where the absence of necessity does not rule out inevitability"
