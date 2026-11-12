@@ -61,7 +61,7 @@ const titleParts = project.title.split(/(?=@)/);
       </h2>
       {project.sticker && (
         <img
-          class="project__sticker"
+          class:list={['project__sticker', `project__sticker--${project.sticker.placement}`]}
           src={asset(project.sticker.src)}
           width={project.sticker.width}
           height={project.sticker.height}
@@ -197,6 +197,16 @@ const titleParts = project.title.split(/(?=@)/);
     max-width: none;
     pointer-events: none;
     user-select: none;
+  }
+
+  /* Рядом: маленький курсор >_ сразу после логотипа, на уровне нижней части букв.
+     Размер в rem, потому что высота логотипа задана в rem, а не от шрифта. */
+  .project__sticker.project__sticker--beside {
+    top: auto;
+    right: auto;
+    bottom: 0.95rem;
+    left: calc(100% + 0.6rem);
+    width: 2.1rem;
   }
 
   .project__tags {
