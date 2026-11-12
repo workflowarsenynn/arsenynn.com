@@ -1,6 +1,14 @@
 import {z} from 'zod';
 
+export const impactScenes = {
+  WordmarkPortal: {duration: 5.6, preset: 'dynamic', enter: 'fade'},
+  ShutterReveal: {duration: 5.2, preset: 'dynamic', enter: 'fade', project: 'annflow'},
+  ProjectOrbit: {duration: 6.2, preset: 'dynamic', enter: 'fade', project: 'arsenynn'},
+  MatchCut: {duration: 5.6, preset: 'dynamic', enter: 'fade', tone: 'dark'},
+};
+
 export const scenes = {
+  ...impactScenes,
   WordmarkEmergence: {duration: 4, y: 690},
   FloatingWebsite: {duration: 5, side: 'left'},
   EditorialScroll: {duration: 16},

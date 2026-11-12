@@ -4,26 +4,14 @@ import {z} from 'zod';
 import capture from '../public/capture.json';
 import {clamp, defaults, ease, mix, presets, scenes, scrollAt, settings} from './settings.mjs';
 
+import {black, white, Page, Mark} from './artwork';
+import {Impact} from './Impact';
+
 const projects = capture.projects.map(project => project.slug);
 const schema = settings(projects);
 type Props = z.infer<typeof schema>;
 type Scene = keyof typeof scenes;
-const black = '#0a0a0a';
-const white = '#f2f2f0';
 
-function Page({width, height, top = 0, clean = false, text = true}: {
-  width: number; height: number; top?: number; clean?: boolean; text?: boolean;
-}) {
-  return <div style={{width, height, overflow: 'hidden', background: black, position: 'relative'}}>
-    <Img src={staticFile(clean ? 'hero-clean.png' : text ? 'site.png' : 'site-no-text.png')}
-      style={{display: 'block', width, height: (clean ? capture.height : capture.heightFull) * width / capture.width,
-        transform: `translateY(${-top * width / capture.width}px)`}} />
-  </div>;
-}
-
-function Mark({width}: {width: number}) {
-  return <Img src={staticFile('arsenynn.svg')} style={{width, display: 'block'}} />;
-}
 
 function Film({scene, ...props}: Props & {scene: Scene}) {
   const frame = useCurrentFrame();
@@ -46,6 +34,13 @@ function Film({scene, ...props}: Props & {scene: Scene}) {
 
   let content: React.ReactNode;
   switch (scene) {
+    case 'WordmarkPortal':
+    case 'ShutterReveal':
+    case 'ProjectOrbit':
+    case 'MatchCut':
+      content = <Impact scene={scene} time={time} length={length} zoom={profile.zoom} speed={props.speed}
+        project={props.project} text={props.text} tone={props.tone} />;
+      break;
     case 'WordmarkEmergence':
       content = props.text && <Mark width={mix(590, 680, beat * profile.zoom)} />;
       break;

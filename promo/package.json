@@ -8,7 +8,8 @@
     "capture": "node src/capture.mjs",
     "studio": "remotion studio src/index.tsx",
     "render:all": "node src/render.mjs",
-    "composite": "node src/composite.mjs"
+    "composite": "node src/composite.mjs",
+    "render:impact": "node src/render.mjs --impact && node src/reel.mjs"
   },
   "keywords": [],
   "author": "",
