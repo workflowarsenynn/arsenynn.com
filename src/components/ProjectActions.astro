@@ -24,12 +24,12 @@ const chapterOf = (url: string) => (staged.has(postOf(url)) ? postOf(url) : unde
 <div class="project-actions action-list">
   {project.trial?.enabled && (
     <>
-      <ActionLink label={project.trial.label} url={project.trial.url} primary rel="noopener noreferrer" />
+      <ActionLink label={project.trial.label} url={project.trial.url} badge={t.trialBadge} primary rel="noopener noreferrer" />
       <p class="project-actions__note">{project.trial.note}</p>
     </>
   )}
   {project.links.map((link) => (
-    <ActionLink label={link.label} url={link.url} primary={link.primary} live={link.type === 'listen'} />
+    <ActionLink label={link.label} url={link.url} primary={link.primary} live={link.type === 'listen' || Boolean(link.primary && link.url === project.radio)} />
   ))}
   {project.links.length === 0 && project.statusLabel && (
     <span class="action action--row project-actions__status">{project.statusLabel}</span>

@@ -395,11 +395,9 @@
       primary: true
   stream: /stream/bessmislennost.json
   mark:
-    src: /logos/bessmyslennost.webp
-    width: 240
+    src: /logos/bis-mark.webp
+    width: 161
     height: 240
-    scale: 1.2
-    photo: true
   en:
     title: Bessmyslennost i skorotechnost
     shortDescription: "A space where what is published does not become the past, and understanding need not coincide with the moment of appearance."
@@ -512,10 +510,10 @@
       thumb: /thumbs/annflow-74.webp
       url: https://t.me/annsflow/74
       path: /annflow/projects/mac-automation/
-  logo:
-    src: /logos/annflow.webp
-    width: 600
-    height: 231
+  mark:
+    src: /logos/annflow-mark.webp
+    width: 241
+    height: 240
   feed: annsflow
   en:
     shortDescription: "Systems, agents and automation for things that need to work."

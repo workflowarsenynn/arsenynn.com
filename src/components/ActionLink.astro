@@ -1,8 +1,8 @@
 ---
 import { localePath, toLocale, ui } from '../lib/i18n';
 import { asset } from '../data/asset';
-type Props = { label: string; url: string; primary?: boolean; variant?: 'row' | 'text'; live?: boolean; rel?: string };
-const { label, url, primary = false, variant = 'row', live = false, rel = 'noopener' } = Astro.props;
+type Props = { label: string; url: string; primary?: boolean; variant?: 'row' | 'text'; live?: boolean; rel?: string; badge?: string };
+const { label, url, primary = false, variant = 'row', live = false, rel = 'noopener', badge } = Astro.props;
 const locale = toLocale(Astro.currentLocale);
 const t = ui[locale];
 const internal = url.startsWith('/');
@@ -13,5 +13,32 @@ const internal = url.startsWith('/');
   target={internal ? undefined : '_blank'}
   rel={internal ? undefined : rel}
 >
-  <span class="action__label">{label}{live && <span class="action__live" aria-hidden="true"></span>}</span><span class="action__arrow" aria-hidden="true">{internal ? '→' : '↗'}</span>{!internal && <span class="visually-hidden">{t.newTab}</span>}
+  <span class="action__label">
+    {badge ? (
+      <span class="action__offer">
+        <span>{label}</span>
+        <span class="action__badge">{badge}</span>
+      </span>
+    ) : label}
+    {live && <span class="action__live" aria-hidden="true"></span>}
+  </span><span class="action__arrow" aria-hidden="true">{internal ? '→' : '↗'}</span>{!internal && <span class="visually-hidden">{t.newTab}</span>}
 </a>
+
+<style>
+  .action__offer {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.2rem 0.45rem;
+    padding-block: 0.25rem;
+  }
+
+  .action__badge {
+    padding-inline: 0.45em;
+    border: 1px solid var(--color-line-strong);
+    border-radius: 0.25rem;
+    color: var(--color-muted);
+    font-size: var(--text-meta);
+    white-space: nowrap;
+  }
+</style>

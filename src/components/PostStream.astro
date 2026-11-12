@@ -156,7 +156,7 @@ const still = first.poster ?? first.src!;
     background: var(--color-press) center / contain no-repeat;
   }
 
-  /* Подсказка видна, пока человек ни разу не пролистал. */
+  /* Короткое движение стрелок показывает направление свайпа. */
   .stream__hint {
     position: absolute;
     left: 50%;
@@ -172,6 +172,19 @@ const still = first.poster ?? first.src!;
     font-size: var(--text-meta);
     white-space: nowrap;
     pointer-events: none;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .stream__hint:not([hidden]) {
+      animation: swipe-hint 1.4s ease both;
+    }
+
+    @keyframes swipe-hint {
+      0% { opacity: 0; transform: translateX(-50%); }
+      18% { opacity: 1; transform: translateX(-50%); }
+      52%, 70% { opacity: 1; transform: translateX(calc(-50% - 0.65rem)); }
+      100% { opacity: 0; transform: translateX(calc(-50% - 0.65rem)); }
+    }
   }
 
   .stream__hint[hidden] {
