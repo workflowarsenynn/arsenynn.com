@@ -113,6 +113,8 @@ const projects = defineCollection({
         .optional(),
       logo: asset.optional(),
       mark: asset.optional(),
+      /** Наклейка поверх названия (parts у @arsenynn). Файл в public/logos/, alt — текст на ней. */
+      sticker: asset.extend({ alt: z.string().min(1) }).optional(),
       /** Публичный Telegram-канал, по последнему посту которого считается активность. */
       feed: z.string().regex(/^[A-Za-z0-9_]+$/).optional(),
       /** Ручная дата последнего обновления, если ленты нет. */

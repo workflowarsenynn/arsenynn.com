@@ -43,21 +43,34 @@ const titleParts = project.title.split(/(?=@)/);
   </div>
 
   <div class="project__body">
-    <h2 class:list={['project__title', { 'project__title--accent': project.accent }]} id={headingId}>
-      {project.logo ? (
+    <div class:list={['project__head', { 'project__head--sticker': project.sticker }]}>
+      <h2 class:list={['project__title', { 'project__title--accent': project.accent }]} id={headingId}>
+        {project.logo ? (
+          <img
+            class="project__logo"
+            src={asset(project.logo.src)}
+            width={project.logo.width}
+            height={project.logo.height}
+            alt={project.title}
+            loading="lazy"
+            decoding="async"
+          />
+        ) : (
+          titleParts.map((part, i) => (i > 0 ? <><wbr />{part}</> : part))
+        )}
+      </h2>
+      {project.sticker && (
         <img
-          class="project__logo"
-          src={asset(project.logo.src)}
-          width={project.logo.width}
-          height={project.logo.height}
-          alt={project.title}
+          class="project__sticker"
+          src={asset(project.sticker.src)}
+          width={project.sticker.width}
+          height={project.sticker.height}
+          alt={project.sticker.alt}
           loading="lazy"
           decoding="async"
         />
-      ) : (
-        titleParts.map((part, i) => (i > 0 ? <><wbr />{part}</> : part))
       )}
-    </h2>
+    </div>
     <ul class="project__tags meta" aria-label={t.tagsLabel}>
       {project.tags.map((tag) => <li>{tag}</li>)}
     </ul>
@@ -165,6 +178,27 @@ const titleParts = project.title.split(/(?=@)/);
     color: var(--color-accent);
   }
 
+  /* Наклейка привязана к ширине названия, а не к viewport.
+     Телефон: приклеена поверх правого верхнего края, низ слегка задевает последние буквы. */
+  .project__head--sticker {
+    position: relative;
+    width: fit-content;
+    max-width: 100%;
+    font-size: var(--text-title);
+  }
+
+  .project__sticker {
+    position: absolute;
+    z-index: 1;
+    right: -0.4em;
+    bottom: calc(100% - 0.4em);
+    width: 2.2em;
+    height: auto;
+    max-width: none;
+    pointer-events: none;
+    user-select: none;
+  }
+
   .project__tags {
     display: flex;
     flex-wrap: wrap;
@@ -207,6 +241,15 @@ const titleParts = project.title.split(/(?=@)/);
       gap: var(--space-2);
       margin: 0;
       padding-top: 0.9rem;
+    }
+
+    /* Desktop: отдельный объект в свободном поле справа от названия, чуть выше строки. */
+    .project__sticker {
+      right: auto;
+      bottom: auto;
+      left: calc(100% + 0.9em);
+      top: -0.3em;
+      width: 2.4em;
     }
   }
 </style>
