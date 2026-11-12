@@ -546,6 +546,7 @@ test('пробный VPN: кнопка с точной ссылкой и усл�
   await page.goto('/');
   const link = page.locator('#party-protocol a[href="https://t.me/partyproto_bot?start=site_arsenynn"]');
   await expect(link).toContainText('Попробовать VPN бесплатно — 3 дня');
+  await expect(link.locator('.action__badge')).toHaveText('Только на сайте');
   await expect(link).toHaveAttribute('target', '_blank');
   await expect(link).toHaveAttribute('rel', 'noopener noreferrer');
   await expect(page.locator('#party-protocol .project-actions__note')).toContainText('Один пробный период на аккаунт');
@@ -664,14 +665,14 @@ test.describe('радио на сайте', () => {
     await page.route('https://radio.arsenynn.quest/**', (route) => route.fulfill({ contentType: 'text/html', body: '<title>stub</title>' }));
   });
 
-  test('ссылка Website без дубля, огонёк у «Сейчас в эфире», без лишнего текста', async ({ page }) => {
+  test('ссылка Website с огоньком без дубля, у «Сейчас в эфире» только подпись', async ({ page }) => {
     await page.goto('/');
     const link = page.locator(`${block} a.action--primary`);
     await expect(link).toContainText('Website');
     await expect(link).toHaveAttribute('href', 'https://radio.arsenynn.quest');
-    await expect(link.locator('.action__live')).toHaveCount(0);
+    await expect(link.locator('.action__live')).toBeVisible();
     await expect(page.locator(`${block} a[href="https://radio.arsenynn.quest"]`)).toHaveCount(1);
-    await expect(page.locator(`${block} .radio__label .action__live`)).toBeVisible();
+    await expect(page.locator(`${block} .radio__label .action__live`)).toHaveCount(0);
     await expect(page.locator(`${block} .radio__head`)).toHaveText('Сейчас в эфире');
     await page.goto('/en/');
     await expect(page.locator(`${block} .radio__label`)).toContainText('On air now');
@@ -705,6 +706,9 @@ test.describe('работы workflow на сайте', () => {
     await page.goto('/');
     await page.locator(`${block} [data-stream-stage]`).scrollIntoViewIfNeeded();
     await expect(page.locator(`${block} [data-stream-count]`)).toHaveText('1 / 11');
+    await expect(page.locator(`${block} [data-stream-text]`)).toHaveText('ВТРНК Radio Show');
+    await expect(page.locator(`${block} [data-stream-link]`)).toHaveAttribute('href', 'https://t.me/ww_arsenynn/189');
+    await page.locator(`${block} [data-stream-next]:visible`).click();
     await expect(page.locator(`${block} [data-stream-text]`)).toHaveText('Окутало');
     await expect(page.locator('#contents-workflow [data-video]')).toHaveCount(0);
     await expect(page.locator('#contents-workflow [data-chapter]')).toHaveCount(11);

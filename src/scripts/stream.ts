@@ -26,6 +26,8 @@ const SWIPE_START = 10;
 const SWIPE_SHARE = 0.2;
 const SWIPE_SPEED = 0.45;
 const SEEN_KEY = 'stream-swiped';
+const HINT_KEY = 'stream-hint-shown';
+let hintShown = false;
 
 function setup(root: HTMLElement) {
   const q = <T extends HTMLElement>(name: string) => root.querySelector<T>(`[data-stream-${name}]`)!;
@@ -244,7 +246,8 @@ function setup(root: HTMLElement) {
 
   function learned() {
     hint.hidden = true;
-    localStorage.setItem(SEEN_KEY, '1');
+    hintShown = true;
+    try { localStorage.setItem(SEEN_KEY, '1'); } catch { /* Private webviews may block storage. */ }
   }
 
   function setPaused(value: boolean) {
@@ -423,7 +426,15 @@ function setup(root: HTMLElement) {
       await load();
       visible = true;
       if (pos < 0) go(1);
-      hint.hidden = Boolean(localStorage.getItem(SEEN_KEY));
+      if (posts.length > 1 && !hintShown && matchMedia('(pointer: coarse)').matches) {
+        try {
+          if (localStorage.getItem(SEEN_KEY) || localStorage.getItem(HINT_KEY)) return;
+          localStorage.setItem(HINT_KEY, '1');
+        } catch { /* The hint can still run once on this page. */ }
+        hintShown = true;
+        hint.hidden = false;
+        window.setTimeout(() => { hint.hidden = true; }, 1400);
+      }
       return;
     }
     if (!posts.length) return;
