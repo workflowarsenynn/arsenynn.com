@@ -519,6 +519,13 @@
     src: /logos/annflow.webp
     width: 600
     height: 231
+  # Курсор терминала после вордмарка: декор, без alt.
+  sticker:
+    src: /logos/annflow-prompt.webp
+    width: 320
+    height: 138
+    alt: ''
+    placement: beside
   feed: annsflow
   en:
     shortDescription: "Systems, agents and automation for things that need to work."

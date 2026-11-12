@@ -43,7 +43,7 @@ const titleParts = project.title.split(/(?=@)/);
   </div>
 
   <div class="project__body">
-    <div class:list={['project__head', { 'project__head--sticker': project.sticker }]}>
+    <div class:list={['project__head', project.sticker && ['project__head--sticker', `project__head--${project.sticker.placement}`]]}>
       <h2 class:list={['project__title', { 'project__title--accent': project.accent }]} id={headingId}>
         {project.logo ? (
           <img
@@ -61,7 +61,7 @@ const titleParts = project.title.split(/(?=@)/);
       </h2>
       {project.sticker && (
         <img
-          class="project__sticker"
+          class:list={['project__sticker', `project__sticker--${project.sticker.placement}`]}
           src={asset(project.sticker.src)}
           width={project.sticker.width}
           height={project.sticker.height}
@@ -197,6 +197,20 @@ const titleParts = project.title.split(/(?=@)/);
     max-width: none;
     pointer-events: none;
     user-select: none;
+  }
+
+  /* Справа: курсор >_ у правого края колонки, на уровне нижней части логотипа,
+     в одну вертикаль со стрелками ссылок. Размер в rem, как высота логотипа. */
+  .project__head--beside {
+    width: auto;
+  }
+
+  .project__sticker.project__sticker--beside {
+    top: auto;
+    right: 0;
+    bottom: 0.95rem;
+    left: auto;
+    width: 2.25rem;
   }
 
   .project__tags {
