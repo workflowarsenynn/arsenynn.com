@@ -10,7 +10,10 @@
     "render:all": "node src/render.mjs",
     "composite": "node src/composite.mjs",
     "render:impact": "node src/render.mjs --impact && node src/reel.mjs",
-    "render:stories": "node src/render.mjs --stories"
+    "render:stories": "node src/render.mjs --stories",
+    "capture:media": "node src/prepare-media.mjs",
+    "studio:media": "remotion studio src/media-scenes.tsx",
+    "render:media": "node src/render-playback.mjs"
   },
   "keywords": [],
   "author": "",
