@@ -60,7 +60,10 @@ for (const {id, props} of jobs) {
     : id === 'FinalWebsiteReveal' ? props.tone : props.side;
   const stem = `${id}-${suffix}-${props.preset}-${props.fps}fps-${props.width}x${props.height}-${props.background}`;
   const file = alpha ? `out/alpha/${stem}.mov` : `out/opaque/${stem}.mp4`;
-  const preview = `out/previews/${stem}.mp4`;
+  const preview = cuts
+    ? `out/qa/story-previews/${stem.replace(/-(transparent|opaque)$/, '')}-opaque-preview.mp4`
+    : `out/previews/${stem}.mp4`;
+  if (cuts) await mkdir('out/qa/story-previews', {recursive: true});
   const composition = await selectComposition({serveUrl, id, inputProps: props});
   const duration = composition.durationInFrames / props.fps;
   console.log(`Rendering ${stem} (${composition.durationInFrames} frames)`);

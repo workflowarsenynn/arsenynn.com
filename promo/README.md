@@ -84,7 +84,7 @@ npm run render:all -- --scene ShutterReveal --config configs/focus-annflow-25.js
 
 ## Проекты изнутри
 
-Из `promo/` запусти `npm run capture`, затем `npm run render:stories`. Команда собирает семь роликов `ProjectStory-*` и семь `AnnflowSeries-*`. Прозрачные MOV лежат в `out/alpha/`, полноразмерные MP4 для просмотра — в `out/previews/`. Общий контактный лист — `out/stills/stories-contact-sheet.png`. У annFlow есть отдельный контактный лист со всеми 19 планами, у каждой серии — лист из четырёх планов. JSON `out/qa/stories-manifest.json` содержит маршруты и источники кадров.
+Из `promo/` запусти `npm run capture`, затем `npm run render:stories`. Команда собирает семь роликов `ProjectStory-*` и семь `AnnflowSeries-*`. Для монтажа бери прозрачные MOV ProRes 4444 из `out/alpha/`. Контрольные MP4 с подложкой лежат в `out/qa/story-previews/` и имеют суффикс `-opaque-preview`. Общий контактный лист — `out/stills/stories-contact-sheet.png`. У annFlow есть отдельный контактный лист со всеми 19 планами, у каждой серии — лист из четырёх планов. JSON `out/qa/stories-manifest.json` содержит маршруты и источники кадров.
 
 | Проект | Что в кадре |
 | --- | --- |
