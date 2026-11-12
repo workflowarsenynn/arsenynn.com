@@ -1,0 +1,29 @@
+{
+  "name": "promo",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "node --test",
+    "capture": "node src/capture.mjs",
+    "studio": "remotion studio src/index.tsx",
+    "render:all": "node src/render.mjs",
+    "composite": "node src/composite.mjs"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "private": true,
+  "dependencies": {
+    "@remotion/bundler": "4.0.543",
+    "@remotion/cli": "4.0.543",
+    "@remotion/renderer": "4.0.543",
+    "playwright": "1.63.0",
+    "react": "19.3.1",
+    "react-dom": "19.3.1",
+    "remotion": "4.0.543",
+    "yaml": "2.9.1",
+    "zod": "4.6.7"
+  }
+}
