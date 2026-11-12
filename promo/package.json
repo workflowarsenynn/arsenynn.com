@@ -13,7 +13,8 @@
     "render:stories": "node src/render.mjs --stories",
     "capture:media": "node src/prepare-media.mjs",
     "studio:media": "remotion studio src/media-scenes.tsx",
-    "render:media": "node src/render-playback.mjs"
+    "render:media": "node src/render-playback.mjs",
+    "render:party": "node src/party-protocol.mjs"
   },
   "keywords": [],
   "author": "",
