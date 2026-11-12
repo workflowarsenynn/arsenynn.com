@@ -510,10 +510,10 @@
       thumb: /thumbs/annflow-74.webp
       url: https://t.me/annsflow/74
       path: /annflow/projects/mac-automation/
-  mark:
-    src: /logos/annflow-mark.webp
-    width: 241
-    height: 240
+  logo:
+    src: /logos/annflow.webp
+    width: 600
+    height: 231
   feed: annsflow
   en:
     shortDescription: "Systems, agents and automation for things that need to work."
