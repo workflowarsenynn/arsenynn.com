@@ -65,7 +65,7 @@ LastUpdated: 2026-11-01 13:40 MSK
 ### 06. Party Protocol — VPN-продукт
 - **Суть:** независимый VPN-сервис со своей инфраструктурой и control plane, своим сайтом и Telegram-ботом (`@partyproto_bot`). На этом сайте он представлен просто как один из проектов автора, без технических деталей.
 - **Теги:** VPN / privacy / secure access
-- **Ссылки:** Website https://partyprotocol.arsenynn.quest (главное действие), Telegram https://t.me/partyprotocol
+- **Ссылки:** Website https://partyproto.ru (главное действие; старый адрес partyprotocol.arsenynn.quest остаётся запасным), Telegram https://t.me/partyprotocol
 - **Визуальный язык:** чёрная маска-«очки» (силуэт карнавальной маски), афро-силуэт, гранжевая кистевая надпись PARTY и жирная курсивная PROTOCOL, фон горчично-жёлтый (#F0B030 примерно) с текстурой ткани.
 - **Будущее:** страница продукта или ссылка на его собственный сайт.
 

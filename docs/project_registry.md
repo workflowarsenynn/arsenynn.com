@@ -19,7 +19,7 @@ LastUpdated: 2026-11-04 23:15 MSK
 | 04 | Without Streaming | `without-streaming` | Listen (primary) | https://radio.arsenynn.quest | 200, владелец продлевает домен |
 | 04 | Without Streaming | `without-streaming` | Telegram | https://t.me/without_streaming | канал найден |
 | 05 | annFlow | `annflow` | Telegram (primary) | https://t.me/annsflow | канал найден |
-| 06 | Party Protocol | `party-protocol` | Website (primary) | https://partyprotocol.arsenynn.quest | 200, владелец продлевает домен |
+| 06 | Party Protocol | `party-protocol` | Website (primary) | https://partyproto.ru | 200, открывается в РФ без VPN (с 2026-11-16) |
 | 06 | Party Protocol | `party-protocol` | Telegram | https://t.me/partyprotocol | канал найден |
 | 07 | Travel Log | `travel-log` | Coming soon | нет | публичного канала нет, ссылку не ставить |
 
