@@ -548,7 +548,7 @@
       type: telegram
       primary: true
     - label: Website
-      url: https://partyprotocol.arsenynn.quest
+      url: https://partyproto.ru
       type: website
   email: support@partyproto.com
   trial:
