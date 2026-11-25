@@ -1,5 +1,5 @@
 # Implementation Plan
-LastUpdated: 2026-11-08 13:10 MSK
+LastUpdated: 2026-11-25
 
 ## Todoist Sync
 - Sync: manual
@@ -104,7 +104,7 @@ LastUpdated: 2026-11-08 13:10 MSK
 - [x] Мир annFlow: импорт канала в Markdown, страницы серий и заметок, оглавления, файлы
 
 ## In Progress
-<!-- Нет задач в работе. -->
+- Social Preview: согласованный RU-текст и EN-перевод, оригинальные SVG и портрет (525 → 345 px), генерация PNG при сборке. Ожидается проверка CI, деплоя и Telegram.
 
 ## Next
 <!-- Canonical planning checklist. Plain items DO NOT auto-create Todoist subtasks. Todoist child boundaries require explicit owner/canonical-plan approval under One Plan = One Subtask. -->
@@ -123,6 +123,7 @@ LastUpdated: 2026-11-08 13:10 MSK
 - [ ] Следующий мир по тому же образцу: выбрать проект, advisory советует @arsenynn
 
 ## Risks
+- Генерация OG требует Chromium Playwright; тестовый и deploy workflow устанавливают его. После публикации Telegram может удерживать старую карточку до обновления через @WebpageBot.
 - Домен `arsenynn.quest` истекает 2026-11-15 (whois 2026-11-04, продления ещё нет): без него перестанут работать Listen и Website Party Protocol.
 - Огоньки зависят от публичной ленты t.me/s/: если Telegram не ответит при сборке, проект временно опустится в «тишину» до следующей пересборки.
 - Telegram отдаёт урезанные страницы при частых запросах: проверку ссылок повторять несколько раз. Код 200 от t.me не доказывает, что пост существует.
@@ -133,6 +134,7 @@ LastUpdated: 2026-11-08 13:10 MSK
 ## Todoist Intake
 <!-- External Todoist active subtasks/descriptions that require review before becoming implementation work. -->
 <!-- Empty unless Todoist intake found new unresolved inputs or intake could not be completed. -->
+- 2026-11-25: read-only MCP fallback, подзадач у `task:6hvH5GRVH9X75cCX` нет. Локальный gate недоступен в cloud-сессии. Todoist не изменён.
 - 2026-11-04: intake через `td` CLI (путь `mcp_connector_fallback` не понадобился, local gate без токена). Подзадач у `task:6hvH5GRVH9X75cCX` нет, новых вводных нет. Статус в Todoist не менялся: запись только по запросу владельца.
 
 ---
