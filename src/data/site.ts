@@ -8,12 +8,12 @@ export const site = {
   title: '@arsenynn — Финальная битва между самоценным и рациональным',
   description:
     'Проекты @arsenynn: авторское кино, видео на заказ, философия, интернет-радио, AI-системы, VPN и путешествия.',
-  // Превью в Telegram и соцсетях: только имя и слоган.
+  // Превью в Telegram и соцсетях: имя, направления проектов; слоган остаётся на обложке.
   ogSiteName: 'arsenynn.com',
   ogTitle: '@arsenynn',
-  ogDescription: 'Финальная битва между самоценным и рациональным',
+  ogDescription: 'Независимые авторские проекты. VPN-сервис, ИИ-агенты и автоматизация бизнеса, интернет-радио, аудиовизуальное искусство, видеопродакшн, философия и путешествия.',
   themeColor: '#0a0a0a',
-  ogImage: '/og.png',
+  ogImage: '/og-v3.png',
 
   // Провайдер плеера глав. Сменить провайдера: эти адреса и параметры в src/scripts/player.ts.
   video: {
@@ -59,7 +59,8 @@ export const site = {
     title: '@arsenynn — The final battle between the intrinsic and the rational',
     description:
       'Projects by @arsenynn: auteur film, commissioned video, philosophy, internet radio, AI systems, VPN and travel.',
-    ogDescription: 'The final battle between the intrinsic and the rational',
+    ogDescription: 'Independent creative projects. VPN service, AI agents and business automation, internet radio, audiovisual art, video production, philosophy and travel.',
+    ogImage: '/og-en-v3.png',
     heroLine: 'The final battle between the intrinsic and the rational',
     workText: 'Portfolio for collaboration and hiring: AI automation, sales and events, video production.',
   },

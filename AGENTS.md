@@ -29,9 +29,10 @@ LastUpdated: 2026-11-04 23:45 MSK
 ## Commands
 - `npm install` — установить зависимости
 - `npm run dev` — локальный сервер
-- `npm run build` — `astro check` и статическая сборка в `dist/`
+- `npx playwright install --with-deps chromium` — подготовить браузер для сборки OG (на macOS достаточно `npx playwright install chromium`).
+- `npm run build` — генерация RU/EN OG PNG, `astro check` и статическая сборка в `dist/`
 - `npm test` — Playwright + axe: 10 ширин, ссылки без About, About с клавиатуры, без JS, reduced motion, 404, нет serious/critical нарушений axe
-- `NODE_PATH=$(npm root -g) node scripts/render-images.mjs` — перегенерировать `public/og.png` и `public/apple-touch-icon.png` (нужен Playwright в окружении)
+- `npm run render:og` — перегенерировать RU/EN OG PNG; `node scripts/render-images.mjs` — также обновить favicon и apple-touch-icon.
 - `python3 scripts/trace-logo.py <in> public/logos/<slug>.svg '#hex'` — векторизовать одноцветный логотип (нужен `pip install potracer`)
 
 Проверка документации:

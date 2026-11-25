@@ -36,3 +36,7 @@ dist/
 # Playwright
 test-results/
 playwright-report/
+
+# Generated social preview images (built before Astro)
+/public/og-v3.png
+/public/og-en-v3.png

@@ -8,7 +8,8 @@
   },
   "scripts": {
     "dev": "astro dev",
-    "build": "astro check && astro build",
+    "build": "npm run render:og && astro check && astro build",
+    "render:og": "node scripts/render-images.mjs --og-only",
     "preview": "astro preview",
     "test": "playwright test"
   },

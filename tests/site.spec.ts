@@ -992,3 +992,23 @@ test('axe: нет serious и critical нарушений', async ({ page }) => {
   const bad = results.violations.filter((v) => v.impact === 'serious' || v.impact === 'critical');
   expect(bad.map((v) => `${v.id}: ${v.nodes.length}`)).toEqual([]);
 });
+
+
+test('социальное превью: локализованные описания и доступные PNG 1200×630', async ({ page, request }) => {
+  for (const [path, image, description] of [
+    ['/', '/og-v3.png', 'Независимые авторские проекты. VPN-сервис, ИИ-агенты и автоматизация бизнеса, интернет-радио, аудиовизуальное искусство, видеопродакшн, философия и путешествия.'],
+    ['/en/', '/og-en-v3.png', 'Independent creative projects. VPN service, AI agents and business automation, internet radio, audiovisual art, video production, philosophy and travel.'],
+  ]) {
+    await page.goto(path);
+    await expect(page.locator('meta[property="og:description"]')).toHaveAttribute('content', description);
+    await expect(page.locator('meta[name="twitter:description"]')).toHaveAttribute('content', description);
+    await expect(page.locator('meta[property="og:image"]')).toHaveAttribute('content', 'https://arsenynn.com' + image);
+    await expect(page.locator('meta[name="twitter:image"]')).toHaveAttribute('content', 'https://arsenynn.com' + image);
+    const response = await request.get(image);
+    expect(response.ok()).toBeTruthy();
+    const png = await response.body();
+    expect(png.subarray(0, 8).toString('hex')).toBe('89504e470d0a1a0a');
+    expect(png.readUInt32BE(16)).toBe(1200);
+    expect(png.readUInt32BE(20)).toBe(630);
+  }
+});
